@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css"/>
+    <script type="text/javascript" src="../lib/require/require.js"></script>
+    <script type="text/javascript">
+        require.config({
+          baseUrl: '../../app/',
+          paths: {
+            jquery: '../lib/jquery/jquery-1.7.2.min',
+            underscore: '../lib/underscore/underscore',
+            backbone: '../lib/backbone/backbone',
+            backbone_marionette: '../lib/backbone.marionette/backbone.marionette',
+            backbone_modelbinder: '../lib/backbone.modelbinder/Backbone.ModelBinder.min',
+            text: '../lib/require/text',
+            chai: '../lib/chai/chai',
+            mocha: '../lib/mocha/mocha'
+          },
+          shim: {
+            'underscore': {
+              exports: '_'
+            },
+            'backbone': {
+              deps: ['underscore', 'jquery'],
+              exports: 'Backbone'
+            },
+            'mocha': {
+                exports: 'mocha'
+            }
+          }
+        });
+
+        require([
+            'jquery',
+            'require',
+            'chai',
+            'mocha'
+        ],
+        function($, require, chai, mocha) {
+            $(document).ready(function() {
+                // Chai
+                assert = chai.assert;
+                should = chai.should();
+                expect = chai.expect;
+
+                mocha.setup('bdd');
+
+                define(['test/person'], function(Person) {    
+                    mocha.run();
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="mocha"></div>
+</body>
+</html>

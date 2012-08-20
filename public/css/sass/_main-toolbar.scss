@@ -1,0 +1,27 @@
+@import "icons/toolbar/*.png";
+@include all-toolbar-sprites;
+
+header#main_toolbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    margin-bottom: 0;    
+    height: 49px;
+    width: 100%;
+    background: #201219 url(../images/app-toolbar-bk.png) repeat-x;
+    border-top: 1px solid #404040;
+    ul#toolbar_nav {
+        display: block;
+        list-style: none;
+        height: 30px;
+        width: 200px;
+        margin: 13px 0 0 28px;
+        li {
+            float: left;
+            width: 47px;
+            height: 25px;
+        }
+    }
+}

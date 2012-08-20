@@ -1,0 +1,5 @@
+{
+    "--title": "USG API Docs",
+    "--output": "docs/",
+    "--categories": "jsduck-class-cats.json"
+}

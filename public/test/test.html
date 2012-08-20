@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Ubuntu Server GUI</title>  
+  
+  <!--<link rel="stylesheet" type="text/css" href="css/stylesheets/screen.css" />-->
+  <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="css/stylesheets/ie.css" /><![endif]-->
+  <!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
+  <!--<script type="text/javascript" data-main="app/boot-test" src="lib/require/require.js"></script>-->
+  <script type="text/javascript" src="../lib/gauge.js/dist/gauge.js"></script>
+  <script type="text/javascript">
+    function domReady() {
+        var memoryGaugeTarget = document.getElementById('gaugeOne');
+        var memoryGauge = new Donut(memoryGaugeTarget);
+        memoryGauge.setOptions({
+            lines: 12,
+            angle: 0.07,
+            lineWidth: 0.10,
+            colorStart: '#6F6EA0',
+            colorStop: '#C0C0DB',
+            strokeColor: '#e0e0e0',
+        });
+        memoryGauge.maxValue = 100;
+        memoryGauge.set(85);
+
+        var cpuGaugeTarget = document.getElementById('gaugeTwo');
+        var cpuGauge = new Donut(cpuGaugeTarget);
+        cpuGauge.setOptions({
+            lines: 12,
+            angle: 0.5,
+            lineWidth: 0.10,
+            colorStart: '#6F6EA0',
+            colorStop: '#C0C0DB',
+            strokeColor: '#e0e0e0',
+        });
+
+        cpuGauge.maxValue = 100;
+        cpuGauge.set(25);
+    }
+
+    window.addEventListener ? window.addEventListener("load", domReady, false) : window.attachEvent && window.attachEvent("onload", domReady);
+
+  </script>
+  <style type="text/css">
+    canvas {
+        float: left;
+    }
+  </style>
+</head>
+<body>
+    <canvas id="gaugeOne" width="200" height="120"></canvas>
+    <canvas id="gaugeTwo" width="200" height="120"></canvas>
+</body>
+</html>

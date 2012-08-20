@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Socket.IO Test</title>  
+  
+  <link rel="stylesheet" type="text/css" href="css/stylesheets/screen.css" />
+  <script type="text/javascript" src="lib/jquery/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="http://app.ubuntuservergui.dev/lib/socket.io-client/dist/socket.io.js"></script>
+  <script>
+
+    var wsConfig = {
+      'resource': 'sock',
+      'transports': ['websocket'],
+      'max reconnection attempts': 2,
+      'try multiple transports': false
+    };
+
+    var statsSocket = io.connect('http://10.0.1.15:3000/stats', wsConfig);
+    var netSocket = io.connect('http://10.0.1.15:3000/net', wsConfig);
+
+    
+    // Stats Socket
+    statsSocket.on('connect', function() {
+      console.log('stats socket connected');
+      statsSocket.emit('pullCpu');
+    });
+
+    statsSocket.on('pushCpu', function(data) {
+      console.log('cpu came back with data');
+      console.dir(data);
+    })
+
+    statsSocket.on('connecting', function() {
+      console.log('stats connecting');
+    });    
+
+    statsSocket.on('disconnect', function() {
+      console.log('stats dis-connected');
+    });
+
+    statsSocket.on('message', function() {
+      console.log('stats inside on message');
+      console.dir(arguments);
+    });
+
+    // Net Socket   
+    netSocket.on('connect', function() {
+      console.log('net socket connected');
+      netSocket.emit('pullNetServices', {'any': {}});
+    });
+    
+    netSocket.on('pushNetServices', function(data) {
+      data = jQuery.parseJSON(data);
+      console.log('netSocket inside pushNetServices response');
+      console.dir(data);
+    });
+
+    // Proc Socket
+    /*
+    procSocket.on('connect', function() {
+      console.log('proc connected');
+    });
+
+    procSocket.on('connecting', function() {
+      console.log('proc connecting');
+    });    
+
+    procSocket.on('disconnect', function() {
+      console.log('proc dis-connected');
+    });
+
+    procSocket.on('message', function() {
+      console.log('proc inside on message');
+      console.dir(arguments);
+    });
+    */
+
+    //procSocket.emit('customevent', {msg: 'any', key: 'randomval', empty: {}});
+
+	</script>  
+
+</head>
+<body>
+    
+</body>
+</html>

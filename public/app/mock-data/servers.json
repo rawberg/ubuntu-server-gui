@@ -1,0 +1,5 @@
+{"success":true, "servers":[
+	{"name":"Web Server", "ip":"10.211.55.27", "ram":512},
+	{"name":"DB Server", "ip":"10.211.55.28", "ram":512},
+	{"name":"Staging Server", "ip":"10.211.55.29", "ram":1024}
+]}
