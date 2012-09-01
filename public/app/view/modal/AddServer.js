@@ -42,6 +42,7 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
     AddServerModal.prototype.hideModal = function() {
       $('#modal_add_server').modal('hide');
       this.clearForm();
+      this.enableForm();
     };
 
     AddServerModal.prototype.onSubmit = function(eventObj) {
@@ -84,6 +85,8 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
         show: false
       }).on('hidden', function() {
         _this.clearForm();
+      }).on('shown', function() {
+        return $('input[type=text]:first').focus();
       });
       return this.el;
     };
@@ -94,8 +97,7 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
     };
 
     AddServerModal.prototype.showModal = function() {
-      $('#modal_add_server').modal('show');
-      $('#modal_add_server input').first().focus();
+      $('#modal_add_server').modal('show').find('input[type=text]:first');
     };
 
     return AddServerModal;

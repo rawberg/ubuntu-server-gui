@@ -1,4 +1,4 @@
-/* line 17, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -68,17 +68,17 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   background: url('../images/icons/toolbar-s82e670740e.png') no-repeat;
 }
 
-/* line 60, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .toolbar-cloud {
   background-position: 0 -25px;
 }
 
-/* line 60, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .toolbar-dashboard {
   background-position: 0 0;
 }
 
-/* line 60, /usr/local/rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 60, /usr/local/Cellar/ruby/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .toolbar-filemanager {
   background-position: 0 -50px;
 }
@@ -598,6 +598,178 @@ div.modal-footer.plain {
   margin: -250px 0 0 -250px;
 }
 
+/* line 2, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+body > div._contextmenu_screen_ {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  display: none;
+  opacity: 1.0;
+  -webkit-transition: opacity 0.15s linear;
+  overflow: hidden;
+  z-index: 120000;
+}
+/* line 15, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+body > menu {
+  display: none;
+}
+
+/* line 21, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+._contextmenu_screen_ menu {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+/* line 22, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+._contextmenu_screen_ menu.fadeout {
+  -webkit-transition: opacity 0.15s linear;
+}
+/* line 30, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+._contextmenu_screen_ menuitem {
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+/* line 35, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+._contextmenu_screen_ menuitem:before {
+  content: attr(label);
+}
+/* line 39, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+._contextmenu_screen_ > menu {
+  position: fixed;
+  display: none;
+  cursor: default;
+  z-Index: 30000;
+  user-select: none;
+  -webkit-user-select: none;
+  list-style: none;
+}
+/* line 49, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+._contextmenu_screen_ menu * {
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* line 54, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+._contextmenu_screen_ menu menuitem {
+  -webkit-user-drag: none;
+}
+
+/* line 61, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.win7 ._contextmenu_screen_ menu {
+  background: #f0f0f0 url(../images/repeat-y.png?) repeat-y;
+  font-family: 'Segoe UI';
+  font-size: 13px;
+  padding: 4px 2px 2px 2px;
+  /* text-rendering: optimizeLegibility; */
+  -webkit-font-smoothing: subpixel-antialiased;
+  border: 1px solid #a0a0a0;
+  -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+  color: black;
+}
+/* line 73, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.win7 menu menuitem {
+  padding: 0px 5px 0px 32px;
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+/* line 78, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.win7 menu menuitem:hover {
+  border: 1px solid #b3d0f5;
+  background-color: rgba(172, 201, 255, 0.05);
+}
+/* line 82, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.win7 menu menuitem[open=true] {
+  border: 1px solid #b3d0f5;
+  background-color: rgba(172, 201, 255, 0.05);
+}
+/* line 87, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.win7 menu hr {
+  height: 0px;
+  border: none;
+  border-bottom: 1px solid white;
+  border-top: 1px solid #e0e0e0;
+  margin: 4px;
+  margin-left: 27px;
+}
+/* line 96, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.win7 ._contextmenu_screen_ menu > .submenu:after {
+  content: " ";
+  display: block;
+  width: 4px;
+  height: 7px;
+  background: url(data:image/gif;base64,R0lGODlhBAAHAIABACgoKP///yH5BAEAAAEALAAAAAAEAAcAAAIIRA4WaeyrVCgAOw==) no-repeat;
+  float: right;
+  position: relative;
+  left: 0px;
+  top: 6px;
+}
+
+/* line 110, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.osx10_7 ._contextmenu_screen_ > menu {
+  background-color: rgba(255, 255, 255, 0.94902);
+  -moz-background-clip: padding;
+  /* Firefox 3.6 */
+  -webkit-background-clip: padding;
+  /* Safari 4? Chrome 6? */
+  background-clip: padding-box;
+  /* Firefox 4, Safari 5, Opera 10, IE 9 */
+  color: black;
+  font-family: 'Lucida Grande';
+  border-top: 1px solid rgba(0, 0, 0, 0.08627);
+  border-left: 1px solid rgba(0, 0, 0, 0.23137);
+  border-right: 1px solid rgba(0, 0, 0, 0.23137);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.41176);
+  border-radius: 5px;
+  padding: 4px 0;
+  -webkit-box-shadow: 0px 12px 10px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+/* line 130, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.osx10_7 ._contextmenu_screen_ > menu.submenu {
+  border-top-left-radius: 0px;
+}
+/* line 136, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.osx10_7 ._contextmenu_screen_ menu > .submenu:after {
+  content: "\25B6";
+  float: right;
+  position: relative;
+  left: 14px;
+  top: 2px;
+  font-size: 12px;
+  color: #404040;
+}
+/* line 145, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.osx10_7 ._contextmenu_screen_ menu > .submenu:hover:after, .osx10_7 ._contextmenu_screen_ menu > .submenu[open=true]:after {
+  color: white;
+}
+/* line 149, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.osx10_7 ._contextmenu_screen_ menu menuitem {
+  height: 19px;
+  padding: 0px 19px 0px 21px;
+}
+/* line 152, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.osx10_7 ._contextmenu_screen_ menu menuitem:hover, .osx10_7 ._contextmenu_screen_ menu menuitem.submenu[open=true] {
+  background: #3c6ff7 url(../images/repeat-x.png) repeat-x;
+  color: white;
+}
+/* line 157, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/_contextmenu.scss */
+.osx10_7 ._contextmenu_screen_ menu hr {
+  height: 0px;
+  border: none;
+  /* results in background: #e3e3e3; */
+  border-bottom: 1px solid #e4e4e4;
+  margin: 5px 1px 6px 1px;
+}
+
 /* line 24, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
 .clearfix {
   *zoom: 1;
@@ -726,7 +898,7 @@ a:hover {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
   cursor: pointer;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
   background-image: -moz-linear-gradient(top, white, #e6e6e6);
   background-image: -ms-linear-gradient(top, white, #e6e6e6);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#e6e6e6));
@@ -1878,46 +2050,68 @@ input[type="checkbox"][readonly] {
 }
 
 /* line 171, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.error > label, .control-group.error .help-block, .control-group.error .help-inline {
+.control-group.error > label,
+.control-group.error .help-block,
+.control-group.error .help-inline {
   color: #b94a48;
 }
 /* line 179, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.error .checkbox, .control-group.error .radio, .control-group.error input, .control-group.error select, .control-group.error textarea {
+.control-group.error .checkbox,
+.control-group.error .radio,
+.control-group.error input,
+.control-group.error select,
+.control-group.error textarea {
   color: #b94a48;
   border-color: #b94a48;
 }
 /* line 182, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.error .checkbox:focus, .control-group.error .radio:focus, .control-group.error input:focus, .control-group.error select:focus, .control-group.error textarea:focus {
+.control-group.error .checkbox:focus,
+.control-group.error .radio:focus,
+.control-group.error input:focus,
+.control-group.error select:focus,
+.control-group.error textarea:focus {
   border-color: #953b39;
   -webkit-box-shadow: 0 0 6px #d59392;
   -moz-box-shadow: 0 0 6px #d59392;
   box-shadow: 0 0 6px #d59392;
 }
 /* line 189, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.error .input-prepend .add-on, .control-group.error .input-append .add-on {
+.control-group.error .input-prepend .add-on,
+.control-group.error .input-append .add-on {
   color: #b94a48;
   background-color: #f2dede;
   border-color: #b94a48;
 }
 
 /* line 171, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.success > label, .control-group.success .help-block, .control-group.success .help-inline {
+.control-group.success > label,
+.control-group.success .help-block,
+.control-group.success .help-inline {
   color: #468847;
 }
 /* line 179, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.success .checkbox, .control-group.success .radio, .control-group.success input, .control-group.success select, .control-group.success textarea {
+.control-group.success .checkbox,
+.control-group.success .radio,
+.control-group.success input,
+.control-group.success select,
+.control-group.success textarea {
   color: #468847;
   border-color: #468847;
 }
 /* line 182, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.success .checkbox:focus, .control-group.success .radio:focus, .control-group.success input:focus, .control-group.success select:focus, .control-group.success textarea:focus {
+.control-group.success .checkbox:focus,
+.control-group.success .radio:focus,
+.control-group.success input:focus,
+.control-group.success select:focus,
+.control-group.success textarea:focus {
   border-color: #356635;
   -webkit-box-shadow: 0 0 6px #7aba7b;
   -moz-box-shadow: 0 0 6px #7aba7b;
   box-shadow: 0 0 6px #7aba7b;
 }
 /* line 189, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../sass-twitter-bootstrap/lib/_mixins.scss */
-.control-group.success .input-prepend .add-on, .control-group.success .input-append .add-on {
+.control-group.success .input-prepend .add-on,
+.control-group.success .input-append .add-on {
   color: #468847;
   background-color: #dff0d8;
   border-color: #468847;
@@ -1945,7 +2139,7 @@ select:focus:required:invalid:focus {
   padding: 17px 20px 18px;
   margin-top: 18px;
   margin-bottom: 18px;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
   border-top: 1px solid #e5e5e5;
   *zoom: 1;
 }
@@ -2491,7 +2685,8 @@ a [class*=" icon-"] {
 
 /* line 63, /Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/public/css/sass/../font-awesome/sass/font-awesome.scss */
 .btn [class^="icon-"],
-.btn [class*=" icon-"], .nav-tabs [class^="icon-"], .nav-tabs [class*=" icon-"] {
+.btn [class*=" icon-"], .nav-tabs [class^="icon-"],
+.nav-tabs [class*=" icon-"] {
   /* keeps button heights with and without icons the same */
   line-height: .9em;
 }
@@ -3581,14 +3776,14 @@ ul.icons li .icon-large:before {
   content: "\f200";
 }
 
-/* line 34, ../sass/screen.scss */
+/* line 38, ../sass/screen.scss */
 html, body {
   width: 100%;
   min-height: 100%;
   height: 100%;
 }
 
-/* line 40, ../sass/screen.scss */
+/* line 44, ../sass/screen.scss */
 #viewport {
   width: 100%;
   height: 100%;

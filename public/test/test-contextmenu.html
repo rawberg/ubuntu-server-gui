@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Ubuntu Server GUI</title>  
+  
+  <!--<link rel="stylesheet" type="text/css" href="css/stylesheets/screen.css" />-->
+  <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="css/stylesheets/ie.css" /><![endif]-->
+  <!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
+  <!--<script type="text/javascript" data-main="app/boot-test" src="lib/require/require.js"></script>-->
+  <script type="text/javascript">
+    function domReady() {
+        var testItem = document.getElementById('testitem');
+        testItem.addEventListener("contextmenu", function() {
+            console.log('hello from context menu');
+            console.dir(arguments);
+        })
+    }
+
+    window.addEventListener ? window.addEventListener("load", domReady, false) : window.attachEvent && window.attachEvent("onload", domReady);
+
+  </script>
+  <style type="text/css">
+
+  </style>
+</head>
+<body>
+    <div id="testitem" contextmenu="supermenu" style="width: 200px; height: 200px; background-color: #000000">Hello</div>
+    <menu type="context" id="supermenu">
+      <menuitem label="Smile Please" onclick="console.dir(arguments)"></menuitem>
+    </menu>
+</body>
+</html>

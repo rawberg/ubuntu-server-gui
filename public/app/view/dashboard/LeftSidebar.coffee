@@ -3,10 +3,11 @@ define([
     'underscore'
     'collection/ServerList'    
     'view/UsgItemView'
-    'view/modal/AddServer'    
+    'view/modal/AddServer'
+    'contextmenu'    
     'text!view/dashboard/tpl/sidebar-left.html'
     
-], ($, _, ServerList, UsgItemView, AddServerModal, leftSidebarTpl) ->
+], ($, _, ServerList, UsgItemView, AddServerModal, ContextMenu, leftSidebarTpl) ->
     
     ###*
      * @class LeftSidebar
@@ -31,13 +32,50 @@ define([
             @parentRegion = options.parentRegion
 
             @events =
-                'click ul': 'serverClick'
+                'click li': 'onServerClick'
+                'contextmenu li': 'onServerRightClick'
+
+            @contextMenu = new ContextMenu([
+                {
+                    label: "Edit Server",
+                    onclick: @onEditServerClick
+                },{
+                    label: "Remove Server",
+                    onclick: @onRemoveServerClick
+                }
+            ])
 
             super
             @collection.fetch()
             return
 
-        serverClick: (eventObj) ->
+        onServerClick: (eventObj) ->
+            console.log('serverClick')
+            console.dir(eventObj)
+            return
+
+        onServerRightClick: (eventObj) ->
+            console.dir(eventObj)
+            eventObj.preventDefault()
+            eventObj.stopPropagation()
+            @contextMenu.sourceEvent = eventObj
+            ContextMenu.show(@contextMenu, eventObj.clientX, eventObj.clientY)
+            return
+
+        onEditServerClick: (eventObj) =>
+            console.log('onEditServerClick')
+            console.dir(@contextMenu.sourceEvent)
+            console.log('server ID: ' + @contextMenu.sourceEvent.currentTarget.id.slice(10))            
+            return
+
+        onRemoveServerClick: (eventObj) =>
+            console.log('onRemoveServerClick')
+            console.dir(@contextMenu.sourceEvent)
+            console.log('server ID: ' + @contextMenu.sourceEvent.currentTarget.id.slice(10))            
+            return
+
+        onShow: () ->
+            
             return
 
 )

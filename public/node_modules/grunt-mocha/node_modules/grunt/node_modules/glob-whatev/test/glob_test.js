@@ -41,8 +41,10 @@ function relFileList(arr) {
 
 exports['globsync'] = {
   'relative': function(test) {
-    test.expect(11);
+    test.expect(13);
     test.deepEqual(globsync.glob('fixture/*'), fileList([0,1]), 'test/fixture/* should match');
+    test.deepEqual(globsync.glob('fixture/foo'), fileList([1]), 'test/fixture/foo should match');
+    test.deepEqual(globsync.glob('fixture/foo/'), fileList([1]), 'test/fixture/foo/ should match');
     test.deepEqual(globsync.glob('fixture/*/*'), fileList([2,6]), 'test/fixture/* should match');
     test.deepEqual(globsync.glob('fixture/**'), fileList([0,1,2,3,4,5,6]), 'test/fixture/** should match');
     test.deepEqual(globsync.glob('fixture/**/'), fileList([1,2,3]), 'test/fixture/**/ should match');
@@ -56,9 +58,11 @@ exports['globsync'] = {
     test.done();
   },
   'absolute': function(test) {
-    test.expect(9);
+    test.expect(11);
     var prefix = path.resolve(process.cwd());
     test.deepEqual(globsync.glob(makeAbsolute('fixture/*')), fileList([0,1], prefix), makeAbsolute('test/fixture/*') + ' should match');
+    test.deepEqual(globsync.glob(makeAbsolute('fixture/foo')), fileList([1], prefix), makeAbsolute('test/fixture/foo') + ' should match');
+    test.deepEqual(globsync.glob(makeAbsolute('fixture/foo/')), fileList([1], prefix), makeAbsolute('test/fixture/foo/') + ' should match');
     test.deepEqual(globsync.glob(makeAbsolute('fixture/*/*')), fileList([2,6], prefix), makeAbsolute('test/fixture/*/*') + ' should match');
     test.deepEqual(globsync.glob(makeAbsolute('fixture/**')), fileList([0,1,2,3,4,5,6], prefix), makeAbsolute('test/fixture/**') + ' should match');
     test.deepEqual(globsync.glob(makeAbsolute('fixture/**/')), fileList([1,2,3], prefix), makeAbsolute('test/fixture/**/') + ' should match');
@@ -70,10 +74,12 @@ exports['globsync'] = {
     test.done();
   },
   'wacky': function(test) {
-    test.expect(9);
+    test.expect(11);
     process.chdir('../lib');
     var prefix = '../test/';
     test.deepEqual(globsync.glob('../test/fixture/*'), fileList([0,1], prefix), '../test/fixture/* should match');
+    test.deepEqual(globsync.glob('../test/fixture/foo'), fileList([1], prefix), '../test/fixture/foo should match');
+    test.deepEqual(globsync.glob('../test/fixture/foo/'), fileList([1], prefix), '../test/fixture/foo/ should match');
     test.deepEqual(globsync.glob('../test/fixture/*/*'), fileList([2,6], prefix), '../test/fixture/*/* should match');
     test.deepEqual(globsync.glob('../test/fixture/**'), fileList([0,1,2,3,4,5,6], prefix), '../test/fixture/** should match');
     test.deepEqual(globsync.glob('../test/fixture/**/'), fileList([1,2,3], prefix), '../test/fixture/**/ should match');

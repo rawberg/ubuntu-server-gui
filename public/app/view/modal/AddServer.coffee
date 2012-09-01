@@ -32,8 +32,6 @@ define([
             @id = 'modal_add_server'
             @className = 'modal hide fade'
             
-            #@collection = new ServerList()
-
             @App.vent.on('server:add-via-modal', @showModal, @)
 
             @events =
@@ -46,6 +44,7 @@ define([
         hideModal: () ->
             $('#modal_add_server').modal('hide')
             @clearForm()
+            @enableForm()
             return
 
         onSubmit: (eventObj) ->
@@ -59,7 +58,6 @@ define([
             name = $.trim($('input[name=name]').val())
             ipv4 = $.trim($('input[name=ipv4]').val())
 
-            #@collection.create({name: name, ipv4: ipv4})
             server = new Server({name: name, ipv4: ipv4})
             server.save()
             @App.vent.trigger('server:new-server-added')
@@ -88,6 +86,8 @@ define([
             }).on('hidden', =>
                 @clearForm()
                 return
+            ).on('shown', =>
+                $('input[type=text]:first').focus()
             )
             return @el
 
@@ -96,9 +96,8 @@ define([
             $('#error_alert').text(msg).show()            
             return
 
-        showModal: () ->           
-            $('#modal_add_server').modal('show')
-            $('#modal_add_server input').first().focus()
+        showModal: () ->
+            $('#modal_add_server').modal('show').find('input[type=text]:first')
             return
 
 

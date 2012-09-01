@@ -11,7 +11,8 @@ require.config({
     text: '../lib/require/text',
     bootstrap_modal: '../css/sass-twitter-bootstrap/js/bootstrap-modal',
     bootstrap_transition: '../css/sass-twitter-bootstrap/js/bootstrap-transition',
-    gauge: '../lib/gauge.js/dist/gauge'
+    gauge: '../lib/gauge.js/dist/gauge',
+    contextmenu: '../lib/contextmenu/contextmenu'
   },
   shim: {
     'underscore': {
@@ -34,6 +35,9 @@ require.config({
     'gauge': {
       deps: ['jquery'],
       exports: 'Donut'
+    },
+    'contextmenu': {
+      exports: 'contextmenu'
     }
   }
 });
