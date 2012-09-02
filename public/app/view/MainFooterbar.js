@@ -25,6 +25,7 @@ define(['jquery', 'underscore', 'backbone', 'backbone_marionette', 'app', 'view/
       if (options == null) {
         options = {};
       }
+      this.App = App;
       this.template = _.template(mainFooterbarTpl);
       this.tagName = 'footer';
       this.id = 'main_footerbar';
@@ -38,7 +39,7 @@ define(['jquery', 'underscore', 'backbone', 'backbone_marionette', 'app', 'view/
     MainFooterBar.prototype.onAddServerClick = function(eventObj) {
       eventObj.stopPropagation();
       eventObj.preventDefault();
-      App.vent.trigger('server:add-via-modal');
+      this.App.modal.show(new AddServerModal());
     };
 
     return MainFooterBar;

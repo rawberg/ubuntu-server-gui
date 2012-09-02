@@ -21,10 +21,14 @@ define(['jquery', 'underscore', 'backbone', 'app', 'model/Server'], function($, 
       this.App = App;
       this.url = 'Servers';
       this.local = true;
-      this.App.vent.on('server:new-server-added', this.fetch, this);
+      this.App.vent.on('server:new-server-added', this.addNewServer, this);
       ServerList.__super__.constructor.apply(this, arguments);
       return;
     }
+
+    ServerList.prototype.addNewServer = function(eventData) {
+      this.add(eventData.server);
+    };
 
     /**
      * @method @private
@@ -40,6 +44,10 @@ define(['jquery', 'underscore', 'backbone', 'app', 'model/Server'], function($, 
                 return response.servers
     */
 
+
+    ServerList.prototype.onClose = function() {
+      this.App.vent.off('server:new-server-added', this.fetch);
+    };
 
     return ServerList;
 

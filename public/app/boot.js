@@ -69,7 +69,6 @@ require(['jquery', 'backbone', 'app', 'model/Session', 'model/User', 'controller
     App.mainToolbar.show(toolbar);
     footerbar = new MainFooterbar();
     App.mainFooterbar.show(footerbar);
-    new AddServerModal().render();
     App.user.session.on('change:active', function(session, active) {
       if (active === true) {
         toolbar = new MainToolbar();

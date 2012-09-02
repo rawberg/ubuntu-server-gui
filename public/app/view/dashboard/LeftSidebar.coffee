@@ -1,30 +1,35 @@
 define([
     'jquery'
     'underscore'
+    'app'
     'collection/ServerList'    
-    'view/UsgItemView'
-    'view/modal/AddServer'
+    'view/UsgCollectionView'
+    'view/dashboard/LeftSidebarItem'
+    'view/modal/RemoveServer'
     'contextmenu'    
-    'text!view/dashboard/tpl/sidebar-left.html'
     
-], ($, _, ServerList, UsgItemView, AddServerModal, ContextMenu, leftSidebarTpl) ->
+], ($, _, App, ServerList, UsgCollectionView, LeftsidebarItem, RemoveServerModal, ContextMenu) ->
     
     ###*
      * @class LeftSidebar
      * Displays list of servers associated with the 
      * user's account in the left sidebar of the Dashboard. 
-     * @extends UsgItemView
+     * @extends UsgCollectionView
      ###    
-    class LeftSidebar extends UsgItemView
+    class LeftSidebar extends UsgCollectionView
         
         ###*
          * @constructor
          * Creates a new LeftSidebar instance.
-         * @param {Object} [options] config options for BackboneMarionette.ItemView.         
+         * @param {Object} [options] config options for UsgCollectionView.         
          * @return {Object} LeftSidebar instance.
          ###        
         constructor: (options = {}) ->
-            @template = _.template(leftSidebarTpl)
+            @App = App
+
+            @itemView = LeftsidebarItem
+            @itemViewOptions = {}
+
             @tagName = 'ul'
             @id = 'left_sidebar_serverlist'
 
@@ -55,7 +60,6 @@ define([
             return
 
         onServerRightClick: (eventObj) ->
-            console.dir(eventObj)
             eventObj.preventDefault()
             eventObj.stopPropagation()
             @contextMenu.sourceEvent = eventObj
@@ -69,13 +73,8 @@ define([
             return
 
         onRemoveServerClick: (eventObj) =>
-            console.log('onRemoveServerClick')
-            console.dir(@contextMenu.sourceEvent)
-            console.log('server ID: ' + @contextMenu.sourceEvent.currentTarget.id.slice(10))            
-            return
-
-        onShow: () ->
-            
+            server = @collection.get(@contextMenu.sourceEvent.currentTarget.id.slice(10))
+            @App.modal.show(new RemoveServerModal({server: server}))
             return
 
 )

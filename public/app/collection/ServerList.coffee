@@ -18,8 +18,12 @@ define([
             @url = 'Servers'
             @local = true
 
-            @App.vent.on('server:new-server-added', @fetch, @)
+            @App.vent.on('server:new-server-added', @addNewServer, @)
             super
+            return
+
+        addNewServer: (eventData) ->
+            @add(eventData.server)
             return
 
         ###*
@@ -33,6 +37,10 @@ define([
         parse: (response, jqXHR) ->
             return response.servers
         ###
+
+        onClose: () ->
+            @App.vent.off('server:new-server-added', @fetch)
+            return
 
     return ServerList
 )

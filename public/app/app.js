@@ -24,7 +24,8 @@ define(['underscore', 'backbone_marionette'], function(_, BackboneMarionette) {
       this.addRegions({
         mainToolbar: "#main_toolbar_container",
         mainViewport: "#viewport",
-        mainFooterbar: '#main_footerbar_container'
+        mainFooterbar: '#main_footerbar_container',
+        modal: '#modal_container'
       });
       /**
        * Overrides for BackboneMarionette templating loading
@@ -35,25 +36,30 @@ define(['underscore', 'backbone_marionette'], function(_, BackboneMarionette) {
        *
       */
 
-      this.bind('initialize:before', function(options) {
-        BackboneMarionette.TemplateCache.prototype.loadTemplate = function(templateId) {
-          var err, msg, template;
-          template = templateId;
-          if (!template || template.length === 0) {
-            msg = "Could not find template: '" + templateId + "'";
-            err = new Error(msg);
-            err.name = "NoTemplateError";
-            throw err;
-          }
-          return template;
-        };
-        BackboneMarionette.Renderer.render = function(template, data) {
-          if (data == null) {
-            data = {};
-          }
-          return template(data);
-        };
-      });
+      /*
+                  @bind('initialize:before', (options) ->
+                      # See "Using marionette with requirejs" in Marionette's Github Repo for details
+                      BackboneMarionette.TemplateCache.prototype.loadTemplate = (templateId) ->
+                          console.log('inside load template templateId')
+                          console.dir(templateId)
+                          # Marionette expects "templateId" to be the ID of a DOM element.
+                          # But with RequireJS, templateId is actually the full text of the template.
+                          template = templateId
+                          #template = $(templateId).html() # original
+      
+                          # Make sure we have a template before trying to compile it
+                          if (!template || template.length == 0)
+                              msg = "Could not find template: '" + templateId + "'"
+                              err = new Error(msg)
+                              err.name = "NoTemplateError"
+                              throw err
+      
+                          return template
+      
+                      return
+                  )
+      */
+
       /**
        * Sets up User and Session model objects
        * and attaches them to the application instance.

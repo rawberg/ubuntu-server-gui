@@ -22,6 +22,7 @@ define([
          * @param {Object} [options] config options for BackboneMarionette.Layout.
          ###
         constructor: (options={}) ->
+            @App = App
             @template = _.template(mainFooterbarTpl)
         
             @tagName = 'footer'
@@ -37,7 +38,7 @@ define([
             eventObj.stopPropagation()
             eventObj.preventDefault()
 
-            App.vent.trigger('server:add-via-modal')
+            @App.modal.show(new AddServerModal())
             return
 
 

@@ -32,8 +32,6 @@ define([
             @id = 'modal_add_server'
             @className = 'modal hide fade'
             
-            @App.vent.on('server:add-via-modal', @showModal, @)
-
             @events =
                 'click #add_server_btn': 'onSubmit',
                 'keyup input': 'onInputKeyup'
@@ -60,7 +58,7 @@ define([
 
             server = new Server({name: name, ipv4: ipv4})
             server.save()
-            @App.vent.trigger('server:new-server-added')
+            @App.vent.trigger('server:new-server-added', {server: server})
             @hideModal()
             return
 
@@ -78,26 +76,22 @@ define([
             @showError(@model.get('errorMsg'))
             return            
 
-        render: () ->
-            super
-            $('#main_footerbar_container').after(@el)
+        onShow: () ->
             $('#modal_add_server').modal({
-                show: false
+                show: true
             }).on('hidden', =>
                 @clearForm()
+                @close()
                 return
             ).on('shown', =>
                 $('input[type=text]:first').focus()
+                return
             )
-            return @el
+            return
 
         showError: (msg) ->
             @enableForm()
             $('#error_alert').text(msg).show()            
-            return
-
-        showModal: () ->
-            $('#modal_add_server').modal('show').find('input[type=text]:first')
             return
 
 

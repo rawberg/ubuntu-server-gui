@@ -3,12 +3,12 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['jquery', 'underscore', 'collection/ServerList', 'view/UsgItemView', 'view/modal/AddServer', 'contextmenu', 'text!view/dashboard/tpl/sidebar-left.html'], function($, _, ServerList, UsgItemView, AddServerModal, ContextMenu, leftSidebarTpl) {
+define(['jquery', 'underscore', 'app', 'collection/ServerList', 'view/UsgCollectionView', 'view/dashboard/LeftSidebarItem', 'view/modal/RemoveServer', 'contextmenu'], function($, _, App, ServerList, UsgCollectionView, LeftsidebarItem, RemoveServerModal, ContextMenu) {
   /**
    * @class LeftSidebar
    * Displays list of servers associated with the 
    * user's account in the left sidebar of the Dashboard. 
-   * @extends UsgItemView
+   * @extends UsgCollectionView
   */
 
   var LeftSidebar;
@@ -19,7 +19,7 @@ define(['jquery', 'underscore', 'collection/ServerList', 'view/UsgItemView', 'vi
     /**
      * @constructor
      * Creates a new LeftSidebar instance.
-     * @param {Object} [options] config options for BackboneMarionette.ItemView.         
+     * @param {Object} [options] config options for UsgCollectionView.         
      * @return {Object} LeftSidebar instance.
     */
 
@@ -32,7 +32,9 @@ define(['jquery', 'underscore', 'collection/ServerList', 'view/UsgItemView', 'vi
 
       this.onEditServerClick = __bind(this.onEditServerClick, this);
 
-      this.template = _.template(leftSidebarTpl);
+      this.App = App;
+      this.itemView = LeftsidebarItem;
+      this.itemViewOptions = {};
       this.tagName = 'ul';
       this.id = 'left_sidebar_serverlist';
       this.collection = new ServerList();
@@ -61,7 +63,6 @@ define(['jquery', 'underscore', 'collection/ServerList', 'view/UsgItemView', 'vi
     };
 
     LeftSidebar.prototype.onServerRightClick = function(eventObj) {
-      console.dir(eventObj);
       eventObj.preventDefault();
       eventObj.stopPropagation();
       this.contextMenu.sourceEvent = eventObj;
@@ -75,14 +76,14 @@ define(['jquery', 'underscore', 'collection/ServerList', 'view/UsgItemView', 'vi
     };
 
     LeftSidebar.prototype.onRemoveServerClick = function(eventObj) {
-      console.log('onRemoveServerClick');
-      console.dir(this.contextMenu.sourceEvent);
-      console.log('server ID: ' + this.contextMenu.sourceEvent.currentTarget.id.slice(10));
+      var server;
+      server = this.collection.get(this.contextMenu.sourceEvent.currentTarget.id.slice(10));
+      this.App.modal.show(new RemoveServerModal({
+        server: server
+      }));
     };
-
-    LeftSidebar.prototype.onShow = function() {};
 
     return LeftSidebar;
 
-  })(UsgItemView);
+  })(UsgCollectionView);
 });

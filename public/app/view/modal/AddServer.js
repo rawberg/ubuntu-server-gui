@@ -30,7 +30,6 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
       this.tagName = 'div';
       this.id = 'modal_add_server';
       this.className = 'modal hide fade';
-      this.App.vent.on('server:add-via-modal', this.showModal, this);
       this.events = {
         'click #add_server_btn': 'onSubmit',
         'keyup input': 'onInputKeyup'
@@ -59,7 +58,9 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
         ipv4: ipv4
       });
       server.save();
-      this.App.vent.trigger('server:new-server-added');
+      this.App.vent.trigger('server:new-server-added', {
+        server: server
+      });
       this.hideModal();
     };
 
@@ -77,27 +78,21 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
       this.showError(this.model.get('errorMsg'));
     };
 
-    AddServerModal.prototype.render = function() {
+    AddServerModal.prototype.onShow = function() {
       var _this = this;
-      AddServerModal.__super__.render.apply(this, arguments);
-      $('#main_footerbar_container').after(this.el);
       $('#modal_add_server').modal({
-        show: false
+        show: true
       }).on('hidden', function() {
         _this.clearForm();
+        _this.close();
       }).on('shown', function() {
-        return $('input[type=text]:first').focus();
+        $('input[type=text]:first').focus();
       });
-      return this.el;
     };
 
     AddServerModal.prototype.showError = function(msg) {
       this.enableForm();
       $('#error_alert').text(msg).show();
-    };
-
-    AddServerModal.prototype.showModal = function() {
-      $('#modal_add_server').modal('show').find('input[type=text]:first');
     };
 
     return AddServerModal;

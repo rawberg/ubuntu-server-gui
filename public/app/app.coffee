@@ -25,6 +25,7 @@ define([
                 mainToolbar: "#main_toolbar_container"
                 mainViewport: "#viewport"
                 mainFooterbar: '#main_footerbar_container'
+                modal: '#modal_container'
             })
 
             ###*
@@ -35,12 +36,16 @@ define([
              * https://github.com/derickbailey/backbone.marionette/wiki/Using-marionette-with-requirejs
              *
              ###
+            ###
             @bind('initialize:before', (options) ->
                 # See "Using marionette with requirejs" in Marionette's Github Repo for details
                 BackboneMarionette.TemplateCache.prototype.loadTemplate = (templateId) ->
+                    console.log('inside load template templateId')
+                    console.dir(templateId)
                     # Marionette expects "templateId" to be the ID of a DOM element.
                     # But with RequireJS, templateId is actually the full text of the template.
                     template = templateId
+                    #template = $(templateId).html() # original
 
                     # Make sure we have a template before trying to compile it
                     if (!template || template.length == 0)
@@ -51,12 +56,9 @@ define([
 
                     return template
 
-                BackboneMarionette.Renderer.render = (template, data={}) ->
-                    return template(data)
-
                 return
             )
-
+            ###
             ###*
              * Sets up User and Session model objects
              * and attaches them to the application instance.

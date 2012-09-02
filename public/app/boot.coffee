@@ -73,9 +73,7 @@ require([
 
         footerbar = new MainFooterbar()
         App.mainFooterbar.show(footerbar)
-
-        # Add Modals
-        new AddServerModal().render()        
+        
         
         # make sure the toolbar is shown upon
         # session activation
