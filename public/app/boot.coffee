@@ -5,7 +5,7 @@ require.config(
         backbone: '../lib/backbone/backbone'
         backbone_dualstorage: '../lib/backbone.dualstorage/backbone.dualstorage'
         backbone_marionette: '../lib/backbone.marionette/backbone.marionette'
-        backbone_modelbinder: '../lib/backbone.modelbinder/Backbone.ModelBinder.min'
+        backbone_modelbinder: '../lib/backbone.modelbinder/Backbone.ModelBinder'
         text: '../lib/require/text'
         bootstrap_modal: '../css/sass-twitter-bootstrap/js/bootstrap-modal'
         bootstrap_transition: '../css/sass-twitter-bootstrap/js/bootstrap-transition'
@@ -55,10 +55,9 @@ require([
     'router'
     'view/MainToolbar'
     'view/MainFooterbar'
-    'view/modal/AddServer'
     'backbone_dualstorage'
 
-], ($, Backbone, App, Session, User, MainController, Router, MainToolbar, MainFooterbar, AddServerModal) ->
+], ($, Backbone, App, Session, User, MainController, Router, MainToolbar, MainFooterbar) ->
     App.start()
     App.user = new User()
     mainController = new MainController()

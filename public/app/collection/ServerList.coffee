@@ -26,21 +26,5 @@ define([
             @add(eventData.server)
             return
 
-        ###*
-         * @method @private
-         * Formats data returned from the server after fetch is called.
-         * @param {Object} response JSON data from the server
-         * @param {Object} [jqXHR] jQuery jqXHR
-         * @return {Object} re-formmated JSON data
-         ###
-        ###
-        parse: (response, jqXHR) ->
-            return response.servers
-        ###
-
-        onClose: () ->
-            @App.vent.off('server:new-server-added', @fetch)
-            return
-
     return ServerList
 )

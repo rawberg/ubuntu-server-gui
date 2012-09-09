@@ -30,25 +30,6 @@ define(['jquery', 'underscore', 'backbone', 'app', 'model/Server'], function($, 
       this.add(eventData.server);
     };
 
-    /**
-     * @method @private
-     * Formats data returned from the server after fetch is called.
-     * @param {Object} response JSON data from the server
-     * @param {Object} [jqXHR] jQuery jqXHR
-     * @return {Object} re-formmated JSON data
-    */
-
-
-    /*
-            parse: (response, jqXHR) ->
-                return response.servers
-    */
-
-
-    ServerList.prototype.onClose = function() {
-      this.App.vent.off('server:new-server-added', this.fetch);
-    };
-
     return ServerList;
 
   })(Backbone.Collection);

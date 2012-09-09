@@ -29,7 +29,7 @@ define(['jquery', 'underscore', 'backbone_marionette', 'app', 'text!view/modal/t
         throw new Error('server must be provided');
       }
       this.App = App;
-      this.model = options.server;
+      this.model = options.model;
       this.template = _.template(removeServerTpl);
       this.tagName = 'div';
       this.id = 'modal_remove_server';

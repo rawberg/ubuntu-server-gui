@@ -2,17 +2,18 @@ define([
     'jquery'
     'underscore'
     'app'
+    'backbone_modelbinder'
     'model/Server'
     'collection/ServerList'
     'view/BaseForm'
-    'text!view/modal/tpl/add-server.html'
+    'text!view/modal/tpl/add-edit-server.html'
     'bootstrap_modal'
     'bootstrap_transition'
 ],
-($, _, App, Server, ServerList, BaseForm, addServerTpl) ->
+($, _, App, BackboneModelBinder, Server, ServerList, BaseForm, addEditServerTpl) ->
     
     ###*
-     * @class AddServerModal
+     * @class AddEditServerModal
      * Add server modal dialog.
      * @extends BackboneMarionette.ItemView
      ###
@@ -26,20 +27,26 @@ define([
         constructor: (options={}) ->
             @App = App
             
-            @template = _.template(addServerTpl)
-            @tagName = 'div'
+            @model = options.model ? new Server()
+            @modelBinder  = new BackboneModelBinder()
 
+            @tagName = 'div'
             @id = 'modal_add_server'
             @className = 'modal hide fade'
+
+            @template = _.template(addEditServerTpl)
+            @templateHelpers =
+                titleOperation: options.operationLabel ? 'Add'
             
             @events =
                 'click #add_server_btn': 'onSubmit',
-                'keyup input': 'onInputKeyup'
+                'keyup input': 'onInputKeyup'       
 
             super
             return
 
         hideModal: () ->
+            @modelBinder.unbind()
             $('#modal_add_server').modal('hide')
             @clearForm()
             @enableForm()
@@ -52,14 +59,11 @@ define([
 
             @hideError()
             @disableForm()
-            
-            name = $.trim($('input[name=name]').val())
-            ipv4 = $.trim($('input[name=ipv4]').val())
 
-            server = new Server({name: name, ipv4: ipv4})
-            server.save()
-            @App.vent.trigger('server:new-server-added', {server: server})
+            @model.save()
+            @App.vent.trigger('server:new-server-added', {server: @model})
             @hideModal()
+            
             return
 
         onInputKeyup: (eventObj) ->
@@ -74,7 +78,7 @@ define([
 
         onAddServerError: ->
             @showError(@model.get('errorMsg'))
-            return            
+            return
 
         onShow: () ->
             $('#modal_add_server').modal({
@@ -84,6 +88,7 @@ define([
                 @close()
                 return
             ).on('shown', =>
+                @modelBinder.bind(@model, @el)
                 $('input[type=text]:first').focus()
                 return
             )

@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['jquery', 'underscore', 'backbone', 'backbone_marionette', 'app', 'view/modal/AddServer', 'text!view/tpl/main-footerbar.html'], function($, _, Backbone, BackboneMarionette, App, AddServerModal, mainFooterbarTpl) {
+define(['jquery', 'underscore', 'backbone', 'backbone_marionette', 'app', 'view/modal/AddEditServer', 'text!view/tpl/main-footerbar.html'], function($, _, Backbone, BackboneMarionette, App, AddEditServerModal, mainFooterbarTpl) {
   /**
    * @class MainFooterBar
    * Application toolbar displayed at the top of the app.
@@ -39,7 +39,9 @@ define(['jquery', 'underscore', 'backbone', 'backbone_marionette', 'app', 'view/
     MainFooterBar.prototype.onAddServerClick = function(eventObj) {
       eventObj.stopPropagation();
       eventObj.preventDefault();
-      this.App.modal.show(new AddServerModal());
+      this.App.modal.show(new AddEditServerModal({
+        operationLabel: 'Add'
+      }));
     };
 
     return MainFooterBar;

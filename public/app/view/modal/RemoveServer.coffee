@@ -25,7 +25,7 @@ define([
             throw new Error('server must be provided') unless options.server?
 
             @App = App
-            @model = options.server
+            @model = options.model
             
             @template = _.template(removeServerTpl)
             @tagName = 'div'

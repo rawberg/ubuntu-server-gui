@@ -67,6 +67,7 @@ define(['jquery', 'underscore', 'backbone_marionette'], function($, _, BackboneM
       if (this.collection) {
         this.bindTo(this.collection, "add", this.addChildView, this);
         this.bindTo(this.collection, "remove", this.removeItemView, this);
+        this.bindTo(this.collection, "change", this.render, this);
         if (this.parentRegion) {
           this.bindTo(this.collection, "reset", this.showInsideParentRegion, this);
         } else {

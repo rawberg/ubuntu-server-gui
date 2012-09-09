@@ -27,6 +27,10 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       }
       this.local = true;
       this.url = 'Servers';
+      this.defaults = {
+        name: null,
+        ipv4: null
+      };
       Server.__super__.constructor.apply(this, arguments);
       return;
     }

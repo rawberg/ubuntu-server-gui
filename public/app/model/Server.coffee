@@ -19,9 +19,10 @@ define([
         constructor: (options = {}) ->
             @local = true
             @url = 'Servers'
+            @defaults =
+                name: null
+                ipv4: null
                         
-            #@url = 'http://10.0.1.9:3000/os/platform'
-
             super
             return
         

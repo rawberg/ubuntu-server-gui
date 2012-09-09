@@ -5,10 +5,11 @@ define([
     'collection/ServerList'    
     'view/UsgCollectionView'
     'view/dashboard/LeftSidebarItem'
+    'view/modal/AddEditServer'
     'view/modal/RemoveServer'
     'contextmenu'    
     
-], ($, _, App, ServerList, UsgCollectionView, LeftsidebarItem, RemoveServerModal, ContextMenu) ->
+], ($, _, App, ServerList, UsgCollectionView, LeftsidebarItem, AddEditServerModal, RemoveServerModal, ContextMenu) ->
     
     ###*
      * @class LeftSidebar
@@ -55,8 +56,8 @@ define([
             return
 
         onServerClick: (eventObj) ->
-            console.log('serverClick')
-            console.dir(eventObj)
+            #console.log('serverClick')
+            #console.dir(eventObj)
             return
 
         onServerRightClick: (eventObj) ->
@@ -67,14 +68,13 @@ define([
             return
 
         onEditServerClick: (eventObj) =>
-            console.log('onEditServerClick')
-            console.dir(@contextMenu.sourceEvent)
-            console.log('server ID: ' + @contextMenu.sourceEvent.currentTarget.id.slice(10))            
+            server = @collection.get(@contextMenu.sourceEvent.currentTarget.id.slice(10))
+            @App.modal.show(new AddEditServerModal({model: server, operationLabel: 'Edit'}))
             return
 
         onRemoveServerClick: (eventObj) =>
             server = @collection.get(@contextMenu.sourceEvent.currentTarget.id.slice(10))
-            @App.modal.show(new RemoveServerModal({server: server}))
+            @App.modal.show(new RemoveServerModal({model: server}))
             return
 
 )

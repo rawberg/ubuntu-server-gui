@@ -52,6 +52,7 @@ define([
             if(@collection)
                 @bindTo(@collection, "add", @addChildView, @)
                 @bindTo(@collection, "remove", @removeItemView, @)
+                @bindTo(@collection, "change", @render, @)
                 if(@parentRegion)
                     @bindTo(@collection, "reset", @showInsideParentRegion, @)
                 else

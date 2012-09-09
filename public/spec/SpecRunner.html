@@ -19,9 +19,14 @@
             jquery: '../lib/jquery/jquery-1.7.2.min',
             underscore: '../lib/underscore/underscore',
             backbone: '../lib/backbone/backbone',
+            backbone_dualstorage: '../lib/backbone.dualstorage/backbone.dualstorage',
             backbone_marionette: '../lib/backbone.marionette/backbone.marionette',
             backbone_modelbinder: '../lib/backbone.modelbinder/Backbone.ModelBinder.min',
             text: '../lib/require/text',
+            bootstrap_modal: '../css/sass-twitter-bootstrap/js/bootstrap-modal',
+            bootstrap_transition: '../css/sass-twitter-bootstrap/js/bootstrap-transition',
+            gauge: '../lib/gauge.js/dist/gauge',
+            contextmenu: '../lib/contextmenu/contextmenu',
             sinon: '../lib/sinon/sinon-1.4.2'
           },
           shim: {
@@ -31,9 +36,27 @@
             'backbone': {
               deps: ['underscore', 'jquery'],
               exports: 'Backbone'
+            },
+            'backbone_dualstorage': {
+              deps: ['backbone']
+            },
+            'bootstrap_modal': {
+              deps: ['jquery'],
+              exports: 'jQuery.fn.modal'
+            },
+            'bootstrap_transition': {
+              deps: ['jquery']
+            },
+            'gauge': {
+              deps: ['jquery'],
+              exports: 'Donut'
+            },
+            'contextmenu': {
+              exports: 'contextmenu'
             }
           }
         });
+
 
 
         require([
@@ -43,9 +66,12 @@
             'sinon',
             'backbone_marionette',
             'app',
-            '../spec/javascripts/user.spec',
-            '../spec/javascripts/session.spec',
-            '../spec/javascripts/loginSignup.spec'
+            'backbone_dualstorage',
+            '../spec/javascripts/model/user.spec',
+            '../spec/javascripts/model/session.spec',
+            '../spec/javascripts/model/server.spec',
+
+            '../spec/javascripts/view/loginSignup.spec'
         ],
             function($, text, sinon, BackboneMarionette, App) {
                 App.start();

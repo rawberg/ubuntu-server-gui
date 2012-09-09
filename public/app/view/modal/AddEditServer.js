@@ -2,9 +2,9 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 'view/BaseForm', 'text!view/modal/tpl/add-server.html', 'bootstrap_modal', 'bootstrap_transition'], function($, _, App, Server, ServerList, BaseForm, addServerTpl) {
+define(['jquery', 'underscore', 'app', 'backbone_modelbinder', 'model/Server', 'collection/ServerList', 'view/BaseForm', 'text!view/modal/tpl/add-edit-server.html', 'bootstrap_modal', 'bootstrap_transition'], function($, _, App, BackboneModelBinder, Server, ServerList, BaseForm, addEditServerTpl) {
   /**
-   * @class AddServerModal
+   * @class AddEditServerModal
    * Add server modal dialog.
    * @extends BackboneMarionette.ItemView
   */
@@ -22,14 +22,20 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
 
 
     function AddServerModal(options) {
+      var _ref, _ref1;
       if (options == null) {
         options = {};
       }
       this.App = App;
-      this.template = _.template(addServerTpl);
+      this.model = (_ref = options.model) != null ? _ref : new Server();
+      this.modelBinder = new BackboneModelBinder();
       this.tagName = 'div';
       this.id = 'modal_add_server';
       this.className = 'modal hide fade';
+      this.template = _.template(addEditServerTpl);
+      this.templateHelpers = {
+        titleOperation: (_ref1 = options.operationLabel) != null ? _ref1 : 'Add'
+      };
       this.events = {
         'click #add_server_btn': 'onSubmit',
         'keyup input': 'onInputKeyup'
@@ -39,27 +45,21 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
     }
 
     AddServerModal.prototype.hideModal = function() {
+      this.modelBinder.unbind();
       $('#modal_add_server').modal('hide');
       this.clearForm();
       this.enableForm();
     };
 
     AddServerModal.prototype.onSubmit = function(eventObj) {
-      var ipv4, name, server;
       eventObj.stopPropagation();
       eventObj.preventDefault();
       eventObj.returnValue = false;
       this.hideError();
       this.disableForm();
-      name = $.trim($('input[name=name]').val());
-      ipv4 = $.trim($('input[name=ipv4]').val());
-      server = new Server({
-        name: name,
-        ipv4: ipv4
-      });
-      server.save();
+      this.model.save();
       this.App.vent.trigger('server:new-server-added', {
-        server: server
+        server: this.model
       });
       this.hideModal();
     };
@@ -86,6 +86,7 @@ define(['jquery', 'underscore', 'app', 'model/Server', 'collection/ServerList', 
         _this.clearForm();
         _this.close();
       }).on('shown', function() {
+        _this.modelBinder.bind(_this.model, _this.el);
         $('input[type=text]:first').focus();
       });
     };

@@ -4,10 +4,10 @@ define([
     'backbone'
     'backbone_marionette'
     'app'
-    'view/modal/AddServer'
+    'view/modal/AddEditServer'
     'text!view/tpl/main-footerbar.html'
 ],
-($, _, Backbone, BackboneMarionette, App, AddServerModal, mainFooterbarTpl) ->
+($, _, Backbone, BackboneMarionette, App, AddEditServerModal, mainFooterbarTpl) ->
     
     ###*
      * @class MainFooterBar
@@ -38,7 +38,7 @@ define([
             eventObj.stopPropagation()
             eventObj.preventDefault()
 
-            @App.modal.show(new AddServerModal())
+            @App.modal.show(new AddEditServerModal({operationLabel: 'Add'}))
             return
 
 
