@@ -25,7 +25,7 @@ define(['jquery', 'underscore', 'backbone_marionette', 'app', 'text!view/modal/t
       if (options == null) {
         options = {};
       }
-      if (options.server == null) {
+      if (options.model == null) {
         throw new Error('server must be provided');
       }
       this.App = App;

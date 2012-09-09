@@ -22,7 +22,7 @@ define([
          * @param {Object} [options] config options for BackboneMarionette.ItemView.
          ###
         constructor: (options={}) ->
-            throw new Error('server must be provided') unless options.server?
+            throw new Error('server must be provided') unless options.model?
 
             @App = App
             @model = options.model
