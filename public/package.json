@@ -1,0 +1,33 @@
+{
+    "author": "David Feinberg <david@ubuntuservergui.com>",
+    "name": "ubuntu-server-gui",
+    "description": "",
+    "version": "0.0.6",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git://github.com:rawberg/ubuntu-server-gui.git"
+    },
+
+    "engines": {
+        "node": "~0.6.11"
+    },
+
+    "dependencies": {
+        "socket.io-client": "0.9.x"
+    },
+
+    "devDependencies": {
+        "coffee-script": ">0.0.0",
+        "grunt": ">0.0.0",
+        "grunt-coffee": ">0.0.0",
+        "grunt-mocha": ">0.0.0",
+        "grunt-shell": ">0.0.0",
+        "chai": ">0.0.0"
+    },
+
+    "licenses": [{
+        "type": "AGPL",
+        "url": ""
+    }]    
+}

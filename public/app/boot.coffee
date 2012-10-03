@@ -11,6 +11,7 @@ require.config(
         bootstrap_transition: '../css/sass-twitter-bootstrap/js/bootstrap-transition'
         gauge: '../lib/gauge.js/dist/gauge'
         contextmenu: '../lib/contextmenu/contextmenu'
+        socket_io: '../lib/socket.io-client/dist/socket.io'
 
     shim:
         'underscore':
@@ -36,6 +37,9 @@ require.config(
 
         'contextmenu':
             exports: 'contextmenu'
+
+        'socket_io':
+            exports: 'io'
 )
 
 ###*

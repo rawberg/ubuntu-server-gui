@@ -1,9 +1,11 @@
 define([
     'jquery',
     'underscore',
-    'backbone'
+    'backbone',
+    'socket_io',
+    'app'
 
-], ($, _, Backbone) ->
+], ($, _, Backbone, io, App) ->
     
     ###*
      * @class ServerOverview
@@ -23,20 +25,26 @@ define([
                 'cpu': 0
                 'memory': 0
 
-            @url = 'http://10.0.1.6:3000/cpumem'
+            @url = 'http://10.0.1.5:3030/dash'
 
 
             super
+            @ws = io.connect(@url, App.ioConfig)
+            @ws.on('cpumem', @parse)
+
             @fetch()
+            
             # poll ever 5 seconds
-            ###
             setInterval(() =>
                 @fetch()
                 return
             , 5000)
-            ###
             return
-        
+
+        fetch: (options={}) ->
+            @ws.emit('cpumem')
+            return
+
         ###*
          * @method @private
          * Formats data returned from the server after fetch is called.
@@ -44,7 +52,7 @@ define([
          * @param {Object} [jqXHR] jQuery jqXHR
          * @return {Object} re-formmated JSON data
          ###
-        parse: (stats, xhr) ->
+        parse: (stats) =>
             totalCpulUtilization = 0
             stats.cpus.forEach((item, index, allItems) ->
                 totalCpulUtilization =+ item.utilization
@@ -61,6 +69,6 @@ define([
             else
                 totalMemUtilization = String(totalMemUtilization).slice(1)
             
-            return {cpu: totalCpulUtilization, memory: totalMemUtilization}
+            @set({cpu: totalCpulUtilization, memory: totalMemUtilization})
 
 )

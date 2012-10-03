@@ -1,8 +1,10 @@
 define([
-    'underscore',
+    'underscore'
     'backbone'
+    'socket_io'
+    'app'
 
-], (_, Backbone) ->
+], (_, Backbone, io, App) ->
     
     ###*
      * @class PlatformInfo
@@ -11,34 +13,32 @@ define([
      ###
     class PlatformInfo extends Backbone.Model
 
-        ###*
-         * @constructor
-         * Creates a new PlatformInfo model.
-         * @param {Object} [options] config options for Backbone.Model.
-         * @return {Object} PlatformInfo model.
-         ###
         constructor: (options={}) ->
             @remote = true
-            @url = 'http://10.0.1.6:3000/os/platform'
+            @url = 'http://10.0.1.5:3030/dash'
             @defaults =
                 'codename': null
                 'release': null
                 'kernel': null
 
             super
-            @fetch()
+            @ws = io.connect(@url, App.ioConfig)
+            @ws.on('os-platform', @parse)
+
+            @ws.emit('os-platform')
+            return
+
+        
+        fetch: (options={}) ->
+            @ws.emit('os-platform')
             return
         
-        ###*
-         * @method @private
-         * Formats data returned from the server after fetch is called.
-         * @param {Object} platformInfo JSON data from the server
-         * @param {Object} [jqXHR] jQuery jqXHR
-         * @return {Object} re-formmated JSON data
-         ###
-        parse: (platformInfo, jqXHR) ->
+        
+        # formats data returned from the server after fetch is called.
+        parse: (platformInfo) =>
             platformInfo.codename = platformInfo.codename.charAt(0).toUpperCase() + platformInfo.codename.slice(1)
-            return platformInfo;
+            @set(platformInfo)
+            return
 
 
 )

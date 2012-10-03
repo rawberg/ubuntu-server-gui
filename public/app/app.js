@@ -71,6 +71,11 @@ define(['underscore', 'backbone_marionette'], function(_, BackboneMarionette) {
 
       this.addInitializer(function(options) {
         this.routers = {};
+        this.ioConfig = {
+          'transports': ['websocket'],
+          'max reconnection attempts': 2,
+          'try multiple transports': false
+        };
       });
       /**
        * Overrides Backbone.wrapError to trigger an Application

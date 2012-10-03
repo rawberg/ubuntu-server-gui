@@ -69,6 +69,11 @@ define([
              ###
             @addInitializer((options) ->
                 @routers = {} # setup a place to store routers
+                @ioConfig =
+                    'transports': ['websocket'],
+                    'max reconnection attempts': 2,
+                    'try multiple transports': false
+                    
                 return
             )
         

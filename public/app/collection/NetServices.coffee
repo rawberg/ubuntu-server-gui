@@ -1,9 +1,11 @@
 define([
     'jquery',
     'underscore',
-    'backbone'
+    'backbone',
+    'socket_io',
+    'app'
   
-  ], ($, _, Backbone) ->
+  ], ($, _, Backbone, io, App) ->
     
     ###*
      * @class NetServices
@@ -13,10 +15,21 @@ define([
     class NetServices extends Backbone.Collection
         constructor: (options={}) ->
             @remote = true
-            @url = 'http://10.0.1.6:3000/net/services'
+            @url = 'http://10.0.1.5:3030/dash'
+            
             super
+            @ws = io.connect(@url, App.ioConfig)
+            @ws.on('net-services', @parse)
+
+            #@ws.emit('net-services')            
             return
         
+
+        fetch: (options={}) ->
+            @ws.emit('net-services')
+            return
+
+
         ###*
          * @method @private
          * Formats network service names.
@@ -37,7 +50,7 @@ define([
          * @param {Object} [jqXHR] jQuery jqXHR
          * @return {Object} re-formmated JSON data
          ###        
-        parse: (response, jqXHR) ->
+        parse: (response) =>
             results = []
             vals = []
             
@@ -49,6 +62,6 @@ define([
 
                 vals.push(item.name)
             )
-            return results
+            @reset(results)
 
 )

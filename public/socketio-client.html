@@ -6,77 +6,45 @@
   
   <link rel="stylesheet" type="text/css" href="css/stylesheets/screen.css" />
   <script type="text/javascript" src="lib/jquery/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript" src="http://app.ubuntuservergui.dev/lib/socket.io-client/dist/socket.io.js"></script>
+  <script type="text/javascript" src="https://app.ubuntuservergui.dev:8443/lib/socket.io-client/dist/socket.io.js"></script>
   <script>
 
-    var wsConfig = {
-      'resource': 'sock',
+    var ioConfig = {
       'transports': ['websocket'],
       'max reconnection attempts': 2,
       'try multiple transports': false
     };
 
-    var statsSocket = io.connect('http://10.0.1.15:3000/stats', wsConfig);
-    var netSocket = io.connect('http://10.0.1.15:3000/net', wsConfig);
+    var dashboardSocket = io.connect('http://10.0.1.5:3030/dash', ioConfig);
 
     
-    // Stats Socket
-    statsSocket.on('connect', function() {
-      console.log('stats socket connected');
-      statsSocket.emit('pullCpu');
+    dashboardSocket.on('connect', function() {
+
+      dashboardSocket.emit('os-platform', function(data) {
+          console.log('os-platform callback data');
+          console.dir(data);
+        });
+
     });
 
-    statsSocket.on('pushCpu', function(data) {
-      console.log('cpu came back with data');
+    dashboardSocket.on('os-platform', function(data) {
+      console.log('os-platform came back with data');
       console.dir(data);
     })
 
-    statsSocket.on('connecting', function() {
-      console.log('stats connecting');
+    dashboardSocket.on('connecting', function() {
+      console.log('dashboard connecting');
     });    
 
-    statsSocket.on('disconnect', function() {
-      console.log('stats dis-connected');
+    dashboardSocket.on('disconnect', function() {
+      console.log('dashboard dis-connected');
     });
 
-    statsSocket.on('message', function() {
-      console.log('stats inside on message');
+    dashboardSocket.on('message', function() {
+      console.log('dashboardSocket inside on message');
       console.dir(arguments);
     });
 
-    // Net Socket   
-    netSocket.on('connect', function() {
-      console.log('net socket connected');
-      netSocket.emit('pullNetServices', {'any': {}});
-    });
-    
-    netSocket.on('pushNetServices', function(data) {
-      data = jQuery.parseJSON(data);
-      console.log('netSocket inside pushNetServices response');
-      console.dir(data);
-    });
-
-    // Proc Socket
-    /*
-    procSocket.on('connect', function() {
-      console.log('proc connected');
-    });
-
-    procSocket.on('connecting', function() {
-      console.log('proc connecting');
-    });    
-
-    procSocket.on('disconnect', function() {
-      console.log('proc dis-connected');
-    });
-
-    procSocket.on('message', function() {
-      console.log('proc inside on message');
-      console.dir(arguments);
-    });
-    */
-
-    //procSocket.emit('customevent', {msg: 'any', key: 'randomval', empty: {}});
 
 	</script>  
 
