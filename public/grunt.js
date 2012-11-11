@@ -55,20 +55,12 @@ module.exports = function(grunt) {
         },
         // Configuration options for the "watch" task.
         watch: {
-          coffee_app: {
-            files: ['app/*.coffee', 'app/**/*.coffee'],
-            tasks: ['shell:coffee_app', 'shell:jasmine_tests']
-          },
-          coffee_spec: {
-            files: ['spec/*.coffee', 'spec/**/*.coffee'],
-            tasks: ['shell:coffee_spec', 'shell:jasmine_tests']
-          },
           compass: {
             files: ['css/sass/*.scss'],
             tasks: ['compass:dev']
           },
           jasmine: {
-            files: ['spec/unit/*.coffee', 'spec/int/*.coffee'],
+            files: ['spec/unit/*.js', 'spec/int/*.js'],
             tasks: ['shell:jasmine_tests']
           }
         },
@@ -78,8 +70,6 @@ module.exports = function(grunt) {
         uglify: {}
     });
 
-    grunt.registerTask('app-coffee', 'Prepare production ready js files from coffee sources.', 'shell:coffee_app');
-    grunt.registerTask('spec-coffee', 'Prepare spec testing js files from coffee sources.', 'shell:coffee_spec');
     grunt.registerTask('app-compass', 'Prepare production ready css files from scss sources.', 'compass:prod');
     grunt.registerTask('app-jasmine', 'Run Jasmine tests.', 'shell:jasmine_tests');
 

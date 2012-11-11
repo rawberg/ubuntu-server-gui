@@ -6,7 +6,7 @@
   
   <link rel="stylesheet" type="text/css" href="css/stylesheets/screen.css" />
   <script type="text/javascript" src="lib/jquery/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript" src="https://app.ubuntuservergui.dev:8443/lib/socket.io-client/dist/socket.io.js"></script>
+  <script type="text/javascript" src="http://app.ubuntuservergui.dev:8888/lib/socket.io-client/dist/socket.io.js"></script>
   <script>
 
     var ioConfig = {
@@ -15,6 +15,20 @@
       'try multiple transports': false
     };
 
+    var ws = io.connect('http://10.0.1.13:3030', ioConfig);
+
+    ws.on('connect', function(socket) {
+
+        ws.emit('status');
+        ws.on('status', function(data) {
+            console.log('status callback data');
+            console.dir(data);
+            ws.disconnect();
+        });
+
+    });
+
+    /*
     var dashboardSocket = io.connect('http://10.0.1.5:3030/dash', ioConfig);
 
     
@@ -44,6 +58,7 @@
       console.log('dashboardSocket inside on message');
       console.dir(arguments);
     });
+*/
 
 
 	</script>  

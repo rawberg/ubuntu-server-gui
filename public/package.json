@@ -2,7 +2,7 @@
     "author": "David Feinberg <david@ubuntuservergui.com>",
     "name": "ubuntu-server-gui",
     "description": "",
-    "version": "0.0.6",
+    "version": "0.6.0",
     "private": true,
     "repository": {
         "type": "git",
@@ -18,16 +18,14 @@
     },
 
     "devDependencies": {
-        "coffee-script": ">0.0.0",
         "grunt": ">0.0.0",
         "grunt-coffee": ">0.0.0",
         "grunt-mocha": ">0.0.0",
-        "grunt-shell": ">0.0.0",
-        "chai": ">0.0.0"
+        "grunt-shell": ">0.0.0"
     },
 
     "licenses": [{
-        "type": "AGPL",
+        "type": "GPL v3",
         "url": ""
-    }]    
+    }]
 }
