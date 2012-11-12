@@ -2,6 +2,10 @@
 #####################
 public/.sass-cache
 
+# Node Modules #
+######################
+node_modules
+
 # Logs and databases #
 ######################
 *.log
