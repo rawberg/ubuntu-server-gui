@@ -2,7 +2,7 @@ var require = {
     baseUrl: '/app',
     paths: {
         // Core Libs
-        jquery: '../libs/jquery/jquery-1.7.2.min',
+        jquery: '../libs/jquery/jquery-1.8.2.min',
         underscore: '../libs/underscore/underscore',
         backbone: '../libs/backbone/backbone',
         marionette: '../libs/backbone.marionette/backbone.marionette',
@@ -10,6 +10,7 @@ var require = {
         // Addons
         backbone_dualstorage: '../libs/backbone.dualstorage/backbone.dualstorage',
         backbone_modelbinder: '../libs/backbone.modelbinder/Backbone.ModelBinder',
+        backbone_routefilter: '../libs/backbone.routefilter/backbone.routefilter',
 
         // Bootstrap & jQuery Plugins
         bootstrap_modal: '../css/sass-twitter-bootstrap/js/bootstrap-modal',

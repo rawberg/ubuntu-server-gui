@@ -1,37 +1,17 @@
-define([
-    'jquery',
-    'backbone',
-    'App',
-    'models/Session',
-    'models/User',
-    'routers/MainRouter',
-    'views/MainToolbar',
-    'views/MainFooterbar',
-    'backbone_dualstorage'],
+define(function (require) {
+    var $ = require('jquery'),
+        Backbone = require('backbone'),
+        App = require('App'),
+        MainController = require('controllers/Main'),
+        MainRouter = require('routers/Main');
 
-    function($, Backbone, App, Session, User, MainRouter, MainToolbar, MainFooterbar) {
-        App.start();
-        App.user = new User();
 
-        $(document).ready(function() {
-            App.routers.main = new MainRouter();
+    App.routers.main = new MainRouter({controller: new MainController()});
+    App.vent.on('session:expired', function() {
+        App.routers.main.navigate('auth/login', {trigger: true});
+    });
 
-            Backbone.history.start({
-                pushState: false
-            });
-
-            // var toolbar = new MainToolbar();
-            // var footerbar = new MainFooterbar();
-
-            // App.mainToolbar.show(toolbar);
-            // App.mainFooterbar.show(footerbar);
-
-            // App.user.session.on('change:active', function(session, active) {
-            //     if (active === true) {
-            //         toolbar = new MainToolbar();
-            //         return App.mainToolbar.show(toolbar);
-            //     }
-            // });
-        });
-    }
-);
+    $(document).ready(function() {
+        Backbone.history.start({pushState: true});
+    });
+});

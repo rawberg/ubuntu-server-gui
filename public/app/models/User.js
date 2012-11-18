@@ -1,46 +1,45 @@
-define([
-    'underscore',
-    'backbone',
-    'models/Session',
-    'app'],
-    function(_, Backbone, Session, App) {
-        return Backbone.Model.extend({
+define(function (require) {
+    var $ = require('jquery'),
+        _ = require('underscore'),
+        Backbone = require('backbone'),
+        Session = require('models/Session');
 
-            url: 'https://cloud.ubuntuservergui.dev/main/login',
-            remote: true,
-            defaults: {
-                email: '',
-                password: ''
-            },
+    return Backbone.Model.extend({
 
-            initialize: function() {
-                this.login = _.bind(this.login, this);
-                this.App = App;
-                this.session = new Session({});
-            },
+        url: 'https://cloud.ubuntuservergui.dev/main/login',
+        remote: true,
+        defaults: {
+            email: '',
+            password: ''
+        },
 
-            login: function() {
-                var that = this;
-                $.ajax({
-                    url: 'https://cloud.ubuntuservergui.com/1.0/session',
-                    type: 'POST',
-                    context: that,
-                    data: that.toJSON(),
-                    success: that.loginSuccess,
-                    error: that.loginError
-                });
-            },
+        initialize: function() {
+            this.login = _.bind(this.login, this);
+            var session = new Session();
+            this.session = function() { return session; };
+        },
 
-            loginSuccess: function() {
-                this.session.set('active', true);
-            },
+        login: function() {
+            var that = this;
+            $.ajax({
+                url: 'https://cloud.ubuntuservergui.com/1.0/session',
+                type: 'POST',
+                context: that,
+                data: that.toJSON(),
+                success: that.loginSuccess,
+                error: that.loginError
+            });
+        },
 
-            loginError: function(jqXHR, textStatus) {
-                var msg, _ref, _ref1;
-                this.session.set('active', false);
-                msg = jQuery.parseJSON(jqXHR.responseText) || 'error';
-                this.App.vent.trigger('auth:invalidLoginRequest', msg);
-            }
-        });
-    }
-);
+        loginSuccess: function() {
+            this.session().set('active', true);
+        },
+
+        loginError: function(jqXHR, textStatus) {
+            var msg, _ref, _ref1;
+            this.session().set('active', false);
+            msg = jQuery.parseJSON(jqXHR.responseText) || 'error';
+            // this.App.vent.trigger('auth:invalidLoginRequest', msg);
+        }
+    });
+});

@@ -2,7 +2,7 @@ define([
     'underscore',
     'backbone',
     'socket_io',
-    'app'],
+    'App'],
     function(_, Backbone, io, App) {
         return Backbone.Model.extend({
 
