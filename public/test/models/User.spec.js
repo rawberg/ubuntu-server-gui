@@ -5,20 +5,33 @@ define(function (require, exports, module) {
     describe('User - Model', function() {
 
         describe('login', function() {
-            var App, server;
+            var App, server, userSpy, sessionSpy;
             beforeEach(function() {
                 // Todo: refactor this into a MockApp helper
-                App = sinon.spy();
+                App = {};
+                App.user = function() {
+                    return {session: function() {
+                        return {get: sinon.stub().returns(true)};
+                    }};
+                };
                 App.vent = {trigger: sinon.spy(), bind: sinon.spy()};
                 App.routers = sinon.spy();
                 App.routers.main = sinon.spy();
                 App.routers.main.navigate = sinon.spy();
 
                 server = sinon.fakeServer.create();
+                userSpy = sinon.spy(User.prototype, 'loginError');
+                sessionSpy = sinon.spy(Session.prototype, 'set');
             });
 
             afterEach(function() {
                 server.restore();
+                if(userSpy) {
+                    userSpy.restore();
+                }
+                if(sessionSpy) {
+                    sessionSpy.restore();
+                }
             });
 
             it('should make a login request to the server', function() {
@@ -29,7 +42,7 @@ define(function (require, exports, module) {
                 });
 
                 user.App = App;
-                user.session.App = App;
+                user.session().App = App;
                 user.login();
 
                 server.respond();
@@ -47,24 +60,17 @@ define(function (require, exports, module) {
                     responseBody
                 ]);
 
-                var userSpy = sinon.spy(User.prototype, 'loginSuccess');
-                var sessionSpy = sinon.spy(Session.prototype, 'set');
-
                 user = new User({
                     email: 'david@ubuntuservergui.com',
                     password: 'samplepass'
                 });
 
                 user.App = App;
-                user.session.App = App;
+                user.session().App = App;
                 user.login();
 
                 server.respond();
-                userSpy.should.have.been.called;
                 sessionSpy.should.have.been.calledWith('active', true);
-
-                userSpy.restore();
-                sessionSpy.restore();
             });
 
             it('should handle an invalid authentication response', function() {
@@ -76,21 +82,19 @@ define(function (require, exports, module) {
                   }, responseBody
                 ]);
 
-                var userSpy = sinon.spy(User.prototype, 'loginError');
-                var sessionSpy = sinon.spy(Session.prototype, 'set');
+
                 user = new User({
                     email: 'david@ubuntuservergui.com',
                     password: 'samplepass'
                 });
 
                 user.App = App;
-                user.session.App = App;
+                user.session().App = App;
                 user.login();
 
                 server.respond();
                 (user.loginError).should.have.been.called;
-                (user.session.set).should.have.been.calledWith('active', false);
-                (App.vent.trigger).should.have.been.calledWith('auth:invalidLoginRequest');
+                (user.session().set).should.have.been.calledWith('active', false);
             });
         });
     });

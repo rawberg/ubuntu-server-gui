@@ -17,15 +17,23 @@ define(function (require, exports, module) {
 
         require([
             // Views
+            '../test/App.spec',
+            // Views
             '../test/views/LoginSignup.spec',
             // Models
             '../test/models/Server.spec',
             '../test/models/User.spec',
-            '../test/models/Session.spec'
-            ], function() {
-            chai.use(sinonChai);
-            mocha.run();
-        });
+            //'../test/models/Session.spec',
+            // Controllers
+            '../test/controllers/Base.spec',
+            // Routers
+            '../test/routers/Base.spec'
+            ],
+            function() {
+                chai.use(sinonChai);
+                mocha.run();
+            }
+        );
 
     });
 

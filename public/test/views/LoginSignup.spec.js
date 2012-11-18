@@ -20,7 +20,7 @@ define(function (require, exports, module) {
                 App.routers.main.navigate = sinon.spy();
 
                 user = new User();
-                user.session.App = App;
+                user.session().App = App;
                 sinon.spy(user.login);
                 loginSignup = new LoginSignup({
                     model: user
@@ -30,7 +30,7 @@ define(function (require, exports, module) {
             });
 
             afterEach(function() {
-                loginSignup.close();
+                loginSignup.remove();
                 LoginSignup.prototype.onLoginClick.restore();
                 LoginSignup.prototype.displayError.restore();
                 LoginSignup.prototype.clearError.restore();
