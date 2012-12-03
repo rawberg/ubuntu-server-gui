@@ -1,10 +1,12 @@
-define(function (require, exports, module) {
-    var User = require('models/User');
-    var Session = require('models/Session');
+define(function (require) {
+    var User = require('models/User'),
+        Session = require('models/Session'),
+        responses = JSON.parse(require('text!/test/mock-responses/sessions.json'));
 
     describe('User - Model', function() {
 
         describe('login', function() {
+
             var App, server, userSpy, sessionSpy;
             beforeEach(function() {
                 // Todo: refactor this into a MockApp helper
@@ -47,17 +49,17 @@ define(function (require, exports, module) {
 
                 server.respond();
                 (server.requests[0].method).should.equal('POST');
-                (server.requests[0].url).should.equal('https://cloud.ubuntuservergui.com/1.0/session');
-                (server.requests[0].requestBody).should.equal('email=david%40ubuntuservergui.com&password=samplepass');
+                (server.requests[0].url).should.equal('https://cloud.ubuntuservergui.com/sessions/');
+                (server.requests[0].requestHeaders['Content-Type']).should.equal("application/json;charset=utf-8");
+                (server.requests[0].requestBody).should.equal('{"email": "david@ubuntuservergui.com", "password": "samplepass"}');
             });
 
             it('should set "active" attribute of user.session to true on successful login', function() {
-                var responseBody, user;
-                responseBody = '{"success": "true"}';
-                server.respondWith("POST", "https://cloud.ubuntuservergui.com/1.0/session", [
+                var user;
+                server.respondWith("POST", "https://cloud.ubuntuservergui.com/sessions/", [
                     200,
                     {"Content-Type": "application/json"},
-                    responseBody
+                    JSON.stringify(responses["https://cloud.ubuntuservergui.com/sessions/"]["POST"]["202"][0])
                 ]);
 
                 user = new User({
@@ -75,11 +77,10 @@ define(function (require, exports, module) {
 
             it('should handle an invalid authentication response', function() {
                 var responseBody, user;
-                responseBody = '{"success": "false", "msg": "Invalid email or password."}';
-                server.respondWith("POST", "https://cloud.ubuntuservergui.com/1.0/session", [
+                server.respondWith("POST", "https://cloud.ubuntuservergui.com/sessions", [
                     406, {
                       "Content-Type": "application/json"
-                  }, responseBody
+                  }, JSON.stringify(responses["https://cloud.ubuntuservergui.com/sessions/"]["POST"]["406"][1])
                 ]);
 
 

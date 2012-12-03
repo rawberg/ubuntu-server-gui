@@ -6,7 +6,7 @@ define(function (require) {
 
     return Backbone.Model.extend({
 
-        url: 'https://cloud.ubuntuservergui.dev/main/login',
+        url: 'https://cloud.ubuntuservergui.com/register/',
         remote: true,
         defaults: {
             email: '',
@@ -20,14 +20,13 @@ define(function (require) {
         },
 
         login: function() {
-            var that = this;
-            $.ajax({
-                url: 'https://cloud.ubuntuservergui.com/1.0/session',
-                type: 'POST',
-                context: that,
-                data: that.toJSON(),
-                success: that.loginSuccess,
-                error: that.loginError
+            Backbone.sync('create', this.session(), {
+                url: 'https://cloud.ubuntuservergui.com/sessions/',
+                context: this,
+                contentType: 'application/json',
+                data: '{"email": "' + this.get('email') + '", "password": "' + this.get('password') + '"}',
+                success: this.loginSuccess,
+                error: this.loginError
             });
         },
 
@@ -36,10 +35,11 @@ define(function (require) {
         },
 
         loginError: function(jqXHR, textStatus) {
-            var msg, _ref, _ref1;
+            var msg;
+            this.App = require('App');
             this.session().set('active', false);
-            msg = jQuery.parseJSON(jqXHR.responseText) || 'error';
-            // this.App.vent.trigger('auth:invalidLoginRequest', msg);
+            msg = jQuery.parseJSON(jqXHR.responseText) || {"email or password": ["Invalid email or password."]};
+            this.App.vent.trigger('user:login-error', msg);
         }
     });
 });

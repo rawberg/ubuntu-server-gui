@@ -19,18 +19,19 @@ define(function (require) {
         });
 
         describe('vent', function() {
-            var ventSpy;
+            var ventSpy, sessionSpy;
             beforeEach(function() {
                 App.start();
                 ventSpy = sinon.spy(App.vent, 'trigger');
+                sessionSpy = sinon.spy(Session.prototype, 'set');
             });
 
             afterEach(function() {
                 ventSpy.restore();
+                sessionSpy.restore();
             });
 
             it('only trigger "session:expired" when session.active is set to false', function() {
-                var sessionSpy = sinon.spy(Session.prototype, 'set');
                 App.user().session().set('active', true);
 
                 (sessionSpy).should.have.been.calledWith('active', true);
@@ -40,6 +41,10 @@ define(function (require) {
                 (sessionSpy).should.have.been.calledWith('active', false);
                 (ventSpy).should.have.been.calledWith('session:expired');
             });
+
+        });
+
+        xdescribe('wrapping ajax errors', function() {
 
         });
     });

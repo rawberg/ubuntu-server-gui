@@ -1,7 +1,8 @@
 define(function (require, exports, module) {
     var _ = require('underscore'),
         Marionette = require('marionette'),
-        App = require('App');
+        App = require('App'),
+        LoginSignupView = require('views/login-signup/LoginSignupView');
 
     return Marionette.Controller.extend({
         initialize: function(options) {
@@ -17,8 +18,7 @@ define(function (require, exports, module) {
         },
 
         login: function() {
-            console.log('show login here');
-            // this.App.mainToolbar.close();
+            this.App.mainViewport.show(new LoginSignupView({model: this.App.user()}));
         },
 
         notFound: function() {

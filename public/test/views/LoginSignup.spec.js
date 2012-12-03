@@ -1,6 +1,7 @@
-define(function (require, exports, module) {
-    var User = require('models/User');
-    var LoginSignup = require('views/loginsignup/LoginSignup');
+define(function (require) {
+    var User = require('models/User'),
+        LoginSignup = require('views/login-signup/LoginSignupView'),
+        responses = JSON.parse(require('text!/test/mock-responses/sessions.json'));
 
     describe('LoginSignup - ItemView', function() {
 
@@ -11,6 +12,8 @@ define(function (require, exports, module) {
                 sinon.spy(LoginSignup.prototype, 'displayError');
                 sinon.spy(LoginSignup.prototype, 'clearError');
                 sinon.spy(LoginSignup.prototype, 'disableForm');
+                sinon.spy(LoginSignup.prototype, 'enableForm');
+                sinon.spy(User.prototype, 'login');
 
                 // Todo: refactor this into a MockApp helper
                 App = sinon.spy();
@@ -21,7 +24,7 @@ define(function (require, exports, module) {
 
                 user = new User();
                 user.session().App = App;
-                sinon.spy(user.login);
+
                 loginSignup = new LoginSignup({
                     model: user
                 });
@@ -35,6 +38,8 @@ define(function (require, exports, module) {
                 LoginSignup.prototype.displayError.restore();
                 LoginSignup.prototype.clearError.restore();
                 LoginSignup.prototype.disableForm.restore();
+                LoginSignup.prototype.enableForm.restore();
+                User.prototype.login.restore();
             });
 
             it('should update user model when field values change', function() {
@@ -97,18 +102,67 @@ define(function (require, exports, module) {
                 loginSignup.$('input[name=password]').trigger('change');
                 loginSignup.$('#login_btn').click();
 
-                server.respondWith("POST", "https://cloud.ubuntuservergui.com/1.0/session", [
-                    200,
+                server.respondWith("POST", "https://cloud.ubuntuservergui.com/sessions/", [
+                    202,
                     {"Content-Type": "application/json"},
-                    '{"succes": true}'
+                    JSON.stringify(responses["https://cloud.ubuntuservergui.com/sessions/"]["POST"]["202"])
                 ]);
                 server.respond();
+
                 (loginSignup.clearError).should.have.been.called;
                 (loginSignup.disableForm).should.have.been.called;
                 (loginSignup.model.login).should.have.been.called;
 
                 loginSignup.model.login.restore();
                 server.restore();
+            });
+
+            it('should display an error message when server responds with a 406 error', function() {
+                var server = sinon.fakeServer.create();
+
+                loginSignup.$('input[name=email]').val('wrong-email@mail.com');
+                loginSignup.$('input[name=email]').trigger('change');
+                loginSignup.$('input[name=password]').val('pass');
+                loginSignup.$('input[name=password]').trigger('change');
+                loginSignup.$('#login_btn').click();
+
+                server.respondWith("POST", "https://cloud.ubuntuservergui.com/sessions/", [
+                    406,
+                    {"Content-Type": "application/json"},
+                    JSON.stringify(responses["https://cloud.ubuntuservergui.com/sessions/"]["POST"]["406"][0])
+                ]);
+                server.respond();
+
+                var serverErrorMsg = _.flatten(responses["https://cloud.ubuntuservergui.com/sessions/"]["POST"]["406"][0]['errors'], true)[0];
+                (loginSignup.displayError).should.have.been.calledWith(serverErrorMsg);
+                (loginSignup.enableForm).should.have.been.called;
+                (loginSignup.$('#loginErrorMsg').css('visibility') === 'visible').should.be.ok;
+
+                server.restore;
+            });
+
+            it('should display an error message when server responds with a 400 error', function() {
+                var server = sinon.fakeServer.create();
+
+                loginSignup.$('input[name=email]').val('wrong-email@mail.com');
+                loginSignup.$('input[name=email]').trigger('change');
+                loginSignup.$('input[name=password]').val('pass');
+                loginSignup.$('input[name=password]').trigger('change');
+                loginSignup.$('#login_btn').click();
+
+                server.respondWith("POST", "https://cloud.ubuntuservergui.com/sessions/", [
+                    400,
+                    {"Content-Type": "application/json"},
+                    JSON.stringify(responses["https://cloud.ubuntuservergui.com/sessions/"]["POST"]["400"][0])
+                ]);
+                server.respond();
+
+                var serverErrorMsg = _.flatten(responses["https://cloud.ubuntuservergui.com/sessions/"]["POST"]["400"][0]['errors'], true)[0];
+                (loginSignup.displayError).should.have.been.calledWith(serverErrorMsg);
+                (loginSignup.enableForm).should.have.been.called;
+                (loginSignup.$('#loginErrorMsg').css('visibility') === 'visible').should.be.ok;
+
+                server.restore;
             });
 
         });

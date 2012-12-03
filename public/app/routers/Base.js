@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function (require) {
     var Marionette = require('marionette');
 
     return Marionette.AppRouter.extend({

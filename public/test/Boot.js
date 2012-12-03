@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function (require) {
     var $ = require('jquery');
     var chai = require("chai");
     var sinonChai = require("sinon_chai");

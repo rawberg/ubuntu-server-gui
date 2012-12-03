@@ -1,19 +1,18 @@
-define([
-    'underscore',
-    'backbone',
-    'backbone_dualstorage'],
-    function(_, Backbone) {
-        return Backbone.Model.extend({
-            url: 'Servers',
-            local: true,
-            defaults: {
-                name: null,
-                ipv4: null
-            },
+define(function (require) {
+    var _ = require('underscore'),
+        Backbone = require('backbone');
+        require('backbone_dualstorage');
 
-            parse: function(serverInfo, jqXHR) {
-                return serverInfo;
-            }
-        });
-    }
-);
+    return Backbone.Model.extend({
+        url: 'Servers',
+        local: true,
+        defaults: {
+            name: null,
+            ipv4: null
+        },
+
+        parse: function(serverInfo, jqXHR) {
+            return serverInfo;
+        }
+    });
+});

@@ -1,8 +1,8 @@
 define(function (require) {
-        Backbone = require('backbone');
+    var Backbone = require('backbone');
 
     return Backbone.Model.extend({
-
+        url: 'https://cloud.ubuntuservergui.com/sessions/',
         remote: true,
         defaults: {
             'active': false

@@ -4,6 +4,7 @@ define([
     'socket_io',
     'App'],
     function(_, Backbone, io, App) {
+
         return Backbone.Model.extend({
 
             remote: true,

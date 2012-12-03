@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function (require) {
     var Backbone = require('backbone');
     var Session = require('models/Session');
 
@@ -13,7 +13,7 @@ define(function (require, exports, module) {
         });
 
         xdescribe('active - attribute (onChange)', function() {
-            var App;
+            var App, routerSpy, sessionSpy;
             beforeEach(function() {
                 Backbone.history = new Backbone.History();
                 Backbone.history.start({
