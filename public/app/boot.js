@@ -7,11 +7,11 @@ define(function (require) {
 
 
     App.routers.main = new MainRouter({controller: new MainController()});
-    App.vent.on('session:expired', function() {
-        App.routers.main.navigate('auth/login', {trigger: true});
-    });
-
-    $(document).ready(function() {
-        Backbone.history.start({pushState: true});
+    App.user().session().fetch({
+        complete: function() {
+            $(document).ready(function() {
+                Backbone.history.start({pushState: true});
+            });
+        }
     });
 });

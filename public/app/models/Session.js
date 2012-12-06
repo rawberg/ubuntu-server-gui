@@ -5,17 +5,29 @@ define(function (require) {
         url: 'https://cloud.ubuntuservergui.com/sessions/',
         remote: true,
         defaults: {
-            'active': false
+            'active': false,
+            'attemptedRoute': undefined
+        },
+
+        initialize: function() {
+            this.on('change:active', this.onStatusChange);
+        },
+
+        onStatusChange: function(session, active) {
+            if(active === false) {
+                this.set('attemptedRoute', Backbone.history.getFragment());
+                Backbone.history.navigate('auth/login', {trigger: true});
+            } else if(active === true && this.get('attemptedRoute')) {
+                Backbone.history.navigate(this.get('attemptedRoute'), {trigger: true});
+                this.set('attemptedRoute', undefined);
+            } else {
+                Backbone.history.navigate('/', {trigger: true});
+                this.set('attemptedRoute', undefined);
+            }
         },
 
         parse: function(response, jqXHR) {
-            var status;
-            if (response.success === true) {
-                status = true;
-            } else {
-                status = false;
-            }
-            return {status: status};
+            return {active: response.success};
         }
     });
 });

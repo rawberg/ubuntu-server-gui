@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function (require) {
     var _ = require('underscore'),
         Backbone = require('backbone'),
         App = require('App'),
@@ -10,9 +10,9 @@ define(function (require, exports, module) {
     return BaseController.extend({
         initialize: function() {
             this.App = App;
-            this.beforeFilters = {
-                dashboard: ['ensureAuthenticated']
-            };
+            // this.beforeFilters = {
+            //     dashboard: ['ensureAuthenticated']
+            // };
 
             BaseController.prototype.initialize.apply(this, arguments);
         },
@@ -23,8 +23,7 @@ define(function (require, exports, module) {
 
             this.App.mainToolbar.show(toolbar);
             this.App.mainFooterbar.show(footerbar);
-            var dashboardLayout = new DashboardLayout();
-            this.App.mainViewport.show(dashboardLayout);
+            this.App.mainViewport.show(new DashboardLayout());
         }
     });
 

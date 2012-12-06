@@ -1,27 +1,20 @@
 define(function (require) {
-
     var _ = require('underscore'),
         Backbone = require('backbone'),
         BaseRouter = require('routers/Base'),
-        BaseController = require('controllers/Base');
+        BaseController = require('controllers/Base'),
+        User = require('models/User'),
+        Session = require('models/Session');
 
     describe('Base - Router', function() {
         var App, MockController, MockRouter;
-        describe('route beforeFilters', function() {
+        describe('route and ensureActiveSession', function() {
             App = {};
-            App.user = function() {
-                return {session: function() {
-                    return {get: {}};
-                }};
-            };
-            App.routers = {main: {}};
+
+            BaseRouter.prototype.navigate = sinon.spy();
 
             MockController = BaseController.extend({
                 initialize: function(options) {
-                    this.beforeFilters = {
-                        action: 'ensureAuthenticated'
-                    };
-
                     this.App = App;
                     BaseController.prototype.initialize.apply(this, arguments);
                 },
@@ -32,8 +25,8 @@ define(function (require) {
 
             MockRouter = BaseRouter.extend({
                 initialize: function(options) {
-
                     this.controller = options.controller;
+                    BaseRouter.prototype.initialize.apply(this, arguments);
                 },
                 appRoutes: {
                     "testroute": "action",
@@ -41,62 +34,71 @@ define(function (require) {
                 }
             });
 
-            var authSpy, actionSpy, loginSpy, mockController, mockRouter, specRoute;
+            var brEnsureActiveSessionSpy, mcActionSpy, bcLoginSpy;
+            var mockController, mockRouter, specRoute;
             beforeEach(function() {
-                authSpy = sinon.spy(BaseController.prototype, 'ensureAuthenticated');
-                loginSpy = sinon.spy(BaseController.prototype, 'login');
-                actionSpy = sinon.spy(MockController.prototype, 'action');
+                Backbone.history = undefined;
+                brEnsureActiveSessionSpy = sinon.spy(BaseRouter.prototype, 'ensureActiveSession');
+                mcActionSpy = sinon.spy(MockController.prototype, 'action');
+                bcLoginSpy = sinon.spy(BaseController.prototype, 'login');
+                sessionSetSpy = sinon.spy(Session.prototype, 'set');
+
                 specRoute = window.location.pathname + window.location.search;
+
+                var user = new User();
+                App.user = function() { return user; };
 
                 mockController = new MockController();
                 mockRouter = new MockRouter({controller: mockController});
-                App.routers.main = mockRouter;
+                mockRouter.App = App;
 
                 try {
-                    Backbone.history.start({silent:true, pushState:true});
+                    Backbone.history.start({silent: true, pushState: true});
                 } catch(e) {}
             });
 
             afterEach(function() {
-                authSpy.restore();
-                actionSpy.restore();
-                loginSpy.restore();
+                brEnsureActiveSessionSpy.restore();
+                mcActionSpy.restore();
+                bcLoginSpy.restore();
+                sessionSetSpy.restore();
+                Backbone.History.started = false;
             });
 
-            it('should call wrapped beforeFilter function before controller method', function() {
-                mockController.App.user().session().get = sinon.stub().returns(true);
+            it('should call ensureActiveSession before the controller method when session is active', function() {
+                App.user().session().attributes.active = true;
                 var routeSpy = sinon.spy();
-                mockRouter.navigate("faketown");
+
                 mockRouter.bind("route:action", routeSpy);
-                mockRouter.navigate('testroute', {trigger: true, replace: false});
+                Backbone.history.navigate('testroute', {trigger: true, replace: false});
 
                 try {
-                    (routeSpy).should.have.been.called;
                     (routeSpy).should.have.been.calledWith();
-                    (authSpy).should.have.been.called;
-                    (actionSpy).should.have.been.called;
+                    (brEnsureActiveSessionSpy).should.have.been.called;
+                    (mcActionSpy).should.have.been.called;
 
-                    mockRouter.navigate(specRoute, {replace: true});
+                    Backbone.history.navigate(specRoute, {replace: true});
                 } catch(e) {
                     throw(e);
                 }
             });
 
-            it('should call wrapped beforeFilter and naviate to login instead of original controller method', function() {
-                mockController.App.user().session().get = sinon.stub().returns(false);
+            it('should call ensureActiveSession, set attempted route and navigate to login route when session is not active', function() {
+                App.user().session().attributes.active = false;
                 var routeActionSpy = sinon.spy();
-                mockRouter.navigate("faketown");
                 mockRouter.bind("route:action", routeActionSpy);
-                mockRouter.navigate('testroute', {trigger: true, replace: false});
+
+                Backbone.history.getFragment = sinon.stub().returns('testroute');
+                Backbone.history.navigate('testroute', {trigger: true, replace: false});
 
                 try {
-                    (routeActionSpy).should.have.been.called;
                     (routeActionSpy).should.have.been.calledWith();
-                    (authSpy).should.have.been.called;
-                    (actionSpy).should.not.have.been.called;
-                    (loginSpy).should.have.been.called;
+                    (brEnsureActiveSessionSpy).should.have.been.called;
+                    (mcActionSpy).should.not.have.been.called;
+                    (mockRouter.navigate).should.have.been.calledWith('auth/login');
+                    (sessionSetSpy).should.have.been.calledWith('attemptedRoute', 'testroute');
 
-                    mockRouter.navigate(specRoute, {replace: true});
+                    Backbone.history.navigate(specRoute, {replace: true});
                 } catch(e) {
                     throw(e);
                 }

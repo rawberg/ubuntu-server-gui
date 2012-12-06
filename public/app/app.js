@@ -16,13 +16,8 @@ define(function (require) {
     App.addInitializer(function(options) {
         var user = new User();
         this.user = function() { return user; };
-        this.user().session().on('change:active', function(session, active) {
-            if(active === false) {
-                this.vent.trigger('session:expired');
-            }
-        }, this);
-        this.routers = {};
 
+        this.routers = {};
         this.ioConfig = {
           'transports': ['websocket'],
           'max reconnection attempts': 2,

@@ -23,7 +23,7 @@ define(function (require) {
             // Models
             '../test/models/Server.spec',
             '../test/models/User.spec',
-            //'../test/models/Session.spec',
+            '../test/models/Session.spec',
             // Controllers
             '../test/controllers/Base.spec',
             // Routers

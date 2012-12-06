@@ -3,9 +3,6 @@ define(function (require) {
         BaseRouter = require('routers/Base');
 
     return BaseRouter.extend({
-        initialize: function(options) {
-            this.controller = options.controller;
-        },
 
         appRoutes: {
             "": "dashboard",

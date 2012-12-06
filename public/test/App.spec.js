@@ -18,7 +18,7 @@ define(function (require) {
             });
         });
 
-        describe('vent', function() {
+        xdescribe('vent', function() {
             var ventSpy, sessionSpy;
             beforeEach(function() {
                 App.start();
@@ -31,7 +31,7 @@ define(function (require) {
                 sessionSpy.restore();
             });
 
-            it('only trigger "session:expired" when session.active is set to false', function() {
+            xit('only trigger "session:expired" when session.active is set to false', function() {
                 App.user().session().set('active', true);
 
                 (sessionSpy).should.have.been.calledWith('active', true);

@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function (require) {
     var _ = require('underscore'),
         Marionette = require('marionette'),
         App = require('App'),
@@ -7,14 +7,6 @@ define(function (require, exports, module) {
     return Marionette.Controller.extend({
         initialize: function(options) {
             this.App = (options && options.App) ? options.App : App;
-        },
-
-        ensureAuthenticated: function() {
-            if(this.App.user().session().get('active')) {
-                return true;
-            } else {
-                return 'auth/login';
-            }
         },
 
         login: function() {

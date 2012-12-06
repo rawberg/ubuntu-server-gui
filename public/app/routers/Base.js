@@ -1,29 +1,36 @@
 define(function (require) {
-    var Marionette = require('marionette');
+    var _ = require('underscore'),
+        Backbone = require('backbone'),
+        Marionette = require('marionette'),
+        App = require('App');
 
     return Marionette.AppRouter.extend({
 
+        initialize: function() {
+            this.App = App;
+        },
+
+        ensureActiveSession: function() {
+            if(!this.App.user().session().get('active')) {
+                this.App.user().session().set('attemptedRoute', Backbone.history.getFragment());
+                this.navigate('auth/login', {trigger: true});
+                return false;
+            } else {
+                return true;
+            }
+        },
+
         route: function(route, name, callback) {
-            if(this.controller['beforeFilters'] && this.controller['beforeFilters'][name]) {
+            if(name !== 'login') {
                 var originalCallback = callback;
-                var beforeFilterName = this.controller['beforeFilters'][name];
 
                 callback = _.bind(function() {
-                    // call beforeFilter method
-                    var routeOrTrue = this.controller[beforeFilterName].apply(this.controller, arguments);
-                    if (routeOrTrue !== true && typeof routeOrTrue === 'string') {
-                        // chance to redirect to a different route
-                        this.navigate(routeOrTrue, {trigger: true});
-                        return;
-                    } else if(routeOrTrue !== true) {
-                        return;
+                    if(this.ensureActiveSession()) {
+                        originalCallback.apply( this, arguments );
                     }
-
-                    // call regular controller method
-                    originalCallback.apply( this, arguments );
                 }, this);
-
             }
+
             Marionette.AppRouter.prototype.route.call(this, route, name, callback);
         }
     });
