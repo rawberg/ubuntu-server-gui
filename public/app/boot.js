@@ -8,6 +8,10 @@ define(function (require) {
 
     App.routers.main = new MainRouter({controller: new MainController()});
     App.user().session().fetch({
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         complete: function() {
             $(document).ready(function() {
                 Backbone.history.start({pushState: true});

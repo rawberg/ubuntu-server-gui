@@ -32,14 +32,6 @@ define(function (require) {
             BaseForm.__super__.close.apply(this, arguments);
         },
 
-        onRender: function() {
-            return this.modelBinder.bind(
-                this.model,
-                this.el,
-                {email: '[name=login_email]', password: '[name=login_password]'}
-            );
-        },
-
         onLoginClick: function(eventObj) {
             eventObj.stopPropagation();
             eventObj.preventDefault();

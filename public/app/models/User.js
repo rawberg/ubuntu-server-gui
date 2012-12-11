@@ -26,6 +26,11 @@ define(function (require) {
                 context: this,
                 contentType: 'application/json',
                 data: '{"email": "' + this.get('email') + '", "password": "' + this.get('password') + '"}',
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: this.loginSuccess,
                 error: this.loginError
             });
@@ -57,6 +62,11 @@ define(function (require) {
                 context: this,
                 contentType: 'application/json',
                 data: '{"email": "' + this.get('email') + '", "password": "' + this.get('password') + '"}',
+//                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: this.loginSuccess,
                 error: this.signupError
             });
