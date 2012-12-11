@@ -14,26 +14,27 @@
 @import "contextmenu"; // converted from lib/contextmenu/contextmenu.css (via sass-convert)
 
 
-// Twitter Bootstrap Styles
-@import "../sass-twitter-bootstrap/lib/variables";
-@import "../sass-twitter-bootstrap/lib/mixins";
-@import "../sass-twitter-bootstrap/lib/utilities";
-//@import "../sass-twitter-bootstrap/lib/reset";
-@import "../sass-twitter-bootstrap/lib/layouts";
-@import "../sass-twitter-bootstrap/lib/scaffolding";
-@import "../sass-twitter-bootstrap/lib/buttons";
-@import "../sass-twitter-bootstrap/lib/type";
-@import "../sass-twitter-bootstrap/lib/alerts";
-@import "../sass-twitter-bootstrap/lib/close";
-@import "../sass-twitter-bootstrap/lib/forms";
-@import "../sass-twitter-bootstrap/lib/modals";
-@import "../sass-twitter-bootstrap/lib/component-animations";
+// Mockup Styles
+@import "../sass-mock-styles/_flatstrap";
 
-// Mock Styles
-@import "../sass-mock-styles/mock";
+// Twitter Bootstrap Styles
+// @import "../sass-twitter-bootstrap/lib/variables";
+// @import "../sass-twitter-bootstrap/lib/mixins";
+// @import "../sass-twitter-bootstrap/lib/utilities";
+// //@import "../sass-twitter-bootstrap/lib/reset";
+// @import "../sass-twitter-bootstrap/lib/layouts";
+// @import "../sass-twitter-bootstrap/lib/scaffolding";
+// @import "../sass-twitter-bootstrap/lib/buttons";
+// @import "../sass-twitter-bootstrap/lib/type";
+// @import "../sass-twitter-bootstrap/lib/alerts";
+// @import "../sass-twitter-bootstrap/lib/close";
+// @import "../sass-twitter-bootstrap/lib/forms";
+// @import "../sass-twitter-bootstrap/lib/modals";
+// @import "../sass-twitter-bootstrap/lib/component-animations";
+
 
 // Font Awesome
-@import "../font-awesome/sass/font-awesome.scss";
+// @import "../font-awesome/sass/font-awesome.scss";
 
 
 

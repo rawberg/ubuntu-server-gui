@@ -1,8 +1,9 @@
 define(function (require) {
-    var _ = require('underscore'),
-        Marionette = require('marionette'),
+    var Marionette = require('marionette'),
         App = require('App'),
-        LoginSignupView = require('views/login-signup/LoginSignupView');
+        LoginSignupLayout = require('views/login-signup/LoginSignupLayout'),
+        LoginView = require('views/login-signup/LoginView'),
+        SignupView = require('views/login-signup/SignupView');
 
     return Marionette.Controller.extend({
         initialize: function(options) {
@@ -10,7 +11,10 @@ define(function (require) {
         },
 
         login: function() {
-            this.App.mainViewport.show(new LoginSignupView({model: this.App.user()}));
+            var loginSignupLayout = new LoginSignupLayout();
+            this.App.mainViewport.show(loginSignupLayout);
+            loginSignupLayout.loginRegion.show(new LoginView({model: this.App.user()}));
+            loginSignupLayout.signupRegion.show(new SignupView({model: this.App.user()}));
         },
 
         notFound: function() {

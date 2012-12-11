@@ -13,8 +13,9 @@ define(function (require) {
             password: ''
         },
 
-        initialize: function() {
+        initialize: function(attributes) {
             this.login = _.bind(this.login, this);
+            this.signup = _.bind(this.signup, this);
             var session = new Session();
             this.session = function() { return session; };
         },
@@ -35,11 +36,30 @@ define(function (require) {
         },
 
         loginError: function(jqXHR, textStatus) {
-            var msg;
-            this.App = require('App');
             this.session().set('active', false);
-            msg = jQuery.parseJSON(jqXHR.responseText) || {"email or password": ["Invalid email or password."]};
-            this.App.vent.trigger('user:login-error', msg);
+
+            var msg;
+            msg = $.parseJSON(jqXHR.responseText) || {"email or password": ["Invalid email or password."]};
+            this.trigger('user:login-error', msg);
+        },
+
+        signupError: function(jqXHR, textStatus) {
+            this.session().set('active', false);
+
+            var msg;
+            msg = $.parseJSON(jqXHR.responseText) || {"email or password": ["Invalid email or password."]};
+            this.trigger('user:signup-error', msg);
+        },
+
+        signup: function() {
+            Backbone.sync('create', this, {
+                url: 'https://cloud.ubuntuservergui.com/register/',
+                context: this,
+                contentType: 'application/json',
+                data: '{"email": "' + this.get('email') + '", "password": "' + this.get('password') + '"}',
+                success: this.loginSuccess,
+                error: this.signupError
+            });
         }
     });
 });

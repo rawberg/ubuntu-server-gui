@@ -1,69 +1,81 @@
-#loginsignup_view {
-    position: relative;
+.login-signup-layout {
     width: 100%;
-    min-height:100%;
-    padding-top: 8%;
-    background-color: #F7F7F7;
+    height: 100%;
+    position: relative;
 
-    .ls-container {
-        //width: 900px;
-        width: 450px;
+    .login-signup-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -250px;
+        margin-left: -450px;
+        width: 900px;
         height: 330px;
-        margin-left: auto;
-        margin-right: auto;
-        background-color: #FFFFFF;
+        background-color: #F7F7F7;
         border: 1px solid #DDDDDD;
 
-        .login-container {
-            //float: left;
-            position: relative;
-            width: 100%;
+        h2 {
+            display: inline-block;
+            margin: 0 0 34px 48px;
+            color: #5E5E5E;
+        }
+
+        .alert-container {
+            margin: 20px 45px 0 45px;
+            min-height: 36px;
+            div {
+                margin-bottom: 4px;
+            }
+        }
+
+        .login-container, .signup-container {
+            width: 449px;
             height: 100%;
 
-            .alert-container {
-                margin: 20px 45px 0 45px;
-                min-height: 36px;
-                #loginErrorMsg {
-                    margin-bottom: 4px;
-                }
-            }
-
-            h2 {
-                //position: absolute;
-                //top: 28px;
-                //left: 50px;
-                display: block;
-                margin: 0 0 0 50px;
-                color: #5E5E5E;
-            }
-
             form {
-                position: absolute;
-                top: 110px;
-                left: 35px;
-
+                position: relative;
                 label, input, button, select, textarea {
                     font-size: 15px;
+                }
+
+                .controls {
+                    margin-left: 94px;
                 }
 
                 label {
                     width: 75px;
                 }
 
-                div.controls {
-                    margin-left: 94px;
+                button {
+                    padding: 8px 20px 8px;
+                    line-height: 20px;
                 }
+            }
+        }
 
-                .control-group {
-                    margin-bottom: 26px;
-                }
+        .login-container {
+            float: left;
+            border-right: dashed 1px #dedede;
+
+            form {
+                padding-left: 25px;
 
                 button {
                     position: absolute;
-                    top: 110px;
-                    left: 234px;
-                    padding: 8px 20px 8px;
-                    line-height: 20px;
+                    right: 107px;
+                }
+            }
+        }
+
+        .signup-container {
+            float: right;
+            border-left: solid 1px #f7f7f7;
+
+            form {
+                padding-left: 40px;
+                button {
+                    position: absolute;
+                    right: 91px;
                 }
             }
         }

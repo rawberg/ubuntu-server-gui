@@ -16,10 +16,11 @@ define(function (require) {
         });
 
         require([
-            // Views
             '../test/App.spec',
             // Views
-            '../test/views/LoginSignup.spec',
+            'views/LoginSignup.spec.js',
+            'views/Login.spec.js',
+            'views/Signup.spec.js',
             // Models
             '../test/models/Server.spec',
             '../test/models/User.spec',
