@@ -4,7 +4,26 @@ define(function (require) {
         Marionette = require('marionette'),
         User = require('models/User');
 
-    var App = new Marionette.Application();
+    var Application = Marionette.Application.extend({
+        onNoobTourActivate: function() {
+            var footerPos = $('footer').position();
+            $('<div class="modal-backdrop noobtour-backdrop body-minus-footer"></div>').appendTo('body');
+            $('<div class="modal-backdrop noobtour-backdrop footer-minus-add-server style="></div>').css({'top': footerPos.top - 78, 'bottom': footerPos.bottom}).appendTo('body');
+            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+
+            // swallow backdrop clicks
+            $('noobtour-backdrop').click(function(eventObj) {
+                eventObj.preventDefault();
+                eventObj.stopPropagation();
+            });
+        },
+
+        onNoobTourDeactivate: function() {
+            $('.noobtour-backdrop').off().remove();
+        }
+    });
+
+    var App = new Application();
 
     App.addRegions({
         mainToolbar: "#main_toolbar_container",
@@ -24,6 +43,9 @@ define(function (require) {
           'reconnect': false,
           'try multiple transports': false
         };
+
+        this.vent.on('noobtour:activate', this.onNoobTourActivate, this);
+        this.vent.on('noobtour:deactivate', this.onNoobTourDeactivate, this);
     });
 
     /*
@@ -85,6 +107,7 @@ define(function (require) {
             return zeroString + n;
         };
     });
+
     App.start();
     return App;
 });

@@ -1,11 +1,9 @@
 define(function (require) {
-    var App = require('App'),
+    var $ = require('jquery'),
+        App = require('App'),
         Session = require('models/Session');
 
     describe('App', function() {
-        beforeEach(function() {
-            App.start();
-        });
 
         describe('start', function() {
             it('should have a user containing a session', function() {
@@ -18,34 +16,80 @@ define(function (require) {
             });
         });
 
-        xdescribe('vent', function() {
-            var ventSpy, sessionSpy;
+        describe('onNoobTourActivate', function() {
+            var tourSpy, appendToSpy, posStub;
+            var clickSwallowSpy, scrollTopSpy;
             beforeEach(function() {
-                App.start();
-                ventSpy = sinon.spy(App.vent, 'trigger');
-                sessionSpy = sinon.spy(Session.prototype, 'set');
+                tourSpy = sinon.spy(App.vent._callbacks['noobtour:activate']['next'], 'callback');
+                posStub = sinon.stub($.prototype, 'position');
+
+                posStub.returns({top: 500, bottom: 540});
+                appendToSpy = sinon.spy($.prototype, 'appendTo');
+                scrollTopSpy = sinon.spy($.prototype, 'animate');
+                clickSwallowSpy = sinon.spy($.prototype, 'click');
+                App.vent.trigger('noobtour:activate');
             });
 
             afterEach(function() {
-                ventSpy.restore();
-                sessionSpy.restore();
+                tourSpy.restore();
+                posStub.restore();
+                appendToSpy.restore();
+                scrollTopSpy.restore();
+                clickSwallowSpy.restore();
+                App.vent.trigger('noobtour:deactivate');
             });
 
-            xit('only trigger "session:expired" when session.active is set to false', function() {
-                App.user().session().set('active', true);
+            it('should be called when the "noobtour:activate" App event is fired', function() {
+                (tourSpy).should.have.been.called;
+            });
 
-                (sessionSpy).should.have.been.calledWith('active', true);
-                (ventSpy).should.not.have.been.called;
+            it('should add noob tour backdrop elements to the dom', function() {
+                (appendToSpy.callCount).should.equal(2);
+            });
 
-                App.user().session().set('active', false);
-                (sessionSpy).should.have.been.calledWith('active', false);
-                (ventSpy).should.have.been.calledWith('session:expired');
+            it('should scroll to the bottom of the page', function() {
+                var scrollTopVal = $(document).height()-$(window).height();
+                (scrollTopSpy).should.have.been.called;
+                (scrollTopSpy.calledWith({scrollTop: scrollTopVal})).should.be.true;
+            });
+
+            it('should setup a listener to swallow backdrop click events', function() {
+                (clickSwallowSpy).should.have.been.called;
             });
 
         });
 
-        xdescribe('wrapping ajax errors', function() {
+        describe('onNoobTourDeActivate', function() {
+            var removeSpy, removeTourSpy, clickSwallowSpy;
+            beforeEach(function() {
+                removeTourSpy = sinon.spy(App.vent._callbacks['noobtour:deactivate']['next'], 'callback');
+                removeSpy = sinon.spy($.prototype, 'remove');
+                clickSwallowSpy = sinon.spy($.prototype, 'off');
+                App.vent.trigger('noobtour:deactivate');
+            });
+
+            afterEach(function() {
+                removeTourSpy.restore();
+                removeSpy.restore();
+                clickSwallowSpy.restore();
+            });
+
+            it('should be called when the "noobtour:deactivate" App event is fired', function() {
+                (removeTourSpy).should.have.been.called;
+            });
+
+            it('should unbind the listener swallowing backdrop click events', function() {
+                (clickSwallowSpy).should.have.been.called;
+            });
+
+            it('should remove noob tour backdrop elements from the dom', function() {
+                (removeSpy).should.have.been.called;
+            });
 
         });
+
+//        xdescribe('wrapping ajax errors', function() {
+//
+//        });
     });
 });
