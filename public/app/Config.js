@@ -14,7 +14,10 @@ var require = {
 
         // Bootstrap & jQuery Plugins
         bootstrap_modal: '../css/sass-twitter-bootstrap/js/bootstrap-modal',
+        bootstrap_tooltip: '../css/sass-twitter-bootstrap/js/bootstrap-tooltip',
+        bootstrap_popover: '../css/sass-twitter-bootstrap/js/bootstrap-popover',
         bootstrap_transition: '../css/sass-twitter-bootstrap/js/bootstrap-transition',
+        joyride: '../libs/zurb-joyride/jquery.joyride-2.0.2',
         gauge: '../libs/gauge.js/dist/gauge',
         contextmenu: '../libs/contextmenu/contextmenu',
 
@@ -44,8 +47,18 @@ var require = {
             deps: ['jquery'],
             exports: 'jQuery.fn.modal'
         },
+        'bootstrap_tooltip': {
+            deps: ['jquery']
+        },
+        'bootstrap_popover': {
+            deps: ['jquery']
+        },
         'bootstrap_transition': {
             deps: ['jquery']
+        },
+        'joyride': {
+            deps: ['jquery'],
+            exports: 'jQuery.fn.joyride'
         },
         'gauge': {
             deps: ['jquery'],

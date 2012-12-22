@@ -8,3 +8,13 @@ div.modal-footer.plain {
     width: 500px;
     margin: -250px 0 0 -250px;
 }
+
+.noobtour-backdrop {
+    &.body-minus-footer {
+        bottom: 28px;
+    }
+
+    &.footer-minus-add-server {
+        left: 31px;
+    }
+}

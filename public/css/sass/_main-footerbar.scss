@@ -10,8 +10,7 @@ footer {
         @include display-box;
         @include box-sizing(border-box);
         @include box-orient(horizontal);
-        @include box-align(stretch);        
-        height: 21px;
+        @include box-align(stretch);
         border-top: 1px solid #d4d4d4;
     }
     #left_sidebar_footerbar {
@@ -21,14 +20,12 @@ footer {
         ul {
             list-style: none;
             margin: 0;
-            //padding-top: 2px;
             li {
                 width: 30px;
+                line-height: 24px;
+                padding-top: 3px;
                 border-right: 1px solid #c5c5c5;
                 text-align: center;
-                i {
-                    padding-top: 3px;
-                }
                 a {
                     i {
                         color: #424242;     
@@ -44,8 +41,8 @@ footer {
             }
         }
     }
-    #main_footerbar {
-        @include box-flex(1);       
+    #center_footerbar {
+        @include box-flex(1);
         width: 100%;
         min-width: 100%;
         border-left: 1px solid #a5a5a5;
