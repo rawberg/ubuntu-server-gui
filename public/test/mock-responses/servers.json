@@ -1,0 +1,10 @@
+{
+    "https://cloud.ubuntuservergui.com/servers/": {
+        "POST": {
+            "200": [
+                {"servers": []}
+            ]
+        }
+
+    }
+}

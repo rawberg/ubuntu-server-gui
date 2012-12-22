@@ -31,7 +31,7 @@ define(['jquery', 'underscore', 'App', 'backbone_modelbinder', 'models/Server', 
       this.modelBinder = new BackboneModelBinder();
       this.tagName = 'div';
       this.id = 'modal_add_server';
-      this.className = 'modal hide fade';
+      this.className = 'modal';
       this.template = _.template(addEditServerTpl);
       this.templateHelpers = {
         titleOperation: (_ref1 = options.operationLabel) != null ? _ref1 : 'Add'

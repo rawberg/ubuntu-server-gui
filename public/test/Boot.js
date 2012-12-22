@@ -18,15 +18,21 @@ define(function (require) {
         require([
             '../test/App.spec',
             // Views
-            'views/LoginSignup.spec.js',
-            'views/Login.spec.js',
-            'views/Signup.spec.js',
+            'views/MainToolbar.spec.js',
+            'views/MainFooterbar.spec.js',
+            // Views (dashboard)
+            'views/dashboard/LeftSidebar.spec.js',
+            // Views (login-signup)
+            'views/login-signup/LoginSignup.spec.js',
+            'views/login-signup/Login.spec.js',
+            'views/login-signup/Signup.spec.js',
             // Models
             '../test/models/Server.spec',
             '../test/models/User.spec',
             '../test/models/Session.spec',
             // Controllers
             '../test/controllers/Base.spec',
+            '../test/controllers/Main.spec',
             // Routers
             '../test/routers/Base.spec'
             ],
