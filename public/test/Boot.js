@@ -16,7 +16,7 @@ define(function (require) {
         });
 
         require([
-            '../test/App.spec',
+            '../test/App.spec.js',
             // Views
             'views/MainToolbar.spec.js',
             'views/MainFooterbar.spec.js',
@@ -26,15 +26,17 @@ define(function (require) {
             'views/login-signup/LoginSignup.spec.js',
             'views/login-signup/Login.spec.js',
             'views/login-signup/Signup.spec.js',
+            // Modals/Popovers
+            'views/modal/NoobTourPopover.spec.js',
             // Models
-            '../test/models/Server.spec',
-            '../test/models/User.spec',
-            '../test/models/Session.spec',
+            '../test/models/Server.spec.js',
+            '../test/models/User.spec.js',
+            '../test/models/Session.spec.js',
             // Controllers
-            '../test/controllers/Base.spec',
-            '../test/controllers/Main.spec',
+            '../test/controllers/Base.spec.js',
+            '../test/controllers/Main.spec.js',
             // Routers
-            '../test/routers/Base.spec'
+            '../test/routers/Base.spec.js'
             ],
             function() {
                 chai.use(sinonChai);

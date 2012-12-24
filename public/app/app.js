@@ -2,13 +2,17 @@ define(function (require) {
     var $ = require('jquery'),
         Backbone = require('backbone'),
         Marionette = require('marionette'),
+        NoobTourPopover = require('views/modal/NoobTourPopover'),
         User = require('models/User');
+
 
     var Application = Marionette.Application.extend({
         onNoobTourActivate: function() {
             var footerPos = $('footer').position();
             $('<div class="modal-backdrop noobtour-backdrop body-minus-footer"></div>').appendTo('body');
-            $('<div class="modal-backdrop noobtour-backdrop footer-minus-add-server style="></div>').css({'top': footerPos.top - 78, 'bottom': footerPos.bottom}).appendTo('body');
+            $('<div class="modal-backdrop noobtour-backdrop footer-minus-add-server"></div>')
+                .css({top: footerPos.top - 78, bottom: 0, right: 0, height: 28})
+                .appendTo('body');
             $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
 
             // swallow backdrop clicks
@@ -16,10 +20,22 @@ define(function (require) {
                 eventObj.preventDefault();
                 eventObj.stopPropagation();
             });
+
+            var noobTourPopover = new NoobTourPopover();
+            this.modal.show(noobTourPopover);
+            $(window).resize(this.onNoobTourResize);
+        },
+
+        onNoobTourResize: function() {
+            var topCoord = $('footer').position().top - 78;
+            $('.noobtour-backdrop.footer-minus-add-server').css({top: topCoord});
+            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
         },
 
         onNoobTourDeactivate: function() {
-            $('.noobtour-backdrop').off().remove();
+            this.modal.close();
+            $('.noobtour-backdrop').off('click').remove();
+            $(window).off('resize', this.onNoobTourResize);
         }
     });
 

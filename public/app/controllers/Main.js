@@ -32,7 +32,7 @@ define(function (require) {
                 footerbarView = new MainFooterbar(),
                 leftsidebarView = new LeftSidebarView({collection: serverList}),
                 platformStatsView = new PlatformStatsView({model: platformInfo}),
-                runningServicesView = new RunningServicesView({collection: netServices});
+                runningServicesView = new RunningServicesView({collection: netServices}),
                 utilizationView = new UtilizationStatsView(),
                 dashboardLayout = new DashboardLayout();
 

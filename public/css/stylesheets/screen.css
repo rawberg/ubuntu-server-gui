@@ -412,7 +412,7 @@ footer {
   background: linear, top, #f3f4f4, #ebebeb, "left top, left bottom";
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f3f4f4', EndColorStr='#ebebeb');
 }
-footer div {
+footer div#left_sidebar_footerbar, footer div#center_footerbar {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-box;
@@ -483,7 +483,14 @@ div.modal-footer.plain {
   bottom: 28px;
 }
 .noobtour-backdrop.footer-minus-add-server {
+  top: 28px;
+  bottom: 0px;
   left: 31px;
+}
+
+.noobtour-popover.popover.top .arrow {
+  left: 0 !important;
+  margin-left: 0 !important;
 }
 
 body > div._contextmenu_screen_ {

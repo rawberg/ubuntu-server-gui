@@ -18,6 +18,7 @@ define(function (require) {
         },
 
         onAddServerClick: function(eventObj) {
+            App.vent.trigger('noobtour:deactivate');
             eventObj.stopPropagation();
             eventObj.preventDefault();
             this.App.modal.show(new AddEditServerModal({

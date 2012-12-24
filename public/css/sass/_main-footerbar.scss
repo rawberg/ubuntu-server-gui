@@ -6,7 +6,7 @@ footer {
     background-color: #f3f4f4;
     @include background(linear,top,rgb(243, 244, 244),rgb(235, 235, 235),'left top, left bottom');
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f3f4f4', EndColorStr='#ebebeb');
-    div {
+    div#left_sidebar_footerbar,  div#center_footerbar {
         @include display-box;
         @include box-sizing(border-box);
         @include box-orient(horizontal);

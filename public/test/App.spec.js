@@ -1,7 +1,8 @@
 define(function (require) {
     var $ = require('jquery'),
         App = require('App'),
-        Session = require('models/Session');
+        Session = require('models/Session'),
+        NoobTourPopover = require('views/modal/NoobTourPopover');
 
     describe('App', function() {
 
@@ -17,16 +18,19 @@ define(function (require) {
         });
 
         describe('onNoobTourActivate', function() {
-            var tourSpy, appendToSpy, posStub;
-            var clickSwallowSpy, scrollTopSpy;
+            var tourSpy, appendToSpy, posStub, windowResizeSpy;
+            var clickSwallowSpy, scrollTopSpy, popoverSpy;
             beforeEach(function() {
                 tourSpy = sinon.spy(App.vent._callbacks['noobtour:activate']['next'], 'callback');
                 posStub = sinon.stub($.prototype, 'position');
-
                 posStub.returns({top: 500, bottom: 540});
+
                 appendToSpy = sinon.spy($.prototype, 'appendTo');
                 scrollTopSpy = sinon.spy($.prototype, 'animate');
                 clickSwallowSpy = sinon.spy($.prototype, 'click');
+                windowResizeSpy = sinon.spy($.prototype, 'resize');
+
+                popoverSpy = sinon.spy(NoobTourPopover.prototype, 'render');
                 App.vent.trigger('noobtour:activate');
             });
 
@@ -36,6 +40,8 @@ define(function (require) {
                 appendToSpy.restore();
                 scrollTopSpy.restore();
                 clickSwallowSpy.restore();
+                windowResizeSpy.restore();
+                popoverSpy.restore();
                 App.vent.trigger('noobtour:deactivate');
             });
 
@@ -57,35 +63,46 @@ define(function (require) {
                 (clickSwallowSpy).should.have.been.called;
             });
 
+            it('should render "NoobTourPopover"', function() {
+                (popoverSpy).should.have.been.called;
+            });
+
+            it('should setup a listener for "window.resize" events', function() {
+                (windowResizeSpy.callCount).should.equal(2);
+            });
+
         });
 
         describe('onNoobTourDeActivate', function() {
-            var removeSpy, removeTourSpy, clickSwallowSpy;
+            var removeSpy, deactivateTourSpy, offSpy;
             beforeEach(function() {
-                removeTourSpy = sinon.spy(App.vent._callbacks['noobtour:deactivate']['next'], 'callback');
+                deactivateTourSpy = sinon.spy(App.vent._callbacks['noobtour:deactivate']['next'], 'callback');
                 removeSpy = sinon.spy($.prototype, 'remove');
-                clickSwallowSpy = sinon.spy($.prototype, 'off');
+                offSpy = sinon.spy($.prototype, 'off');
                 App.vent.trigger('noobtour:deactivate');
             });
 
             afterEach(function() {
-                removeTourSpy.restore();
+                deactivateTourSpy.restore();
                 removeSpy.restore();
-                clickSwallowSpy.restore();
+                offSpy.restore();
             });
 
             it('should be called when the "noobtour:deactivate" App event is fired', function() {
-                (removeTourSpy).should.have.been.called;
+                (deactivateTourSpy).should.have.been.called;
             });
 
             it('should unbind the listener swallowing backdrop click events', function() {
-                (clickSwallowSpy).should.have.been.called;
+                (offSpy).should.have.been.calledWith('click');
+            });
+
+            it('should unbind "window.resize" event', function() {
+                (offSpy).should.have.been.calledWith('resize');
             });
 
             it('should remove noob tour backdrop elements from the dom', function() {
                 (removeSpy).should.have.been.called;
             });
-
         });
 
 //        xdescribe('wrapping ajax errors', function() {

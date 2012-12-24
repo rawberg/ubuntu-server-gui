@@ -4,10 +4,10 @@ define(function (require) {
         AddEditServerModal = require('views/modal/AddEditServer');
 
     describe('MainFooterbar - ItemView', function() {
-        var mainFooterbar, addServerClickSpy, appModalSpy;
-        var addEditModal, modalRenderSpy;
+        var mainFooterbar, addServerClickSpy;
+        var addEditModal, modalRenderSpy, deactivateTourSpy;
         beforeEach(function() {
-            appModalSpy = sinon.spy(App.modal, 'show');
+            deactivateTourSpy = sinon.spy(App.vent._callbacks['noobtour:deactivate']['next'], 'callback');
             addServerClickSpy = sinon.spy(MainFooterbar.prototype, 'onAddServerClick');
             modalRenderSpy = sinon.spy(AddEditServerModal.prototype, 'render');
             mainFooterbar = new MainFooterbar();
@@ -18,8 +18,8 @@ define(function (require) {
         afterEach(function() {
             mainFooterbar.close();
             addServerClickSpy.restore();
-            appModalSpy.restore();
             modalRenderSpy.restore();
+            deactivateTourSpy.restore();
         });
 
         describe('initialze', function() {
@@ -29,11 +29,20 @@ define(function (require) {
         });
 
         describe('onAddServerClick', function() {
-            it('should show the add/edit server modal', function() {
+            beforeEach(function() {
                 mainFooterbar.$('#lsfb_btn_add_server').click();
+            })
+
+            it('should be called when add server button is clicked', function() {
                 (addServerClickSpy).should.have.been.called;
-                (appModalSpy).should.have.been.called;
+            });
+
+            it('should render the "AddEditServerModal"', function() {
                 (modalRenderSpy).should.have.been.called;
+            });
+
+            it('should trigger the "noobtour:deactivate" event', function() {
+                (deactivateTourSpy).should.have.been.called;
             });
         });
     });
