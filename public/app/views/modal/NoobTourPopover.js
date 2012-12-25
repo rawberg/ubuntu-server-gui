@@ -13,7 +13,8 @@ define(function (require) {
             var topCoord = $('#lsfb_btn_add_server').position().top - 133;
             this.$el.css({top: topCoord, left: 2, display: 'block'});
 
-            $(window).resize(_.bind(this.onWindowResize, this));
+            this.resizeListener = _.bind(this.onWindowResize, this);
+            $(window).resize(this.resizeListener);
         },
 
         onWindowResize: function() {
@@ -22,7 +23,7 @@ define(function (require) {
         },
 
         onClose: function() {
-            $(window).off('resize', this);
+            $(window).off('resize', this.resizeListener);
         }
     });
 });

@@ -22,11 +22,13 @@ define(function (require) {
             'views/MainFooterbar.spec.js',
             // Views (dashboard)
             'views/dashboard/LeftSidebar.spec.js',
+            'views/dashboard/LeftSidebarItem.spec.js',
             // Views (login-signup)
             'views/login-signup/LoginSignup.spec.js',
             'views/login-signup/Login.spec.js',
             'views/login-signup/Signup.spec.js',
             // Modals/Popovers
+            'views/modal/AddEditServer.spec.js',
             'views/modal/NoobTourPopover.spec.js',
             // Models
             '../test/models/Server.spec.js',

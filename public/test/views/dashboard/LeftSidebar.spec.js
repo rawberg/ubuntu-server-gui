@@ -10,8 +10,8 @@ define(function (require) {
     describe('LeftSidebar - UsgCollectionView', function() {
 
         var leftSidebar, listAddSpy, serversCollection,
-             listRemoveSpy, listRightClickSpy, contextShowSpy,
-            onEditServerClickSpy, onRemoveServerClick, modalShowSpy;
+            listRemoveSpy, listRightClickSpy, contextShowSpy,
+            onEditServerClickSpy, onRemoveServerClickSpy, modalShowSpy;
         beforeEach(function() {
             listAddSpy = sinon.spy(ServerListCollection.prototype, 'add');
             listRemoveSpy = sinon.spy(ServerListCollection.prototype, 'remove');
@@ -48,6 +48,12 @@ define(function (require) {
 
             it('should have a ServerList collection', function() {
                 (leftSidebar.collection).should.be.an.instanceof(ServerListCollection);
+            });
+        });
+
+        describe('render', function() {
+            it('should show the name of servers in the server list collection', function() {
+                (leftSidebar.$('span').first().text()).should.equal('Web Server');
             });
         });
 

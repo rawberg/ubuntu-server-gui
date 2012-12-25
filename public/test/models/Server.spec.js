@@ -5,9 +5,14 @@ define(['models/Server', 'app'], function(Server, App) {
         describe('save (local storage)', function() {
             window.localStorage.clear();
 
-            var server;
+            var server, storedServer;
             beforeEach(function() {
                 server = new Server();
+                server.set('name', 'Sample Server');
+                server.set('ipv4', '192.168.0.1');
+                server.save();
+
+                storedServer = JSON.parse(window.localStorage['Servers'+server.id]);
             });
 
             afterEach(function() {
@@ -15,22 +20,22 @@ define(['models/Server', 'app'], function(Server, App) {
             });
 
             it('should save model to localStorage', function(done) {
-                server.set('name', 'Sample Server');
-                server.set('ipv4', '192.168.0.1');
-                server.save();
-
                 var localStorageServers = window.localStorage["Servers"].split(',');
                 (localStorageServers.length).should.equal(1);
                 done();
             });
 
-            it('model id should match item id in localStorage', function(done) {
-                server.set('name', 'Super Sample Server');
-                server.set('ipv4', '192.168.10.1');
-                server.save();
-
+            it('"id" should match server "id" in localStorage', function(done) {
                 (window.localStorage["Servers"]).should.equal(server.id);
                 done();
+            });
+
+            it('server "name" should match server "name" in localStorage', function() {
+                (storedServer.name).should.equal(server.get('name'));
+            });
+
+            it('server "ipv4" should match "ipv4" address in localStorage', function() {
+                (storedServer.ipv4).should.equal(server.get('ipv4'));
             });
 
             it('should delete model from localStorage when calling destroy', function(done) {

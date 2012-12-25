@@ -47,7 +47,6 @@ define(function (require) {
         onServerRightClick: function(eventObj) {
             eventObj.preventDefault();
             eventObj.stopPropagation();
-
             this.contextMenu.sourceEvent = eventObj;
             ContextMenu.show(this.contextMenu, eventObj.clientX, eventObj.clientY);
         },
