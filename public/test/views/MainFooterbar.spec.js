@@ -5,11 +5,12 @@ define(function (require) {
 
     describe('MainFooterbar - ItemView', function() {
         var mainFooterbar, addServerClickSpy;
-        var addEditModal, modalRenderSpy, deactivateTourSpy;
+        var modalRenderSpy, deactivateTourSpy;
         beforeEach(function() {
             deactivateTourSpy = sinon.spy(App.vent._callbacks['noobtour:deactivate']['next'], 'callback');
             addServerClickSpy = sinon.spy(MainFooterbar.prototype, 'onAddServerClick');
             modalRenderSpy = sinon.spy(AddEditServerModal.prototype, 'render');
+
             mainFooterbar = new MainFooterbar();
             mainFooterbar.App = App;
             mainFooterbar.render();
@@ -31,7 +32,11 @@ define(function (require) {
         describe('onAddServerClick', function() {
             beforeEach(function() {
                 mainFooterbar.$('#lsfb_btn_add_server').click();
-            })
+            });
+
+            afterEach(function() {
+                App.closeModal();
+            });
 
             it('should be called when add server button is clicked', function() {
                 (addServerClickSpy).should.have.been.called;

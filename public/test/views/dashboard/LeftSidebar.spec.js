@@ -26,7 +26,7 @@ define(function (require) {
             contextShowSpy = sinon.spy(ContextMenu, 'show');
 
             leftSidebar = new LeftSidebarView({collection: serversCollection});
-            modalShowSpy = sinon.spy(leftSidebar.App.modal, 'show');
+            modalShowSpy = sinon.spy(leftSidebar.App, 'showModal');
             leftSidebar.render();
         });
 
@@ -71,6 +71,7 @@ define(function (require) {
                 (onEditServerClickSpy).should.have.been.called;
                 (modalShowSpy).should.have.been.called;
                 (modalShowSpy.args[0][0]).should.be.an.instanceof(AddEditServerModal);
+                leftSidebar.App.closeModal();
             });
 
             it('clicking remove server in the contextmenu calls onRemoveServerClick', function() {
@@ -78,6 +79,7 @@ define(function (require) {
                 (onRemoveServerClickSpy).should.have.been.called;
                 (modalShowSpy).should.have.been.called;
                 (modalShowSpy.args[0][0]).should.be.an.instanceof(RemoveServerModal);
+                leftSidebar.App.closeModal();
             });
         });
 

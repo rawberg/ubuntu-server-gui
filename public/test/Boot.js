@@ -29,6 +29,7 @@ define(function (require) {
             'views/login-signup/Signup.spec.js',
             // Modals/Popovers
             'views/modal/AddEditServer.spec.js',
+            'views/modal/RemoveServer.spec.js',
             'views/modal/NoobTourPopover.spec.js',
             // Models
             '../test/models/Server.spec.js',

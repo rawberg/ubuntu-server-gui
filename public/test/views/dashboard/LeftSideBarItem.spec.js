@@ -21,7 +21,11 @@ define(function (require) {
         describe('onRender', function() {
             it('should set "id" of the li to match the server "id"', function() {
                 (leftSideBarItem.el.id).should.equal('server_id_' + server.get('id'));
-            })
+            });
+
+            it('should set the "name" of the server in the span tag', function() {
+                (leftSideBarItem.el.innerText).should.equal(server.get('name'));
+            });
         });
 
     });

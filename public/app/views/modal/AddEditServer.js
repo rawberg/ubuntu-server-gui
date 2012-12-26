@@ -3,8 +3,8 @@ define(function (require) {
         _ = require('underscore'),
         Marionette = require('marionette'),
         ModelBinder = require('backbone_modelbinder'),
+        App = require('App'),
         Server = require('models/Server'),
-        ServerList = require('collections/ServerList'),
         BaseForm = require('views/BaseForm'),
         addEditServerTpl = require('text!views/modal/templates/add-edit-server.html');
 
@@ -27,15 +27,9 @@ define(function (require) {
         },
 
         initialize: function(options) {
-            this.modelBinder = new ModelBinder();
+            this.App = options && options.App ? options.App : App;
             this.model = options && options.model ? options.model : new Server();
-        },
-
-        hideModal: function() {
-            this.modelBinder.unbind();
-            $('#modal_add_server').modal('hide');
-            this.clearForm();
-            this.enableForm();
+            this.modelBinder = new ModelBinder();
         },
 
         onSubmit: function(eventObj) {
@@ -49,7 +43,9 @@ define(function (require) {
             this.App.vent.trigger('server:new-server-added', {
                 server: this.model
             });
-            this.hideModal();
+
+            this.modelBinder.unbind();
+            this.App.closeModal();
         },
 
         onInputKeyup: function(eventObj) {
@@ -67,15 +63,9 @@ define(function (require) {
         },
 
         onRender: function() {
-            $('#modal_add_server').modal({show: true})
-                .on('hidden', _.bind(function() {
-                    this.clearForm();
-                    this.close();
-                }, this))
-                .on('shown', _.bind(function() {
-                    this.modelBinder.bind(this.model, this.el);
-                    $('input[type=text]:first').focus();
-                }, this));
+            this.clearForm();
+            this.enableForm();
+            this.modelBinder.bind(this.model, this.el);
         },
 
         showError: function(msg) {

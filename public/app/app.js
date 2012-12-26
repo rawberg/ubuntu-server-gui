@@ -5,6 +5,7 @@ define(function (require) {
         NoobTourPopover = require('views/modal/NoobTourPopover'),
         User = require('models/User');
 
+    require('bootstrap_modal');
 
     var Application = Marionette.Application.extend({
         onNoobTourActivate: function() {
@@ -36,6 +37,23 @@ define(function (require) {
             this.modal.close();
             $('.noobtour-backdrop').off('click').remove();
             $(window).off('resize', this.onNoobTourResize);
+        },
+
+        showModal: function(view) {
+            this.modal.show(view);
+            this.modal.currentView.$el.modal('show')
+                .on('hidden', _.bind(this.closeModal, this));
+        },
+
+        closeModal: function() {
+            if(this.modal.currentView.$el.hasClass('in')) {
+                this.modal.currentView.$el.modal('hide');
+            }
+
+            if(this.modal.currentView) {
+                this.modal.currentView.$el.off('hidden');
+            }
+            this.modal.close();
         }
     });
 

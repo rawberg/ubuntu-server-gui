@@ -21,7 +21,7 @@ define(function (require) {
             App.vent.trigger('noobtour:deactivate');
             eventObj.stopPropagation();
             eventObj.preventDefault();
-            this.App.modal.show(new AddEditServerModal({
+            this.App.showModal(new AddEditServerModal({
                 operationLabel: 'Add'
             }));
         }

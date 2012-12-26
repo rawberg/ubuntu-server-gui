@@ -2,7 +2,10 @@ define(function (require) {
     var $ = require('jquery'),
         App = require('App'),
         Session = require('models/Session'),
+        AddEditServerModal = require('views/modal/AddEditServer'),
         NoobTourPopover = require('views/modal/NoobTourPopover');
+
+    require('bootstrap_modal');
 
     describe('App', function() {
 
@@ -105,8 +108,41 @@ define(function (require) {
             });
         });
 
-//        xdescribe('wrapping ajax errors', function() {
-//
-//        });
+        describe('showModal', function() {
+            var modalSpy, viewRenderSpy;
+
+            beforeEach(function() {
+                modalSpy = sinon.spy($.prototype, 'modal');
+                viewRenderSpy = sinon.spy(AddEditServerModal.prototype, 'render');
+                App.showModal(new AddEditServerModal());
+            });
+
+            afterEach(function() {
+                modalSpy.restore();
+                viewRenderSpy.restore();
+                App.closeModal();
+            });
+
+            it('should show the modal', function() {
+                (modalSpy).should.have.been.calledWith('show');
+                (viewRenderSpy).should.have.been.called;
+            });
+
+        });
+
+        describe('closeModal', function() {
+            var viewRemoveSpy;
+
+            beforeEach(function() {
+                viewRemoveSpy = sinon.spy(AddEditServerModal.prototype, 'remove');
+                App.showModal(new AddEditServerModal());
+            });
+
+            it('should call "remove" on the currentView in the modal region', function() {
+                App.closeModal();
+                (viewRemoveSpy).should.have.been.called;
+            });
+        });
+
     });
 });

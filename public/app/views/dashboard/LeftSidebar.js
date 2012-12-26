@@ -54,7 +54,7 @@ define(function (require) {
         onEditServerClick: function(eventObj) {
             var server;
             server = this.collection.get(this.contextMenu.sourceEvent.currentTarget.id.slice(10));
-            this.App.modal.show(new AddEditServerModal({
+            this.App.showModal(new AddEditServerModal({
                 model: server,
                 operationLabel: 'Edit'
             }));
@@ -63,7 +63,7 @@ define(function (require) {
         onRemoveServerClick: function(eventObj) {
             var server;
             server = this.collection.get(this.contextMenu.sourceEvent.currentTarget.id.slice(10));
-            this.App.modal.show(new RemoveServerModal({model: server}));
+            this.App.showModal(new RemoveServerModal({model: server}));
         }
     });
 });
