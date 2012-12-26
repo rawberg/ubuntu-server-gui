@@ -15,24 +15,12 @@ define(function (require) {
             'click #remove_server_btn': 'onConfirmation'
         },
 
-        hideModal: function() {
-            $('#modal_remove_server').modal('hide');
-        },
-
         onConfirmation: function(eventObj) {
             eventObj.stopPropagation();
             eventObj.preventDefault();
             eventObj.returnValue = false;
+            this.$el.modal('hide');
             this.model.destroy();
-            this.hideModal();
-        },
-
-        onRender: function() {
-            $('#modal_remove_server').modal({show: true})
-                .on('hidden', _.bind(function() {
-                    this.close();
-                }, this))
-                .on('shown', function() {});
         }
     });
 });

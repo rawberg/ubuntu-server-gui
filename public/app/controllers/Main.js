@@ -46,7 +46,11 @@ define(function (require) {
             dashboardLayout.performanceRegion.show(utilizationView);
 
             netServices.fetch();
-            serverList.fetch();
+            serverList.fetch({success: _.bind(function() {
+                if(serverList.length == 0) {
+                    this.App.vent.trigger('noobtour:activate');
+                }
+            }, this)});
         }
     });
 

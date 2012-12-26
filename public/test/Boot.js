@@ -31,6 +31,8 @@ define(function (require) {
             'views/modal/AddEditServer.spec.js',
             'views/modal/RemoveServer.spec.js',
             'views/modal/NoobTourPopover.spec.js',
+            // Collections
+            '../test/collections/ServerList.spec.js',
             // Models
             '../test/models/Server.spec.js',
             '../test/models/User.spec.js',

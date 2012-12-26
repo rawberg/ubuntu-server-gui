@@ -1,10 +1,9 @@
-define(['jquery', 'underscore', 'backbone', 'App', 'models/Server'],
-    function($, _, Backbone, App, ServerModel) {
-    /**
-    * @class ServerList
-    * List of servers associated with User's account
-    * @extends Backbone.Collection
-    */
+define(function (require) {
+    var $ = require('jquery'),
+        _ = require('underscore'),
+        Backbone = require('backbone'),
+        App = require('App'),
+        Server = require('models/Server');
 
     return Backbone.Collection.extend({
         url: 'Servers',
@@ -17,10 +16,17 @@ define(['jquery', 'underscore', 'backbone', 'App', 'models/Server'],
             this.App = App;
             this.local = true;
             this.App.vent.on('server:new-server-added', this.addNewServer, this);
+            this.on('remove', this.onRemove, this);
         },
 
         addNewServer: function(eventData) {
             this.add(eventData.server);
+        },
+
+        onRemove: function() {
+            if(this.length === 0) {
+                App.vent.trigger('noobtour:activate');
+            }
         }
 
     });

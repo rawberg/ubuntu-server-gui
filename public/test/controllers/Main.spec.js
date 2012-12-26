@@ -16,9 +16,11 @@ define(function (require) {
         describe('dashboard', function() {
             var mainController, dashboardLayoutSpy, leftsidebarSpy,
                 utilizationStatsSpy, runningServicesSpy, platformStatsSpy;
-            var dashboardLayout, leftSidebar, runningServices;
+            var dashboardLayout, leftSidebar, runningServices, footerPosStub;
 
             beforeEach(function() {
+                footerPosStub = sinon.stub($.prototype, 'position');
+                footerPosStub.returns({top: 666});
                 leftsidebarSpy = sinon.spy(LeftSidebarView.prototype, 'render');
                 dashboardLayoutSpy = sinon.spy(DashboardLayout.prototype, 'render');
                 utilizationStatsSpy = sinon.spy(UtilizationStatsView.prototype, 'render');
@@ -39,6 +41,7 @@ define(function (require) {
             });
 
             afterEach(function() {
+                footerPosStub.restore();
                 leftsidebarSpy.restore();
                 dashboardLayoutSpy.restore();
                 utilizationStatsSpy.restore();
@@ -86,6 +89,7 @@ define(function (require) {
             it('should show platform stats in the dashboard layout', function() {
                 (platformStatsSpy).should.have.been.called;
             });
+
         });
     });
 });

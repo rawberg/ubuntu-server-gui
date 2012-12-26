@@ -21,9 +21,6 @@ define(function (require) {
                 modalSpy.restore();
             });
 
-            it('should show the modal', function() {
-                (modalSpy).should.have.been.calledWith({show: true});
-            });
 
         });
     });
