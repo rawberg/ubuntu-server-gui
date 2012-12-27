@@ -12,6 +12,9 @@ This is a very early version of the app I'm releasing to get developer feedback.
     npm install
     setup a local web server to point to public/index.html (getting started will be easier soon, I promise)
 
+### Install Notes
+- make sure you install the [server side application]((https://github.com/rawberg/ubuntu-server-api) on any servers you'd like to connect too
+
 ### Tests
 - written with [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/api/bdd/)
 - open public/test/TestRunner.html in a browser to run them
