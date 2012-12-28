@@ -4,6 +4,9 @@ define(function (require) {
         Marionette = require('marionette'),
         popoverTpl = require('text!views/modal/templates/noob-tour-popover.html');
 
+    require('bootstrap_tooltip');
+    require('bootstrap_popover');
+
     return Marionette.ItemView.extend({
         template: _.template(popoverTpl),
         tagName: 'div',

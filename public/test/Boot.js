@@ -16,32 +16,32 @@ define(function (require) {
         });
 
         require([
-            '../test/App.spec.js',
+            'test/App.spec.js',
             // Views
-            'views/MainToolbar.spec.js',
-            'views/MainFooterbar.spec.js',
+            'test/views/MainToolbar.spec.js',
+            'test/views/MainFooterbar.spec.js',
             // Views (dashboard)
-            'views/dashboard/LeftSidebar.spec.js',
-            'views/dashboard/LeftSidebarItem.spec.js',
+            'test/views/dashboard/LeftSidebar.spec.js',
+            'test/views/dashboard/LeftSidebarItem.spec.js',
             // Views (login-signup)
-            'views/login-signup/LoginSignup.spec.js',
-            'views/login-signup/Login.spec.js',
-            'views/login-signup/Signup.spec.js',
+            'test/views/login-signup/LoginSignup.spec.js',
+            'test/views/login-signup/Login.spec.js',
+            'test/views/login-signup/Signup.spec.js',
             // Modals/Popovers
-            'views/modal/AddEditServer.spec.js',
-            'views/modal/RemoveServer.spec.js',
-            'views/modal/NoobTourPopover.spec.js',
+            'test/views/modal/AddEditServer.spec.js',
+            'test/views/modal/RemoveServer.spec.js',
+            'test/views/modal/NoobTourPopover.spec.js',
             // Collections
-            '../test/collections/ServerList.spec.js',
+            'test/collections/ServerList.spec.js',
             // Models
-            '../test/models/Server.spec.js',
-            '../test/models/User.spec.js',
-            '../test/models/Session.spec.js',
+            'test/models/Server.spec.js',
+            'test/models/User.spec.js',
+            'test/models/Session.spec.js',
             // Controllers
-            '../test/controllers/Base.spec.js',
-            '../test/controllers/Main.spec.js',
+            'test/controllers/Base.spec.js',
+            'test/controllers/Main.spec.js',
             // Routers
-            '../test/routers/Base.spec.js'
+            'test/routers/Base.spec.js'
             ],
             function() {
                 chai.use(sinonChai);

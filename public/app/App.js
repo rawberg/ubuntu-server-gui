@@ -5,6 +5,7 @@ define(function (require) {
         NoobTourPopover = require('views/modal/NoobTourPopover'),
         User = require('models/User');
 
+    require('bootstrap_tooltip');
     require('bootstrap_modal');
 
     var Application = Marionette.Application.extend({

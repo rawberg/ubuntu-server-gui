@@ -8,7 +8,7 @@ define(function (require) {
             "": "dashboard",
             "dashboard": "dashboard",
             "auth/login": "login",
-            "*path": "notFound"
+            "*path": "login"
         }
     });
 });

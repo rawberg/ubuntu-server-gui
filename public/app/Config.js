@@ -1,5 +1,5 @@
 var require = {
-    baseUrl: '/app',
+    baseUrl: 'app/',
     paths: {
         // Core Libs
         jquery: '../libs/jquery/jquery-1.8.2.min',
