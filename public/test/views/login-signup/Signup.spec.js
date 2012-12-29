@@ -42,11 +42,19 @@ define(function (require) {
             });
 
             it('should update user model when field values change', function() {
+                var server = sinon.fakeServer.create();
                 signupView.$('#signup_form input[name=signup_email]').val('russell.peters@aol.com');
                 signupView.$('#signup_form input[name=signup_email]').trigger('change');
                 signupView.$('#signup_form input[name=signup_password]').val('sample-pass');
                 signupView.$('#signup_form input[name=signup_password]').trigger('change');
                 signupView.$('#signup_btn').click();
+
+                server.respondWith("POST", "https://cloud.ubuntuservergui.com/register/", [
+                    202,
+                    {"Content-Type": "application/json"},
+                    JSON.stringify(responses["https://cloud.ubuntuservergui.com/register/"]["POST"]["202"][0])
+                ]);
+                server.respond();
 
                 (user.get('email')).should.equal('russell.peters@aol.com');
                 (user.get('password')).should.equal('sample-pass');

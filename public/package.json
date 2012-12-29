@@ -21,7 +21,8 @@
         "grunt": ">0.0.0",
         "grunt-coffee": ">0.0.0",
         "grunt-mocha": ">0.0.0",
-        "grunt-shell": ">0.0.0"
+        "grunt-shell": ">0.0.0",
+        "requirejs": ">0.0.0"
     },
 
     "licenses": [{
