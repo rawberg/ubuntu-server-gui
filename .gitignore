@@ -4,6 +4,7 @@ public/.sass-cache
 
 # Node Modules #
 ######################
+node_modules
 public/node_modules
 
 # Logs and databases #
