@@ -9,11 +9,15 @@ This is a very early version of the app I'm releasing to get developer feedback.
 ### Install For Developers
     git clone git@github.com:rawberg/ubuntu-server-gui.git ubuntu-server-gui
     cd ubuntu-server-gui
-    npm install
-    setup a local web server to point to public/index.html (getting started will be easier soon, I promise)
-
+    npm install .
+    setup a local web server to point to public/index.html
+    (getting started will be easier soon, I promise)
+    
 ### Install Notes
 - make sure you install the [server side application]((https://github.com/rawberg/ubuntu-server-api) on any servers you'd like to connect too
+
+### Deployment
+    running grunt build will create a "deployable" directory containing an optimized version ready for deployment
 
 ### Tests
 - written with [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/api/bdd/)
