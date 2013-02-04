@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: 'app/',
+    baseUrl: (window.basePath ? window.basePath : '') + 'app/',
     paths: {
         // Core Libs
         jquery: '../libs/jquery/jquery-1.8.2.min',
@@ -72,6 +72,14 @@ require.config({
 if(typeof(window.TESTRUNNER) === 'undefined') {
     require(['jquery', 'backbone', 'App', 'controllers/Main', 'routers/Main'],
         function($, Backbone, App, MainController, MainRouter) {
+            var rootPath = '/';
+            var pushState = true;
+            // support using Backbone router when app is loaded via file://
+            if(location.pathname.indexOf('/public/index.html') !== -1) {
+                rootPath = location.pathname.substring(0, location.pathname.lastIndexOf('/public/index.html')+18);
+                pushState = false;
+            }
+
             App.routers.main = new MainRouter({controller: new MainController()});
             App.user().session().fetch({
                 xhrFields: {
@@ -80,7 +88,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                 crossDomain: true,
                 complete: function() {
                     $(document).ready(function() {
-                        Backbone.history.start({pushState: true});
+                        Backbone.history.start({pushState: pushState, root: rootPath});
                     });
                 }
             });
