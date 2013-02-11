@@ -10,8 +10,6 @@ define(function (require) {
 
         LeftSidebarView = require('views/dashboard/LeftSidebar'),
         NetServicesCollection = require('collections/NetServices'),
-        PlatformInfoModel = require('models/PlatformInfo'),
-        PlatformStatsView = require('views/dashboard/PlatformStats'),
 
         RunningServicesView = require('views/dashboard/RunningServices'),
         ServerListCollection = require('collections/ServerList'),
@@ -24,28 +22,24 @@ define(function (require) {
         },
 
         dashboard: function() {
-            var serverList = new ServerListCollection(),
-                netServices = new NetServicesCollection(),
-                platformInfo = new PlatformInfoModel();
+            var serverList = new ServerListCollection();
 
             var toolbarView = new MainToolbar(),
                 footerbarView = new MainFooterbar(),
-                leftsidebarView = new LeftSidebarView({collection: serverList}),
-                platformStatsView = new PlatformStatsView({model: platformInfo}),
-                runningServicesView = new RunningServicesView({collection: netServices}),
-                utilizationView = new UtilizationStatsView(),
-                dashboardLayout = new DashboardLayout();
+                leftsidebarView = new LeftSidebarView({collection: serverList});
+
+            var dashboardLayout = this.dashboardLayout = new DashboardLayout();
 
             this.App.mainToolbar.show(toolbarView);
             this.App.mainFooterbar.show(footerbarView);
             this.App.mainViewport.show(dashboardLayout);
 
             dashboardLayout.sidebarLeftRegion.show(leftsidebarView);
-            dashboardLayout.platformRegion.show(platformStatsView);
-            dashboardLayout.servicesRegion.show(runningServicesView);
-            dashboardLayout.performanceRegion.show(utilizationView);
-
-            netServices.fetch();
+            dashboardLayout.sidebarLeftRegion.currentView.on(
+                'itemview:onServerClick',
+                _.bind(dashboardLayout.showMonitoring, dashboardLayout)
+            );
+//            netServices.fetch();
             serverList.fetch({success: _.bind(function() {
                 if(serverList.length == 0) {
                     this.App.vent.trigger('noobtour:activate');

@@ -117,6 +117,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     // Views (dashboard)
                     'test/views/dashboard/LeftSidebar.spec.js',
                     'test/views/dashboard/LeftSidebarItem.spec.js',
+                    'test/views/dashboard/DashboardLayout.spec.js',
                     // Views (login-signup)
                     'test/views/login-signup/LoginSignup.spec.js',
                     'test/views/login-signup/Login.spec.js',

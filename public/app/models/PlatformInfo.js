@@ -8,24 +8,24 @@ define([
         return Backbone.Model.extend({
 
             remote: true,
-            url: 'http://10.0.1.13:3030/dash',
             defaults: {
                 'codename': null,
                 'release': null,
                 'kernel': null
             },
 
-            initialize: function() {
-                this.getAuthToken = __bind(this.getAuthToken, this);
-                this.parse = __bind(this.parse, this);
-                this.ws = io.connect(this.url, App.ioConfig);
-                this.ws.on('error', function(errorMsg) {
+            initialize: function(attributes, options) {
+                this.server = options.server ? options.server : null;
+                this.getAuthToken = _.bind(this.getAuthToken, this);
+                this.parse = _.bind(this.parse, this);
+                this.ws = io.connect(this.url(), App.ioConfig);
+                this.ws.on('error', _.bind(function(errorMsg) {
                     if (errorMsg === 'handshake error') {
-                        _this.getAuthToken();
+                        this.getAuthToken();
                     }
                     this.ws.on('os-platform', this.parse);
                     this.ws.emit('os-platform');
-                });
+                }, this));
             },
 
             fetch: function() {
@@ -33,12 +33,9 @@ define([
             },
 
             connectAndFetch: function() {
-                console.log('inside connectAndFetch');
             },
 
             parse: function(platformInfo) {
-                console.log('inside parse');
-                console.dir(arguments);
                 platformInfo.codename = platformInfo.codename.charAt(0).toUpperCase() + platformInfo.codename.slice(1);
                 this.set(platformInfo);
             },
@@ -46,7 +43,7 @@ define([
             getAuthToken: function() {
                 var that = this;
                 $.ajax({
-                    url: 'http://10.0.1.13:3030/authtoken',
+                    url: 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/authtoken',
                     type: 'GET',
                     success: function() {
                         that.ws.disconnect();
@@ -59,6 +56,10 @@ define([
                         });
                     }
                 });
+            },
+
+            url: function() {
+                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash';
             }
         });
     }

@@ -8,7 +8,8 @@ define(function (require) {
         local: true,
         defaults: {
             name: null,
-            ipv4: null
+            ipv4: null,
+            port: 8809
         },
 
         parse: function(serverInfo, jqXHR) {

@@ -1,6 +1,7 @@
 define(function (require) {
     var $ = require('jquery'),
         _ = require('underscore'),
+        Marionette = require('marionette'),
         AddEditServerModal = require('views/modal/AddEditServer'),
         App = require('App'),
         ContextMenu = require('contextmenu'),
@@ -9,7 +10,7 @@ define(function (require) {
         RemoveServerModal = require('views/modal/RemoveServer');
 
 
-    return UsgCollectionView.extend({
+    return Marionette.CollectionView.extend({
         itemView: LeftSidebarItem,
         tagName: 'ul',
         id: 'left_sidebar_serverlist',
@@ -22,8 +23,8 @@ define(function (require) {
             this.parentRegion = options.parentRegion;
             this.App = App;
 
-            this.onRemoveServerClick = __bind(this.onRemoveServerClick, this);
-            this.onEditServerClick = __bind(this.onEditServerClick, this);
+            this.onRemoveServerClick = _.bind(this.onRemoveServerClick, this);
+            this.onEditServerClick = _.bind(this.onEditServerClick, this);
 
             this.contextMenu = new ContextMenu([
                 {

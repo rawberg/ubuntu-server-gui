@@ -13,7 +13,7 @@ define([
             },
 
             initialize: function() {
-                this.parse = __bind(this.parse, this);
+                this.parse = _.bind(this.parse, this);
                 this.remote = true;
                 this.ws = io.connect(this.url, App.ioConfig);
                 this.ws.on('cpumem', this.parse);

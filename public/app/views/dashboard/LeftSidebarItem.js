@@ -10,8 +10,16 @@ define(function (require) {
         className: 'vm-small',
         template: _.template(leftSidebarItemTpl),
 
+        events: {
+            'click': 'onServerClick'
+        },
+
         onRender: function() {
             this.el.id = 'server_id_' + this.model.get('id');
+        },
+
+        onServerClick: function() {
+            this.trigger('onServerClick', this.model);
         }
     });
 });

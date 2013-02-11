@@ -9,7 +9,7 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
                 if (options === null) {
                     options = {};
                 }
-                this.parse = __bind(this.parse, this);
+                this.parse = _.bind(this.parse, this);
 
                 this.remote = true;
                 this.ws = io.connect(this.url, App.ioConfig);

@@ -76,7 +76,8 @@ define(function (require) {
           'transports': ['websocket'],
           'max reconnection attempts': 2,
           'reconnect': false,
-          'try multiple transports': false
+          'try multiple transports': false,
+          'secure': true
         };
 
         this.vent.on('noobtour:activate', this.onNoobTourActivate, this);

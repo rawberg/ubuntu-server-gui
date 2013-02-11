@@ -2,6 +2,8 @@ define(function (require) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Marionette = require('marionette'),
+        PlatformInfoModel = require('models/PlatformInfo'),
+        PlatformStatsView = require('views/dashboard/PlatformStats'),
         dashboardLayoutTpl = require('text!views/dashboard/templates/layout.html');
 
     require('bootstrap_modal');
@@ -19,15 +21,17 @@ define(function (require) {
             platformRegion: '#dash_platform'
         },
 
-        activateNoobTour: function() {
-            $('<div class="modal-backdrop" />').appendTo(document.body).css('bottom', '24px');
-            var footerCoordinates = $('#main_footerbar_container').offset();
-            $('<div class="modal-backdrop" />').appendTo(document.body).css({top: String(footerCoordinates.top - 74) + 'px', bottom: '0px', left: '31px', right: '0px'});
-            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-        },
+        showMonitoring: function(itemView, serverModel) {
+//            var netServices = new NetServicesCollection(),
+            var platformInfo = new PlatformInfoModel({}, {server: serverModel});
+            var platformStatsView = new PlatformStatsView({model: platformInfo});
 
-        onShow: function() {
-//            this.activateNoobTour();
+//                runningServicesView = new RunningServicesView({collection: netServices}),
+//                utilizationView = new UtilizationStatsView();
+//
+            this.platformRegion.show(platformStatsView);
+//            this.dashboardLayout.servicesRegion.show(runningServicesView);
+//            this.dashboardLayout.performanceRegion.show(utilizationView);
         }
     });
 });
