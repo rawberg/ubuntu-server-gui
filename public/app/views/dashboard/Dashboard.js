@@ -2,8 +2,15 @@ define(function (require) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Marionette = require('marionette'),
-        PlatformInfoModel = require('models/PlatformInfo'),
+        // Models & Collections
+        PlatformInfo = require('models/PlatformInfo'),
+        ServerOverview = require('models/ServerOverview'),
+        NetServices = require('collections/NetServices'),
+        // Views
         PlatformStatsView = require('views/dashboard/PlatformStats'),
+        RunningServicesView = require('views/dashboard/RunningServices'),
+        UtilizationStatsView = require('views/dashboard/UtilizationStats'),
+
         dashboardLayoutTpl = require('text!views/dashboard/templates/layout.html');
 
     require('bootstrap_modal');
@@ -22,16 +29,19 @@ define(function (require) {
         },
 
         showMonitoring: function(itemView, serverModel) {
-//            var netServices = new NetServicesCollection(),
-            var platformInfo = new PlatformInfoModel({}, {server: serverModel});
-            var platformStatsView = new PlatformStatsView({model: platformInfo});
+            var platformStatsView = new PlatformStatsView({
+                model: new PlatformInfo({}, {server: serverModel})
+            });
+            var utilizationView = new UtilizationStatsView({
+                model: new ServerOverview({}, {server: serverModel})
+            });
+            var runningServicesView = new RunningServicesView({
+                collection: new NetServices([], {server: serverModel})
+            });
 
-//                runningServicesView = new RunningServicesView({collection: netServices}),
-//                utilizationView = new UtilizationStatsView();
-//
             this.platformRegion.show(platformStatsView);
-//            this.dashboardLayout.servicesRegion.show(runningServicesView);
-//            this.dashboardLayout.performanceRegion.show(utilizationView);
+            this.servicesRegion.show(runningServicesView);
+            this.performanceRegion.show(utilizationView);
         }
     });
 });

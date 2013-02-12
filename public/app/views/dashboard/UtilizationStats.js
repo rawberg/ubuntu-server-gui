@@ -17,7 +17,6 @@ define(function(require, exports, module) {
         initialize: function() {
             this.cpuGaugeConverter = _.bind(this.cpuGaugeConverter, this);
             this.App = App;
-            this.model = new ServerOverview();
             this._modelBinder = new ModelBinder();
             this.modelBindings = {
                 cpu: {

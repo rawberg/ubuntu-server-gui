@@ -9,22 +9,23 @@ define([
 
             remote: true,
             defaults: {
-                'codename': null,
-                'release': null,
-                'kernel': null
+                'codename': '',
+                'release': '',
+                'kernel': ''
             },
 
             initialize: function(attributes, options) {
-                this.server = options.server ? options.server : null;
+                this.server = (options && options.server) ? options.server : null;
                 this.getAuthToken = _.bind(this.getAuthToken, this);
                 this.parse = _.bind(this.parse, this);
                 this.ws = io.connect(this.url(), App.ioConfig);
+                this.ws.on('os-platform', this.parse);
+                this.fetch();
+
                 this.ws.on('error', _.bind(function(errorMsg) {
                     if (errorMsg === 'handshake error') {
                         this.getAuthToken();
                     }
-                    this.ws.on('os-platform', this.parse);
-                    this.ws.emit('os-platform');
                 }, this));
             },
 

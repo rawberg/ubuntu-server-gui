@@ -31,7 +31,6 @@ define(function (require) {
 
                 mainController = new MainController();
 
-                sinon.spy(NetServicesCollection.prototype, 'fetch');
                 sinon.spy(ServerListCollection.prototype, 'fetch');
                 sinon.spy(mainController.App.mainViewport, 'show');
                 sinon.spy(mainController.App.mainToolbar, 'show');
@@ -40,7 +39,6 @@ define(function (require) {
                 mainController.dashboard();
                 dashboardLayout = mainController.App.mainViewport.currentView;
                 leftSidebar = dashboardLayout.sidebarLeftRegion.currentView;
-                runningServices = dashboardLayout.servicesRegion.currentView;
             });
 
             afterEach(function() {
@@ -48,7 +46,6 @@ define(function (require) {
                 leftsidebarSpy.restore();
                 dashboardLayoutSpy.restore();
 
-                NetServicesCollection.prototype.fetch.restore();
                 ServerListCollection.prototype.fetch.restore();
 
                 mainController.App.mainViewport.show.restore();

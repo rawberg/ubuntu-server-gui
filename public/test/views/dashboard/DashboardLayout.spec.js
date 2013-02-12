@@ -5,6 +5,9 @@ define(function (require) {
     // Models
         Server = require('models/Server'),
 
+    // Collections
+        NetServicesCollection = require('collections/NetServices'),
+
     // Views
         DashboardLayout = require('views/dashboard/Dashboard'),
         LeftSidebarView = require('views/dashboard/LeftSidebar'),
@@ -20,6 +23,7 @@ define(function (require) {
 
             beforeEach(function() {
                 dashboardLayout = new DashboardLayout();
+                sinon.spy(NetServicesCollection.prototype, 'fetch');
                 utilizationStatsSpy = sinon.spy(UtilizationStatsView.prototype, 'render');
                 runningServicesSpy = sinon.spy(RunningServicesView.prototype, 'render');
                 platformStatsSpy = sinon.spy(PlatformStatsView.prototype, 'render');
@@ -29,20 +33,21 @@ define(function (require) {
             });
 
             afterEach(function() {
+                NetServicesCollection.prototype.fetch.restore();
                 utilizationStatsSpy.restore();
                 runningServicesSpy.restore();
                 platformStatsSpy.restore();
             });
 
+            it('should show utilization stats in the dashboard layout', function() {
+                (utilizationStatsSpy).should.have.been.called;
+            });
 
-        //            it('should show utilization stats in the dashboard layout', function() {
-        //                (utilizationStatsSpy).should.have.been.called;
-        //            });
-        //
-        //            it('should show running services in the dashboard layout', function() {
-        //                (runningServicesSpy).should.have.been.called;
-        //                (runningServices.collection.fetch).should.have.been.called;
-        //            });
+            it('should show running services in the dashboard layout', function() {
+                (runningServicesSpy).should.have.been.called;
+                var runningServices = dashboardLayout.servicesRegion.currentView;
+                (runningServices.collection.fetch).should.have.been.called;
+            });
 
             it('should show platform stats in the dashboard layout', function() {
                 (platformStatsSpy).should.have.been.called;

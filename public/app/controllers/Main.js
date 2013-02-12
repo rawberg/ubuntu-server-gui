@@ -39,7 +39,7 @@ define(function (require) {
                 'itemview:onServerClick',
                 _.bind(dashboardLayout.showMonitoring, dashboardLayout)
             );
-//            netServices.fetch();
+
             serverList.fetch({success: _.bind(function() {
                 if(serverList.length == 0) {
                     this.App.vent.trigger('noobtour:activate');

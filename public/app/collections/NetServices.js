@@ -3,23 +3,25 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
     function($, _, Backbone, io, App) {
 
         return Backbone.Collection.extend({
-            url: 'http://10.0.1.13:3030/dash',
 
-            initialize: function(options) {
-                if (options === null) {
-                    options = {};
-                }
+            initialize: function(models, options) {
+                this.server = (options && options.server) ? options.server : null;
                 this.parse = _.bind(this.parse, this);
 
                 this.remote = true;
-                this.ws = io.connect(this.url, App.ioConfig);
+                this.ws = io.connect(this.url(), App.ioConfig);
                 this.ws.on('net-services', this.parse);
+                this.fetch();
+                setInterval(_.bind(function() {
+                    this.fetch();
+                }, this), 5000);
+
+                this.ws.on('error', _.bind(function(errorMsg) {
+                    console.log('connection error', arguments);
+                }, this));
             },
 
             fetch: function(options) {
-                if (options === null) {
-                    options = {};
-                }
                 this.ws.emit('net-services');
             },
 
@@ -51,7 +53,7 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
                 var vals = [];
 
                 _.each(response.netServices, function(item, index, list) {
-                    item.name = _this.formatService(item.name);
+                    item.name = that.formatService(item.name);
                     if (vals.indexOf(item.name) === -1) {
                         results.push(item);
                     }
@@ -59,6 +61,10 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
                 });
 
                 return this.reset(results);
+            },
+
+            url: function() {
+                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash';
             }
 
         });

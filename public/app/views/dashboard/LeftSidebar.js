@@ -9,7 +9,9 @@ define(function (require) {
         UsgCollectionView = require('views/UsgCollectionView'),
         RemoveServerModal = require('views/modal/RemoveServer');
 
-
+    /**
+     * @params {collection: ServerList}
+     */
     return Marionette.CollectionView.extend({
         itemView: LeftSidebarItem,
         tagName: 'ul',
@@ -36,7 +38,6 @@ define(function (require) {
                 }
             ]);
             this.contextMenu.className = 'server-list-contextmenu';
-            UsgCollectionView.__super__.initialize.apply(this, arguments);
         },
 
         onClose: function() {

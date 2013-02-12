@@ -5,17 +5,16 @@ define([
     'App'],
     function(_, Backbone, io, App) {
         return Backbone.Model.extend({
-
-            url: 'http://10.0.1.13:3030/dash',
             defaults: {
                 'cpu': 0,
                 'memory': 0
             },
 
-            initialize: function() {
+            initialize: function(attributes, options) {
                 this.parse = _.bind(this.parse, this);
                 this.remote = true;
-                this.ws = io.connect(this.url, App.ioConfig);
+                this.server = (options && options.server) ? options.server : null;
+                this.ws = io.connect(this.url(), App.ioConfig);
                 this.ws.on('cpumem', this.parse);
                 this.fetch();
                 setInterval(_.bind(function() {
@@ -48,6 +47,10 @@ define([
                 }
 
                 return this.set({cpu: totalCpulUtilization, memory: totalMemUtilization});
+            },
+
+            url: function() {
+                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash';
             }
         });
     }
