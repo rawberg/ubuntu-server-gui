@@ -7,12 +7,9 @@ define(function (require) {
 
     return Backbone.Collection.extend({
         url: 'Servers',
+        model: Server,
 
         initialize: function(options) {
-            if (options === null) {
-                options = {};
-            }
-
             this.App = App;
             this.local = true;
             this.App.vent.on('server:new-server-added', this.addNewServer, this);

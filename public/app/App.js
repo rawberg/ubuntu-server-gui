@@ -74,11 +74,15 @@ define(function (require) {
         this.routers = {};
         this.ioConfig = {
           'transports': ['websocket'],
-          'max reconnection attempts': 2,
+          'max reconnection attempts': 1,
+          'connect timeout': 4000,
           'reconnect': false,
+          'force new connection': true,
           'try multiple transports': false,
           'secure': true
         };
+
+        this.ws = null; // place holder for web socket connection
 
         this.vent.on('noobtour:activate', this.onNoobTourActivate, this);
         this.vent.on('noobtour:deactivate', this.onNoobTourDeactivate, this);

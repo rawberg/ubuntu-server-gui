@@ -9,20 +9,15 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
                 this.parse = _.bind(this.parse, this);
 
                 this.remote = true;
-                this.ws = io.connect(this.url(), App.ioConfig);
-                this.ws.on('net-services', this.parse);
+                this.server.ws.on('net-services', this.parse);
                 this.fetch();
                 setInterval(_.bind(function() {
                     this.fetch();
                 }, this), 5000);
-
-                this.ws.on('error', _.bind(function(errorMsg) {
-                    console.log('connection error', arguments);
-                }, this));
             },
 
             fetch: function(options) {
-                this.ws.emit('net-services');
+                this.server.ws.emit('net-services');
             },
 
             /**

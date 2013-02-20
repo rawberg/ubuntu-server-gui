@@ -14,8 +14,7 @@ define([
                 this.parse = _.bind(this.parse, this);
                 this.remote = true;
                 this.server = (options && options.server) ? options.server : null;
-                this.ws = io.connect(this.url(), App.ioConfig);
-                this.ws.on('cpumem', this.parse);
+                this.server.ws.on('cpumem', this.parse);
                 this.fetch();
                 setInterval(_.bind(function() {
                     this.fetch();
@@ -23,7 +22,7 @@ define([
             },
 
             fetch: function(options) {
-                this.ws.emit('cpumem');
+                this.server.ws.emit('cpumem');
             },
 
             parse: function(stats) {

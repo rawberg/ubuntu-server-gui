@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3></h3>
+</div>
+<div class="modal-body connecting" style="display: none;"><p>Connecting to <span class="server-name"></span>.</p></div>
+<div class="modal-body connection-error" style="display: none;">
+    <p>Error connecting to <span class="server-name"></span>.</p>
+    <h5>Troubleshooting Tips:</h5>
+    <ul>
+        <li>Make sure the <a href="https://github.com/rawberg/ubuntu-server-api#auto-install-recommended" target="_blank">server agent is installed</a>.</li>
+        <li>Make sure the server agent is running on port <span class="server-port"></span>.</li>
+        <li>Make sure you can access the server at (<span class="server-ipv4"></span>) from your local network.</li>
+    </ul>
+</div>
+<div class="modal-footer plain">
+    <button class="btn" data-dismiss="modal">Cancel</button>
+</div>

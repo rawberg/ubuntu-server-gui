@@ -9,7 +9,9 @@ define(function (require) {
         addEditServerTpl = require('text!views/modal/templates/add-edit-server.html');
 
     require('bootstrap_modal');
-
+    /**
+     * @params {model: Server}
+     */
     return BaseForm.extend({
 
         tagName: 'div',
@@ -41,7 +43,8 @@ define(function (require) {
             this.disableForm();
             this.model.save();
             this.App.vent.trigger('server:new-server-added', {
-                server: this.model
+                server: this.model,
+                connect: false       // Todo: add form field/button to select "save and connect"
             });
 
             this.modelBinder.unbind();

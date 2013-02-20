@@ -11,7 +11,7 @@ define(function (require) {
         ServerListCollection = require('collections/ServerList'),
 
         // Views
-        DashboardLayout = require('views/dashboard/Dashboard'),
+        DashboardLayout = require('views/dashboard/Dashboard').DashboardLayout,
         LeftSidebarView = require('views/dashboard/LeftSidebar'),
         PlatformStatsView = require('views/dashboard/PlatformStats'),
         RunningServicesView = require('views/dashboard/RunningServices'),

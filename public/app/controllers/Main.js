@@ -4,7 +4,7 @@ define(function (require) {
         Backbone = require('backbone'),
         BaseController = require('controllers/Base'),
 
-        DashboardLayout = require('views/dashboard/Dashboard'),
+        DashboardLayout = require('views/dashboard/Dashboard').DashboardLayout,
         MainFooterbar = require('views/MainFooterbar'),
         MainToolbar = require('views/MainToolbar'),
 
@@ -37,7 +37,7 @@ define(function (require) {
             dashboardLayout.sidebarLeftRegion.show(leftsidebarView);
             dashboardLayout.sidebarLeftRegion.currentView.on(
                 'itemview:onServerClick',
-                _.bind(dashboardLayout.showMonitoring, dashboardLayout)
+                _.bind(dashboardLayout.onServerClick, dashboardLayout)
             );
 
             serverList.fetch({success: _.bind(function() {

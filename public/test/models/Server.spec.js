@@ -2,6 +2,33 @@ define(['models/Server', 'app'], function(Server, App) {
 
     describe('Server - Model', function() {
 
+        describe('wsUrl', function() {
+
+            var server;
+            beforeEach(function() {
+                server = new Server();
+                server.set('name', 'Sample Server');
+                server.set('ipv4', '10.10.0.1');
+                server.set('port', 9090);
+            });
+
+            it('should return a correctly formatted websocket url', function() {
+               (server.wsUrl()).should.have.string('https://10.10.0.1:9090/');
+            });
+
+        });
+
+        xdescribe('wsConnect', function() {
+            beforeEach(function() {
+
+            });
+
+            afterEach(function() {
+
+            });
+
+        });
+
         describe('save (local storage)', function() {
             window.localStorage.clear();
 

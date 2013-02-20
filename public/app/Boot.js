@@ -11,6 +11,7 @@ require.config({
         backbone_dualstorage: '../libs/backbone.dualstorage/backbone.dualstorage',
         backbone_modelbinder: '../libs/backbone.modelbinder/Backbone.ModelBinder',
         backbone_routefilter: '../libs/backbone.routefilter/backbone.routefilter',
+        backbone_stickit: '../libs/backbone.stickit/backbone.stickit',
 
         // Bootstrap & jQuery Plugins
         bootstrap_modal: '../css/flatstrap/assets/js/bootstrap-modal',
@@ -39,6 +40,9 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
+        'backbone_stickit': {
+            deps: ['jquery', 'backbone']
+        },
         'backbone_dualstorage': {
             deps: ['backbone']
         },
@@ -61,9 +65,6 @@ require.config({
         },
         'contextmenu': {
             exports: 'contextmenu'
-        },
-        'socket_io': {
-            exports: 'io'
         }
     }
 });
@@ -117,7 +118,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     // Views (dashboard)
                     'test/views/dashboard/LeftSidebar.spec.js',
                     'test/views/dashboard/LeftSidebarItem.spec.js',
-                    'test/views/dashboard/DashboardLayout.spec.js',
+                    'test/views/dashboard/Dashboard.spec.js',
                     // Views (login-signup)
                     'test/views/login-signup/LoginSignup.spec.js',
                     'test/views/login-signup/Login.spec.js',
@@ -126,6 +127,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     'test/views/modal/AddEditServer.spec.js',
                     'test/views/modal/RemoveServer.spec.js',
                     'test/views/modal/NoobTourPopover.spec.js',
+                    'test/views/modal/ServerConnection.spec.js',
                     // Collections
                     'test/collections/ServerList.spec.js',
                     // Models
