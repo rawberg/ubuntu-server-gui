@@ -12,7 +12,7 @@ define(function (require) {
         defaults: {
             name: null,
             ipv4: null,
-            port: 8809
+            port: 8890
         },
 
         parse: function(serverInfo, jqXHR) {
@@ -20,31 +20,26 @@ define(function (require) {
         },
 
         wsUrl: function() {
-            return 'https://' + this.get('ipv4') + ':' + this.get('port') + '/';
+            return 'https://' + this.get('ipv4') + ':' + this.get('port');
         },
 
         wsConnect: function(serverConnection) {
             var ws = this.ws = io.connect(this.wsUrl(), App.ioConfig);
             ws.on('connect', _.bind(function() {
-                console.log('socket connected');
                 serverConnection.set('connection_status', 'connected');
-                App.vent.trigger('server:connected', server);
+                App.vent.trigger('server:connected', this);
             }, this));
             // Not very DRY, socket.io doesn't seem to support binding multiple events at once
             ws.on('connect_failed', function() {
-                console.log('socket connection faled');
                 serverConnection.set('connection_status', 'connection error');
             });
             ws.on('error', function() {
-                console.log('socket connection faled');
                 serverConnection.set('connection_status', 'connection error');
             });
             ws.on('reconnect_error', function() {
-                console.log('socket connection faled');
                 serverConnection.set('connection_status', 'connection error');
             });
             ws.on('reconnect_failed', function() {
-                console.log('socket connection faled');
                 serverConnection.set('connection_status', 'connection error');
             });
         }

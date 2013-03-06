@@ -74,6 +74,7 @@ define(function (require) {
         this.routers = {};
         this.ioConfig = {
           'transports': ['websocket'],
+          'resource': 'usg',
           'max reconnection attempts': 1,
           'connect timeout': 4000,
           'reconnect': false,

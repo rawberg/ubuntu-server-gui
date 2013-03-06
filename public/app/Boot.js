@@ -22,6 +22,7 @@ require.config({
         contextmenu: '../libs/contextmenu/contextmenu',
 
         // Misc
+        ace: '../libs/ace/lib/ace',
         text: '../libs/require/text',
         socket_io: '../libs/socket.io-client/dist/socket.io',
 
