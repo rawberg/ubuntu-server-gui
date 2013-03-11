@@ -10,15 +10,15 @@ define(function (require) {
             this.App = App;
         },
 
-        ensureActiveSession: function() {
-            if(!this.App.user().session().get('active')) {
-                this.App.user().session().set('attemptedRoute', Backbone.history.getFragment());
-                this.navigate('auth/login', {trigger: true});
-                return false;
-            } else {
-                return true;
-            }
-        },
+//        ensureActiveSession: function() {
+//            if(!this.App.user().session().get('active')) {
+//                this.App.user().session().set('attemptedRoute', Backbone.history.getFragment());
+//                this.navigate('auth/login', {trigger: true});
+//                return false;
+//            } else {
+//                return true;
+//            }
+//        },
 
         route: function(route, name, callback) {
             if(name !== 'login') {

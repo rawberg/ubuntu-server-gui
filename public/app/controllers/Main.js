@@ -35,13 +35,9 @@ define(function (require) {
             this.App.mainViewport.show(dashboardLayout);
 
             dashboardLayout.sidebarLeftRegion.show(leftsidebarView);
-            dashboardLayout.sidebarLeftRegion.currentView.on(
-                'itemview:onServerClick',
-                _.bind(dashboardLayout.onServerClick, dashboardLayout)
-            );
 
             serverList.fetch({success: _.bind(function() {
-                if(serverList.length == 0) {
+                if(serverList.length === 0) {
                     this.App.vent.trigger('noobtour:activate');
                 }
             }, this)});

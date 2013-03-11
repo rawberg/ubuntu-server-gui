@@ -1,8 +1,7 @@
 define(function (require) {
-    var Marionette = require('marionette'),
-        BaseRouter = require('routers/Base');
+    var Marionette = require('marionette');
 
-    return BaseRouter.extend({
+    return Marionette.AppRouter.extend({
 
         appRoutes: {
             "": "dashboard",

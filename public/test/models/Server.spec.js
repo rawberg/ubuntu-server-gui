@@ -13,7 +13,7 @@ define(['models/Server', 'app'], function(Server, App) {
             });
 
             it('should return a correctly formatted websocket url', function() {
-               (server.wsUrl()).should.have.string('https://10.10.0.1:9090');
+               (server.wsUrl()).should.have.string('http://10.10.0.1:9090');
             });
 
         });

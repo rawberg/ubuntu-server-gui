@@ -4,7 +4,8 @@ define(function (require, exports, module) {
         Marionette = require('marionette'),
         App = require('App'),
         Server = require('models/Server'),
-        serverConnectionTpl = require('text!views/modal/templates/server-connection.html');
+        serverConnectingTpl = require('text!views/modal/templates/server-connection-connecting.html'),
+        serverConnectErrorTpl = require('text!views/modal/templates/server-connection-error.html');
 
     require('backbone_stickit');
     require('bootstrap_modal');
@@ -12,46 +13,42 @@ define(function (require, exports, module) {
      * @params {model: Server}
      */
     return Marionette.ItemView.extend({
-        template: _.template(serverConnectionTpl),
         className: 'modal hide fade',
         id: 'server-connection-modal',
 
         bindings: {
             'h3': 'connection_status',
+            'span.connection-status': 'connection_status',
             'span.server-name': 'name',
             'span.server-port': 'port',
             'span.server-ipv4': 'ipv4'
         },
 
+        modelEvents: {
+            "change:connection_status": "onStatusChange"
+        },
+
+        getTemplate: function() {
+            if(this.model.get('connection_status') === 'connecting') {
+                return _.template(serverConnectingTpl);
+            } else {
+                return _.template(serverConnectErrorTpl);
+            }
+        },
+
         initialize: function(options) {
             this.App = options && options.App ? options.App : App;
-            this.model.on('change:connection_status', _.bind(function(model, value, options) {
-                if(value === 'connecting') {
-                    this.showConnectingState();
-                } else {
-                    this.showErrorState();
-                }
-            }, this));
+
         },
 
         onRender: function() {
             this.stickit();
-            // a bit redundant but avoids flicker when waiting for model to change
-            if(this.model.get('connection_status') == 'connecting') {
-                this.showConnectingState();
-            } else {
-                this.showErrorState();
+        },
+
+        onStatusChange: function(server, connection_status, changes) {
+            if(connection_status === 'connection error') {
+                this.render();
             }
-        },
-
-        showErrorState: function() {
-            this.$('.modal-body').hide();
-            this.$('.modal-body.connection-error').show();
-        },
-
-        showConnectingState: function() {
-            this.$('.modal-body').hide();
-            this.$('.modal-body.connecting').show();
         }
     });
 });

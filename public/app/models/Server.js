@@ -20,11 +20,11 @@ define(function (require) {
         },
 
         wsUrl: function() {
-            return 'https://' + this.get('ipv4') + ':' + this.get('port');
+            return 'http://' + this.get('ipv4') + ':' + this.get('port');
         },
 
         wsConnect: function(serverConnection) {
-            var ws = this.ws = io.connect(this.wsUrl(), App.ioConfig);
+            var ws = window.ws = this.ws = io.connect(this.wsUrl()+'/dash', App.ioConfig);
             ws.on('connect', _.bind(function() {
                 serverConnection.set('connection_status', 'connected');
                 App.vent.trigger('server:connected', this);

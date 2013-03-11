@@ -493,7 +493,7 @@ div.modal-footer.plain {
   margin-left: 0 !important;
 }
 
-#server-connection-modal h3 {
+#server-connection-modal h3, #server-connection-modal span.connection-status {
   text-transform: capitalize;
 }
 

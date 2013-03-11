@@ -14,6 +14,7 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
                 setInterval(_.bind(function() {
                     this.fetch();
                 }, this), 5000);
+
             },
 
             fetch: function(options) {
@@ -33,6 +34,7 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
                 str = str.replace(/(db|sql|ssh|dhcp)\b/, function(txt) {
                     return txt.toUpperCase();
                 });
+                return str;
             },
 
             /**
@@ -42,7 +44,7 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
              * @param {Object} [jqXHR] jQuery jqXHR
              * @return {Object} re-formmated JSON data
             */
-            parse: function(response) {
+            parse: function(response, options) {
                 var that = this;
                 var results = [];
                 var vals = [];
@@ -51,15 +53,16 @@ define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
                     item.name = that.formatService(item.name);
                     if (vals.indexOf(item.name) === -1) {
                         results.push(item);
+                        vals.push(item.name);
                     }
-                    return vals.push(item.name);
-                });
 
-                return this.reset(results);
+                });
+                this.reset(results);
+                return results;
             },
 
             url: function() {
-                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash';
+                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash/net-services';
             }
 
         });

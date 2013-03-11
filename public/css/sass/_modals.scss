@@ -31,7 +31,7 @@ div.modal-footer.plain {
 
 // Server Connection Modal
 #server-connection-modal {
-  h3 {
+  h3, span.connection-status {
     text-transform: capitalize;
   }
 }

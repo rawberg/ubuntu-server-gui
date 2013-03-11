@@ -28,11 +28,17 @@ define(function (require) {
             it('displays connecting status and server name in the modal', function() {
                 (serverConnectionModal.$('h3').text()).should.have.string('connecting');
                 (serverConnectionModal.$('.modal-body').text()).should.have.string('Simple Server');
+                (serverConnectionModal.$('div.modal-body').hasClass('connecting')).should.be.true;
             });
 
             it('displays connection error message in the modal', function() {
                 serverConnectionModel.set('connection_status', 'connection error');
                 (serverConnectionModal.$('h3').text()).should.have.string('connection error');
+            });
+
+            it('displays the correct template on connect error', function() {
+                serverConnectionModel.set('connection_status', 'connection error');
+                (serverConnectionModal.$('div.modal-body').hasClass('connection-error')).should.be.true;
             });
         });
     });

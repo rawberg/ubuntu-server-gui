@@ -83,17 +83,20 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
             }
 
             App.routers.main = new MainRouter({controller: new MainController()});
-            App.user().session().fetch({
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                complete: function() {
-                    $(document).ready(function() {
-                        Backbone.history.start({pushState: pushState, root: rootPath});
-                    });
-                }
+
+            $(document).ready(function() {
+                Backbone.history.start({pushState: pushState, root: rootPath});
             });
+
+//            App.user().session().fetch({
+//                xhrFields: {
+//                    withCredentials: true
+//                },
+//                crossDomain: true,
+//                complete: function() {
+//
+//                }
+//            });
         }
     );
 } else {

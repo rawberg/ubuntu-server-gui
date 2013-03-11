@@ -32,10 +32,13 @@ define(function (require, exports, module) {
         },
 
         initialize: function(options) {
-            this.App = App;
-            this.App.vent.on('server:connected', _.bind(function(server) {
-                App.closeModal();
-                this.showMonitoring(server)
+            App.vent.on('server:connected', _.bind(function(server) {
+                this.showMonitoring(server);
+                _.delay(_.bind(App.closeModal, App), 1200);
+            }, this));
+
+            this.sidebarLeftRegion.on('show', _.bind(function(view) {
+                view.on('itemview:onServerClick', _.bind(this.onServerClick, this));
             }, this));
         },
 

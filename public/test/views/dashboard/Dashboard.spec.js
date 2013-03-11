@@ -4,6 +4,7 @@ define(function (require) {
         _ = require('underscore'),
         Marionette = require('marionette'),
         Socket = require('socket_io').Socket,
+        App = require('App'),
     // Models
         Server = require('models/Server'),
     // Collections
@@ -62,10 +63,10 @@ define(function (require) {
 
         describe('onServerClick', function() {
 
-            var dashboardLayout, modalSpy, serverModelSpy;
+            var dashboardLayout, modalShowSpy, serverModelSpy;
             beforeEach(function() {
                 dashboardLayout = new DashboardLayout();
-                modalShowSpy = sinon.spy(dashboardLayout.App, 'showModal');
+                modalShowSpy = sinon.spy(App, 'showModal');
                 serverModelSpy = sinon.spy(Server.prototype, 'wsConnect');
                 var fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
                 dashboardLayout.onServerClick(null, fakeServer);
@@ -74,6 +75,7 @@ define(function (require) {
             afterEach(function() {
                 modalShowSpy.restore();
                 serverModelSpy.restore();
+                App.closeModal();
             });
 
             it('calls wsConnect on the server model', function() {
@@ -83,7 +85,6 @@ define(function (require) {
             it('shows the server connection modal', function() {
                 (modalShowSpy).should.have.been.called;
                 (modalShowSpy.args[0][0]).should.be.an.instanceof(ServerConnectionModal);
-                dashboardLayout.App.closeModal();
             });
         });
     });

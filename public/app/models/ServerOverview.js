@@ -29,27 +29,21 @@ define([
                 var totalCpulUtilization, totalMemUtilization;
                 totalCpulUtilization = 0;
                 stats.cpus.forEach(function(item, index, allItems) {
-                    return totalCpulUtilization += item.utilization;
+                    return totalCpulUtilization += Number(item.utilization);
                 });
 
-                if (totalCpulUtilization > 1) {
-                    totalCpulUtilization = Math.round(totalCpulUtilization);
-                } else {
-                    totalCpulUtilization = String(totalCpulUtilization).slice(1);
-                }
                 totalMemUtilization = 0;
-
                 if (stats.mem.utilization > 1) {
                     totalMemUtilization = Math.round(stats.mem.utilization);
                 } else {
                     totalMemUtilization = String(totalMemUtilization).slice(1);
                 }
 
-                return this.set({cpu: totalCpulUtilization, memory: totalMemUtilization});
+                return this.set({cpu: totalCpulUtilization.toFixed(2), memory: totalMemUtilization});
             },
 
             url: function() {
-                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash';
+                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash/cpumem';
             }
         });
     }

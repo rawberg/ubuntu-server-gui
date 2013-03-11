@@ -77,10 +77,10 @@ define(function (require) {
           'resource': 'usg',
           'max reconnection attempts': 1,
           'connect timeout': 4000,
-          'reconnect': false,
+          'reconnect': true,
           'force new connection': true,
           'try multiple transports': false,
-          'secure': true
+          'secure': false
         };
 
         this.ws = null; // place holder for web socket connection
