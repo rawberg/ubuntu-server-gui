@@ -1,19 +1,22 @@
 {
-    "author": "David Feinberg <david@ubuntuservergui.com>",
-    "name": "ubuntu-server-gui",
-    "description": "",
-    "version": "0.6.0",
-    "private": true,
-    "repository": {
-        "type": "git",
-        "url": "git://github.com:rawberg/ubuntu-server-gui.git"
-    },
-
-    "engines": {
-        "node": "~0.6.11"
+    "main": "index.html",
+    "name": "Ubuntu Server GUI",
+    "description": "Ubuntu Server GUI desktop app.",
+    "version": "0.8.0",
+    "nodejs": true,
+    "window": {
+        "title": "Ubuntu Server GUI",
+        "icon": "css/images/icons/USG.icns",
+        "toolbar": true,
+        "width": 840,
+        "height": 600,
+        "position": "mouse",
+        "min_width": 600,
+        "min_height": 400
     },
 
     "dependencies": {
+        "ssh2": "0.2.x",
         "socket.io-client": "0.9.x"
     },
 

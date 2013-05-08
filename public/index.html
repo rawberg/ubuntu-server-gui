@@ -1,39 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Ubuntu Server GUI</title>
-  <script type="text/javascript">
-      // Toggles basePath so the app can be loaded from both
-      // file:// and http:// with pushstate (better way?)
-      (function(window) {
-          // window.basePath is also used in Boot.js
-          var basePath = window.basePath = (location.pathname.indexOf('/public/index.html') !== -1) ? '' : '/';
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Ubuntu Server GUI</title>
 
-          var bootCss = document.createElement("link");
-          bootCss.setAttribute("rel", "stylesheet");
-          bootCss.setAttribute("type", "text/css");
-          bootCss.setAttribute("href", basePath + "css/flatstrap/assets/css/bootstrap.css");
-          document.getElementsByTagName("head")[0].appendChild(bootCss);
-
-          var screenCss = document.createElement("link");
-          screenCss.setAttribute("rel", "stylesheet");
-          screenCss.setAttribute("type", "text/css");
-          screenCss.setAttribute("href", basePath + "css/stylesheets/screen.css");
-          document.getElementsByTagName("head")[0].appendChild(screenCss);
-
-          var bootJs = document.createElement("script");
-          bootJs.setAttribute("type", "text/javascript");
-          bootJs.setAttribute("data-main", basePath + "app/Boot.js");
-          bootJs.setAttribute("src", basePath + "libs/require/require.min.js");
-          document.getElementsByTagName("head")[0].appendChild(bootJs);
-      })(window);
-  </script>
+    <link rel="stylesheet" type="text/css" href="css/flatstrap/assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/stylesheets/screen.css" />
+    <script type="text/javascript" src="libs/require/require.min.js" data-main="app/Boot.js"></script>
 </head>
 <body>
-    <div id="main_toolbar_container"></div>
-    <div id="viewport"></div>
-    <div id="main_footerbar_container"></div>
-    <div id="modal_container"></div>
+<div id="main_toolbar_container"></div>
+<div id="viewport"></div>
+<div id="main_footerbar_container"></div>
+<div id="modal_container"></div>
 </body>
 </html>
