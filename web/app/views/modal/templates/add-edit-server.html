@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <a class="close" data-dismiss="modal" href="#">×</a>
+    <h3><%= operationLabel %> server</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" action="#" autocomplete="on" onSubmit="return false;">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="name">Name</label>
+          <div class="controls">
+            <input type="text" id="server_name" class="input" name="name">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="ipv4">IP Address</label>
+          <div class="controls">
+            <input type="text" class="input" name="ipv4">
+          </div>
+        </div>        
+      </fieldset>
+    </form>
+</div>
+<div class="modal-footer plain">
+    <button class="btn" data-dismiss="modal">Cancel</button>
+    <button id="add_server_btn" class="btn btn-inverse">Save</button>
+</div>    
