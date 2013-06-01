@@ -21,7 +21,7 @@ You'll need three tools to assist in ensuring installation is correct and genera
 
 1. Prepare an isolated environment
 
-    sudo pip install virtualenvwrapper nodeenv
+    	sudo pip install virtualenvwrapper nodeenv
 	export WORKON_HOME=~/Envs
 	mkdir -p $WORKON_HOME
 	source /usr/local/bin/virtualenvwrapper.sh
@@ -30,13 +30,13 @@ You'll need three tools to assist in ensuring installation is correct and genera
 
 2. Install Ubuntu Server Gui Client
 
-    git clone git@github.com:rawberg/ubuntu-server-gui.git ubuntu-server-gui
-    cd ubuntu-server-gui/public
-    npm install .
+	git clone git@github.com:rawberg/ubuntu-server-gui.git ubuntu-server-gui
+	cd ubuntu-server-gui/public
+	npm install .
 
 3. First Run
 
-    grunt server
+	grunt server
 
 
 ### Install Notes
