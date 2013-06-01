@@ -1,6 +1,6 @@
 {
     "main": "index.html",
-    "name": "Ubuntu Server GUI",
+    "name": "Ubuntu-Server-GUI",
     "description": "Ubuntu Server GUI desktop app.",
     "version": "0.8.0",
     "nodejs": true,
