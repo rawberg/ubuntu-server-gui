@@ -13,30 +13,31 @@ This is a very early version of the app I'm releasing to get developer feedback.
 
 You'll need three tools to assist in ensuring installation is correct and general quality control through out your projects life cycle.
 
-  *VirtualEnv* : Your project won't be the only code on your system that uses python or node, this tool creates isolated library environments to keep the packages you use for your project separate from your system.
+- *VirtualEnv* : Your project won't be the only code on your system that uses python or node, this tool creates isolated library environments to keep the packages you use for your project separate from your system.
 
-  *VirtualEnvWrapper* : Makes dealing with virtualenv easier, really a bulter of sorts.
+- *VirtualEnvWrapper* : Makes dealing with virtualenv easier, really a bulter of sorts.
 
-  *NodeEnv*: Install specific versions of Node in your virtualenv, and promotes the isolated environment for node packages. packages installed the global switch (-g) will end up in the isolated environment.
+- *NodeEnv*: Install specific versions of Node in your virtualenv, and promotes the isolated environment for node packages. packages installed the global switch (-g) will end up in the isolated environment.
+
 
 1. Prepare an isolated environment
 
-    	sudo pip install virtualenvwrapper nodeenv
-	export WORKON_HOME=~/Envs
-	mkdir -p $WORKON_HOME
-	source /usr/local/bin/virtualenvwrapper.sh
-	mkvirtualenv --distribute ubuntu-server-gui
-	nodeenv -p
+		sudo pip install virtualenvwrapper nodeenv
+		export WORKON_HOME=~/Envs
+		mkdir -p $WORKON_HOME
+		source /usr/local/bin/virtualenvwrapper.sh
+		mkvirtualenv --distribute ubuntu-server-gui
+		nodeenv -p
 
 2. Install Ubuntu Server Gui Client
 
-	git clone git@github.com:rawberg/ubuntu-server-gui.git ubuntu-server-gui
-	cd ubuntu-server-gui/public
-	npm install .
+		git clone git@github.com:rawberg/ubuntu-server-gui.git ubuntu-server-gui
+		cd ubuntu-server-gui
+		npm install .
 
 3. First Run
 
-	grunt server
+		grunt server
 
 
 ### Install Notes
