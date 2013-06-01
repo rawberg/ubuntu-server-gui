@@ -11,6 +11,14 @@ This is a very early version of the app I'm releasing to get developer feedback.
 
 ### Install For Developers
 
+You'll need three tools to assist in ensuring installation is correct and general quality control through out your projects life cycle.
+
+  *VirtualEnv* : Your project won't be the only code on your system that uses python or node, this tool creates isolated library environments to keep the packages you use for your project separate from your system.
+
+  *VirtualEnvWrapper* : Makes dealing with virtualenv easier, really a bulter of sorts.
+
+  *NodeEnv*: Install specific versions of Node in your virtualenv, and promotes the isolated environment for node packages. packages installed the global switch (-g) will end up in the isolated environment.
+
 1. Prepare an isolated environment
 
     sudo pip install virtualenvwrapper nodeenv
