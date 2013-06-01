@@ -16,6 +16,7 @@ You'll need three tools to assist in ensuring installation is correct and genera
 - *VirtualEnv* : Your project won't be the only code on your system that uses python or node, this tool creates isolated library environments to keep the packages you use for your project separate from your system.
 
 - *VirtualEnvWrapper* : Makes dealing with virtualenv easier, really a bulter of sorts.
+  Read more about virtualenvwrapper here : http://virtualenvwrapper.readthedocs.org/en/latest/
 
 - *NodeEnv*: Install specific versions of Node in your virtualenv, and promotes the isolated environment for node packages. packages installed the global switch (-g) will end up in the isolated environment.
 
