@@ -13,11 +13,13 @@ define(function (require_browser) {
             beforeEach(function() {
                 server = new Server({name: 'test server', ipv4: '10.0.1.1'});
                 serverConnection = new ServerConnection({}, {server: server});
-                initiateRemoteProxySpy= sinon.spy(ServerConnection.prototype, 'initiateRemoteProxy');
-                initiateLocalProxySpy= sinon.spy(ServerConnection.prototype, 'initiateLocalProxy');
+                initiateRemoteProxySpy= sinon.stub(ServerConnection.prototype, 'initiateRemoteProxy');
+                initiateLocalProxySpy= sinon.stub(ServerConnection.prototype, 'initiateLocalProxy');
             });
 
             afterEach(function() {
+                initiateRemoteProxySpy.restore();
+                initiateLocalProxySpy.restore();
                 serverConnection.destroy();
                 server.destroy();
             });
@@ -26,14 +28,14 @@ define(function (require_browser) {
                 return function() {
                     it('calls setupPortForwarding when running in desktop mode', function() {
                         serverConnection.connect();
-                        initiateRemoteProxySpy.should.have.been.called;
+                        initiateLocalProxySpy.should.have.been.called;
                     });
                 }
             } else {
                 return function() {
                     it('calls initiateLocalProxy when running in web mode', function() {
                         serverConnection.connect();
-                        initiateLocalProxySpy.should.have.been.called;
+                        initiateRemoteProxySpy.should.have.been.called;
                     });
                 }
             }

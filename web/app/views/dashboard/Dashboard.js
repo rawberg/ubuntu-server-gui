@@ -44,7 +44,7 @@ define(function (require_browser, exports, module) {
         },
 
         onServerClick: function(itemView, server) {
-            var serverConnection = new ServerConnection({}, server);
+            var serverConnection = new ServerConnection({}, {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
             serverConnection.connect();
         },
@@ -53,16 +53,16 @@ define(function (require_browser, exports, module) {
             var platformStatsView = new PlatformStatsView({
                 model: new PlatformInfo({}, {server: serverModel})
             });
-            var utilizationView = new UtilizationStatsView({
-                model: new ServerOverview({}, {server: serverModel})
-            });
-            var runningServicesView = new RunningServicesView({
-                collection: new NetServices([], {server: serverModel})
-            });
+//            var utilizationView = new UtilizationStatsView({
+//                model: new ServerOverview({}, {server: serverModel})
+//            });
+//            var runningServicesView = new RunningServicesView({
+//                collection: new NetServices([], {server: serverModel})
+//            });
 
             this.platformRegion.show(platformStatsView);
-            this.servicesRegion.show(runningServicesView);
-            this.performanceRegion.show(utilizationView);
+//            this.servicesRegion.show(runningServicesView);
+//            this.performanceRegion.show(utilizationView);
         }
     });
 });

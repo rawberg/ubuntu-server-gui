@@ -74,17 +74,6 @@ define(function (require_browser) {
         this.user = function() { return user; };
 
         this.routers = {};
-        this.ioConfig = {
-          'transports': ['websocket'],
-          'resource': 'usg',
-          'max reconnection attempts': 1,
-          'connect timeout': 4000,
-          'reconnect': true,
-          'force new connection': true,
-          'try multiple transports': false,
-          'secure': false
-        };
-
         this.ws = null; // place holder for web socket connection
 
         this.vent.on('noobtour:activate', this.onNoobTourActivate, this);

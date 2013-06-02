@@ -5,6 +5,8 @@ require_browser.config({
         underscore: '../libs/underscore/underscore',
         backbone: '../libs/backbone/backbone',
         marionette: '../libs/backbone.marionette/backbone.marionette',
+        shoe: '../libs/shoe/shoe',
+        dnode: '../libs/dnode/dnode',
 
         // Addons
         backbone_dualstorage: '../libs/backbone.dualstorage/backbone.dualstorage',
@@ -22,7 +24,6 @@ require_browser.config({
 
         // Misc
         text: '../libs/require/text',
-        socket_io: '../libs/socket.io-client/dist/socket.io',
 
         // Testing Libs
         jasmine: '../libs/jasmine/jasmine',
@@ -131,6 +132,8 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     'test/views/dashboard/LeftSidebar.spec.js',
                     'test/views/dashboard/LeftSidebarItem.spec.js',
                     'test/views/dashboard/Dashboard.spec.js',
+                    // Views (filemanager)
+                    'test/views/filemanager/FileManager.spec.js',
                     // Views (login-signup)
                     'test/views/login-signup/LoginSignup.spec.js',
 //                    'test/views/login-signup/Login.spec.js',

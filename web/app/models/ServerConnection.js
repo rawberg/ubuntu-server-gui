@@ -1,14 +1,15 @@
 define(function (require_browser) {
     var Backbone = require_browser('backbone'),
-        App = require_browser('App');
-
-    require_browser('socket_io');
+        App = require_browser('App'),
+        shoe = require_browser('shoe'),
+        dnode = require_browser('dnode');
 
     return Backbone.Model.extend({
         initialize: function(attributes, options) {
             if(typeof options.server === "undefined") {
                 throw "Expected server to be provided.";
             }
+            this.options = options || {};
         },
 
         connect: function() {
@@ -25,37 +26,29 @@ define(function (require_browser) {
 
         initiateLocalProxy: function(callback) {
             var SshConnection = require('ssh2');
-            App.sshProxy = new SshConnection();
+            var sshProxy = new SshConnection();
 
-            App.sshProxy.on('ready', function() {
-                App.sshProxy.exec('uname -a', function(err, stream) {
-                    if (err) {
-                        throw err;
-                    }
+            sshProxy.on('ready', _.bind(function() {
+                this.options.server.sshProxy = sshProxy;
+                App.vent.trigger('server:connected', this.options.server);
+            }, this));
 
-                    stream.on('data', function(data, extended) {
-                        console.log((extended === 'stderr' ? 'STDERR: \n' : 'STDOUT: \n')
-                            + data);
-                    });
-
-                    stream.close();
-                });
+            //TODO: find a better place or logging and error trapping
+            sshProxy.on('error', function(err) {
+                console.log('SSH Connection :: error :: ' + err);
             });
 
-            App.sshProxy.on('error', function(err) {
-                console.log('Connection :: error :: ' + err);
+            sshProxy.on('end', function() {
+                console.log('SSh Connection :: end');
             });
 
-            App.sshProxy.on('end', function() {
-                console.log('Connection :: end');
+            sshProxy.on('close', function(had_error) {
+                console.log('SSH Connection :: close');
             });
 
-            App.sshProxy.on('close', function(had_error) {
-                console.log('Connection :: close');
-            });
-
-            App.sshProxy.connect({
-                host: this.options.server.get('host'),
+            //TODO: make username and password dynamic
+            sshProxy.connect({
+                host: this.options.server.get('ipv4'),
                 port: this.options.server.get('port'),
                 username: 'stdissue',
                 password: 'devbox99'
@@ -63,25 +56,34 @@ define(function (require_browser) {
         },
 
         initiateRemoteProxy: function(serverConnection) {
-            debugger;
-//            var ws = window.ws = this.ws = io.connect(server.url()+'/dash', App.ioConfig);
-//            ws.on('connect', _.bind(function() {
-//                serverConnection.set('connection_status', 'connected');
-//                App.vent.trigger('server:connected', this);
-//            }, this));
-//            // Not very DRY, socket.io doesn't seem to support binding multiple events at once
-//            ws.on('connect_failed', function() {
-//                serverConnection.set('connection_status', 'connection error');
-//            });
-//            ws.on('error', function() {
-//                serverConnection.set('connection_status', 'connection error');
-//            });
-//            ws.on('reconnect_error', function() {
-//                serverConnection.set('connection_status', 'connection error');
-//            });
-//            ws.on('reconnect_failed', function() {
-//                serverConnection.set('connection_status', 'connection error');
-//            });
+            //TODO: replace show url with proper url
+            var wsStream = shoe('http://localhost:9999/proxy');
+            var dnodeStream = dnode();
+
+            dnodeStream.on('remote', _.bind(function (usgCloud) {
+                var ip = this.options.server.get('ipv4');
+                var port = this.options.server.get('port');
+
+                usgCloud.sshProxyConnect(ip, port, _.bind(function() {
+                    this.options.server.sshProxy = usgCloud;
+                    App.vent.trigger('server:connected', this.options.server);
+                }, this));
+
+            }, this));
+            dnodeStream.pipe(wsStream).pipe(dnodeStream);
+
+            //TODO: find a better place or logging and error trapping
+            dnodeStream.on('error', function(err) {
+                console.log('Cloud Connection :: error :: ' + err);
+            });
+
+            dnodeStream.on('end', function() {
+                console.log('Cloud Connection :: end');
+            });
+
+            dnodeStream.on('close', function(had_error) {
+                console.log('Cloud Connection :: close');
+            });
         }
 
     });

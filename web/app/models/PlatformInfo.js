@@ -1,67 +1,34 @@
-define([
-    'underscore',
-    'backbone',
-    'socket_io',
-    'App'],
-    function(_, Backbone, io, App) {
+define(function (require_browser, exports, module) {
+    var $ = require_browser('jquery'),
+        _ = require_browser('underscore'),
+        Backbone = require_browser('backbone');
 
-        return Backbone.Model.extend({
+    return Backbone.Model.extend({
+        remote: true,
+        defaults: {
+            'codename': '',
+            'release': '',
+            'kernel': ''
+        },
 
-            remote: true,
-            defaults: {
-                'codename': '',
-                'release': '',
-                'kernel': ''
-            },
+        initialize: function(attributes, options) {
+            this.server = (options && options.server) ? options.server : null;
+            this.fetch();
+        },
 
-            initialize: function(attributes, options) {
-                this.server = (options && options.server) ? options.server : null;
-                this.parse = _.bind(this.parse, this);
-                this.server.ws.on('os-platform', this.parse);
-                this.fetch();
+        fetch: function() {
+            this.server.sshProxy.exec('lsb_release -c', {}, _.bind(function(data) {
+                var codename = data.slice(1 + data.indexOf(':')).trim();
+                this.set('codename', codename.charAt(0).toUpperCase() + codename.slice(1));
+            }, this));
 
-                // Todo: refactor this into server model
-//                this.server.ws.on('error', _.bind(function(errorMsg) {
-//                    if (errorMsg === 'handshake error') {
-//                        this.getAuthToken();
-//                    }
-//                }, this));
-            },
+            this.server.sshProxy.exec('lsb_release -d', {}, _.bind(function(data) {
+                this.set('release', data.slice(1 + data.indexOf(':')).trim());
+            }, this));
 
-            fetch: function() {
-                this.server.ws.emit('os-platform');
-            },
-
-            connectAndFetch: function() {
-            },
-
-            parse: function(platformInfo) {
-                platformInfo.codename = platformInfo.codename.charAt(0).toUpperCase() + platformInfo.codename.slice(1);
-                this.set(platformInfo);
-            },
-
-            // Todo: refactor this into server model
-//            getAuthToken: function() {
-//                var that = this;
-//                $.ajax({
-//                    url: 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/authtoken',
-//                    type: 'GET',
-//                    success: function() {
-//                        that.ws.disconnect();
-//                        that.ws = io.connect(_this.url, App.ioConfig);
-//                        that.ws.on('error', function(errorMsg) {
-//                            console.log('error inside onError');
-//                            console.dir(arguments);
-//                            that.ws.on('os-platform', that.parse);
-//                            that.ws.emit('os-platform');
-//                        });
-//                    }
-//                });
-//            },
-
-            url: function() {
-                return 'https://' + this.server.get('ipv4') + ':' + this.server.get('port') + '/dash';
-            }
-        });
-    }
-);
+            this.server.sshProxy.exec('uname -r', {}, _.bind(function(data) {
+                this.set('kernel', data.slice(0, data.length - 1));
+            }, this));
+        }
+    });
+});

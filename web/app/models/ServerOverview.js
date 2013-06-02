@@ -1,9 +1,8 @@
 define([
     'underscore',
     'backbone',
-    'socket_io',
     'App'],
-    function(_, Backbone, io, App) {
+    function(_, Backbone, App) {
         return Backbone.Model.extend({
             defaults: {
                 'cpu': 0,

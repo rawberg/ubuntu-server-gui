@@ -1,6 +1,6 @@
-define(['jquery', 'underscore', 'backbone', 'socket_io', 'App'],
+define(['jquery', 'underscore', 'backbone', 'App'],
 
-    function($, _, Backbone, io, App) {
+    function($, _, Backbone, App) {
 
         return Backbone.Collection.extend({
 
