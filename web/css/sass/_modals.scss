@@ -1,0 +1,37 @@
+
+div.modal-footer.plain {
+    background-color: transparent;
+    border-top: none;
+}
+
+#modal_add_server {
+    width: 500px;
+    margin: -250px 0 0 -250px;
+}
+
+// Noob Tour Styles
+.noobtour-backdrop {
+    &.body-minus-footer {
+        bottom: 28px;
+    }
+
+    &.footer-minus-add-server {
+        top:  28px;
+        bottom:  0px;
+        left: 31px;
+    }
+}
+
+.noobtour-popover.popover.top {
+    .arrow {
+        left:  0 !important;
+        margin-left: 0 !important;
+    }
+}
+
+// Server Connection Modal
+#server-connection-modal {
+  h3, span.connection-status {
+    text-transform: capitalize;
+  }
+}
