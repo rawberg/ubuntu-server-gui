@@ -4,6 +4,13 @@
 @import "compass/css3/images";
 @import "compass/utilities/sprites";
 
+// Core
+@import "core/typography";
+@import "core/container";
+@import "core/background";
+@import "core/foreground";
+@import "core/spacing";
+
 // Application Components
 @import "main-toolbar";
 @import "dashboard";
@@ -15,7 +22,7 @@
 // Font Awesome
 @import "../font-awesome/sass/font-awesome.scss";
 
-html, body {
+html {
     width: 100%;
 	min-height:100%;
   	height:100%;
@@ -23,11 +30,13 @@ html, body {
 
 body {
   position: relative;
+  height:100%;
 }
 
 #viewport {
     width: 100%;
     height: 100%;
+    margin-bottom: -30px;
 }
 
 #ace-editor {

@@ -1,31 +1,38 @@
 #sidebar_left {
-  @include box-flex(0);
-  @include display-box;
+  @extend %offwhite-background;
+  @extend %side-panel-container;
   min-width: 216px;
   width: 216px;
   min-height: 100%;
-  background-color: #efebf2;
-  border-right: 1px solid #a5a5a5;
-  ul#left_sidebar_serverlist {
-    width: 100%;
-    list-style: none;
-    margin: 0;
+  padding-top: 50px;
+
+  ul {
+    @extend %list-spacing;
+    @extend %list-background;
+    min-width: 216px;
+
     li {
-      width: 100%;
+      @extend %full-width-spacing;
+      @extend %centered-text;
+
+      max-width: 215px; // allow 1px for right border
       height: 110px;
-      background: #efebf2 url(../images/icons/sidebar-left/server-silver-small.png) no-repeat 50% 50%;
+      background-image: url(../images/icons/sidebar-left/server-silver-small.png);
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      @extend %side-panel-background;
       border-bottom: 1px solid #c1c1c1;
-      text-align: center;
+      border-right: 1px solid #a5a5a5;
+
       &:hover {
-        background-color: #fcf7f2;
+        @extend %side-panel-hover-background;
       }
 
       span {
         position: relative;
         top: 84px;
-        font-family: Arial, Helvetica, Tahoma, sans-serif;
-        font-size: 13px;
-        color: rgba(33, 33, 33, 0.57);
+        @extend %side-panel-text;
+        cursor: default;
       }
     }
   }
@@ -34,6 +41,7 @@
 #file-manager-layout {
   width: 100%;
   min-height:100%;
+
   #file-manager {
     min-height: 500px;
   }
@@ -41,8 +49,7 @@
 
 #dashboard_layout {
     width: 100%;
-    min-height:100%;
-    margin-top: 50px;
+    height: 100%;
     @include display-box;
     @include box-orient(horizontal);
     @include box-align(stretch);
@@ -185,15 +192,15 @@
         }
         
         .software {
-                @include box-orient(vertical);
-                @include box-align(stretch);
-                @include box-pack(center);            
-                
-                position: relative;
-                h2 {
-                    position: absolute;
-                    top: 19px;
-                }
+          @include box-orient(vertical);
+          @include box-align(stretch);
+          @include box-pack(center);
+          background-color: #ffffff;
+          position: relative;
+          h2 {
+            position: absolute;
+            top: 19px;
+          }
             
             .container {
                 @include display-box;

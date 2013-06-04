@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         // Configuration options for the "watch" task.
         watch: {
             compass: {
-                files: ['css/sass/*.scss'],
+                files: ['css/sass/*.scss', 'css/sass/core/*.scss'],
                 tasks: ['compass:dev']
             }
         },

@@ -28,7 +28,7 @@ define(function (require_browser, exports, module) {
         regions: {
             sidebarLeftRegion: '#sidebar_left',
             performanceRegion: '#dash_performance',
-            servicesRegion: '#dash_services',
+//            servicesRegion: '#dash_services',
             platformRegion: '#dash_platform'
         },
 

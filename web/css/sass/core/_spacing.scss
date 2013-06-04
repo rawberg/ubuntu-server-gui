@@ -1,0 +1,8 @@
+%full-width-spacing {
+  width: 100%;
+}
+
+%list-spacing {
+  @extend %full-width-spacing;
+  margin: 0;
+}

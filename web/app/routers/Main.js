@@ -4,7 +4,7 @@ define(function (require_browser) {
     return Marionette.AppRouter.extend({
 
         appRoutes: {
-            "": "filemanager",
+            "": "dashboard",
             "filemanager": "filemanager",
             "dashboard": "dashboard",
             "auth/login": "login",

@@ -1,13 +1,63 @@
+#sidebar_left ul li {
+  text-align: center;
+}
+
+#sidebar_left ul li span {
+  font-family: Arial, Helvetica, Tahoma, sans-serif;
+  font-size: 13px;
+  color: rgba(33, 33, 33, 0.57);
+}
+
+#sidebar_left {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  -ms-box-flex: 0;
+  box-flex: 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-right: 1px solid #a5a5a5;
+}
+
+#sidebar_left {
+  background-color: #EFEBF2;
+}
+
+#sidebar_left ul {
+  list-style: none;
+}
+
+#sidebar_left ul li {
+  background-color: #EFEBF2;
+}
+
+#sidebar_left ul li:hover {
+  background-color: #FCF7F2;
+}
+
+#sidebar_left ul, #sidebar_left ul li {
+  width: 100%;
+}
+
+#sidebar_left ul {
+  margin: 0;
+}
+
 .toolbar-sprite, .toolbar-cloud, .toolbar-dashboard, .toolbar-filemanager {
-  background: url('../images/icons/toolbar-s82e670740e.png') no-repeat;
+  background-image: url('../images/icons/toolbar-sb3f00fb1cd.png');
+  background-repeat: no-repeat;
 }
 
 .toolbar-cloud {
-  background-position: 0 -25px;
+  background-position: 0 0;
 }
 
 .toolbar-dashboard {
-  background-position: 0 0;
+  background-position: 0 -25px;
 }
 
 .toolbar-filemanager {
@@ -40,41 +90,27 @@ header#main_toolbar ul#toolbar_nav li {
 }
 
 #sidebar_left {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  -ms-box-flex: 0;
-  box-flex: 0;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-box;
-  display: box;
   min-width: 216px;
   width: 216px;
   min-height: 100%;
-  background-color: #efebf2;
+  padding-top: 50px;
+}
+#sidebar_left ul {
+  min-width: 216px;
+}
+#sidebar_left ul li {
+  max-width: 215px;
+  height: 110px;
+  background-image: url(../images/icons/sidebar-left/server-silver-small.png);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid #c1c1c1;
   border-right: 1px solid #a5a5a5;
 }
-#sidebar_left ul#left_sidebar_serverlist {
-  width: 100%;
-  list-style: none;
-  margin: 0;
-}
-#sidebar_left ul#left_sidebar_serverlist li {
-  width: 100%;
-  height: 110px;
-  background: #efebf2 url(../images/icons/sidebar-left/server-silver-small.png) no-repeat 50% 50%;
-  border-bottom: 1px solid #c1c1c1;
-  text-align: center;
-}
-#sidebar_left ul#left_sidebar_serverlist li:hover {
-  background-color: #fcf7f2;
-}
-#sidebar_left ul#left_sidebar_serverlist li span {
+#sidebar_left ul li span {
   position: relative;
   top: 84px;
-  font-family: Arial, Helvetica, Tahoma, sans-serif;
-  font-size: 13px;
-  color: rgba(33, 33, 33, 0.57);
+  cursor: default;
 }
 
 #file-manager-layout {
@@ -87,8 +123,7 @@ header#main_toolbar ul#toolbar_nav li {
 
 #dashboard_layout {
   width: 100%;
-  min-height: 100%;
-  margin-top: 50px;
+  height: 100%;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-box;
@@ -290,6 +325,7 @@ header#main_toolbar ul#toolbar_nav li {
   -moz-box-pack: center;
   -ms-box-pack: center;
   box-pack: center;
+  background-color: #ffffff;
   position: relative;
 }
 #dashboard_layout #main_content .software h2 {
@@ -446,6 +482,7 @@ footer #left_sidebar_footerbar {
   box-flex: 0;
   min-width: 216px;
   width: 216px;
+  border-right: 1px solid #a5a5a5;
 }
 footer #left_sidebar_footerbar ul {
   list-style: none;
@@ -475,7 +512,6 @@ footer #center_footerbar {
   box-flex: 1;
   width: 100%;
   min-width: 100%;
-  border-left: 1px solid #a5a5a5;
 }
 
 div.modal-footer.plain {
@@ -1587,7 +1623,7 @@ ul.icons li .icon-large:before {
   content: "\f200";
 }
 
-html, body {
+html {
   width: 100%;
   min-height: 100%;
   height: 100%;
@@ -1595,11 +1631,13 @@ html, body {
 
 body {
   position: relative;
+  height: 100%;
 }
 
 #viewport {
   width: 100%;
   height: 100%;
+  margin-bottom: -30px;
 }
 
 #ace-editor {
