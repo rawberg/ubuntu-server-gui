@@ -1,11 +1,11 @@
 # CSS and SCSS       #
 #####################
-public/.sass-cache
+web/.sass-cache
 
 # Node Modules #
 ######################
 node_modules
-public/node_modules
+web/node_modules
 
 # Logs and databases #
 ######################
