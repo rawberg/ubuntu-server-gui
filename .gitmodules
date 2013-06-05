@@ -5,4 +5,4 @@
 [submodule "web/css/flatstrap"]
 	path = web/css/flatstrap
 	url = git://github.com/littlesparkvt/flatstrap.git
-	branch = master
+	branch = f290bd9011fb8b15c9f01700b8962736fba35335
