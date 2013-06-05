@@ -2,3 +2,7 @@
 	path = web/css/fuelux
 	url = git://github.com/ExactTarget/fuelux.git
 	branch = 73a3c7d6e6dcf91e6a80ec7f9d762b0518e67e78
+[submodule "web/css/flatstrap"]
+	path = web/css/flatstrap
+	url = git://github.com/littlesparkvt/flatstrap.git
+	branch = master
