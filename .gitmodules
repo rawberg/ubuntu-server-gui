@@ -13,4 +13,3 @@
 [submodule "web/css/bootswatch"]
 	path = web/css/bootswatch
 	url = git://github.com/thomaspark/bootswatch.git
-	branch = v2.3.2
