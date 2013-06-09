@@ -106,7 +106,7 @@
     .left, .right {
       display: inline-block;
       position: relative;
-      min-height: 160px;
+      //min-height: 160px;
       padding-bottom: 0;
       text-align: center;
       canvas {
@@ -142,14 +142,18 @@
       min-width: 31%;
       margin-left: 6%;
       background-color: #f5f5f5;
-
-      span.gauge-text-value {
-        bottom: 71px;
-        left: 140px;
-      }
-
-      i {
-        bottom: 5px;
+      span.statbox {
+        display: inline-block;
+        padding: 30px 40px;
+        margin-bottom: 15px;
+        background-color: #F8F8F8;
+        border-radius: 6px;
+        border: 1px solid rgba(213, 213, 213, 0.53);
+        font-family: 'Amaranth',sans-serif;
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: bold;
+        text-align: center;
       }
     }
 

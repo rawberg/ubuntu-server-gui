@@ -20,7 +20,8 @@ define(function(require_browser, exports, module) {
                 observe: 'memory',
                 onGet: 'formatMemory',
                 updateMethod: 'html'
-            }
+            },
+            '[name=tcp_connections]': 'tcp_connections'
         },
 
         initialize: function() {
@@ -36,26 +37,9 @@ define(function(require_browser, exports, module) {
         },
 
         onRender: function() {
-            var cpuGaugeTarget, memoryGaugeTarget;
             this.stickit();
 
-//            cpuGaugeTarget = this.$('#dashboard_cpu_donut')[0];
-//            this.cpuGauge = new Donut(cpuGaugeTarget);
-//            this.cpuGauge.setOptions({
-//                lines: 12,
-//                angle: 0.50,
-//                lineWidth: 0.10,
-//                colorStart: '#A6B2FF',
-//                colorStop: '#929DE0',
-//                strokeColor: '#e0e0e0',
-//                generateGradient: true
-//            });
-//            this.cpuGauge.maxValue = 100;
-//            this.cpuGauge.set(this.model.get('cpu'));
-//            this.model.on("change:cpu", function(model, val) {
-//                return this.cpuGauge.set(val);
-//            }, this);
-            memoryGaugeTarget = this.$('#dashboard_memory_donut')[0];
+            var memoryGaugeTarget = this.$('#dashboard_memory_donut')[0];
             this.memoryGauge = new Donut(memoryGaugeTarget);
             this.memoryGauge.setOptions({
                 lines: 12,
@@ -70,9 +54,10 @@ define(function(require_browser, exports, module) {
 
             this.memoryGauge.maxValue = 100;
             this.memoryGauge.set(this.model.get('memory'));
-            this.model.on("change:memory", function(model, val) {
-                return this.memoryGauge.set(val);
-            }, this);
+
+            this.model.on("change:memory", _.bind(function(model, val) {
+                this.memoryGauge.set(val);
+            }, this));
         }
     });
 });

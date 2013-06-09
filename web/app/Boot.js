@@ -19,7 +19,7 @@ require_browser.config({
         bootstrap_tooltip: '../css/flatstrap/assets/js/bootstrap-tooltip',
         bootstrap_popover: '../css/flatstrap/assets/js/bootstrap-popover',
         bootstrap_transition: '../css/flatstrap/assets/js/bootstrap-transition',
-        gauge: '../libs/gauge.js/dist/gauge',
+        gauge: '../libs/gauge.js/gauge.min',
         contextmenu: '../libs/contextmenu/contextmenu',
 
         // Misc
