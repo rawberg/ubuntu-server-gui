@@ -19,9 +19,9 @@ define(function (require_browser, exports, module) {
         bindings: {
             'h3': 'connection_status',
             'span.connection-status': 'connection_status',
-            'span.server-name': 'server_name',
-            'span.server-port': 'server_port',
-            'span.server-addr': 'server_addr'
+            'span.server-name': 'name',
+            'span.server-port': 'port',
+            'span.server-addr': 'ipv4'
         },
 
         modelEvents: {

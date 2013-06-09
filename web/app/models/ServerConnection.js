@@ -10,10 +10,6 @@ define(function (require_browser) {
                 throw "Expected server to be provided.";
             }
             this.options = options || {};
-            // copy these vals so we can access them in server connection views
-            this.set('server_name', options.server.get('name'));
-            this.set('server_port', options.server.get('port'));
-            this.set('server_addr', options.server.get('ipv4'));
         },
 
         connect: function() {

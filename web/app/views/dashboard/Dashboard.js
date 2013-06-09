@@ -44,7 +44,7 @@ define(function (require_browser, exports, module) {
         },
 
         onServerClick: function(itemView, server) {
-            var serverConnection = new ServerConnection({connection_status: 'connecting'}, {server: server});
+            var serverConnection = new ServerConnection(_.extend({connection_status: 'connecting'}, server.toJSON()), {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
             serverConnection.connect();
         },
