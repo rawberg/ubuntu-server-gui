@@ -1,3 +1,4 @@
+// Compass
 @import "compass/css3/border-radius";
 @import "compass/css3/flexbox";
 @import "compass/css3/box-sizing";
@@ -20,7 +21,7 @@
 @import "contextmenu"; // converted from lib/contextmenu/contextmenu.css (via sass-convert)
 
 // Font Awesome
-@import "../font-awesome/sass/font-awesome.scss";
+@import "../font-awesome/build/assets/font-awesome/css/font-awesome.css";
 
 html {
     width: 100%;

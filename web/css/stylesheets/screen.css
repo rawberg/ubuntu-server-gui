@@ -1,13 +1,17 @@
+@import url(../font-awesome/build/assets/font-awesome/css/font-awesome.css);
+/* line 1, ../sass/core/_typography.scss */
 #sidebar_left ul li {
   text-align: center;
 }
 
+/* line 5, ../sass/core/_typography.scss */
 #sidebar_left ul li span {
   font-family: Arial, Helvetica, Tahoma, sans-serif;
   font-size: 13px;
   color: rgba(33, 33, 33, 0.57);
 }
 
+/* line 1, ../sass/core/_container.scss */
 #sidebar_left {
   -webkit-flex: 0;
   -ms-flex: 0;
@@ -22,47 +26,58 @@
   border-right: 1px solid #a5a5a5;
 }
 
+/* line 1, ../sass/core/_background.scss */
 #sidebar_left {
   background-color: #EFEBF2;
 }
 
+/* line 5, ../sass/core/_background.scss */
 #sidebar_left ul {
   list-style: none;
 }
 
+/* line 9, ../sass/core/_background.scss */
 #sidebar_left ul li {
   background-color: #EFEBF2;
 }
 
+/* line 13, ../sass/core/_background.scss */
 #sidebar_left ul li:hover {
   background-color: #FCF7F2;
 }
 
+/* line 1, ../sass/core/_spacing.scss */
 #sidebar_left ul, #sidebar_left ul li {
   width: 100%;
 }
 
+/* line 5, ../sass/core/_spacing.scss */
 #sidebar_left ul {
   margin: 0;
 }
 
+/* line 63, icons/toolbar/*.png */
 .toolbar-sprite, .toolbar-cloud, .toolbar-dashboard, .toolbar-filemanager {
   background-image: url('../images/icons/toolbar-sb3f00fb1cd.png');
   background-repeat: no-repeat;
 }
 
+/* line 77, ../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.4/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .toolbar-cloud {
   background-position: 0 0;
 }
 
+/* line 77, ../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.4/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .toolbar-dashboard {
   background-position: 0 -25px;
 }
 
+/* line 77, ../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.4/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
 .toolbar-filemanager {
   background-position: 0 -50px;
 }
 
+/* line 4, ../sass/_main-toolbar.scss */
 header#main_toolbar {
   position: fixed;
   top: 0;
@@ -75,6 +90,7 @@ header#main_toolbar {
   background: #201219 url(../images/app-toolbar-bk.png) repeat-x;
   border-top: 1px solid #404040;
 }
+/* line 15, ../sass/_main-toolbar.scss */
 header#main_toolbar ul#toolbar_nav {
   display: block;
   list-style: none;
@@ -82,12 +98,14 @@ header#main_toolbar ul#toolbar_nav {
   width: 200px;
   margin: 13px 0 0 28px;
 }
+/* line 21, ../sass/_main-toolbar.scss */
 header#main_toolbar ul#toolbar_nav li {
   float: left;
   width: 47px;
   height: 25px;
 }
 
+/* line 1, ../sass/_dashboard.scss */
 #dashboard_layout {
   height: 100%;
   display: -webkit-flexbox;
@@ -103,6 +121,7 @@ header#main_toolbar ul#toolbar_nav li {
   align-items: stretch;
 }
 
+/* line 8, ../sass/_dashboard.scss */
 #sidebar_left {
   display: -webkit-flexbox;
   display: -ms-flexbox;
@@ -113,9 +132,11 @@ header#main_toolbar ul#toolbar_nav li {
   min-height: 100%;
   padding-top: 50px;
 }
+/* line 17, ../sass/_dashboard.scss */
 #sidebar_left ul {
   min-width: 216px;
 }
+/* line 22, ../sass/_dashboard.scss */
 #sidebar_left ul li {
   max-width: 215px;
   height: 110px;
@@ -125,20 +146,24 @@ header#main_toolbar ul#toolbar_nav li {
   border-bottom: 1px solid #c1c1c1;
   border-right: 1px solid #a5a5a5;
 }
+/* line 39, ../sass/_dashboard.scss */
 #sidebar_left ul li span {
   position: relative;
   top: 84px;
   cursor: default;
 }
 
+/* line 49, ../sass/_dashboard.scss */
 #file-manager-layout {
   width: 100%;
   min-height: 100%;
 }
+/* line 53, ../sass/_dashboard.scss */
 #file-manager-layout #file-manager {
   min-height: 500px;
 }
 
+/* line 60, ../sass/_dashboard.scss */
 #main_content {
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -154,8 +179,10 @@ header#main_toolbar ul#toolbar_nav li {
   -ms-flex-align: stretch;
   -webkit-align-items: stretch;
   align-items: stretch;
+  padding-top: 50px;
 }
-#main_content #dash_performance, #main_content #dash_services, #main_content #dash_software {
+/* line 68, ../sass/_dashboard.scss */
+#main_content #dash_performance, #main_content #dash_software {
   display: -webkit-flexbox;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -168,194 +195,153 @@ header#main_toolbar ul#toolbar_nav li {
   -webkit-align-items: stretch;
   align-items: stretch;
 }
-#main_content .performance, #main_content .services, #main_content .software {
+/* line 75, ../sass/_dashboard.scss */
+#main_content #dash_performance {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  padding: 19px 6px 0px 22px;
-  height: 100%;
+  min-height: 260px;
+}
+/* line 80, ../sass/_dashboard.scss */
+#main_content #dash_platform {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+/* line 84, ../sass/_dashboard.scss */
+#main_content .performance, #main_content .software {
+  width: 100%;
   font-size: 13px;
   font-family: "Lucida Grande" sans-serif;
 }
-#main_content .performance span.label, #main_content .services span.label, #main_content .software span.label {
+/* line 89, ../sass/_dashboard.scss */
+#main_content .performance span.label, #main_content .software span.label {
   font-weight: bold;
 }
-#main_content .performance h2, #main_content .services h2, #main_content .software h2 {
-  display: inline-block;
+/* line 93, ../sass/_dashboard.scss */
+#main_content .performance h2, #main_content .software h2 {
   font-size: 17px;
   font-weight: normal;
   color: #616161;
 }
+/* line 100, ../sass/_dashboard.scss */
 #main_content #dash_performance, #main_content .performance, #main_content #dash_software, #main_content .software {
   background-color: #f5f5f5;
 }
+/* line 104, ../sass/_dashboard.scss */
 #main_content .performance {
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-  -webkit-flex-pack: left;
-  -ms-flex-pack: left;
-  -webkit-justify-content: left;
-  justify-content: left;
-  max-height: 240px;
+  padding: 10px 6px 0px 22px;
 }
+/* line 106, ../sass/_dashboard.scss */
 #main_content .performance .left, #main_content .performance .right {
+  display: inline-block;
   position: relative;
   min-height: 160px;
   padding-bottom: 0;
   text-align: center;
 }
+/* line 112, ../sass/_dashboard.scss */
 #main_content .performance .left canvas, #main_content .performance .right canvas {
-  margin-top: 56px;
+  margin-top: 18px;
   margin-bottom: 7px;
 }
+/* line 117, ../sass/_dashboard.scss */
 #main_content .performance .left span.gauge-text-value, #main_content .performance .right span.gauge-text-value {
-  display: block;
-  position: relative;
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+  width: 100px;
   font-family: 'Amaranth',sans-serif;
   font-size: 24px;
+  line-height: 30px;
   font-weight: bold;
 }
+/* line 128, ../sass/_dashboard.scss */
 #main_content .performance .left i, #main_content .performance .right i {
-  position: relative;
+  position: absolute;
   font-size: 11px;
 }
+/* line 133, ../sass/_dashboard.scss */
 #main_content .performance .left span.gauge-label, #main_content .performance .right span.gauge-label {
-  display: block;
-  position: relative;
-  bottom: 36px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
 }
+/* line 141, ../sass/_dashboard.scss */
 #main_content .performance .left {
   min-width: 31%;
   margin-left: 6%;
   background-color: #f5f5f5;
 }
+/* line 146, ../sass/_dashboard.scss */
 #main_content .performance .left span.gauge-text-value {
   bottom: 71px;
-  left: 0px;
+  left: 140px;
 }
+/* line 151, ../sass/_dashboard.scss */
 #main_content .performance .left i {
-  bottom: 96px;
-  left: 30px;
+  bottom: 5px;
 }
+/* line 156, ../sass/_dashboard.scss */
 #main_content .performance .right {
   min-width: 16%;
   background-color: #f5f5f5;
 }
+/* line 160, ../sass/_dashboard.scss */
 #main_content .performance .right span.gauge-text-value {
-  bottom: 71px;
-  left: 0;
+  top: 55px;
+  left: 95px;
 }
+/* line 165, ../sass/_dashboard.scss */
 #main_content .performance .right i {
-  bottom: 97px;
-  left: 21px;
+  bottom: 7px;
 }
-#main_content .services {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-flex-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-  color: #020001;
-  background-color: #ffffff;
-}
-#main_content .services .container {
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-#main_content .services .container span {
-  display: block;
-  margin-bottom: 8px;
-}
-#main_content .services .container .col {
-  min-width: 135px;
-  height: 100%;
-  padding-top: 30px;
-}
+/* line 171, ../sass/_dashboard.scss */
 #main_content .software {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-flex-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-  -webkit-flex-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
   background-color: #ffffff;
-  position: relative;
 }
+/* line 173, ../sass/_dashboard.scss */
 #main_content .software h2 {
-  position: absolute;
-  top: 19px;
+  padding-left: 20px;
 }
+/* line 177, ../sass/_dashboard.scss */
 #main_content .software .container {
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-  -webkit-flex-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
   width: 100%;
-  margin-bottom: 25px;
+  text-align: center;
 }
+/* line 182, ../sass/_dashboard.scss */
 #main_content .software .container span {
   display: block;
   margin-bottom: 10px;
+  background-color: transparent;
 }
+/* line 186, ../sass/_dashboard.scss */
+#main_content .software .container span.label {
+  color: rgba(51, 51, 51, 0.79);
+  text-shadow: none;
+}
+/* line 192, ../sass/_dashboard.scss */
 #main_content .software .container .left {
+  display: inline-block;
   min-height: 100%;
-  margin-left: -15%;
   padding-right: 5px;
   text-align: right;
 }
+/* line 199, ../sass/_dashboard.scss */
 #main_content .software .container .right {
+  display: inline-block;
   min-height: 100%;
-  padding-left: 5px;
+  padding: 0 160px 0 5px;
   text-align: left;
 }
 
+/* line 1, ../sass/_login-signup.scss */
 .login-signup-layout {
   width: 100%;
   height: 100%;
   position: relative;
 }
+/* line 6, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container {
   position: absolute;
   top: 50%;
@@ -367,61 +353,77 @@ header#main_toolbar ul#toolbar_nav li {
   background-color: #F7F7F7;
   border: 1px solid #DDDDDD;
 }
+/* line 17, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container h2 {
   display: inline-block;
   margin: 0 0 34px 48px;
   color: #5E5E5E;
 }
+/* line 23, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .alert-container {
   margin: 20px 45px 0 45px;
   min-height: 36px;
 }
+/* line 26, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .alert-container div {
   margin-bottom: 4px;
 }
+/* line 31, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container, .login-signup-layout .login-signup-container .signup-container {
   width: 449px;
   height: 100%;
 }
+/* line 35, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container form, .login-signup-layout .login-signup-container .signup-container form {
   position: relative;
 }
+/* line 37, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container form label, .login-signup-layout .login-signup-container .login-container form input, .login-signup-layout .login-signup-container .login-container form button, .login-signup-layout .login-signup-container .login-container form select, .login-signup-layout .login-signup-container .login-container form textarea, .login-signup-layout .login-signup-container .signup-container form label, .login-signup-layout .login-signup-container .signup-container form input, .login-signup-layout .login-signup-container .signup-container form button, .login-signup-layout .login-signup-container .signup-container form select, .login-signup-layout .login-signup-container .signup-container form textarea {
   font-size: 15px;
 }
+/* line 41, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container form .controls, .login-signup-layout .login-signup-container .signup-container form .controls {
   margin-left: 94px;
 }
+/* line 45, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container form label, .login-signup-layout .login-signup-container .signup-container form label {
   width: 75px;
 }
+/* line 49, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container form button, .login-signup-layout .login-signup-container .signup-container form button {
   padding: 8px 20px 8px;
   line-height: 20px;
 }
+/* line 56, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container {
   float: left;
   border-right: dashed 1px #dedede;
 }
+/* line 60, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container form {
   padding-left: 25px;
 }
+/* line 63, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .login-container form button {
   position: absolute;
   right: 107px;
 }
+/* line 70, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .signup-container {
   float: right;
   border-left: solid 1px #f7f7f7;
 }
+/* line 74, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .signup-container form {
   padding-left: 40px;
 }
+/* line 76, ../sass/_login-signup.scss */
 .login-signup-layout .login-signup-container .signup-container form button {
   position: absolute;
   right: 91px;
 }
 
+/* line 1, ../sass/_main-footerbar.scss */
 footer {
   width: 100%;
   display: -webkit-flexbox;
@@ -439,6 +441,7 @@ footer {
   background: linear, top, #f3f4f4, #ebebeb, "left top, left bottom";
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f3f4f4', EndColorStr='#ebebeb');
 }
+/* line 9, ../sass/_main-footerbar.scss */
 footer div#left_sidebar_footerbar, footer div#center_footerbar {
   display: -webkit-flexbox;
   display: -ms-flexbox;
@@ -456,6 +459,7 @@ footer div#left_sidebar_footerbar, footer div#center_footerbar {
   align-items: stretch;
   border-top: 1px solid #d4d4d4;
 }
+/* line 16, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar {
   -webkit-flex: 0;
   -ms-flex: 0;
@@ -464,10 +468,12 @@ footer #left_sidebar_footerbar {
   width: 216px;
   border-right: 1px solid #a5a5a5;
 }
+/* line 21, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul {
   list-style: none;
   margin: 0;
 }
+/* line 24, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li {
   width: 30px;
   line-height: 24px;
@@ -475,50 +481,61 @@ footer #left_sidebar_footerbar ul li {
   border-right: 1px solid #c5c5c5;
   text-align: center;
 }
+/* line 31, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li a i {
   color: #424242;
 }
+/* line 35, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li a:hover {
   cursor: default;
   text-decoration: none;
 }
+/* line 38, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li a:hover i {
   color: #707070;
 }
+/* line 45, ../sass/_main-footerbar.scss */
 footer #center_footerbar {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
 }
 
+/* line 2, ../sass/_modals.scss */
 div.modal-footer.plain {
   background-color: transparent;
   border-top: none;
 }
 
+/* line 7, ../sass/_modals.scss */
 #modal_add_server {
   width: 500px;
   margin: -250px 0 0 -250px;
 }
 
+/* line 14, ../sass/_modals.scss */
 .noobtour-backdrop.body-minus-footer {
   bottom: 28px;
 }
+/* line 18, ../sass/_modals.scss */
 .noobtour-backdrop.footer-minus-add-server {
   top: 28px;
   bottom: 0px;
   left: 31px;
 }
 
+/* line 26, ../sass/_modals.scss */
 .noobtour-popover.popover.top .arrow {
   left: 0 !important;
   margin-left: 0 !important;
 }
 
+/* line 34, ../sass/_modals.scss */
 #server-connection-modal h3, #server-connection-modal span.connection-status {
   text-transform: capitalize;
 }
 
+/* line 2, ../sass/_contextmenu.scss */
 body > div._contextmenu_screen_ {
   position: fixed;
   top: 0;
@@ -532,28 +549,34 @@ body > div._contextmenu_screen_ {
   overflow: hidden;
   z-index: 120000;
 }
+/* line 15, ../sass/_contextmenu.scss */
 body > menu {
   display: none;
 }
 
+/* line 21, ../sass/_contextmenu.scss */
 ._contextmenu_screen_ menu {
   display: inline-block;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
+/* line 22, ../sass/_contextmenu.scss */
 ._contextmenu_screen_ menu.fadeout {
   -webkit-transition: opacity 0.15s linear;
 }
+/* line 30, ../sass/_contextmenu.scss */
 ._contextmenu_screen_ menuitem {
   display: block;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
+/* line 35, ../sass/_contextmenu.scss */
 ._contextmenu_screen_ menuitem:before {
   content: attr(label);
 }
+/* line 39, ../sass/_contextmenu.scss */
 ._contextmenu_screen_ > menu {
   position: fixed;
   display: none;
@@ -563,15 +586,18 @@ body > menu {
   -webkit-user-select: none;
   list-style: none;
 }
+/* line 49, ../sass/_contextmenu.scss */
 ._contextmenu_screen_ menu * {
   cursor: default;
   user-select: none;
   -webkit-user-select: none;
 }
+/* line 54, ../sass/_contextmenu.scss */
 ._contextmenu_screen_ menu menuitem {
   -webkit-user-drag: none;
 }
 
+/* line 61, ../sass/_contextmenu.scss */
 .win7 ._contextmenu_screen_ menu {
   background: #f0f0f0 url(../images/repeat-y.png?) repeat-y;
   font-family: 'Segoe UI';
@@ -583,20 +609,24 @@ body > menu {
   -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
   color: black;
 }
+/* line 73, ../sass/_contextmenu.scss */
 .win7 menu menuitem {
   padding: 0px 5px 0px 32px;
   height: 20px;
   border-radius: 3px;
   border: 1px solid transparent;
 }
+/* line 78, ../sass/_contextmenu.scss */
 .win7 menu menuitem:hover {
   border: 1px solid #b3d0f5;
   background-color: rgba(172, 201, 255, 0.05);
 }
+/* line 82, ../sass/_contextmenu.scss */
 .win7 menu menuitem[open=true] {
   border: 1px solid #b3d0f5;
   background-color: rgba(172, 201, 255, 0.05);
 }
+/* line 87, ../sass/_contextmenu.scss */
 .win7 menu hr {
   height: 0px;
   border: none;
@@ -605,6 +635,7 @@ body > menu {
   margin: 4px;
   margin-left: 27px;
 }
+/* line 96, ../sass/_contextmenu.scss */
 .win7 ._contextmenu_screen_ menu > .submenu:after {
   content: " ";
   display: block;
@@ -617,6 +648,7 @@ body > menu {
   top: 6px;
 }
 
+/* line 110, ../sass/_contextmenu.scss */
 .osx10_7 ._contextmenu_screen_ > menu {
   background-color: rgba(255, 255, 255, 0.94902);
   -moz-background-clip: padding;
@@ -638,9 +670,11 @@ body > menu {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: subpixel-antialiased;
 }
+/* line 130, ../sass/_contextmenu.scss */
 .osx10_7 ._contextmenu_screen_ > menu.submenu {
   border-top-left-radius: 0px;
 }
+/* line 136, ../sass/_contextmenu.scss */
 .osx10_7 ._contextmenu_screen_ menu > .submenu:after {
   content: "\25B6";
   float: right;
@@ -650,17 +684,21 @@ body > menu {
   font-size: 12px;
   color: #404040;
 }
+/* line 145, ../sass/_contextmenu.scss */
 .osx10_7 ._contextmenu_screen_ menu > .submenu:hover:after, .osx10_7 ._contextmenu_screen_ menu > .submenu[open=true]:after {
   color: white;
 }
+/* line 149, ../sass/_contextmenu.scss */
 .osx10_7 ._contextmenu_screen_ menu menuitem {
   height: 19px;
   padding: 0px 19px 0px 21px;
 }
+/* line 152, ../sass/_contextmenu.scss */
 .osx10_7 ._contextmenu_screen_ menu menuitem:hover, .osx10_7 ._contextmenu_screen_ menu menuitem.submenu[open=true] {
   background: #3c6ff7 url(../images/repeat-x.png) repeat-x;
   color: white;
 }
+/* line 157, ../sass/_contextmenu.scss */
 .osx10_7 ._contextmenu_screen_ menu hr {
   height: 0px;
   border: none;
@@ -669,954 +707,27 @@ body > menu {
   margin: 5px 1px 6px 1px;
 }
 
-/*  Font Awesome
-    the iconic font designed for use with Twitter Bootstrap
-    -------------------------------------------------------
-    The full suite of pictographic icons, examples, and documentation
-    can be found at: http://fortawesome.github.com/Font-Awesome/
-
-    License
-    -------------------------------------------------------
-    The Font Awesome webfont, CSS, and LESS files are licensed under CC BY 3.0:
-    http://creativecommons.org/licenses/by/3.0/ A mention of
-    'Font Awesome - http://fortawesome.github.com/Font-Awesome' in human-readable
-    source code is considered acceptable attribution (most common on the web).
-    If human readable source code is not available to the end user, a mention in
-    an 'About' or 'Credits' screen is considered acceptable (most common in desktop
-    or mobile software).
-
-    Contact
-    -------------------------------------------------------
-    Email: dave@davegandy.com
-    Twitter: http://twitter.com/fortaweso_me
-    Work: Lead Product Designer @ http://kyruus.com
-
-    */
-@font-face {
-  font-family: "FontAwesome";
-  src: url('fonts/../../font-awesome/font/fontawesome-webfont.eot');
-  src: url('fonts/../../font-awesome/font/fontawesome-webfont.eot?#iefix') format('eot'), url('fonts/../../font-awesome/font/fontawesome-webfont.woff') format('woff'), url('fonts/../../font-awesome/font/fontawesome-webfont.ttf') format('truetype'), url('fonts/../../font-awesome/font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/*  Font Awesome styles
-    ------------------------------------------------------- */
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  display: inline-block;
-  text-decoration: inherit;
-}
-
-a [class^="icon-"],
-a [class*=" icon-"] {
-  display: inline-block;
-  text-decoration: inherit;
-}
-
-/* makes the font 33% larger relative to the icon container */
-.icon-large:before {
-  vertical-align: middle;
-  font-size: 4/3em;
-}
-
-.btn [class^="icon-"],
-.btn [class*=" icon-"], .nav-tabs [class^="icon-"],
-.nav-tabs [class*=" icon-"] {
-  /* keeps button heights with and without icons the same */
-  line-height: .9em;
-}
-
-li [class^="icon-"],
-li [class*=" icon-"] {
-  display: inline-block;
-  width: 1.25em;
-  text-align: center;
-}
-li .icon-large:before,
-li .icon-large:before {
-  /* 1.5 increased font size for icon-large * 1.25 width */
-  width: 1.875em;
-}
-
-ul.icons {
-  list-style-type: none;
-  margin-left: 2em;
-  text-indent: -.8em;
-}
-ul.icons li [class^="icon-"],
-ul.icons li [class*=" icon-"] {
-  width: .8em;
-}
-ul.icons li .icon-large:before,
-ul.icons li .icon-large:before {
-  /* 1.5 increased font size for icon-large * 1.25 width */
-  vertical-align: initial;
-}
-
-/*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
-    readers do not read off random characters that represent icons */
-.icon-glass:before {
-  content: "\f000";
-}
-
-.icon-music:before {
-  content: "\f001";
-}
-
-.icon-search:before {
-  content: "\f002";
-}
-
-.icon-envelope:before {
-  content: "\f003";
-}
-
-.icon-heart:before {
-  content: "\f004";
-}
-
-.icon-star:before {
-  content: "\f005";
-}
-
-.icon-star-empty:before {
-  content: "\f006";
-}
-
-.icon-user:before {
-  content: "\f007";
-}
-
-.icon-film:before {
-  content: "\f008";
-}
-
-.icon-th-large:before {
-  content: "\f009";
-}
-
-.icon-th:before {
-  content: "\f00a";
-}
-
-.icon-th-list:before {
-  content: "\f00b";
-}
-
-.icon-ok:before {
-  content: "\f00c";
-}
-
-.icon-remove:before {
-  content: "\f00d";
-}
-
-.icon-zoom-in:before {
-  content: "\f00e";
-}
-
-.icon-zoom-out:before {
-  content: "\f010";
-}
-
-.icon-off:before {
-  content: "\f011";
-}
-
-.icon-signal:before {
-  content: "\f012";
-}
-
-.icon-cog:before {
-  content: "\f013";
-}
-
-.icon-trash:before {
-  content: "\f014";
-}
-
-.icon-home:before {
-  content: "\f015";
-}
-
-.icon-file:before {
-  content: "\f016";
-}
-
-.icon-time:before {
-  content: "\f017";
-}
-
-.icon-road:before {
-  content: "\f018";
-}
-
-.icon-download-alt:before {
-  content: "\f019";
-}
-
-.icon-download:before {
-  content: "\f01a";
-}
-
-.icon-upload:before {
-  content: "\f01b";
-}
-
-.icon-inbox:before {
-  content: "\f01c";
-}
-
-.icon-play-circle:before {
-  content: "\f01d";
-}
-
-.icon-repeat:before {
-  content: "\f01e";
-}
-
-/* \f020 doesn't work in Safari. all shifted one down */
-.icon-refresh:before {
-  content: "\f021";
-}
-
-.icon-list-alt:before {
-  content: "\f022";
-}
-
-.icon-lock:before {
-  content: "\f023";
-}
-
-.icon-flag:before {
-  content: "\f024";
-}
-
-.icon-headphones:before {
-  content: "\f025";
-}
-
-.icon-volume-off:before {
-  content: "\f026";
-}
-
-.icon-volume-down:before {
-  content: "\f027";
-}
-
-.icon-volume-up:before {
-  content: "\f028";
-}
-
-.icon-qrcode:before {
-  content: "\f029";
-}
-
-.icon-barcode:before {
-  content: "\f02a";
-}
-
-.icon-tag:before {
-  content: "\f02b";
-}
-
-.icon-tags:before {
-  content: "\f02c";
-}
-
-.icon-book:before {
-  content: "\f02d";
-}
-
-.icon-bookmark:before {
-  content: "\f02e";
-}
-
-.icon-print:before {
-  content: "\f02f";
-}
-
-.icon-camera:before {
-  content: "\f030";
-}
-
-.icon-font:before {
-  content: "\f031";
-}
-
-.icon-bold:before {
-  content: "\f032";
-}
-
-.icon-italic:before {
-  content: "\f033";
-}
-
-.icon-text-height:before {
-  content: "\f034";
-}
-
-.icon-text-width:before {
-  content: "\f035";
-}
-
-.icon-align-left:before {
-  content: "\f036";
-}
-
-.icon-align-center:before {
-  content: "\f037";
-}
-
-.icon-align-right:before {
-  content: "\f038";
-}
-
-.icon-align-justify:before {
-  content: "\f039";
-}
-
-.icon-list:before {
-  content: "\f03a";
-}
-
-.icon-indent-left:before {
-  content: "\f03b";
-}
-
-.icon-indent-right:before {
-  content: "\f03c";
-}
-
-.icon-facetime-video:before {
-  content: "\f03d";
-}
-
-.icon-picture:before {
-  content: "\f03e";
-}
-
-.icon-pencil:before {
-  content: "\f040";
-}
-
-.icon-map-marker:before {
-  content: "\f041";
-}
-
-.icon-adjust:before {
-  content: "\f042";
-}
-
-.icon-tint:before {
-  content: "\f043";
-}
-
-.icon-edit:before {
-  content: "\f044";
-}
-
-.icon-share:before {
-  content: "\f045";
-}
-
-.icon-check:before {
-  content: "\f046";
-}
-
-.icon-move:before {
-  content: "\f047";
-}
-
-.icon-step-backward:before {
-  content: "\f048";
-}
-
-.icon-fast-backward:before {
-  content: "\f049";
-}
-
-.icon-backward:before {
-  content: "\f04a";
-}
-
-.icon-play:before {
-  content: "\f04b";
-}
-
-.icon-pause:before {
-  content: "\f04c";
-}
-
-.icon-stop:before {
-  content: "\f04d";
-}
-
-.icon-forward:before {
-  content: "\f04e";
-}
-
-.icon-fast-forward:before {
-  content: "\f050";
-}
-
-.icon-step-forward:before {
-  content: "\f051";
-}
-
-.icon-eject:before {
-  content: "\f052";
-}
-
-.icon-chevron-left:before {
-  content: "\f053";
-}
-
-.icon-chevron-right:before {
-  content: "\f054";
-}
-
-.icon-plus-sign:before {
-  content: "\f055";
-}
-
-.icon-minus-sign:before {
-  content: "\f056";
-}
-
-.icon-remove-sign:before {
-  content: "\f057";
-}
-
-.icon-ok-sign:before {
-  content: "\f058";
-}
-
-.icon-question-sign:before {
-  content: "\f059";
-}
-
-.icon-info-sign:before {
-  content: "\f05a";
-}
-
-.icon-screenshot:before {
-  content: "\f05b";
-}
-
-.icon-remove-circle:before {
-  content: "\f05c";
-}
-
-.icon-ok-circle:before {
-  content: "\f05d";
-}
-
-.icon-ban-circle:before {
-  content: "\f05e";
-}
-
-.icon-arrow-left:before {
-  content: "\f060";
-}
-
-.icon-arrow-right:before {
-  content: "\f061";
-}
-
-.icon-arrow-up:before {
-  content: "\f062";
-}
-
-.icon-arrow-down:before {
-  content: "\f063";
-}
-
-.icon-share-alt:before {
-  content: "\f064";
-}
-
-.icon-resize-full:before {
-  content: "\f065";
-}
-
-.icon-resize-small:before {
-  content: "\f066";
-}
-
-.icon-plus:before {
-  content: "\f067";
-}
-
-.icon-minus:before {
-  content: "\f068";
-}
-
-.icon-asterisk:before {
-  content: "\f069";
-}
-
-.icon-exclamation-sign:before {
-  content: "\f06a";
-}
-
-.icon-gift:before {
-  content: "\f06b";
-}
-
-.icon-leaf:before {
-  content: "\f06c";
-}
-
-.icon-fire:before {
-  content: "\f06d";
-}
-
-.icon-eye-open:before {
-  content: "\f06e";
-}
-
-.icon-eye-close:before {
-  content: "\f070";
-}
-
-.icon-warning-sign:before {
-  content: "\f071";
-}
-
-.icon-plane:before {
-  content: "\f072";
-}
-
-.icon-calendar:before {
-  content: "\f073";
-}
-
-.icon-random:before {
-  content: "\f074";
-}
-
-.icon-comment:before {
-  content: "\f075";
-}
-
-.icon-magnet:before {
-  content: "\f076";
-}
-
-.icon-chevron-up:before {
-  content: "\f077";
-}
-
-.icon-chevron-down:before {
-  content: "\f078";
-}
-
-.icon-retweet:before {
-  content: "\f079";
-}
-
-.icon-shopping-cart:before {
-  content: "\f07a";
-}
-
-.icon-folder-close:before {
-  content: "\f07b";
-}
-
-.icon-folder-open:before {
-  content: "\f07c";
-}
-
-.icon-resize-vertical:before {
-  content: "\f07d";
-}
-
-.icon-resize-horizontal:before {
-  content: "\f07e";
-}
-
-.icon-bar-chart:before {
-  content: "\f080";
-}
-
-.icon-twitter-sign:before {
-  content: "\f081";
-}
-
-.icon-facebook-sign:before {
-  content: "\f082";
-}
-
-.icon-camera-retro:before {
-  content: "\f083";
-}
-
-.icon-key:before {
-  content: "\f084";
-}
-
-.icon-cogs:before {
-  content: "\f085";
-}
-
-.icon-comments:before {
-  content: "\f086";
-}
-
-.icon-thumbs-up:before {
-  content: "\f087";
-}
-
-.icon-thumbs-down:before {
-  content: "\f088";
-}
-
-.icon-star-half:before {
-  content: "\f089";
-}
-
-.icon-heart-empty:before {
-  content: "\f08a";
-}
-
-.icon-signout:before {
-  content: "\f08b";
-}
-
-.icon-linkedin-sign:before {
-  content: "\f08c";
-}
-
-.icon-pushpin:before {
-  content: "\f08d";
-}
-
-.icon-external-link:before {
-  content: "\f08e";
-}
-
-.icon-signin:before {
-  content: "\f090";
-}
-
-.icon-trophy:before {
-  content: "\f091";
-}
-
-.icon-github-sign:before {
-  content: "\f092";
-}
-
-.icon-upload-alt:before {
-  content: "\f093";
-}
-
-.icon-lemon:before {
-  content: "\f094";
-}
-
-.icon-phone:before {
-  content: "\f095";
-}
-
-.icon-check-empty:before {
-  content: "\f096";
-}
-
-.icon-bookmark-empty:before {
-  content: "\f097";
-}
-
-.icon-phone-sign:before {
-  content: "\f098";
-}
-
-.icon-twitter:before {
-  content: "\f099";
-}
-
-.icon-facebook:before {
-  content: "\f09a";
-}
-
-.icon-github:before {
-  content: "\f09b";
-}
-
-.icon-unlock:before {
-  content: "\f09c";
-}
-
-.icon-credit-card:before {
-  content: "\f09d";
-}
-
-.icon-rss:before {
-  content: "\f09e";
-}
-
-.icon-hdd:before {
-  content: "\f0a0";
-}
-
-.icon-bullhorn:before {
-  content: "\f0a1";
-}
-
-.icon-bell:before {
-  content: "\f0a2";
-}
-
-.icon-certificate:before {
-  content: "\f0a3";
-}
-
-.icon-hand-right:before {
-  content: "\f0a4";
-}
-
-.icon-hand-left:before {
-  content: "\f0a5";
-}
-
-.icon-hand-up:before {
-  content: "\f0a6";
-}
-
-.icon-hand-down:before {
-  content: "\f0a7";
-}
-
-.icon-circle-arrow-left:before {
-  content: "\f0a8";
-}
-
-.icon-circle-arrow-right:before {
-  content: "\f0a9";
-}
-
-.icon-circle-arrow-up:before {
-  content: "\f0aa";
-}
-
-.icon-circle-arrow-down:before {
-  content: "\f0ab";
-}
-
-.icon-globe:before {
-  content: "\f0ac";
-}
-
-.icon-wrench:before {
-  content: "\f0ad";
-}
-
-.icon-tasks:before {
-  content: "\f0ae";
-}
-
-.icon-filter:before {
-  content: "\f0b0";
-}
-
-.icon-briefcase:before {
-  content: "\f0b1";
-}
-
-.icon-fullscreen:before {
-  content: "\f0b2";
-}
-
-.icon-group:before {
-  content: "\f0c0";
-}
-
-.icon-link:before {
-  content: "\f0c1";
-}
-
-.icon-cloud:before {
-  content: "\f0c2";
-}
-
-.icon-beaker:before {
-  content: "\f0c3";
-}
-
-.icon-cut:before {
-  content: "\f0c4";
-}
-
-.icon-copy:before {
-  content: "\f0c5";
-}
-
-.icon-paper-clip:before {
-  content: "\f0c6";
-}
-
-.icon-save:before {
-  content: "\f0c7";
-}
-
-.icon-sign-blank:before {
-  content: "\f0c8";
-}
-
-.icon-reorder:before {
-  content: "\f0c9";
-}
-
-.icon-list-ul:before {
-  content: "\f0ca";
-}
-
-.icon-list-ol:before {
-  content: "\f0cb";
-}
-
-.icon-strikethrough:before {
-  content: "\f0cc";
-}
-
-.icon-underline:before {
-  content: "\f0cd";
-}
-
-.icon-table:before {
-  content: "\f0ce";
-}
-
-.icon-magic:before {
-  content: "\f0d0";
-}
-
-.icon-truck:before {
-  content: "\f0d1";
-}
-
-.icon-pinterest:before {
-  content: "\f0d2";
-}
-
-.icon-pinterest-sign:before {
-  content: "\f0d3";
-}
-
-.icon-google-plus-sign:before {
-  content: "\f0d4";
-}
-
-.icon-google-plus:before {
-  content: "\f0d5";
-}
-
-.icon-money:before {
-  content: "\f0d6";
-}
-
-.icon-caret-down:before {
-  content: "\f0d7";
-}
-
-.icon-caret-up:before {
-  content: "\f0d8";
-}
-
-.icon-caret-left:before {
-  content: "\f0d9";
-}
-
-.icon-caret-right:before {
-  content: "\f0da";
-}
-
-.icon-columns:before {
-  content: "\f0db";
-}
-
-.icon-sort:before {
-  content: "\f0dc";
-}
-
-.icon-sort-down:before {
-  content: "\f0dd";
-}
-
-.icon-sort-up:before {
-  content: "\f0de";
-}
-
-.icon-envelope-alt:before {
-  content: "\f0e0";
-}
-
-.icon-linkedin:before {
-  content: "\f0e1";
-}
-
-.icon-undo:before {
-  content: "\f0e2";
-}
-
-.icon-legal:before {
-  content: "\f0e3";
-}
-
-.icon-dashboard:before {
-  content: "\f0e4";
-}
-
-.icon-comment-alt:before {
-  content: "\f0e5";
-}
-
-.icon-comments-alt:before {
-  content: "\f0e6";
-}
-
-.icon-bolt:before {
-  content: "\f0e7";
-}
-
-.icon-sitemap:before {
-  content: "\f0e8";
-}
-
-.icon-umbrella:before {
-  content: "\f0e9";
-}
-
-.icon-paste:before {
-  content: "\f0ea";
-}
-
-.icon-user-md:before {
-  content: "\f200";
-}
-
+/* line 26, ../sass/screen.scss */
 html {
   width: 100%;
   min-height: 100%;
   height: 100%;
 }
 
+/* line 32, ../sass/screen.scss */
 body {
   position: relative;
   height: 100%;
 }
 
+/* line 37, ../sass/screen.scss */
 #viewport {
   width: 100%;
   height: 100%;
   margin-bottom: -30px;
 }
 
+/* line 43, ../sass/screen.scss */
 #ace-editor {
   position: absolute;
   top: 50px;

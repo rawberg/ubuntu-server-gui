@@ -62,9 +62,10 @@
   @include display-flex;
   @include flex-direction(column);
   @include align-items(stretch);
+  padding-top: 50px; // clears top toolbar
 
 
-  #dash_performance, #dash_services, #dash_software {
+  #dash_performance, #dash_software {
     @include display-flex;
     @include flex-direction(row);
     @include align-items(stretch);
@@ -72,15 +73,16 @@
   }
 
   #dash_performance {
-    //@include flex(16);
+    @include flex(1);
+    min-height: 260px;
   }
 
-  .performance, .services, .software {
+  #dash_platform {
     @include flex(1);
-    @include display-flex;
+  }
 
-    padding: 19px 6px 0px 22px;
-    height: 100%;
+  .performance, .software {
+    width: 100%;
     font-size: 13px;
     font-family: "Lucida Grande" sans-serif;
 
@@ -89,7 +91,6 @@
     }
 
     h2 {
-      display: inline-block;
       font-size: 17px;
       font-weight: normal;
       color: #616161;
@@ -101,37 +102,38 @@
   }
 
   .performance {
-    @include flex-direction(row);
-    @include align-items(stretch);
-    @include justify-content(left);
-    max-height: 240px;
+    padding: 10px 6px 0px 22px;
     .left, .right {
+      display: inline-block;
       position: relative;
       min-height: 160px;
       padding-bottom: 0;
       text-align: center;
       canvas {
-        margin-top: 56px;
+        margin-top: 18px;
         margin-bottom: 7px;
       }
 
       span.gauge-text-value {
-        display: block;
-        position: relative;
+        display: inline-block;
+        position: absolute;
+        text-align: center;
+        width: 100px;
         font-family: 'Amaranth',sans-serif;
         font-size: 24px;
+        line-height: 30px;
         font-weight: bold;
       }
 
       i {
-        position: relative;
+        position: absolute;
         font-size: 11px;
       }
 
       span.gauge-label {
-        display: block;
-        position: relative;
-        bottom: 36px;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
       }
 
     }
@@ -143,12 +145,11 @@
 
       span.gauge-text-value {
         bottom: 71px;
-        left: 0px;
+        left: 140px;
       }
 
       i {
-        bottom: 96px;
-        left: 30px;
+        bottom: 5px;
       }
     }
 
@@ -157,75 +158,48 @@
       background-color: #f5f5f5;
 
       span.gauge-text-value {
-        bottom: 71px;
-        left: 0;
+        top: 55px;
+        left: 95px;
       }
 
       i {
-        bottom: 97px;
-        left: 21px;
-      }
-
-    }
-  }
-
-  .services {
-    @include flex-direction(column);
-    @include align-items(stretch);
-    color: #020001;
-    background-color: #ffffff;
-    .container {
-      @include display-flex;
-      @include align-items(center);
-      @include flex-direction(row);
-      @include justify-content(center);
-      width: 100%;
-      height: 100%;
-      span {
-        display: block;
-        margin-bottom: 8px;
-      }
-      .col {
-        min-width: 135px;
-        height: 100%;
-        padding-top: 30px;
+        bottom: 7px;
       }
     }
   }
 
   .software {
-    @include flex-direction(column);
-    @include align-items(stretch);
-    @include justify-content(center);
     background-color: #ffffff;
-    position: relative;
     h2 {
-      position: absolute;
-      top: 19px;
+      padding-left: 20px;
     }
 
     .container {
-      @include display-flex;
-      @include align-items(stretch);
-      @include justify-content(center);
-      @include flex-direction(row);
       width: 100%;
-      margin-bottom: 25px;
+      text-align: center;
+      //padding-bottom: 20px;
+      //margin-bottom: 25px;
       span {
         display: block;
         margin-bottom: 10px;
+        background-color: transparent;
+        &.label {
+          color: rgba(51, 51, 51, 0.79);
+          text-shadow: none;
+        }
       }
 
       .left {
+        display: inline-block;
         min-height: 100%;
-        margin-left: -15%;
         padding-right: 5px;
         text-align: right;
       }
 
       .right {
+        display: inline-block;
         min-height: 100%;
-        padding-left: 5px;
+        padding: 0 160px 0 5px;
         text-align: left;
       }
     }

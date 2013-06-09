@@ -28,8 +28,8 @@ define(function (require_browser, exports, module) {
         regions: {
             sidebarLeftRegion: '#sidebar_left',
             performanceRegion: '#dash_performance',
-//            servicesRegion: '#dash_services',
             platformRegion: '#dash_platform'
+            //            servicesRegion: '#dash_services',
         },
 
         initialize: function(options) {
@@ -53,16 +53,18 @@ define(function (require_browser, exports, module) {
             var platformStatsView = new PlatformStatsView({
                 model: new PlatformInfo({}, {server: serverModel})
             });
-//            var utilizationView = new UtilizationStatsView({
-//                model: new ServerOverview({}, {server: serverModel})
-//            });
+
+            var utilizationView = new UtilizationStatsView({
+                model: new ServerOverview({}, {server: serverModel})
+            });
+
 //            var runningServicesView = new RunningServicesView({
 //                collection: new NetServices([], {server: serverModel})
 //            });
 
             this.platformRegion.show(platformStatsView);
+            this.performanceRegion.show(utilizationView);
 //            this.servicesRegion.show(runningServicesView);
-//            this.performanceRegion.show(utilizationView);
         }
     });
 });
