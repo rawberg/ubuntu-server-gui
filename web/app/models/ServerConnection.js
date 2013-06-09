@@ -10,6 +10,10 @@ define(function (require_browser) {
                 throw "Expected server to be provided.";
             }
             this.options = options || {};
+            // copy these vals so we can access them in server connection views
+            this.set('server_name', options.server.get('name'));
+            this.set('server_port', options.server.get('port'));
+            this.set('server_addr', options.server.get('ipv4'));
         },
 
         connect: function() {
@@ -30,6 +34,7 @@ define(function (require_browser) {
 
             sshProxy.on('ready', _.bind(function() {
                 this.options.server.sshProxy = sshProxy;
+                this.set('connection_status', 'connected');
                 App.vent.trigger('server:connected', this.options.server);
             }, this));
 
@@ -66,6 +71,7 @@ define(function (require_browser) {
 
                 usgCloud.sshProxyConnect(ip, port, _.bind(function() {
                     this.options.server.sshProxy = usgCloud;
+                    this.set('connection_status', 'connected');
                     App.vent.trigger('server:connected', this.options.server);
                 }, this));
 

@@ -19,9 +19,9 @@ define(function (require_browser, exports, module) {
         bindings: {
             'h3': 'connection_status',
             'span.connection-status': 'connection_status',
-            'span.server-name': 'name',
-            'span.server-port': 'port',
-            'span.server-ipv4': 'ipv4'
+            'span.server-name': 'server_name',
+            'span.server-port': 'server_port',
+            'span.server-addr': 'server_addr'
         },
 
         modelEvents: {
@@ -38,7 +38,6 @@ define(function (require_browser, exports, module) {
 
         initialize: function(options) {
             this.App = options && options.App ? options.App : App;
-
         },
 
         onRender: function() {
