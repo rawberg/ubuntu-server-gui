@@ -34,11 +34,12 @@ define(function (require_browser, exports, module) {
 
         initialize: function(options) {
             App.vent.on('server:selected', this.onServerClick, this);
+            App.vent.on('server:connected', this.transitionToShowMonitoring, this);
+        },
 
-            App.vent.on('server:connected', _.bind(function(server) {
-                this.showMonitoring(server);
-                _.delay(_.bind(App.closeModal, App), 1200);
-            }, this));
+        close: function() {
+            App.vent.off('server:selected', this.onServerClick);
+            App.vent.off('server:connected', this.transitionToShowMonitoring);
         },
 
         onServerClick: function(server) {
@@ -63,6 +64,13 @@ define(function (require_browser, exports, module) {
             this.platformRegion.show(platformStatsView);
             this.performanceRegion.show(utilizationView);
 //            this.servicesRegion.show(runningServicesView);
+        },
+
+        transitionToShowMonitoring: function(server) {
+            this.showMonitoring(server);
+            _.delay(_.bind(App.closeModal, App), 1200);
         }
+
+
     });
 });
