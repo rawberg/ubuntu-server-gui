@@ -1,5 +1,5 @@
-define(function (require_browser) {
-    var LeftSidebarItem = require_browser('views/dashboard/LeftSidebarItem'),
+define(function (require_browser, exports, module) {
+    var LeftSidebarItem = require_browser('views/dashboard/LeftSidebar').LeftSidebarItem,
         Server = require_browser('models/Server');
 
     describe('LeftSidebarItem - ItemView', function() {
@@ -10,6 +10,7 @@ define(function (require_browser) {
                 name: 'Sample Server',
                 id: 'c2170a11-c3bb-5b81-33ed-f28eaa21e43c'
             });
+
             leftSideBarItem = new LeftSidebarItem({model: server});
             leftSideBarItem.render()
         });

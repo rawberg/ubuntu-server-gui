@@ -9,7 +9,7 @@ define(function (require_browser) {
         MainFooterbar = require_browser('views/MainFooterbar'),
         MainToolbar = require_browser('views/MainToolbar'),
 
-        LeftSidebarView = require_browser('views/dashboard/LeftSidebar'),
+        LeftSidebarView = require_browser('views/dashboard/LeftSidebar').LeftSidebar,
         ServerListCollection = require_browser('collections/ServerList');
 
     return BaseController.extend({

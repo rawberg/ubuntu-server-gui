@@ -33,17 +33,15 @@ define(function (require_browser, exports, module) {
         },
 
         initialize: function(options) {
+            App.vent.on('server:selected', this.onServerClick, this);
+
             App.vent.on('server:connected', _.bind(function(server) {
                 this.showMonitoring(server);
                 _.delay(_.bind(App.closeModal, App), 1200);
             }, this));
-
-            this.sidebarLeftRegion.on('show', _.bind(function(view) {
-                view.on('itemview:onServerClick', _.bind(this.onServerClick, this));
-            }, this));
         },
 
-        onServerClick: function(itemView, server) {
+        onServerClick: function(server) {
             var serverConnection = new ServerConnection(_.extend({connection_status: 'connecting'}, server.toJSON()), {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
             serverConnection.connect();

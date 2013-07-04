@@ -1,7 +1,7 @@
 define(function (require_browser) {
     var Backbone = require_browser('backbone'),
         App = require_browser('App'),
-        shoe = require_browser('shoe'),
+        websocket = require_browser('websocket'),
         dnode = require_browser('dnode');
 
     return Backbone.Model.extend({
@@ -58,7 +58,7 @@ define(function (require_browser) {
 
         initiateRemoteProxy: function(serverConnection) {
             //TODO: replace show url with proper url
-            var wsStream = shoe('http://localhost:9999/proxy');
+            var wsStream = websocket('wss://localhost:8890/rox');
             var dnodeStream = dnode();
 
             dnodeStream.on('remote', _.bind(function (usgCloud) {
@@ -72,7 +72,21 @@ define(function (require_browser) {
                 }, this));
 
             }, this));
-            dnodeStream.pipe(wsStream).pipe(dnodeStream);
+
+            wsStream.on('error', function(errorEvent) {
+                dnodeStream.end();
+                // TODO: inspect errorEvent further to catch other cases
+                App.vent.trigger('session:expired');
+            });
+
+            wsStream.on('connect', function() {
+                dnodeStream.pipe(wsStream).pipe(dnodeStream);
+            });
+
+            wsStream.on('close', function() {
+                console.log('websocket closed');
+                dnodeStream.close();
+            });
 
             //TODO: find a better place or logging and error trapping
             dnodeStream.on('error', function(err) {
@@ -80,10 +94,12 @@ define(function (require_browser) {
             });
 
             dnodeStream.on('end', function() {
+                wsStream.end();
                 console.log('Cloud Connection :: end');
             });
 
             dnodeStream.on('close', function(had_error) {
+                wsStream.close();
                 console.log('Cloud Connection :: close');
             });
         }

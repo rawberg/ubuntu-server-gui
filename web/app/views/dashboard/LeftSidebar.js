@@ -1,18 +1,32 @@
-define(function (require_browser) {
+define(function (require_browser, exports, module) {
     var $ = require_browser('jquery'),
         _ = require_browser('underscore'),
         Marionette = require_browser('marionette'),
         AddEditServerModal = require_browser('views/modal/AddEditServer'),
         App = require_browser('App'),
         ContextMenu = require_browser('contextmenu'),
-        LeftSidebarItem = require_browser('views/dashboard/LeftSidebarItem'),
         UsgCollectionView = require_browser('views/UsgCollectionView'),
-        RemoveServerModal = require_browser('views/modal/RemoveServer');
+        RemoveServerModal = require_browser('views/modal/RemoveServer'),
+        leftSidebarItemTpl = require_browser('text!views/dashboard/templates/sidebar-left-item.html');
+
+    var LeftSidebarItem = module.exports.LeftSidebarItem = Marionette.ItemView.extend({
+        tagName: 'li',
+        className: 'vm-small',
+        template: _.template(leftSidebarItemTpl),
+
+        triggers: {
+            'click': 'onServerClick'
+        },
+
+        onRender: function() {
+            this.el.id = 'server_id_' + this.model.get('id');
+        }
+    });
 
     /**
      * @params {collection: ServerList}
      */
-    return Marionette.CollectionView.extend({
+    module.exports.LeftSidebar = Marionette.CollectionView.extend({
         itemView: LeftSidebarItem,
         tagName: 'ul',
         id: 'left_sidebar_serverlist',
@@ -27,6 +41,7 @@ define(function (require_browser) {
 
             this.onRemoveServerClick = _.bind(this.onRemoveServerClick, this);
             this.onEditServerClick = _.bind(this.onEditServerClick, this);
+            this.on('itemview:onServerClick', this.onServerClick, this);
 
             this.contextMenu = new ContextMenu([
                 {
@@ -44,6 +59,10 @@ define(function (require_browser) {
             // remove any context menu items we may have created
             $('.server-list-contextmenu menuitem').off();
             $('.server-list-contextmenu').off().remove();
+        },
+
+        onServerClick: function(eventObj) {
+            App.vent.trigger('server:selected', eventObj.model);
         },
 
         onServerRightClick: function(eventObj) {

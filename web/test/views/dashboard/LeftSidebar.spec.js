@@ -1,8 +1,8 @@
-define(function (require_browser) {
+define(function (require_browser, exports, module) {
     var AddEditServerModal = require_browser('views/modal/AddEditServer'),
         ContextMenu = require_browser('contextmenu'),
         DashboardLayout = require_browser('views/dashboard/Dashboard'),
-        LeftSidebarView = require_browser('views/dashboard/LeftSidebar'),
+        LeftSidebarView = require_browser('views/dashboard/LeftSidebar').LeftSidebar,
         RemoveServerModal = require_browser('views/modal/RemoveServer'),
         ServerListCollection = require_browser('collections/ServerList');
 

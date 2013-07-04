@@ -6,6 +6,7 @@ require_browser.config({
         backbone: '../libs/backbone/backbone',
         marionette: '../libs/backbone.marionette/backbone.marionette',
         shoe: '../libs/shoe/shoe',
+        websocket: '../libs/websocket-stream/websocket-stream',
         dnode: '../libs/dnode/dnode',
 
         // Addons

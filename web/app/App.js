@@ -42,6 +42,11 @@ define(function (require_browser) {
             $(window).off('resize', this.onNoobTourResize);
         },
 
+        onSessionExpired: function() {
+            // TODO: switch to the real url
+            window.location = 'https://localhost:8890/signin';
+        },
+
         showModal: function(view) {
             this.modal.show(view);
             this.modal.currentView.$el.modal('show')
@@ -74,10 +79,11 @@ define(function (require_browser) {
         this.user = function() { return user; };
 
         this.routers = {};
-        this.ws = null; // place holder for web socket connection
+        this.activeServer = undefined; // place holder for the server we're currently connected to
 
         this.vent.on('noobtour:activate', this.onNoobTourActivate, this);
         this.vent.on('noobtour:deactivate', this.onNoobTourDeactivate, this);
+        this.vent.on('session:expired', this.onSessionExpired, this);
     });
 
     /*

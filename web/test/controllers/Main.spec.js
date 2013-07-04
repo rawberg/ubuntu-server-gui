@@ -12,7 +12,7 @@ define(function (require_browser) {
 
         // Views
         DashboardLayout = require_browser('views/dashboard/Dashboard').DashboardLayout,
-        LeftSidebarView = require_browser('views/dashboard/LeftSidebar'),
+        LeftSidebarView = require_browser('views/dashboard/LeftSidebar').LeftSidebar,
         PlatformStatsView = require_browser('views/dashboard/PlatformStats'),
         RunningServicesView = require_browser('views/dashboard/RunningServices'),
         UtilizationStatsView = require_browser('views/dashboard/UtilizationStats');
