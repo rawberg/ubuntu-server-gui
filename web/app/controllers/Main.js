@@ -1,7 +1,6 @@
 define(function (require_browser) {
     var _ = require_browser('underscore'),
         App = require_browser('App'),
-        Backbone = require_browser('backbone'),
         BaseController = require_browser('controllers/Base'),
 
         DashboardLayout = require_browser('views/dashboard/Dashboard').DashboardLayout,
@@ -18,20 +17,19 @@ define(function (require_browser) {
             BaseController.prototype.initialize.apply(this, arguments);
         },
 
-        dashboard: function() {
-            var serverList = new ServerListCollection();
-
+        _commonToolbars: function() {
             var toolbarView = new MainToolbar(),
-                footerbarView = new MainFooterbar(),
-                leftsidebarView = new LeftSidebarView({collection: serverList});
-
-            var dashboardLayout = this.dashboardLayout = new DashboardLayout();
+                footerbarView = new MainFooterbar();
 
             this.App.mainToolbar.show(toolbarView);
             this.App.mainFooterbar.show(footerbarView);
-            this.App.mainViewport.show(dashboardLayout);
+        },
 
-            dashboardLayout.sidebarLeftRegion.show(leftsidebarView);
+        _sidebarLeft: function(sidebarRegion) {
+            var serverList = new ServerListCollection(),
+                leftsidebarView = new LeftSidebarView({collection: serverList});
+
+            sidebarRegion.show(leftsidebarView);
 
             serverList.fetch({success: _.bind(function() {
                 if(serverList.length === 0) {
@@ -40,26 +38,20 @@ define(function (require_browser) {
             }, this)});
         },
 
+        dashboard: function() {
+            var dashboardLayout = this.dashboardLayout = new DashboardLayout();
+            this._commonToolbars();
+            this._sidebarLeft(dashboardLayout.sidebarLeftRegion);
+
+            this.App.mainViewport.show(dashboardLayout);
+        },
+
         filemanager: function() {
-            var serverList = new ServerListCollection();
-
-            var toolbarView = new MainToolbar(),
-                footerbarView = new MainFooterbar(),
-                leftsidebarView = new LeftSidebarView({collection: serverList});
-
             var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout();
+            this._commonToolbars();
+            this._sidebarLeft(fileManagerLayout.sidebarLeftRegion);
 
-            this.App.mainToolbar.show(toolbarView);
-            this.App.mainFooterbar.show(footerbarView);
             this.App.mainViewport.show(fileManagerLayout);
-
-            fileManagerLayout.sidebarLeftRegion.show(leftsidebarView);
-
-            serverList.fetch({success: _.bind(function() {
-                if(serverList.length === 0) {
-                    this.App.vent.trigger('noobtour:activate');
-                }
-            }, this)});
         }
     });
 
