@@ -1,6 +1,6 @@
 define(function (require_browser, exports, module) {
     var $ = require_browser('jquery'),
-        Backbone = require_browser('backbone'),
+        _ = require_browser('underscore'),
         Marionette = require_browser('marionette'),
         App = require_browser('App'),
     // Models & Collections
@@ -8,7 +8,6 @@ define(function (require_browser, exports, module) {
         ServerConnection = require_browser('models/ServerConnection'),
     // Views
         ServerConnectionModal = require_browser('views/modal/ServerConnectionView'),
-
         fileManagerLayoutTpl = require_browser('text!views/filemanager/templates/layout.html');
 
     module.exports.FileManagerLayout = Marionette.Layout.extend({
@@ -21,25 +20,31 @@ define(function (require_browser, exports, module) {
         },
 
         initialize: function(options) {
-            App.vent.on('server:connected', _.bind(function(sshProxy) {
-                this.showFileManager(sshProxy);
-                _.delay(_.bind(App.closeModal, App), 1200);
-            }, this));
-
-            this.sidebarLeftRegion.on('show', _.bind(function(view) {
-                view.on('itemview:onServerClick', _.bind(this.onServerClick, this));
-            }, this));
+            App.vent.on('server:selected', this.onServerSelected, this);
+            App.vent.on('server:connected', this.transitionToShowFileManager, this);
         },
 
-        onServerClick: function(itemView, server) {
+        close: function() {
+            App.vent.off('server:selected', this.onServerSelected);
+            App.vent.off('server:connected', this.transitionToShowFileManager);
+        },
+
+        onRender: function() {
+            var activeServer = App.getActiveServer();
+            if(activeServer) {
+                this.showFileManager(activeServer);
+            }
+        },
+
+        onServerSelected: function(server) {
             var serverConnection = new ServerConnection({}, {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
             serverConnection.connect();
         },
 
-        showFileManager: function(sshProxy) {
+        showFileManager: function(server) {
             var directoryCollection;
-            sshProxy.sftp(function(err, sftp) {
+            server.sshProxy.sftp(function(err, sftp) {
                 if (err) throw err;
                 sftp.on('end', function() {
                     console.log('SFTP :: SFTP session closed');
@@ -61,6 +66,11 @@ define(function (require_browser, exports, module) {
                     });
                 });
             });
+        },
+
+        transitionToShowFileManager: function(server) {
+            this.showFileManager(server);
+            _.delay(_.bind(App.closeModal, App), 1200);
         }
     });
 });

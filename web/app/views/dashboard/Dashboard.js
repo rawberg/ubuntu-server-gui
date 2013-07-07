@@ -1,7 +1,6 @@
 define(function (require_browser, exports, module) {
     var $ = require_browser('jquery'),
         _ = require_browser('underscore'),
-        Backbone = require_browser('backbone'),
         Marionette = require_browser('marionette'),
         App = require_browser('App'),
     // Models & Collections
@@ -29,20 +28,26 @@ define(function (require_browser, exports, module) {
             sidebarLeftRegion: '#sidebar_left',
             performanceRegion: '#dash_performance',
             platformRegion: '#dash_platform'
-            //            servicesRegion: '#dash_services',
         },
 
         initialize: function(options) {
-            App.vent.on('server:selected', this.onServerClick, this);
+            App.vent.on('server:selected', this.onServerSelected, this);
             App.vent.on('server:connected', this.transitionToShowMonitoring, this);
         },
 
         close: function() {
-            App.vent.off('server:selected', this.onServerClick);
+            App.vent.off('server:selected', this.onServerSelected);
             App.vent.off('server:connected', this.transitionToShowMonitoring);
         },
 
-        onServerClick: function(server) {
+        onRender: function() {
+            var activeServer = App.getActiveServer();
+            if(activeServer) {
+                this.showMonitoring(activeServer);
+            }
+        },
+
+        onServerSelected: function(server) {
             var serverConnection = new ServerConnection(_.extend({connection_status: 'connecting'}, server.toJSON()), {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
             serverConnection.connect();
@@ -57,20 +62,13 @@ define(function (require_browser, exports, module) {
                 model: new ServerOverview({}, {server: serverModel})
             });
 
-//            var runningServicesView = new RunningServicesView({
-//                collection: new NetServices([], {server: serverModel})
-//            });
-
             this.platformRegion.show(platformStatsView);
             this.performanceRegion.show(utilizationView);
-//            this.servicesRegion.show(runningServicesView);
         },
 
         transitionToShowMonitoring: function(server) {
             this.showMonitoring(server);
             _.delay(_.bind(App.closeModal, App), 1200);
         }
-
-
     });
 });

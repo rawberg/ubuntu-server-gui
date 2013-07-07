@@ -6,6 +6,9 @@ define(function (require_browser) {
         App = require_browser('App'),
     // Models
         Server = require_browser('models/Server'),
+        PlatformInfo = require_browser('models/PlatformInfo'),
+        ServerOverview = require_browser('models/ServerOverview'),
+        ServerConnection = require_browser('models/ServerConnection'),
     // Collections
         NetServicesCollection = require_browser('collections/NetServices'),
     // Views
@@ -18,30 +21,34 @@ define(function (require_browser) {
 
 
 
-    xdescribe('Dashboard', function() {
+    describe('Dashboard', function() {
 
         describe('showMonitoring', function() {
             var dashboardLayout;
-            var utilizationStatsSpy, runningServicesSpy, platformStatsSpy;
+            var utilizationStatsSpy, platformStatsSpy;
 
             beforeEach(function() {
+                sinon.stub(App, 'onSessionExpired');
+                sinon.stub(PlatformInfo.prototype, 'fetch');
+                sinon.stub(ServerOverview.prototype, 'fetch');
+                sinon.spy(NetServicesCollection.prototype, 'fetch');
+
                 dashboardLayout = new DashboardLayout();
-//                sinon.stub(Socket.prototype, 'setHeartbeatTimeout');
-//                sinon.spy(NetServicesCollection.prototype, 'fetch');
                 utilizationStatsSpy = sinon.spy(UtilizationStatsView.prototype, 'render');
-                runningServicesSpy = sinon.spy(RunningServicesView.prototype, 'render');
                 platformStatsSpy = sinon.spy(PlatformStatsView.prototype, 'render');
 
-//                var fakeServer = new Server({ipv4: '10.0.0.1'});
-//                fakeServer.ws = io.connect();
-//                dashboardLayout.showMonitoring(fakeServer);
+                var fakeServer = new Server({ipv4: '10.0.0.1'});
+                dashboardLayout.showMonitoring(fakeServer);
             });
 
             afterEach(function() {
+                PlatformInfo.prototype.fetch.restore();
+                ServerOverview.prototype.fetch.restore();
                 NetServicesCollection.prototype.fetch.restore();
-//                Socket.prototype.setHeartbeatTimeout.restore();
+
+                App.onSessionExpired.restore();
+
                 utilizationStatsSpy.restore();
-                runningServicesSpy.restore();
                 platformStatsSpy.restore();
             });
 
@@ -49,42 +56,73 @@ define(function (require_browser) {
                 (utilizationStatsSpy).should.have.been.called;
             });
 
-            it('should show running services in the dashboard layout', function() {
-                (runningServicesSpy).should.have.been.called;
-                var runningServices = dashboardLayout.servicesRegion.currentView;
-                (runningServices.collection.fetch).should.have.been.called;
-            });
-
             it('should show platform stats in the dashboard layout', function() {
                 (platformStatsSpy).should.have.been.called;
             });
+
         });
 
-        xdescribe('onServerClick', function() {
+        describe('onServerSelected', function() {
+            var dashboardLayout;
+            var modalShowStub, serverModelSpy, serverConnectSpy;
 
-            var dashboardLayout, modalShowSpy, serverModelSpy;
             beforeEach(function() {
                 dashboardLayout = new DashboardLayout();
-                modalShowSpy = sinon.spy(App, 'showModal');
-                serverModelSpy = sinon.spy(Server.prototype, 'wsConnect');
+                modalShowStub = sinon.stub(App, 'showModal');
+                serverConnectSpy = sinon.spy(ServerConnection.prototype, 'connect');
+
                 var fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
-                dashboardLayout.onServerClick(null, fakeServer);
+                App.vent.trigger('server:selected', fakeServer);
             });
 
             afterEach(function() {
-                modalShowSpy.restore();
-                serverModelSpy.restore();
-                App.closeModal();
+                modalShowStub.restore();
+                serverConnectSpy.restore();
+                App.activeServer = undefined; // avoid test pollution
             });
 
-            it('calls wsConnect on the server model', function() {
-                (serverModelSpy).should.have.been.called;
+            it('calls connect on the ServerConnection model', function() {
+                (serverConnectSpy).should.have.been.called;
             });
 
             it('shows the server connection modal', function() {
-                (modalShowSpy).should.have.been.called;
-                (modalShowSpy.args[0][0]).should.be.an.instanceof(ServerConnectionModal);
+                (modalShowStub).should.have.been.called;
+                (modalShowStub.args[0][0]).should.be.an.instanceof(ServerConnectionModal);
             });
+        });
+
+        describe('onRender', function() {
+            var dashboardLayout, fakeServer;
+            var showMonitoringSpy;
+
+            beforeEach(function() {
+                dashboardLayout = new DashboardLayout();
+                showMonitoringSpy = sinon.spy(DashboardLayout.prototype, 'showMonitoring');
+
+                sinon.stub(PlatformInfo.prototype, 'fetch');
+                sinon.stub(ServerOverview.prototype, 'fetch');
+
+                fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
+            });
+
+            afterEach(function() {
+                showMonitoringSpy.restore();
+                PlatformInfo.prototype.fetch.restore();
+                ServerOverview.prototype.fetch.restore();
+            });
+
+            it('doesn\'t call showMonitoring without an actively selected Server', function() {
+                App.activeServer = undefined;
+                dashboardLayout.render();
+                (showMonitoringSpy).should.not.have.been.called;
+            });
+
+            it('calls showMonitoring when a Server is actively selected', function() {
+                App.activeServer = fakeServer;
+                dashboardLayout.render();
+                (showMonitoringSpy).should.have.been.called;
+            });
+
         });
     });
 });

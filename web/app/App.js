@@ -1,6 +1,5 @@
 define(function (require_browser) {
     var $ = require_browser('jquery'),
-        Backbone = require_browser('backbone'),
         Marionette = require_browser('marionette'),
         NoobTourPopover = require_browser('views/modal/NoobTourPopover'),
         User = require_browser('models/User');
@@ -9,6 +8,14 @@ define(function (require_browser) {
     require_browser('bootstrap_modal');
 
     var Application = Marionette.Application.extend({
+        getActiveServer: function() {
+            if(this.activeServer !== undefined) {
+                return this.activeServer;
+            } else {
+                return false;
+            }
+        },
+
         onNoobTourActivate: function() {
             var footerPos = $('footer').position();
             $('<div class="modal-backdrop noobtour-backdrop body-minus-footer"></div>').appendTo('body');
@@ -44,7 +51,11 @@ define(function (require_browser) {
 
         onSessionExpired: function() {
             // TODO: switch to the real url
-            window.location = 'https://localhost:8890/signin';
+            //window.location = 'https://localhost:8890/signin';
+        },
+
+        onServerSelected: function(server) {
+            this.activeServer = server;
         },
 
         showModal: function(view) {
@@ -81,6 +92,7 @@ define(function (require_browser) {
         this.routers = {};
         this.activeServer = undefined; // place holder for the server we're currently connected to
 
+        this.vent.on('server:selected', this.onServerSelected, this);
         this.vent.on('noobtour:activate', this.onNoobTourActivate, this);
         this.vent.on('noobtour:deactivate', this.onNoobTourDeactivate, this);
         this.vent.on('session:expired', this.onSessionExpired, this);
