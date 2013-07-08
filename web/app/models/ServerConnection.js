@@ -35,12 +35,14 @@ define(function (require_browser) {
             }, this));
 
             //TODO: find a better place or logging and error trapping
+            //TODO: decide how consumers will know sshProxy is no longer active
             sshProxy.on('error', function(err) {
                 console.log('SSH Connection :: error :: ' + err);
             });
 
             sshProxy.on('end', function() {
                 console.log('SSh Connection :: end');
+                App.vent.trigger('server:disconnected', this.options.server);
             });
 
             sshProxy.on('close', function(had_error) {
@@ -73,11 +75,13 @@ define(function (require_browser) {
 
             }, this));
 
-            wsStream.on('error', function(errorEvent) {
+            wsStream.on('error', _.bind(function(errorEvent) {
                 dnodeStream.end();
                 // TODO: inspect errorEvent further to catch other cases
+                console.log('errorEvent: ', errorEvent);
+                this.set('connection_status', 'connection error');
                 App.vent.trigger('session:expired');
-            });
+            }, this));
 
             wsStream.on('connect', function() {
                 dnodeStream.pipe(wsStream).pipe(dnodeStream);
@@ -93,10 +97,11 @@ define(function (require_browser) {
                 console.log('Cloud Connection :: error :: ' + err);
             });
 
-            dnodeStream.on('end', function() {
+            dnodeStream.on('end', _.bind(function() {
                 wsStream.end();
+                App.vent.trigger('server:disconnected', this.options.server);
                 console.log('Cloud Connection :: end');
-            });
+            }, this));
 
             dnodeStream.on('close', function(had_error) {
                 wsStream.close();

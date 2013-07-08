@@ -534,7 +534,11 @@ div.modal-footer.plain {
   margin-left: 0 !important;
 }
 
-/* line 34, ../sass/_modals.scss */
+/* line 33, ../sass/_modals.scss */
+#server-connection-modal {
+  width: 590px;
+}
+/* line 35, ../sass/_modals.scss */
 #server-connection-modal h3, #server-connection-modal span.connection-status {
   text-transform: capitalize;
 }

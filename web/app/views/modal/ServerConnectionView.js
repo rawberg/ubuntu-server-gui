@@ -16,9 +16,12 @@ define(function (require_browser, exports, module) {
         className: 'modal hide fade',
         id: 'server-connection-modal',
 
-        bindings: {
+        connection_bindings: {
             'h3': 'connection_status',
-            'span.connection-status': 'connection_status',
+            'span.connection-status': 'connection_status'
+        },
+
+        server_bindings: {
             'span.server-name': 'name',
             'span.server-port': 'port',
             'span.server-addr': 'ipv4'
@@ -36,12 +39,21 @@ define(function (require_browser, exports, module) {
             }
         },
 
-        initialize: function(options) {
-            this.App = options && options.App ? options.App : App;
+        templateHelpers: function() {
+            var location = '';
+            if(App.isDesktop()) {
+                location = 'your local network';
+            } else {
+                location = 'api.ubuntuservergui.com';
+            }
+            return {
+                access_location: location
+            }
         },
 
         onRender: function() {
-            this.stickit();
+            this.stickit(this.model, this.connection_bindings);
+            this.stickit(this.model.options.server, this.server_bindings);
         },
 
         onStatusChange: function(server, connection_status, changes) {

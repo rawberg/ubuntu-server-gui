@@ -41,17 +41,17 @@ define(function (require_browser) {
         dashboard: function() {
             var dashboardLayout = this.dashboardLayout = new DashboardLayout();
             this._commonToolbars();
-            this._sidebarLeft(dashboardLayout.sidebarLeftRegion);
 
             this.App.mainViewport.show(dashboardLayout);
+            this._sidebarLeft(dashboardLayout.sidebarLeftRegion);
         },
 
         filemanager: function() {
             var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout();
             this._commonToolbars();
-            this._sidebarLeft(fileManagerLayout.sidebarLeftRegion);
 
             this.App.mainViewport.show(fileManagerLayout);
+            this._sidebarLeft(fileManagerLayout.sidebarLeftRegion);
         }
     });
 

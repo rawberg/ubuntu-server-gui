@@ -26,8 +26,8 @@ define(function (require_browser) {
             beforeEach(function() {
                 footerPosStub = sinon.stub($.prototype, 'position');
                 footerPosStub.returns({top: 666});
-                leftsidebarSpy = sinon.spy(LeftSidebarView.prototype, 'render');
-                dashboardLayoutSpy = sinon.spy(DashboardLayout.prototype, 'render');
+                leftsidebarSpy = sinon.stub(LeftSidebarView.prototype, 'render');
+                dashboardLayoutSpy = sinon.stub(DashboardLayout.prototype, 'render');
 
                 mainController = new MainController();
 

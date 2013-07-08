@@ -28,7 +28,6 @@ define(function (require_browser) {
             var utilizationStatsSpy, platformStatsSpy;
 
             beforeEach(function() {
-                sinon.stub(App, 'onSessionExpired');
                 sinon.stub(PlatformInfo.prototype, 'fetch');
                 sinon.stub(ServerOverview.prototype, 'fetch');
                 sinon.spy(NetServicesCollection.prototype, 'fetch');
@@ -45,8 +44,6 @@ define(function (require_browser) {
                 PlatformInfo.prototype.fetch.restore();
                 ServerOverview.prototype.fetch.restore();
                 NetServicesCollection.prototype.fetch.restore();
-
-                App.onSessionExpired.restore();
 
                 utilizationStatsSpy.restore();
                 platformStatsSpy.restore();

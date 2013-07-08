@@ -16,6 +16,14 @@ define(function (require_browser) {
             }
         },
 
+        isDesktop: function() {
+            if(typeof process !== 'undefined') {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
         onNoobTourActivate: function() {
             var footerPos = $('footer').position();
             $('<div class="modal-backdrop noobtour-backdrop body-minus-footer"></div>').appendTo('body');
