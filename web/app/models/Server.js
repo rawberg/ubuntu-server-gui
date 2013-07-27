@@ -1,5 +1,6 @@
 define(function (require_browser) {
-    var Backbone = require_browser('backbone'),
+    var _ = require_browser('underscore'),
+        Backbone = require_browser('backbone'),
         App = require_browser('App');
 
     require_browser('backbone_dualstorage');

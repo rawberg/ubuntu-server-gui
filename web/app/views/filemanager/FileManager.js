@@ -4,11 +4,33 @@ define(function (require_browser, exports, module) {
         Marionette = require_browser('marionette'),
         App = require_browser('App'),
     // Models & Collections
+        DirectoryContents = require_browser('collections/DirectoryContents'),
         Server = require_browser('models/Server'),
         ServerConnection = require_browser('models/ServerConnection'),
     // Views
         ServerConnectionModal = require_browser('views/modal/ServerConnectionView'),
-        fileManagerLayoutTpl = require_browser('text!views/filemanager/templates/layout.html');
+    // Templates
+        fileManagerLayoutTpl = require_browser('text!views/filemanager/templates/filemanager-layout.html'),
+        directoryExplorerTpl = require_browser('text!views/filemanager/templates/directory-explorer.html'),
+        directoryItemTpl = require_browser('text!/views/filemanager/templates/directory-item.html');
+
+    var DirectoryItemView = module.exports.DirectoryItemView = Marionette.ItemView.extend({
+        template: _.template(directoryItemTpl),
+
+        initialize: function() {
+
+        }
+    });
+
+    var DirectoryExplorerView = module.exports.DirectoryExplorerView = Marionette.CompositeView.extend({
+        template: _.template(directoryExplorerTpl),
+        itemView: DirectoryItemView,
+        itemViewContainer: 'tbody',
+
+        initialize: function() {
+
+        }
+    });
 
     module.exports.FileManagerLayout = Marionette.Layout.extend({
         template: _.template(fileManagerLayoutTpl),
@@ -16,7 +38,8 @@ define(function (require_browser, exports, module) {
 
         regions: {
             sidebarLeftRegion: '#sidebar_left',
-            fileManagerRegion: '#file-manager'
+            fileManagerHeaderRegion: '#file-manager-header',
+            fileManagerExplorerRegion: '#file-manager-explorer'
         },
 
         initialize: function(options) {
@@ -43,29 +66,10 @@ define(function (require_browser, exports, module) {
         },
 
         showFileManager: function(server) {
-            var directoryCollection;
-            server.sshProxy.sftp(function(err, sftp) {
-                if (err) throw err;
-                sftp.on('end', function() {
-                    console.log('SFTP :: SFTP session closed');
-                });
-                sftp.opendir('/', function readdir(err, handle) {
-                    if (err) throw err;
-                    sftp.readdir(handle, function(err, list) {
-                        if (err) throw err;
-                        if (list === false) {
-                            sftp.close(handle, function(err) {
-                                if (err) throw err;
-                                console.log('SFTP :: Handle closed');
-                                sftp.end();
-                            });
-                            return;
-                        }
-                        console.dir(list);
-                        readdir(undefined, handle);
-                    });
-                });
-            });
+            var directoryContents = new DirectoryContents();
+            var directoryExplorer = new DirectoryExplorerView({collection: directoryContents});
+            this.fileManagerExplorerRegion.show(directoryExplorer);
+            directoryContents.fetch();
         },
 
         transitionToShowFileManager: function(server) {

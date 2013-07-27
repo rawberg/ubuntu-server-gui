@@ -5,8 +5,8 @@ define(['models/Server', 'app'], function(Server, App) {
         var async = new AsyncSpec(this);
 
         describe('url', function() {
-
             var server;
+
             beforeEach(function() {
                 server = new Server();
                 server.set('name', 'Sample Server');
@@ -95,6 +95,21 @@ define(['models/Server', 'app'], function(Server, App) {
                 (serverData.name).should.equal('Changed Sample Server');
                 (serverData.ipv4).should.equal('111.108.0.1');
                 done();
+            });
+        });
+
+        describe('read from a directory handle', function() {
+            var server;
+
+            beforeEach(function() {
+                server = new Server({
+                    'name': 'Sample Server',
+                    'ipv4': '10.10.0.1'
+                });
+            });
+
+            async.it('should call sftpReadDir', function(done) {
+
             });
         });
     });

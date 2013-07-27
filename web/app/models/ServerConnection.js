@@ -37,7 +37,7 @@ define(function (require_browser) {
             //TODO: find a better place or logging and error trapping
             //TODO: decide how consumers will know sshProxy is no longer active
             sshProxy.on('error', function(err) {
-                console.log('SSH Connection :: error :: ' + err);
+                console.log('SSH Connection :: error :: ', err);
             });
 
             sshProxy.on('end', function() {

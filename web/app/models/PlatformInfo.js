@@ -17,17 +17,26 @@ define(function (require_browser, exports, module) {
         },
 
         fetch: function() {
-            this.server.sshProxy.exec('lsb_release -c', {}, _.bind(function(data) {
-                var codename = data.slice(1 + data.indexOf(':')).trim();
-                this.set('codename', codename.charAt(0).toUpperCase() + codename.slice(1));
+            this.server.sshProxy.exec('lsb_release -c', {}, _.bind(function(err, stream) {
+                stream.on('data', _.bind(function(data, extended) {
+                    data = data.toString();
+                    var codename = data.slice(1 + data.indexOf(':')).trim();
+                    this.set('codename', codename.charAt(0).toUpperCase() + codename.slice(1));
+                }, this));
             }, this));
 
-            this.server.sshProxy.exec('lsb_release -d', {}, _.bind(function(data) {
-                this.set('release', data.slice(1 + data.indexOf(':')).trim());
+            this.server.sshProxy.exec('lsb_release -d', {}, _.bind(function(err, stream) {
+                stream.on('data', _.bind(function(data, extended) {
+                    data = data.toString();
+                    this.set('release', data.slice(1 + data.indexOf(':')).trim());
+                }, this));
             }, this));
-
-            this.server.sshProxy.exec('uname -r', {}, _.bind(function(data) {
-                this.set('kernel', data.slice(0, data.length - 1));
+//
+            this.server.sshProxy.exec('uname -r', {}, _.bind(function(err, stream) {
+                stream.on('data', _.bind(function(data, extended) {
+                    data = data.toString();
+                    this.set('kernel', data.slice(0, data.length - 1));
+                }, this));
             }, this));
         }
     });

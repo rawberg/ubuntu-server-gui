@@ -146,6 +146,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     'test/views/modal/ServerConnectionView.spec.js',
                     // Collections
                     'test/collections/ServerList.spec.js',
+                    'test/collections/DirectoryContents.spec.js',
                     // Models
                     'test/models/Server.spec.js',
                     'test/models/ServerConnection.spec.js',
