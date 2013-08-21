@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Style guide</title>
+    <link rel="stylesheet" href="css/flatstrap/assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/stylesheets/styleguide.css"/>
+    <link rel="stylesheet" href="css/flatstrap/assets/js/google-code-prettify/prettify.css"/>
+
+    <script src="libs/jquery/jquery-1.8.2.min.js"></script>
+    <script src="libs/underscore/underscore.js"></script>
+    <script src="css/flatstrap/assets/js/google-code-prettify/prettify.js"></script>
+    <script src="css/flatstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="css/flatstrap/assets/js/bootstrap-dropdown.js"></script>
+</head>
+<body class="sg" data-spy="scroll" data-target=".navbar.navbar-spyed">
+
+    <div class="navbar navbar-spyed navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner" style="padding-left: 40px; padding-right: 40px;">
+            <a class="brand" href="#">USG - Style Guide</a>
+
+            <ul class="nav">
+                <li class="active"><a href="#colors">Colors</a></li>
+                <li><a href="#typography">Typography</a></li>
+                <li><a href="#containers">Containers</a></li>
+                <li><a href="#buttons">Buttons</a></li>
+                <li><a href="#components">Components</a></li>
+                <li><a href="#forms">Forms</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <section id="components">
+        <h2 class="sg-h2">Components</h2>
+        <div class="sg-box">
+            <div class="row">
+                <h3 class="sg-h3">File Manager</h3>
+                <div class="sg-docs-example">
+                    <table class="file-manager table-striped">
+                        <thead>
+                            <tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Men.In.Black.3.(2012).720p.x264.NLSubs-QoQ.mkv</td><td>Sept 7, 2012</td><td>500&nbsp;MB</td></tr>
+                            <tr><td>Men.In.Black.3.(2012).720p.x264.NLSubs-QoQ.mkv</td><td>Sept 7, 2012</td><td>500&nbsp;MB</td></tr>
+                            <tr><td>Men.In.Black.3.(2012).720p.x264.NLSubs-QoQ.mkv</td><td>Sept 7, 2012</td><td>500&nbsp;MB</td></tr>
+                            <tr><td>Men.In.Black.3.(2012).720p.x264.NLSubs-QoQ.mkv</td><td>Sept 7, 2012</td><td>500&nbsp;MB</td></tr>
+                            <tr><td>Men.In.Black.3.(2012).720p.x264.NLSubs-QoQ.mkv</td><td>Sept 7, 2012</td><td>500&nbsp;MB</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    // Activate Google Prettify for pretty-printing code
+    addEventListener('load', prettyPrint, false);
+
+    $(document).ready(function () {
+        $('.sg-docs-example').after(function () {
+            var html = $(this).html();
+            var lines = _(html.split("\n")).compact();
+            var initial_indent = _(lines).first().match(/^\s*/)[0].length;
+
+            html = _(lines).chain().
+                    map(function (line) {
+                        return line.slice(initial_indent, line.length);
+                    }).
+                    compact().
+                    join("\n").
+                    value();
+
+            $(document.createElement("div"))
+                    .addClass("sg-docs-source")
+                    .append($(document.createElement("pre")).html(_.escape(html)))
+                    .append($(document.createElement("button")).addClass("btn show-source").text("Show Source"))
+                    .insertAfter($(this));
+        });
+
+        $('button.show-source').on('click', function () {
+            $(this).closest(".sg-docs-source").toggleClass('opened');
+        });
+
+        // Add prettyprint class to pre elements
+        $('pre, xmp').addClass('prettyprint').addClass('linenums');
+    });
+</script>
+</html>

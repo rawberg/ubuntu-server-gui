@@ -1,0 +1,199 @@
+@import "compass/css3";
+@import "compass/css3/border-radius";
+@import "compass/css3/flexbox";
+@import "compass/css3/box-sizing";
+@import "compass/css3/images";
+@import "compass/utilities/sprites";
+
+@import "components";
+
+/* Tweak navbar brand link to be super sleek
+-------------------------------------------------- */
+
+body > .navbar {
+  font-size: 13px;
+}
+
+/* Change the docs' brand */
+body > .navbar .brand {
+  padding-right: 0;
+  padding-left: 0;
+  margin-left: 20px;
+  float: right;
+  font-weight: bold;
+  color: #000;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .125);
+  -webkit-transition: all .2s linear;
+  -moz-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+body > .navbar .brand:hover {
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 0 30px rgba(255, 255, 255, .4);
+  color: rgba(255, 255, 255, 0.59);
+}
+
+/* End navbar brand tweak
+-------------------------------------------------- */
+
+body.sg {
+  padding: 40px 80px;
+}
+
+.sg-h1 {
+  margin: 24px 0 18px 0;
+  font-size: 38px;
+}
+
+.sg-h2 {
+  font-size: 32px;
+  margin: 28px 0 22px 0;
+}
+
+.sg-h3 {
+  font-size: 24px;
+}
+
+.sg-box .sg-h3 {
+  color: #333;
+}
+
+.sg-description {
+  margin: 15px;
+  margin-left: 0;
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.sg {
+  .overlay {
+    display: inline-block;
+  }
+  .overlay + .overlay {
+    margin-left: 10px;
+  }
+
+  .navbar-spyed .brand {
+    margin-left: 45px;
+  }
+
+  // style guide specific stuff for components
+  .well-fullwidth, .well-inset-fullwidth {
+    min-height: 400px;
+  }
+
+}
+
+.sg-box {
+  background-color: white;
+  padding: 20px 50px;
+  @include box-shadow(0px 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* Base class */
+.sg-docs-example {
+  position: relative;
+  margin: 15px 0;
+  padding: 40px 39px 28px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.sg-docs-source {
+  position: relative;
+  margin: 15px 0;
+  padding: 40px 39px 28px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.sg-docs-source {
+  text-align: center;
+
+  pre {
+    display: none;
+  }
+  button {
+    display: inherit;
+  }
+}
+
+.sg-docs-source.opened {
+  text-align: inherit;
+
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+
+  pre {
+    display: block;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    margin: 0;
+  }
+  button {
+    display: none;
+  }
+}
+
+.sg-docs-source:after {
+  content: "Source";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+  -moz-border-radius: 4px 0 4px 0;
+  border-radius: 4px 0 4px 0;
+}
+
+/* Echo out a label for the example */
+.sg-docs-example:after {
+  content: "Example";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+  -moz-border-radius: 4px 0 4px 0;
+  border-radius: 4px 0 4px 0;
+}
+
+/* Remove spacing between an example and it's code */
+.sg-docs-example + .prettyprint {
+  margin-top: -20px;
+  padding-top: 15px;
+}
+
+.sg-docs-example + .sg-docs-source {
+  margin-top: -20px;
+}
+
+.header {
+  font-weight: 300;
+  font-size: 30px;
+
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+
+  border-bottom: 1px solid darkgray;
+}
+
