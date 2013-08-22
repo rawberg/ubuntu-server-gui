@@ -63,23 +63,34 @@
 /* line 4, ../sass/_components.scss */
 .file-manager th {
   text-align: left;
+  font-size: 15px;
+  color: #807B7B;
+  height: 24px;
 }
-/* line 7, ../sass/_components.scss */
+/* line 10, ../sass/_components.scss */
 .file-manager th:first-child {
-  padding-left: 40px;
+  padding-left: 36px;
 }
-/* line 12, ../sass/_components.scss */
+/* line 15, ../sass/_components.scss */
 .file-manager td {
   text-overflow: ellipsis;
+  height: 26px;
+}
+/* line 19, ../sass/_components.scss */
+.file-manager td .icon-folder-close-alt {
+  display: inline-block;
+  margin-left: 14px;
+  margin-right: 7px;
+  font-size: 15px;
 }
 
-/* line 18, ../sass/_components.scss */
+/* line 29, ../sass/_components.scss */
 .file-manager.table-striped tbody > tr:nth-child(odd) > td,
 .file-manager.table-striped tbody > tr:nth-child(odd) > th {
   background-color: #f3f6fa;
 }
 
-/* line 23, ../sass/_components.scss */
+/* line 34, ../sass/_components.scss */
 .file-manager.table-hover tbody tr:hover > td,
 .file-manager.table-hover tbody tr:hover > th {
   background-color: #f5f5f5;
