@@ -9,6 +9,7 @@ define(function (require_browser) {
         url: 'Servers',
         local: true,
         sshProxy: undefined,
+        sftpProxy: undefined,
         defaults: {
             name: null,
             ipv4: null,

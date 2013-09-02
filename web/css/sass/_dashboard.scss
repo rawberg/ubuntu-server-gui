@@ -5,58 +5,6 @@
   @include align-items(stretch);
 }
 
-#sidebar_left {
-  @extend %offwhite-background;
-  @extend %side-panel-container;
-  @include display-flex;
-  min-width: 216px;
-  width: 216px;
-  min-height: 100%;
-  padding-top: 50px;
-
-  ul {
-    @extend %list-spacing;
-    @extend %list-background;
-    min-width: 216px;
-
-    li {
-      @extend %full-width-spacing;
-      @extend %centered-text;
-
-      max-width: 215px; // allow 1px for right border
-      height: 110px;
-      background-image: url(../images/icons/sidebar-left/server-silver-small.png);
-      background-position: 50% 50%;
-      background-repeat: no-repeat;
-      @extend %side-panel-background;
-      border-bottom: 1px solid #c1c1c1;
-      border-right: 1px solid #a5a5a5;
-
-      &:hover {
-        @extend %side-panel-hover-background;
-      }
-
-      span {
-        position: relative;
-        top: 84px;
-        @extend %side-panel-text;
-        cursor: default;
-      }
-    }
-  }
-}
-
-#file-manager-layout {
-  width: 100%;
-  min-height:100%;
-
-  #file-manager {
-    min-height: 500px;
-  }
-}
-
-
-
 #main_content {
   @include flex(1);
   @include display-flex;

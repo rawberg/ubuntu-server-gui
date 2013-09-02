@@ -57,42 +57,61 @@
 }
 
 /* line 1, ../sass/_components.scss */
-.file-manager {
+.directory-explorer {
   width: 100%;
+  table-layout: fixed;
 }
-/* line 4, ../sass/_components.scss */
-.file-manager th {
+/* line 6, ../sass/_components.scss */
+.directory-explorer thead th:first-of-type {
+  max-width: 80px;
+  min-width: 80px;
+  width: 80px;
+}
+/* line 12, ../sass/_components.scss */
+.directory-explorer thead th {
   text-align: left;
   font-size: 15px;
   color: #807B7B;
+  width: 100%;
   height: 24px;
+  cursor: default;
 }
-/* line 10, ../sass/_components.scss */
-.file-manager th:first-child {
-  padding-left: 36px;
+/* line 23, ../sass/_components.scss */
+.directory-explorer tr td:first-of-type {
+  min-width: 80px;
+  max-width: 80px;
+  width: 80px;
+  text-align: center;
 }
-/* line 15, ../sass/_components.scss */
-.file-manager td {
+/* line 31, ../sass/_components.scss */
+.directory-explorer td {
   text-overflow: ellipsis;
   height: 26px;
+  cursor: default;
 }
-/* line 19, ../sass/_components.scss */
-.file-manager td .icon-folder-close-alt {
-  display: inline-block;
-  margin-left: 14px;
-  margin-right: 7px;
+/* line 36, ../sass/_components.scss */
+.directory-explorer td .icon-mode-41471:before {
+  content: "\f016";
+}
+/* line 40, ../sass/_components.scss */
+.directory-explorer td .icon-mode-16877:before {
+  content: "\f07b";
+}
+/* line 44, ../sass/_components.scss */
+.directory-explorer td [class^="icon-"] {
+  display: inline;
   font-size: 15px;
 }
 
-/* line 29, ../sass/_components.scss */
-.file-manager.table-striped tbody > tr:nth-child(odd) > td,
-.file-manager.table-striped tbody > tr:nth-child(odd) > th {
+/* line 53, ../sass/_components.scss */
+.directory-explorer.table-striped tbody > tr:nth-child(odd) > td,
+.directory-explorer.table-striped tbody > tr:nth-child(odd) > th {
   background-color: #f3f6fa;
 }
 
-/* line 34, ../sass/_components.scss */
-.file-manager.table-hover tbody tr:hover > td,
-.file-manager.table-hover tbody tr:hover > th {
+/* line 58, ../sass/_components.scss */
+.directory-explorer.table-hover tbody tr:hover > td,
+.directory-explorer.table-hover tbody tr:hover > th {
   background-color: #f5f5f5;
 }
 
@@ -162,48 +181,6 @@ header#main_toolbar ul#toolbar_nav li {
 }
 
 /* line 8, ../sass/_dashboard.scss */
-#sidebar_left {
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  min-width: 216px;
-  width: 216px;
-  min-height: 100%;
-  padding-top: 50px;
-}
-/* line 17, ../sass/_dashboard.scss */
-#sidebar_left ul {
-  min-width: 216px;
-}
-/* line 22, ../sass/_dashboard.scss */
-#sidebar_left ul li {
-  max-width: 215px;
-  height: 110px;
-  background-image: url(../images/icons/sidebar-left/server-silver-small.png);
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  border-bottom: 1px solid #c1c1c1;
-  border-right: 1px solid #a5a5a5;
-}
-/* line 39, ../sass/_dashboard.scss */
-#sidebar_left ul li span {
-  position: relative;
-  top: 84px;
-  cursor: default;
-}
-
-/* line 49, ../sass/_dashboard.scss */
-#file-manager-layout {
-  width: 100%;
-  min-height: 100%;
-}
-/* line 53, ../sass/_dashboard.scss */
-#file-manager-layout #file-manager {
-  min-height: 500px;
-}
-
-/* line 60, ../sass/_dashboard.scss */
 #main_content {
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -221,7 +198,7 @@ header#main_toolbar ul#toolbar_nav li {
   align-items: stretch;
   padding-top: 50px;
 }
-/* line 68, ../sass/_dashboard.scss */
+/* line 16, ../sass/_dashboard.scss */
 #main_content #dash_performance, #main_content #dash_software {
   display: -webkit-flexbox;
   display: -ms-flexbox;
@@ -235,56 +212,56 @@ header#main_toolbar ul#toolbar_nav li {
   -webkit-align-items: stretch;
   align-items: stretch;
 }
-/* line 75, ../sass/_dashboard.scss */
+/* line 23, ../sass/_dashboard.scss */
 #main_content #dash_performance {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   min-height: 260px;
 }
-/* line 80, ../sass/_dashboard.scss */
+/* line 28, ../sass/_dashboard.scss */
 #main_content #dash_platform {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
 }
-/* line 84, ../sass/_dashboard.scss */
+/* line 32, ../sass/_dashboard.scss */
 #main_content .performance, #main_content .software {
   width: 100%;
   font-size: 13px;
   font-family: "Lucida Grande" sans-serif;
 }
-/* line 89, ../sass/_dashboard.scss */
+/* line 37, ../sass/_dashboard.scss */
 #main_content .performance span.label, #main_content .software span.label {
   font-weight: bold;
 }
-/* line 93, ../sass/_dashboard.scss */
+/* line 41, ../sass/_dashboard.scss */
 #main_content .performance h2, #main_content .software h2 {
   font-size: 17px;
   font-weight: normal;
   color: #616161;
 }
-/* line 100, ../sass/_dashboard.scss */
+/* line 48, ../sass/_dashboard.scss */
 #main_content #dash_performance, #main_content .performance, #main_content #dash_software, #main_content .software {
   background-color: #f5f5f5;
 }
-/* line 104, ../sass/_dashboard.scss */
+/* line 52, ../sass/_dashboard.scss */
 #main_content .performance {
   padding: 10px 6px 0px 22px;
 }
-/* line 106, ../sass/_dashboard.scss */
+/* line 54, ../sass/_dashboard.scss */
 #main_content .performance .left, #main_content .performance .right {
   display: inline-block;
   position: relative;
   padding-bottom: 0;
   text-align: center;
 }
-/* line 112, ../sass/_dashboard.scss */
+/* line 60, ../sass/_dashboard.scss */
 #main_content .performance .left canvas, #main_content .performance .right canvas {
   margin-top: 18px;
   margin-bottom: 7px;
 }
-/* line 117, ../sass/_dashboard.scss */
+/* line 65, ../sass/_dashboard.scss */
 #main_content .performance .left span.gauge-text-value, #main_content .performance .right span.gauge-text-value {
   display: inline-block;
   position: absolute;
@@ -295,24 +272,24 @@ header#main_toolbar ul#toolbar_nav li {
   line-height: 30px;
   font-weight: bold;
 }
-/* line 128, ../sass/_dashboard.scss */
+/* line 76, ../sass/_dashboard.scss */
 #main_content .performance .left i, #main_content .performance .right i {
   position: absolute;
   font-size: 11px;
 }
-/* line 133, ../sass/_dashboard.scss */
+/* line 81, ../sass/_dashboard.scss */
 #main_content .performance .left span.gauge-label, #main_content .performance .right span.gauge-label {
   display: inline-block;
   width: 100%;
   text-align: center;
 }
-/* line 141, ../sass/_dashboard.scss */
+/* line 89, ../sass/_dashboard.scss */
 #main_content .performance .left {
   min-width: 31%;
   margin-left: 6%;
   background-color: #f5f5f5;
 }
-/* line 145, ../sass/_dashboard.scss */
+/* line 93, ../sass/_dashboard.scss */
 #main_content .performance .left span.statbox {
   display: inline-block;
   padding: 30px 40px;
@@ -326,52 +303,52 @@ header#main_toolbar ul#toolbar_nav li {
   font-weight: bold;
   text-align: center;
 }
-/* line 160, ../sass/_dashboard.scss */
+/* line 108, ../sass/_dashboard.scss */
 #main_content .performance .right {
   min-width: 16%;
   background-color: #f5f5f5;
 }
-/* line 164, ../sass/_dashboard.scss */
+/* line 112, ../sass/_dashboard.scss */
 #main_content .performance .right span.gauge-text-value {
   top: 55px;
   left: 95px;
 }
-/* line 169, ../sass/_dashboard.scss */
+/* line 117, ../sass/_dashboard.scss */
 #main_content .performance .right i {
   bottom: 7px;
 }
-/* line 175, ../sass/_dashboard.scss */
+/* line 123, ../sass/_dashboard.scss */
 #main_content .software {
   background-color: #ffffff;
 }
-/* line 177, ../sass/_dashboard.scss */
+/* line 125, ../sass/_dashboard.scss */
 #main_content .software h2 {
   padding-left: 20px;
 }
-/* line 181, ../sass/_dashboard.scss */
+/* line 129, ../sass/_dashboard.scss */
 #main_content .software .container {
   width: 100%;
   text-align: center;
 }
-/* line 186, ../sass/_dashboard.scss */
+/* line 134, ../sass/_dashboard.scss */
 #main_content .software .container span {
   display: block;
   margin-bottom: 10px;
   background-color: transparent;
 }
-/* line 190, ../sass/_dashboard.scss */
+/* line 138, ../sass/_dashboard.scss */
 #main_content .software .container span.label {
   color: rgba(51, 51, 51, 0.79);
   text-shadow: none;
 }
-/* line 196, ../sass/_dashboard.scss */
+/* line 144, ../sass/_dashboard.scss */
 #main_content .software .container .left {
   display: inline-block;
   min-height: 100%;
   padding-right: 5px;
   text-align: right;
 }
-/* line 203, ../sass/_dashboard.scss */
+/* line 151, ../sass/_dashboard.scss */
 #main_content .software .container .right {
   display: inline-block;
   min-height: 100%;
@@ -469,6 +446,8 @@ header#main_toolbar ul#toolbar_nav li {
 
 /* line 1, ../sass/_main-footerbar.scss */
 footer {
+  position: fixed;
+  bottom: 0;
   width: 100%;
   display: -webkit-flexbox;
   display: -ms-flexbox;
@@ -483,9 +462,9 @@ footer {
   align-items: stretch;
   background-color: #f3f4f4;
   background: linear, top, #f3f4f4, #ebebeb, "left top, left bottom";
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f3f4f4', EndColorStr='#ebebeb');
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#f3f4f4', EndColorStr='#ebebeb');
 }
-/* line 9, ../sass/_main-footerbar.scss */
+/* line 11, ../sass/_main-footerbar.scss */
 footer div#left_sidebar_footerbar, footer div#center_footerbar {
   display: -webkit-flexbox;
   display: -ms-flexbox;
@@ -503,7 +482,7 @@ footer div#left_sidebar_footerbar, footer div#center_footerbar {
   align-items: stretch;
   border-top: 1px solid #d4d4d4;
 }
-/* line 16, ../sass/_main-footerbar.scss */
+/* line 18, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar {
   -webkit-flex: 0;
   -ms-flex: 0;
@@ -512,12 +491,12 @@ footer #left_sidebar_footerbar {
   width: 216px;
   border-right: 1px solid #a5a5a5;
 }
-/* line 21, ../sass/_main-footerbar.scss */
+/* line 23, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul {
   list-style: none;
   margin: 0;
 }
-/* line 24, ../sass/_main-footerbar.scss */
+/* line 26, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li {
   width: 30px;
   line-height: 24px;
@@ -525,20 +504,20 @@ footer #left_sidebar_footerbar ul li {
   border-right: 1px solid #c5c5c5;
   text-align: center;
 }
-/* line 31, ../sass/_main-footerbar.scss */
+/* line 33, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li a i {
   color: #424242;
 }
-/* line 35, ../sass/_main-footerbar.scss */
+/* line 37, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li a:hover {
   cursor: default;
   text-decoration: none;
 }
-/* line 38, ../sass/_main-footerbar.scss */
+/* line 40, ../sass/_main-footerbar.scss */
 footer #left_sidebar_footerbar ul li a:hover i {
   color: #707070;
 }
-/* line 45, ../sass/_main-footerbar.scss */
+/* line 47, ../sass/_main-footerbar.scss */
 footer #center_footerbar {
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -760,22 +739,82 @@ html {
   width: 100%;
   min-height: 100%;
   height: 100%;
+  cursor: default;
 }
 
-/* line 33, ../sass/screen.scss */
+/* line 34, ../sass/screen.scss */
 body {
   position: relative;
   height: 100%;
+  cursor: default;
 }
 
-/* line 38, ../sass/screen.scss */
+/* line 40, ../sass/screen.scss */
 #viewport {
   width: 100%;
   height: 100%;
+  min-height: 100%;
   margin-bottom: -30px;
 }
 
-/* line 44, ../sass/screen.scss */
+/* line 47, ../sass/screen.scss */
+#sidebar_left {
+  position: fixed;
+  left: 0;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  min-width: 216px;
+  width: 216px;
+  min-height: 100%;
+  padding-top: 50px;
+}
+/* line 58, ../sass/screen.scss */
+#sidebar_left ul {
+  min-width: 216px;
+}
+/* line 63, ../sass/screen.scss */
+#sidebar_left ul li {
+  max-width: 215px;
+  height: 110px;
+  background-image: url(../images/icons/sidebar-left/server-silver-small.png);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid #c1c1c1;
+  border-right: 1px solid #a5a5a5;
+}
+/* line 81, ../sass/screen.scss */
+#sidebar_left ul li span {
+  position: relative;
+  top: 84px;
+  cursor: default;
+}
+
+/* line 91, ../sass/screen.scss */
+#file-manager-layout {
+  position: absolute;
+  left: 216px;
+  width: 100%;
+  min-height: 100%;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  align-items: stretch;
+}
+/* line 100, ../sass/screen.scss */
+#file-manager-layout #file-manager {
+  min-height: 500px;
+}
+
+/* line 105, ../sass/screen.scss */
 #ace-editor {
   position: absolute;
   top: 50px;
