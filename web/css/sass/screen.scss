@@ -16,6 +16,7 @@
 @import "components";
 @import "main-toolbar";
 @import "dashboard";
+@import "filemanager";
 @import "login-signup";
 @import "main-footerbar";
 @import "modals";
@@ -44,12 +45,15 @@ body {
     margin-bottom: -30px;
 }
 
+#main_content {
+  @include flex(1);
+  padding-top: 50px;
+  // clears top toolbar
+}
+
 #sidebar_left {
-  position: fixed;
-  left: 0;
   @extend %offwhite-background;
   @extend %side-panel-container;
-  @include display-flex;
   min-width: 216px;
   width: 216px;
   min-height: 100%;
@@ -58,6 +62,7 @@ body {
   ul {
     @extend %list-spacing;
     @extend %list-background;
+    position: fixed;
     min-width: 216px;
 
     li {
@@ -85,20 +90,6 @@ body {
         cursor: default;
       }
     }
-  }
-}
-
-#file-manager-layout {
-  position: absolute;
-  left: 216px;
-  width: 100%;
-  min-height: 100%;
-  @include display-flex;
-  @include flex-direction(row);
-  @include align-items(stretch);
-
-  #file-manager {
-    min-height: 500px;
   }
 }
 

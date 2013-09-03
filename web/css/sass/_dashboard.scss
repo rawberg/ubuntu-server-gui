@@ -3,15 +3,12 @@
   @include display-flex;
   @include flex-direction(row);
   @include align-items(stretch);
-}
 
-#main_content {
-  @include flex(1);
-  @include display-flex;
-  @include flex-direction(column);
-  @include align-items(stretch);
-  padding-top: 50px; // clears top toolbar
-
+  #main_content {
+    @include display-flex;
+    @include flex-direction(column);
+    @include align-items(stretch);
+  }
 
   #dash_performance, #dash_software {
     @include display-flex;

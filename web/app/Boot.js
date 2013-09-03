@@ -25,6 +25,8 @@ require_browser.config({
 
         // Misc
         text: '../libs/require/text',
+        moment: '../libs/moment/moment',
+        filesize: '../libs/filesize/filesize.min',
 
         // Testing Libs
         jasmine: '../libs/jasmine/jasmine',

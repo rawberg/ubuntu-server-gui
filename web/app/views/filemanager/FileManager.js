@@ -3,6 +3,9 @@ define(function (require_browser, exports, module) {
         _ = require_browser('underscore'),
         Marionette = require_browser('marionette'),
         App = require_browser('App'),
+        moment = require_browser('moment'),
+        filesize = require_browser('filesize'),
+
     // Models & Collections
         DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents,
         Server = require_browser('models/Server'),
@@ -14,9 +17,40 @@ define(function (require_browser, exports, module) {
         directoryExplorerTpl = require_browser('text!views/filemanager/templates/directory-explorer.html'),
         directoryItemTpl = require_browser('text!views/filemanager/templates/directory-item.html');
 
+    require_browser('backbone_stickit');
+
     var DirectoryItemView = module.exports.DirectoryItemView = Marionette.ItemView.extend({
         template: _.template(directoryItemTpl),
-        tagName: 'tr'
+        tagName: 'tr',
+
+        bindings: {
+            '.filename': 'filename',
+            '.timestamp': {
+                observe: 'attrs.mtime',
+                onGet: function(val, options) {
+                    return moment.unix(this.model.get('attrs').mtime).format('llll');
+                }
+            },
+            '.size': {
+                observe: 'attrs.size',
+                onGet: function(val, options) {
+                    return filesize(this.model.get('attrs').size, true);
+                }
+            },
+            'i': {
+                attributes: [{
+                    name: 'class',
+                    observe: 'attrs.mode',
+                    onGet: function(val, options) {
+                        return 'icon-mode-' + this.model.get('attrs').mode;
+                    }
+                }]
+            }
+        },
+
+        onRender: function() {
+            this.stickit();
+        }
     });
 
     var DirectoryExplorerView = module.exports.DirectoryExplorerView = Marionette.CompositeView.extend({

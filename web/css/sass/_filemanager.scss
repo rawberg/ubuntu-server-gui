@@ -1,0 +1,11 @@
+#file-manager-layout {
+  width: 100%;
+  min-height: 100%;
+  @include display-flex;
+  @include flex-direction(row);
+  @include align-items(stretch);
+
+  #main_content {
+    overflow-y: scroll;
+  }
+}
