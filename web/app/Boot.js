@@ -1,7 +1,7 @@
 require_browser.config({
     paths: {
         // Core Libs
-        jquery: '../libs/jquery/jquery-1.8.2.min',
+        jquery: '../libs/jquery/jquery-2.0.3.min',
         underscore: '../libs/underscore/underscore',
         backbone: '../libs/backbone/backbone',
         marionette: '../libs/backbone.marionette/backbone.marionette',
@@ -34,7 +34,7 @@ require_browser.config({
         jasmine_async: '../libs/jasmine/jasmine.async',
         sinon: '../libs/sinon/sinon-1.7.1',
         chai: '../libs/chai/chai',
-        sinon_chai: '../libs/chai/plugins/sinon-chai'
+        sinon_chai: '../libs/chai/sinon-chai'
     },
 
     shim: {
@@ -98,6 +98,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                 pushState = false;
             }
 
+            App.start();
             App.routers.main = new MainRouter({controller: new MainController()});
 
             $(document).ready(function() {
@@ -155,7 +156,6 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
 //                    'test/models/User.spec.js',
 //                    'test/models/Session.spec.js',
                     // Controllers
-                    'test/controllers/Base.spec.js',
                     'test/controllers/Main.spec.js',
                     // Routers
                     'test/routers/Base.spec.js'

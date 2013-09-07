@@ -13,11 +13,12 @@ define(function (require_browser) {
 
     describe('FileManager', function() {
 
-        xdescribe('onServerSelected', function() {
+        describe('onServerSelected', function() {
             var fileManagerLayout;
             var modalShowSpy, serverConnectSpy;
 
             beforeEach(function() {
+                App.initCallbacks.run(undefined, App);
                 fileManagerLayout = new FileManagerLayout();
                 modalShowSpy = sinon.stub(App, 'showModal');
                 serverConnectSpy = sinon.spy(ServerConnection.prototype, 'connect');
@@ -42,7 +43,7 @@ define(function (require_browser) {
             });
         });
 
-        xdescribe('onRender', function() {
+        describe('onRender', function() {
             var fileManagerLayout, fakeServer;
             var showFileManagerSpy;
 
@@ -69,29 +70,6 @@ define(function (require_browser) {
                 (showFileManagerSpy).should.have.been.called;
             });
 
-        });
-
-        describe('showFileManager', function() {
-            var fileManagerLayout, fakeServer;
-            var showFileManagerSpy;
-
-            beforeEach(function() {
-                fileManagerLayout = new FileManagerLayout();
-                showFileManagerSpy = sinon.stub(FileManagerLayout.prototype, 'showFileManager');
-
-                fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
-                fakeServer.sshProxy = {};
-                fakeServer.sshProxy.sftp = sinon.stub().yields();
-            });
-
-            it('establishes and sftp connection', function() {
-                fileManagerLayout.showFileManager(fakeServer);
-                (fakeServer.sshProxy.sftp).should.have.been.called;
-            });
-
-            afterEach(function() {
-                showFileManagerSpy.restore();
-            });
         });
     });
 });

@@ -9,6 +9,13 @@ define(function (require_browser) {
 
     describe('App', function() {
 
+        beforeEach(function() {
+            App.initCallbacks.run(undefined, App);
+        });
+
+        afterEach(function() {
+        });
+
         describe('start', function() {
             it('should have a user containing a session', function() {
                 (App.user()).should.exist;
@@ -23,8 +30,9 @@ define(function (require_browser) {
         describe('onNoobTourActivate', function() {
             var tourSpy, appendToSpy, posStub, windowResizeSpy;
             var clickSwallowSpy, scrollTopSpy, popoverSpy;
+
             beforeEach(function() {
-                tourSpy = sinon.spy(App.vent._callbacks['noobtour:activate']['next'], 'callback');
+                tourSpy = sinon.spy(App.vent._events['noobtour:activate'][0], 'callback');
                 posStub = sinon.stub($.prototype, 'position');
                 posStub.returns({top: 500, bottom: 540});
 
@@ -79,7 +87,7 @@ define(function (require_browser) {
         describe('onNoobTourDeActivate', function() {
             var removeSpy, deactivateTourSpy, offSpy;
             beforeEach(function() {
-                deactivateTourSpy = sinon.spy(App.vent._callbacks['noobtour:deactivate']['next'], 'callback');
+                deactivateTourSpy = sinon.spy(App.vent._events['noobtour:deactivate'][0], 'callback');
                 removeSpy = sinon.spy($.prototype, 'remove');
                 offSpy = sinon.spy($.prototype, 'off');
                 App.vent.trigger('noobtour:deactivate');

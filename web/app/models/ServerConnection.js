@@ -115,7 +115,6 @@ define(function (require_browser) {
             wsStream.on('error', _.bind(function(errorEvent) {
                 dnodeStream.end();
                 // TODO: inspect errorEvent further to catch other cases
-                console.log('errorEvent: ', errorEvent);
                 this.set('connection_status', 'connection error');
                 App.vent.trigger('session:expired');
             }, this));

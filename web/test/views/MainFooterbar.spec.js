@@ -7,7 +7,8 @@ define(function (require_browser) {
         var mainFooterbar, addServerClickSpy;
         var modalRenderSpy, deactivateTourSpy;
         beforeEach(function() {
-            deactivateTourSpy = sinon.spy(App.vent._callbacks['noobtour:deactivate']['next'], 'callback');
+            App.initCallbacks.run(undefined, App);
+            deactivateTourSpy = sinon.spy(App.vent._events['noobtour:deactivate'][0], 'callback');
             addServerClickSpy = sinon.spy(MainFooterbar.prototype, 'onAddServerClick');
             modalRenderSpy = sinon.spy(AddEditServerModal.prototype, 'render');
 

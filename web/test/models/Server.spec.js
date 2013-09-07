@@ -20,25 +20,12 @@ define(['models/Server', 'app'], function(Server, App) {
 
         });
 
-        xdescribe('wsConnect', function() {
-            beforeEach(function() {
-
-            });
-
-            afterEach(function() {
-
-            });
-
-        });
-
-        describe('save (local storage)', function() {
+        describe('saving, updating and deleting (local storage)', function() {
             window.localStorage.clear();
-
             var server, storedServer;
+
             beforeEach(function() {
-                server = new Server();
-                server.set('name', 'Sample Server');
-                server.set('ipv4', '192.168.0.1');
+                server = new Server({name: 'Sample Server', 'ipv4': '192.168.0.1'}, {local: true});
                 server.save();
 
                 storedServer = JSON.parse(window.localStorage['Servers'+server.id]);
@@ -48,69 +35,42 @@ define(['models/Server', 'app'], function(Server, App) {
                 window.localStorage.clear();
             });
 
-            async.it('should save model to localStorage', function(done) {
+            it('should save model to localStorage', function() {
                 var localStorageServers = window.localStorage["Servers"].split(',');
                 (localStorageServers.length).should.equal(1);
-                done();
             });
 
-            async.it('"id" should match server "id" in localStorage', function(done) {
+            it('server "id", "name" and "ipv4" should match data in localStorage', function() {
                 (window.localStorage["Servers"]).should.equal(server.id);
-                done();
-            });
-
-            it('server "name" should match server "name" in localStorage', function() {
                 (storedServer.name).should.equal(server.get('name'));
-            });
-
-            it('server "ipv4" should match "ipv4" address in localStorage', function() {
                 (storedServer.ipv4).should.equal(server.get('ipv4'));
             });
 
-            async.it('should delete model from localStorage when calling destroy', function(done) {
-                server.set('name', 'Super Sample Server');
-                server.set('ipv4', '192.168.10.1');
-                server.save();
+            it('should delete model from localStorage when calling destroy', function() {
+                var secondServer = new Server({name: 'second server'}, {local: true});
+                secondServer.save();
+                (window.localStorage["Servers"].split(',').length).should.equal(2);
 
-                (window.localStorage["Servers"]).should.equal(server.id);
-                server.destroy();
-
-                (window.localStorage["Servers"].length).should.equal(0);
-                done();
+                secondServer.destroy();
+                (window.localStorage["Servers"].split(',').length).should.equal(1);
             });
 
-            async.it('should persist model attribute edits back to localStorage when calling save after edits', function(done) {
-                server.set('name', 'Super Sample Server');
-                server.set('ipv4', '192.168.10.1');
-                server.save();
+            it('should persist model attribute edits back to localStorage when calling save after edits', function() {
+                var serverKey = "Servers" + server.id;
+                var originalServerData = JSON.parse(window.localStorage[serverKey]);
 
-                expect(window.localStorage["Servers"]).to.be.equal(server.id);
+                (originalServerData.name).should.equal('Sample Server');
+                (originalServerData.ipv4).should.equal('192.168.0.1');
+
                 server.set('name', 'Changed Sample Server');
                 server.set('ipv4', '111.108.0.1');
                 server.save();
 
-                var serverData, serverKey;
-                serverKey = "Servers" + server.id;
-                serverData = JSON.parse(window.localStorage[serverKey]);
-                (serverData.name).should.equal('Changed Sample Server');
-                (serverData.ipv4).should.equal('111.108.0.1');
-                done();
+                var updatedServerData = JSON.parse(window.localStorage[serverKey]);
+                (updatedServerData.name).should.equal('Changed Sample Server');
+                (updatedServerData.ipv4).should.equal('111.108.0.1');
             });
         });
 
-        describe('read from a directory handle', function() {
-            var server;
-
-            beforeEach(function() {
-                server = new Server({
-                    'name': 'Sample Server',
-                    'ipv4': '10.10.0.1'
-                });
-            });
-
-            async.it('should call sftpReadDir', function(done) {
-
-            });
-        });
     });
 });

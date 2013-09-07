@@ -166,6 +166,5 @@ define(function (require_browser) {
         };
     });
 
-    App.start();
     return App;
 });

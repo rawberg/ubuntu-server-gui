@@ -26,23 +26,23 @@ define(function (require_browser, exports, module) {
         bindings: {
             '.filename': 'filename',
             '.timestamp': {
-                observe: 'attrs.mtime',
+                observe: 'mtime',
                 onGet: function(val, options) {
-                    return moment.unix(this.model.get('attrs').mtime).format('llll');
+                    return moment.unix(val).format('llll');
                 }
             },
             '.size': {
-                observe: 'attrs.size',
+                observe: 'size',
                 onGet: function(val, options) {
-                    return filesize(this.model.get('attrs').size, true);
+                    return val ? filesize(val, true) : '';
                 }
             },
             'i': {
                 attributes: [{
                     name: 'class',
-                    observe: 'attrs.mode',
+                    observe: 'mode',
                     onGet: function(val, options) {
-                        return 'icon-mode-' + this.model.get('attrs').mode;
+                        return 'icon-mode-' + val;
                     }
                 }]
             }
@@ -58,7 +58,20 @@ define(function (require_browser, exports, module) {
         tagName: 'table',
         className: 'directory-explorer table-striped',
         itemView: DirectoryItemView,
-        itemViewContainer: 'tbody'
+        itemViewContainer: 'tbody',
+
+        events: {
+            'click th.column-name': 'onSortByName'
+        },
+
+        collectionEvents: {
+            'sort': 'render'
+        },
+
+        onSortByName: function() {
+            debugger;
+            this.collection.sort('filename');
+        }
     });
 
     module.exports.FileManagerLayout = Marionette.Layout.extend({
@@ -95,7 +108,7 @@ define(function (require_browser, exports, module) {
         },
 
         showFileManager: function(server) {
-            var directoryContents = new DirectoryContents([], {server: server});
+            var directoryContents = new DirectoryContents([], {server: server, comparator: 'filename'});
             var directoryExplorer = new DirectoryExplorerView({collection: directoryContents});
             this.fileManagerExplorerRegion.show(directoryExplorer);
             directoryContents.fetch();
