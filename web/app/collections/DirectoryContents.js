@@ -1,7 +1,6 @@
 define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Backbone = require_browser('backbone');
+    var Backbone = require_browser('backbone'),
+        _ = require_browser('underscore');
 
     var DirectoryItem = Backbone.Model.extend({
         parse: function(response, options) {
@@ -18,7 +17,8 @@ define(function (require_browser, exports, module) {
 
     var DirectoryContents = module.exports.DirectoryContents = Backbone.Collection.extend({
         model: DirectoryItem,
-        comparator: 'filename',
+        sortProperty: '',
+        sortDirection: 'ASC',
 
         initialize: function(models, options) {
             this.server = (options && options.server) ? options.server : null;
@@ -27,12 +27,66 @@ define(function (require_browser, exports, module) {
             }
         },
 
+        comparator: function(modelOne, modelTwo, otherStuff) {
+            return this[this.sortProperty + 'Sort'].call(this, modelOne, modelTwo);
+        },
+
         fetch: function(options) {
             var path = (options && options.path) ? options.path : '/';
             this.server.sshProxy.usgOpendir(path, _.bind(function (err, list) {
+                console.log(list);
                 this.add(list, {parse: true});
-                this.sort();
             }, this));
+        },
+
+        filenameSort: function(modelOne, modelTwo) {
+            if(this.sortDirection === 'ASC') {
+                return (modelOne.get('filename')) > (modelTwo.get('filename')) ? 1 : -1;
+            } else {
+                return (modelOne.get('filename')) < (modelTwo.get('filename')) ? 1 : -1;
+            }
+        },
+
+        mtimeSort: function(modelOne, modelTwo) {
+            if (this.sortDirection === 'ASC') {
+                return (modelOne.get('mtime')) > (modelTwo.get('mtime')) ? 1 : -1;
+            } else {
+                return (modelOne.get('mtime')) < (modelTwo.get('mtime')) ? 1 : -1;
+            }
+        },
+
+        sizeSort: function(modelOne, modelTwo) {
+            if (this.sortDirection === 'ASC') {
+                return (modelOne.get('size')) > (modelTwo.get('size')) ? 1 : -1;
+            } else {
+                return (modelOne.get('size')) < (modelTwo.get('size')) ? 1 : -1;
+            }
+        },
+
+        sort: function (options) {
+            if (!this.comparator) throw new Error('Cannot sort a set without a comparator');
+            options || (options = {});
+
+            var currentSortProperty = this.sortProperty;
+            this.sortProperty = options.sortProperty ? options.sortProperty : 'filename';
+
+            if (currentSortProperty === this.sortProperty) {
+                this.sortDirection = 'DESC';
+            } else {
+                this.sortDirection = 'ASC';
+            }
+            this.sortDirection = options.sortDirection ? options.sortDirection : this.sortDirection;
+
+            // Run sort based on type of `comparator`.
+            if (_.isString(this.comparator) || this.comparator.length === 1) {
+                this.models = this.sortBy(this.comparator, this);
+            } else {
+                this.models.sort(_.bind(this.comparator, this));
+            }
+
+            if (!options.silent) this.trigger('sort', this, options);
+            return this;
         }
+
     });
 });
