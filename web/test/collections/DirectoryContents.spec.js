@@ -67,6 +67,19 @@ define(function (require_browser) {
                 (directoryContents.last().get('mtime')).should.equal(1330970070);
             });
 
+            it('correctly toggles sort direction on repeat sorts of the same property', function() {
+                (directoryContents.sortDirection).should.equal('ASC');
+
+                directoryContents.sort({sortProperty: 'mtime'});
+                (directoryContents.sortDirection).should.equal('ASC');
+
+                directoryContents.sort({sortProperty: 'mtime'});
+                (directoryContents.sortDirection).should.equal('DSC');
+
+                directoryContents.sort({sortProperty: 'mtime'});
+                (directoryContents.sortDirection).should.equal('ASC');
+            });
+
         });
     });
 });

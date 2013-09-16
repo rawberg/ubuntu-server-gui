@@ -10,7 +10,7 @@ define(function (require_browser) {
     describe('App', function() {
 
         beforeEach(function() {
-            App.initCallbacks.run(undefined, App);
+            App._initCallbacks.run(undefined, App);
         });
 
         afterEach(function() {

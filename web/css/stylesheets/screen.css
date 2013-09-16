@@ -372,6 +372,19 @@ header#main_toolbar ul#toolbar_nav li {
 #file-manager-layout #main_content {
   overflow-y: scroll;
 }
+/* line 12, ../sass/_filemanager.scss */
+#file-manager-layout ::-moz-selection {
+  background-color: #FFFFFF;
+}
+/* line 16, ../sass/_filemanager.scss */
+#file-manager-layout ::selection {
+  background-color: #FFFFFF;
+}
+/* line 22, ../sass/_filemanager.scss */
+#file-manager-layout thead th i {
+  display: none;
+  margin-left: 5px;
+}
 
 /* line 1, ../sass/_login-signup.scss */
 .login-signup-layout {

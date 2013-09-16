@@ -18,7 +18,7 @@ define(function (require_browser) {
             var modalShowSpy, serverConnectSpy;
 
             beforeEach(function() {
-                App.initCallbacks.run(undefined, App);
+                App._initCallbacks.run(undefined, App);
                 fileManagerLayout = new FileManagerLayout();
                 modalShowSpy = sinon.stub(App, 'showModal');
                 serverConnectSpy = sinon.spy(ServerConnection.prototype, 'connect');

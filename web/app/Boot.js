@@ -4,6 +4,8 @@ require_browser.config({
         jquery: '../libs/jquery/jquery-2.0.3.min',
         underscore: '../libs/underscore/underscore',
         backbone: '../libs/backbone/backbone',
+        'backbone.babysitter': '../libs/backbone.marionette/backbone.babysitter',
+        'backbone.wreqr': '../libs/backbone.marionette/backbone.wreqr',
         marionette: '../libs/backbone.marionette/backbone.marionette',
         shoe: '../libs/shoe/shoe',
         websocket: '../libs/websocket-stream/websocket-stream',

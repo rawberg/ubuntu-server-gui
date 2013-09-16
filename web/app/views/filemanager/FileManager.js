@@ -61,17 +61,33 @@ define(function (require_browser, exports, module) {
         itemViewContainer: 'tbody',
 
         events: {
-            'click th.column-name': 'onSortByName'
+            'click th.column-filename': 'onSortByName',
+            'click th.column-mtime': 'onSortByModified',
+            'click th.column-size': 'onSortBySize'
         },
 
         collectionEvents: {
-            'sort': 'render'
+            'sort': 'render toggleSortCaret'
+        },
+
+        onSortByModified: function () {
+            this.collection.sort({sortProperty: 'mtime'});
         },
 
         onSortByName: function() {
-            debugger;
-            this.collection.sort('filename');
+            this.collection.sort({sortProperty: 'filename'});
+        },
+
+        onSortBySize: function() {
+            this.collection.sort({sortProperty: 'size'});
+        },
+
+        toggleSortCaret: function() {
+            var direction = (this.collection.sortDirection === 'ASC') ? 'up' : 'down';
+            this.$('th.column-' + this.collection.sortProperty + ' i').hide();
+            this.$('th.column-' + this.collection.sortProperty + ' i').attr('class', 'icon-caret-' + direction).show();
         }
+
     });
 
     module.exports.FileManagerLayout = Marionette.Layout.extend({
@@ -108,7 +124,7 @@ define(function (require_browser, exports, module) {
         },
 
         showFileManager: function(server) {
-            var directoryContents = new DirectoryContents([], {server: server, comparator: 'filename'});
+            var directoryContents = new DirectoryContents([], {server: server});
             var directoryExplorer = new DirectoryExplorerView({collection: directoryContents});
             this.fileManagerExplorerRegion.show(directoryExplorer);
             directoryContents.fetch();

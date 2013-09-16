@@ -8,4 +8,22 @@
   #main_content {
     overflow-y: scroll;
   }
+
+  ::-moz-selection {
+    background-color: #FFFFFF;
+  }
+
+  ::selection {
+    background-color: #FFFFFF;
+  }
+
+  thead {
+    th {
+      i {
+        display: none;
+        margin-left: 5px;
+      }
+    }
+  }
+
 }

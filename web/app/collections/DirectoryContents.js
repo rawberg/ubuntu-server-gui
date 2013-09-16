@@ -2,7 +2,7 @@ define(function (require_browser, exports, module) {
     var Backbone = require_browser('backbone'),
         _ = require_browser('underscore');
 
-    var DirectoryItem = Backbone.Model.extend({
+    var Directory = Backbone.Model.extend({
         parse: function(response, options) {
             return {
                 filename: response.filename,
@@ -16,7 +16,7 @@ define(function (require_browser, exports, module) {
     });
 
     var DirectoryContents = module.exports.DirectoryContents = Backbone.Collection.extend({
-        model: DirectoryItem,
+        model: Directory,
         sortProperty: '',
         sortDirection: 'ASC',
 
@@ -34,8 +34,8 @@ define(function (require_browser, exports, module) {
         fetch: function(options) {
             var path = (options && options.path) ? options.path : '/';
             this.server.sshProxy.usgOpendir(path, _.bind(function (err, list) {
-                console.log(list);
-                this.add(list, {parse: true});
+                //console.log(list);
+                this.add(list, {parse: true, sort: false});
             }, this));
         },
 
@@ -71,18 +71,13 @@ define(function (require_browser, exports, module) {
             this.sortProperty = options.sortProperty ? options.sortProperty : 'filename';
 
             if (currentSortProperty === this.sortProperty) {
-                this.sortDirection = 'DESC';
+                this.sortDirection = (this.sortDirection === 'DSC') ? 'ASC': 'DSC';
             } else {
                 this.sortDirection = 'ASC';
             }
-            this.sortDirection = options.sortDirection ? options.sortDirection : this.sortDirection;
 
-            // Run sort based on type of `comparator`.
-            if (_.isString(this.comparator) || this.comparator.length === 1) {
-                this.models = this.sortBy(this.comparator, this);
-            } else {
-                this.models.sort(_.bind(this.comparator, this));
-            }
+            this.sortDirection = options.sortDirection ? options.sortDirection : this.sortDirection;
+            this.models.sort(_.bind(this.comparator, this));
 
             if (!options.silent) this.trigger('sort', this, options);
             return this;
