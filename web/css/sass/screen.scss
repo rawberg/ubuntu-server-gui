@@ -1,18 +1,44 @@
-// Compass
+
+/* Compass Mixins
+-------------------------------------------------- */
 @import "compass/css3/border-radius";
 @import "compass/css3/flexbox";
 @import "compass/css3/box-sizing";
 @import "compass/css3/images";
 @import "compass/utilities/sprites";
 
-// Core
+
+/* Bootstrap Styles
+-------------------------------------------------- */
+// Core variables and mixins
+@import "variables";
+@import "mixins";
+
+// Reset
+@import "normalize";
+@import "print";
+
+// Core CSS
+@import "scaffolding";
+@import "type";
+@import "code";
+@import "grid";
+@import "tables";
+@import "forms";
+@import "buttons";
+
+
+/* Application Core Styles
+-------------------------------------------------- */
 @import "core/typography";
 @import "core/container";
 @import "core/background";
 @import "core/foreground";
 @import "core/spacing";
 
-// Application Components
+
+/* Application Component Styles
+-------------------------------------------------- */
 @import "components";
 @import "main-toolbar";
 @import "dashboard";
@@ -21,6 +47,7 @@
 @import "main-footerbar";
 @import "modals";
 @import "contextmenu"; // converted from lib/contextmenu/contextmenu.css (via sass-convert)
+
 
 // Font Awesome
 @import "../font-awesome/build/assets/font-awesome/css/font-awesome.css";

@@ -6,11 +6,10 @@ output_style  = :expanded
 http_path = "/"
 css_dir = "stylesheets"
 sass_dir = "sass"
-#additional_import_paths = ["sass-twitter-bootstrap/lib"]
 images_dir = "images"
 javascripts_dir = "javascripts"
 
-#add_import_path "sass-twitter-bootstrap/lib"
+add_import_path "bootstrap/lib"
 
 # To enable relative paths to assets via compass helper functions. Uncomment:
 relative_assets = true

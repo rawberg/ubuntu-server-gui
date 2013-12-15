@@ -2,28 +2,25 @@
 <html>
 <head>
     <title>Style guide</title>
-    <link rel="stylesheet" href="css/flatstrap/assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="css/stylesheets/styleguide.css"/>
-    <link rel="stylesheet" href="css/flatstrap/assets/js/google-code-prettify/prettify.css"/>
+    <link rel="stylesheet" href="css/google-code-prettify/prettify.css"/>
 
-    <script src="libs/jquery/jquery-1.8.2.min.js"></script>
+    <script src="libs/jquery/jquery-2.0.3.min.js"></script>
     <script src="libs/underscore/underscore.js"></script>
-    <script src="css/flatstrap/assets/js/google-code-prettify/prettify.js"></script>
-    <script src="css/flatstrap/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="css/flatstrap/assets/js/bootstrap-dropdown.js"></script>
+    <script src="css/google-code-prettify/prettify.js"></script>
+    <script src="css/bootstrap/js/scrollspy.js"></script>
+    <script src="css/bootstrap/js/dropdown.js"></script>
 </head>
 <body class="sg" data-spy="scroll" data-target=".navbar.navbar-spyed">
 
-    <div class="navbar navbar-spyed navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner" style="padding-left: 40px; padding-right: 40px;">
-            <a class="brand" href="#">USG - Style Guide</a>
-
-            <ul class="nav">
-                <li><a href="#toolbars">Toolbars</a></li>
-                <li><a href="#components">Components</a></li>
-            </ul>
-        </div>
-    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <a class="brand" href="#">USG - Style Guide</a>
+        <ul class="nav navbar-nav">
+            <li><a href="#toolbars">Toolbars</a></li>
+            <li><a href="#components">Components</a></li>
+        </ul>
+    </nav>
 
     <section id="toolbars">
         <h2 class="sg-h2">Toolbar</h2>
@@ -31,14 +28,17 @@
             <div class="row">
                 <h3 class="sg-h3">Main Toolbar</h3>
                 <div class="sg-docs-example">
-                    <div id="main-toolbar" style="position: static;">
+                    <nav id="main-toolbar" style="position: static;">
                         <ul class="toolbar-nav">
+                            <li class="toolbar-server_rack"><a href="#cloud"></a></li>
+                            <li class="toolbar-server-toggle"><select class="form-control"><option>Select/Add Server</option></select></li>
+                            <li class="toolbar-separator"></li>
                             <li class="toolbar-dashboard"><a href="#dashboard"></a></li>
-                            <li class="toolbar-file-cabinet"><a href="#filemanager"></a></li>
-                            <li class="toolbar-server-rack"><a href="#cloud"></a></li>
+                            <li class="toolbar-file_cabinet"><a href="#filemanager"></a></li>
                             <li class="toolbar-gear"><a href="#settings"></a></li>
+                            <li class="toolbar-separator"></li>
                         </ul>
-                    </div>
+                    </nav>
                 </div>
             </div>
         </div>

@@ -17,22 +17,59 @@
     .toolbar-nav {
         display: block;
         list-style: none;
-        height: 30px;
-        width: 200px;
-        margin: 13px 0 0 28px;
+        height: 39px;
+        width: 100%;
+        margin: 10px 0 0 0;
+        padding: 0px;
 
         li {
             float: left;
-            width: 47px;
-            height: 25px;
-        }
 
-        .separator {
-            border-left: 1px solid #313131;
-            border-right: 1px solid #111111;
-            width: 0;
-            margin: 4px;
-            background-color: transparent;
+            &.toolbar-server_rack {
+                margin: 0 20px 0 60px;
+            }
+
+            &.toolbar-server-toggle {
+                margin-right: 24px;
+            }
+
+            &.toolbar-dashboard {
+                margin: 0 16px 0 18px;
+            }
+
+            &.toolbar-gear {
+                float: right;
+                margin: 0 14px 0 18px;
+            }
+
+            &.toolbar-separator {
+                border-left: 1px solid #313131;
+                border-right: 1px solid #111111;
+                width: 0;
+                height: 29px;
+                background-color: transparent;
+            }
+
+            a {
+                display: block;
+                width: 32px;
+                height: 28px;
+            }
+
+            .form-control {
+                border: none;
+                margin-top: 4px;
+                height: 20px;
+                font-size: 13px;
+            }
+
+//            &:nth-last-child(2) {
+//                float: right;
+//            }
+
+            &:last-child {
+                float: right;
+            }
         }
     }
 }
