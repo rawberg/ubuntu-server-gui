@@ -5,7 +5,11 @@
 @import "compass/css3/images";
 @import "compass/utilities/sprites";
 
+/* Application Styles
+-------------------------------------------------- */
+@import "main-toolbar";
 @import "components";
+
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */

@@ -2,15 +2,10 @@
 	path = web/css/fuelux
 	url = git://github.com/ExactTarget/fuelux.git
 	branch = 73a3c7d6e6dcf91e6a80ec7f9d762b0518e67e78
-[submodule "web/css/flatstrap"]
-	path = web/css/flatstrap
-	url = git://github.com/littlesparkvt/flatstrap.git
-	branch = f290bd9011fb8b15c9f01700b8962736fba35335
 [submodule "web/css/font-awesome"]
 	path = web/css/font-awesome
 	url = git://github.com/FortAwesome/Font-Awesome.git
 	branch = v3.1.1
-[submodule "web/css/bootswatch"]
-	path = web/css/bootswatch
-	url = git://github.com/thomaspark/bootswatch.git
-	branch = a9aab510f11515c7dec294e7b24e838ff583e15a
+[submodule "web/css/bootstrap"]
+	path = web/css/bootstrap
+	url = git://github.com/jlong/sass-bootstrap.git

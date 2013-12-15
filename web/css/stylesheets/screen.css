@@ -143,7 +143,7 @@ table.directory-explorer td [class^="icon-"] {
 }
 
 /* line 4, ../sass/_main-toolbar.scss */
-header#main_toolbar {
+#main-toolbar {
   position: fixed;
   top: 0;
   right: 0;
@@ -160,7 +160,7 @@ header#main_toolbar {
   border-bottom: 1px solid #101010;
 }
 /* line 17, ../sass/_main-toolbar.scss */
-header#main_toolbar ul#toolbar_nav {
+#main-toolbar .toolbar-nav {
   display: block;
   list-style: none;
   height: 30px;
@@ -168,13 +168,13 @@ header#main_toolbar ul#toolbar_nav {
   margin: 13px 0 0 28px;
 }
 /* line 24, ../sass/_main-toolbar.scss */
-header#main_toolbar ul#toolbar_nav li {
+#main-toolbar .toolbar-nav li {
   float: left;
   width: 47px;
   height: 25px;
 }
 /* line 30, ../sass/_main-toolbar.scss */
-header#main_toolbar ul#toolbar_nav .separator {
+#main-toolbar .toolbar-nav .separator {
   border-left: 1px solid #313131;
   border-right: 1px solid #111111;
   width: 0;

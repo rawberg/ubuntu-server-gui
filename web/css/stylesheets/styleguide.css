@@ -1,3 +1,71 @@
+/* Application Styles
+-------------------------------------------------- */
+/* line 71, icons/toolbar/*.png */
+.toolbar-sprite, .toolbar-dashboard, .toolbar-file-cabinet, .toolbar-gear, .toolbar-server-rack {
+  background-image: url('../images/icons/toolbar-sbb47433a33.png');
+  background-repeat: no-repeat;
+}
+
+/* line 77, ../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.4/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.toolbar-dashboard {
+  background-position: 0 0;
+}
+
+/* line 77, ../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.4/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.toolbar-file-cabinet {
+  background-position: 0 -28px;
+}
+
+/* line 77, ../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.4/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.toolbar-gear {
+  background-position: 0 -52px;
+}
+
+/* line 77, ../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.4/frameworks/compass/stylesheets/compass/utilities/sprites/_base.scss */
+.toolbar-server-rack {
+  background-position: 0 -76px;
+}
+
+/* line 4, ../sass/_main-toolbar.scss */
+#main-toolbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  margin-bottom: 0;
+  height: 49px;
+  width: 100%;
+  background-image: -webkit-linear-gradient(#262626, #222222);
+  background-image: -moz-linear-gradient(#262626, #222222);
+  background-image: -o-linear-gradient(#262626, #222222);
+  background-image: linear-gradient(#262626, #222222);
+  border-top: 1px solid #323232;
+  border-bottom: 1px solid #101010;
+}
+/* line 17, ../sass/_main-toolbar.scss */
+#main-toolbar .toolbar-nav {
+  display: block;
+  list-style: none;
+  height: 30px;
+  width: 200px;
+  margin: 13px 0 0 28px;
+}
+/* line 24, ../sass/_main-toolbar.scss */
+#main-toolbar .toolbar-nav li {
+  float: left;
+  width: 47px;
+  height: 25px;
+}
+/* line 30, ../sass/_main-toolbar.scss */
+#main-toolbar .toolbar-nav .separator {
+  border-left: 1px solid #313131;
+  border-right: 1px solid #111111;
+  width: 0;
+  margin: 4px;
+  background-color: transparent;
+}
+
 /* line 1, ../sass/_components.scss */
 table.directory-explorer {
   width: 100%;
@@ -60,13 +128,13 @@ table.directory-explorer td [class^="icon-"] {
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
-/* line 13, ../sass/styleguide.scss */
+/* line 17, ../sass/styleguide.scss */
 body > .navbar {
   font-size: 13px;
 }
 
 /* Change the docs' brand */
-/* line 18, ../sass/styleguide.scss */
+/* line 22, ../sass/styleguide.scss */
 body > .navbar .brand {
   padding-right: 0;
   padding-left: 0;
@@ -80,7 +148,7 @@ body > .navbar .brand {
   transition: all .2s linear;
 }
 
-/* line 31, ../sass/styleguide.scss */
+/* line 35, ../sass/styleguide.scss */
 body > .navbar .brand:hover {
   text-decoration: none;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.4);
@@ -89,34 +157,34 @@ body > .navbar .brand:hover {
 
 /* End navbar brand tweak
 -------------------------------------------------- */
-/* line 40, ../sass/styleguide.scss */
+/* line 44, ../sass/styleguide.scss */
 body.sg {
   padding: 40px 80px;
 }
 
-/* line 44, ../sass/styleguide.scss */
+/* line 48, ../sass/styleguide.scss */
 .sg-h1 {
   margin: 24px 0 18px 0;
   font-size: 38px;
 }
 
-/* line 49, ../sass/styleguide.scss */
+/* line 53, ../sass/styleguide.scss */
 .sg-h2 {
   font-size: 32px;
   margin: 28px 0 22px 0;
 }
 
-/* line 54, ../sass/styleguide.scss */
+/* line 58, ../sass/styleguide.scss */
 .sg-h3 {
   font-size: 24px;
 }
 
-/* line 58, ../sass/styleguide.scss */
+/* line 62, ../sass/styleguide.scss */
 .sg-box .sg-h3 {
   color: #333;
 }
 
-/* line 62, ../sass/styleguide.scss */
+/* line 66, ../sass/styleguide.scss */
 .sg-description {
   margin: 15px;
   margin-left: 0;
@@ -124,24 +192,24 @@ body.sg {
   font-weight: 200;
 }
 
-/* line 70, ../sass/styleguide.scss */
+/* line 74, ../sass/styleguide.scss */
 .sg .overlay {
   display: inline-block;
 }
-/* line 73, ../sass/styleguide.scss */
+/* line 77, ../sass/styleguide.scss */
 .sg .overlay + .overlay {
   margin-left: 10px;
 }
-/* line 77, ../sass/styleguide.scss */
+/* line 81, ../sass/styleguide.scss */
 .sg .navbar-spyed .brand {
   margin-left: 45px;
 }
-/* line 82, ../sass/styleguide.scss */
+/* line 86, ../sass/styleguide.scss */
 .sg .well-fullwidth, .sg .well-inset-fullwidth {
   min-height: 400px;
 }
 
-/* line 88, ../sass/styleguide.scss */
+/* line 92, ../sass/styleguide.scss */
 .sg-box {
   background-color: white;
   padding: 20px 50px;
@@ -151,7 +219,7 @@ body.sg {
 }
 
 /* Base class */
-/* line 95, ../sass/styleguide.scss */
+/* line 99, ../sass/styleguide.scss */
 .sg-docs-example {
   position: relative;
   margin: 15px 0;
@@ -163,7 +231,7 @@ body.sg {
   border-radius: 4px;
 }
 
-/* line 106, ../sass/styleguide.scss */
+/* line 110, ../sass/styleguide.scss */
 .sg-docs-source {
   position: relative;
   margin: 15px 0;
@@ -175,27 +243,27 @@ body.sg {
   border-radius: 4px;
 }
 
-/* line 117, ../sass/styleguide.scss */
+/* line 121, ../sass/styleguide.scss */
 .sg-docs-source {
   text-align: center;
 }
-/* line 120, ../sass/styleguide.scss */
+/* line 124, ../sass/styleguide.scss */
 .sg-docs-source pre {
   display: none;
 }
-/* line 123, ../sass/styleguide.scss */
+/* line 127, ../sass/styleguide.scss */
 .sg-docs-source button {
   display: inherit;
 }
 
-/* line 128, ../sass/styleguide.scss */
+/* line 132, ../sass/styleguide.scss */
 .sg-docs-source.opened {
   text-align: inherit;
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 0;
 }
-/* line 135, ../sass/styleguide.scss */
+/* line 139, ../sass/styleguide.scss */
 .sg-docs-source.opened pre {
   display: block;
   border-left: none;
@@ -203,12 +271,12 @@ body.sg {
   border-bottom: none;
   margin: 0;
 }
-/* line 142, ../sass/styleguide.scss */
+/* line 146, ../sass/styleguide.scss */
 .sg-docs-source.opened button {
   display: none;
 }
 
-/* line 147, ../sass/styleguide.scss */
+/* line 151, ../sass/styleguide.scss */
 .sg-docs-source:after {
   content: "Source";
   position: absolute;
@@ -226,7 +294,7 @@ body.sg {
 }
 
 /* Echo out a label for the example */
-/* line 164, ../sass/styleguide.scss */
+/* line 168, ../sass/styleguide.scss */
 .sg-docs-example:after {
   content: "Example";
   position: absolute;
@@ -244,18 +312,18 @@ body.sg {
 }
 
 /* Remove spacing between an example and it's code */
-/* line 181, ../sass/styleguide.scss */
+/* line 185, ../sass/styleguide.scss */
 .sg-docs-example + .prettyprint {
   margin-top: -20px;
   padding-top: 15px;
 }
 
-/* line 186, ../sass/styleguide.scss */
+/* line 190, ../sass/styleguide.scss */
 .sg-docs-example + .sg-docs-source {
   margin-top: -20px;
 }
 
-/* line 190, ../sass/styleguide.scss */
+/* line 194, ../sass/styleguide.scss */
 .header {
   font-weight: 300;
   font-size: 30px;

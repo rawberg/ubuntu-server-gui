@@ -1,7 +1,7 @@
 @import "icons/toolbar/*.png";
 @include all-toolbar-sprites;
 
-header#main_toolbar {
+#main-toolbar {
     position: fixed;
     top: 0;
     right: 0;
@@ -14,7 +14,7 @@ header#main_toolbar {
     border-top: 1px solid #323232;
     border-bottom: 1px solid #101010;
 
-    ul#toolbar_nav {
+    .toolbar-nav {
         display: block;
         list-style: none;
         height: 30px;
