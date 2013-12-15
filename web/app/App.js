@@ -27,11 +27,9 @@ define(function (require_browser) {
         onNoobTourActivate: function() {
             var footerPos = $('footer').position();
             $('<div class="modal-backdrop noobtour-backdrop body-minus-footer"></div>').appendTo('body');
-            $('<div class="modal-backdrop noobtour-backdrop footer-minus-add-server"></div>')
-                .css({top: footerPos.top - 78, bottom: 0, right: 0, height: 28})
-                .appendTo('body');
-            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+            $('<div class="modal-backdrop noobtour-backdrop footer-minus-add-server"></div>').appendTo('body');
 
+            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
             // swallow backdrop clicks
             $('noobtour-backdrop').click(function(eventObj) {
                 eventObj.preventDefault();
@@ -40,7 +38,6 @@ define(function (require_browser) {
 
             var noobTourPopover = new NoobTourPopover();
             this.modal.show(noobTourPopover);
-            $(window).resize(this.onNoobTourResize);
         },
 
         onNoobTourResize: function() {

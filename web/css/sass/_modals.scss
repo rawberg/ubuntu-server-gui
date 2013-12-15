@@ -10,15 +10,16 @@ div.modal-footer.plain {
 }
 
 // Noob Tour Styles
-.noobtour-backdrop {
+.modal-backdrop.noobtour-backdrop {
     &.body-minus-footer {
         bottom: 28px;
     }
 
     &.footer-minus-add-server {
-        top:  28px;
+        top: inherit;
         bottom:  0px;
         left: 31px;
+        height: 28px;
     }
 }
 
