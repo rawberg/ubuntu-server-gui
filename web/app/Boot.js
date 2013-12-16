@@ -18,10 +18,10 @@ require_browser.config({
         backbone_stickit: '../libs/backbone.stickit/backbone.stickit',
 
         // Bootstrap & jQuery Plugins
-        bootstrap_modal: '../css/flatstrap/assets/js/bootstrap-modal',
-        bootstrap_tooltip: '../css/flatstrap/assets/js/bootstrap-tooltip',
-        bootstrap_popover: '../css/flatstrap/assets/js/bootstrap-popover',
-        bootstrap_transition: '../css/flatstrap/assets/js/bootstrap-transition',
+        bootstrap_modal: '../css/bootstrap/js/modal',
+        bootstrap_tooltip: '../css/bootstrap/js/tooltip',
+        bootstrap_popover: '../css/bootstrap/js/popover',
+        bootstrap_transition: '../css/bootstrap/js/transition',
         gauge: '../libs/gauge.js/gauge.min',
         contextmenu: '../libs/contextmenu/contextmenu',
 

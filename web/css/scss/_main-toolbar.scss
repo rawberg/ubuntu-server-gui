@@ -17,16 +17,17 @@
     .toolbar-nav {
         display: block;
         list-style: none;
-        height: 39px;
+        height: 49px;
         width: 100%;
-        margin: 10px 0 0 0;
+        margin: 0px;
         padding: 0px;
 
         li {
             float: left;
+            margin-top: 10px;
 
             &.toolbar-server_rack {
-                margin: 0 20px 0 60px;
+                margin: 12px 20px 0 60px;
             }
 
             &.toolbar-server-toggle {
@@ -34,26 +35,27 @@
             }
 
             &.toolbar-dashboard {
-                margin: 0 16px 0 18px;
+                margin: 10px 16px 0 18px;
             }
 
             &.toolbar-gear {
                 float: right;
-                margin: 0 14px 0 18px;
+                margin: 10px 14px 0 18px;
             }
 
             &.toolbar-separator {
                 border-left: 1px solid #313131;
                 border-right: 1px solid #111111;
                 width: 0;
-                height: 29px;
+                height: 48px;
+                margin: 0;
                 background-color: transparent;
             }
 
             a {
                 display: block;
                 width: 32px;
-                height: 28px;
+                height: 26px;
             }
 
             .form-control {
@@ -62,10 +64,6 @@
                 height: 20px;
                 font-size: 13px;
             }
-
-//            &:nth-last-child(2) {
-//                float: right;
-//            }
 
             &:last-child {
                 float: right;

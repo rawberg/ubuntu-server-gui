@@ -3,7 +3,7 @@
 /* Application Styles
 -------------------------------------------------- */
 .toolbar-sprite, .toolbar-dashboard, .toolbar-directions, .toolbar-file_cabinet, .toolbar-gear, .toolbar-server_rack {
-  background-image: url('../images/icons/toolbar-sa4eb4229b2.png');
+  background-image: url('../images/icons/toolbar-s86fc8e2e06.png');
   background-repeat: no-repeat;
 }
 
@@ -46,38 +46,40 @@
 #main-toolbar .toolbar-nav {
   display: block;
   list-style: none;
-  height: 39px;
+  height: 49px;
   width: 100%;
-  margin: 10px 0 0 0;
+  margin: 0px;
   padding: 0px;
 }
 #main-toolbar .toolbar-nav li {
   float: left;
+  margin-top: 10px;
 }
 #main-toolbar .toolbar-nav li.toolbar-server_rack {
-  margin: 0 20px 0 60px;
+  margin: 12px 20px 0 60px;
 }
 #main-toolbar .toolbar-nav li.toolbar-server-toggle {
   margin-right: 24px;
 }
 #main-toolbar .toolbar-nav li.toolbar-dashboard {
-  margin: 0 16px 0 18px;
+  margin: 10px 16px 0 18px;
 }
 #main-toolbar .toolbar-nav li.toolbar-gear {
   float: right;
-  margin: 0 14px 0 18px;
+  margin: 10px 14px 0 18px;
 }
 #main-toolbar .toolbar-nav li.toolbar-separator {
   border-left: 1px solid #313131;
   border-right: 1px solid #111111;
   width: 0;
-  height: 29px;
+  height: 48px;
+  margin: 0;
   background-color: transparent;
 }
 #main-toolbar .toolbar-nav li a {
   display: block;
   width: 32px;
-  height: 28px;
+  height: 26px;
 }
 #main-toolbar .toolbar-nav li .form-control {
   border: none;
