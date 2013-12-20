@@ -1,13 +1,46 @@
+// Base Modal Styles
+#modal-container {
+    display: none;
 
-div.modal-footer.plain {
-    background-color: transparent;
-    border-top: none;
+    &.modal-backdrop {
+        opacity: 0.6;
+    }
+
+    .modal-dialog {
+        padding-top: 70px;
+    }
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .modal-title {
+        color: #000000;
+    }
 }
 
-#modal_add_server {
+// Add/Edit Server Modal
+.modal-dialog.modal-add-edit-server {
     width: 500px;
-    margin: 0 0 0 -250px;
+
+    .modal-header {
+        padding-left: 20px;
+    }
+
+    .modal-body {
+        padding: 20px 40px;
+    }
 }
+
+
+// Server Connection Modal
+#server-connection-modal {
+  width: 590px;
+  h3, span.connection-status {
+    text-transform: capitalize;
+  }
+}
+
 
 // Noob Tour Styles
 .modal-backdrop.noobtour-backdrop {
@@ -18,7 +51,7 @@ div.modal-footer.plain {
     &.footer-minus-add-server {
         top: inherit;
         bottom:  0px;
-        left: 31px;
+        left: 30px;
         height: 28px;
     }
 }
@@ -27,13 +60,9 @@ div.modal-footer.plain {
     .arrow {
         left:  0 !important;
         margin-left: 0 !important;
+        &:after {
+            bottom: 2px;
+            margin-left: -9px;
+        }
     }
-}
-
-// Server Connection Modal
-#server-connection-modal {
-  width: 590px;
-  h3, span.connection-status {
-    text-transform: capitalize;
-  }
 }

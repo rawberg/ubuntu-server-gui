@@ -212,9 +212,98 @@ table {
   border-spacing: 0;
 }
 
-/* Welcome to Compass. Use this file to define print styles.
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" /> */
+@media print {
+  * {
+    text-shadow: none !important;
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 2cm .5cm;
+}
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  select {
+    background: #fff !important;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .table td,
+  .table th {
+    background-color: #fff !important;
+  }
+
+  .btn > .caret,
+  .dropup > .btn > .caret {
+    border-top-color: #000 !important;
+  }
+
+  .label {
+    border: 1px solid #000;
+  }
+
+  .table {
+    border-collapse: collapse !important;
+  }
+
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #ddd !important;
+  }
+}
 *,
 *:before,
 *:after {
@@ -5203,38 +5292,133 @@ button.close {
   -webkit-appearance: none;
 }
 
-div.modal-footer.plain {
-  background-color: transparent;
-  border-top: none;
+.modal-open {
+  overflow: hidden;
 }
 
-#modal_add_server {
-  width: 500px;
-  margin: 0 0 0 -250px;
+.modal {
+  display: none;
+  overflow: auto;
+  overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+}
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
 }
 
-.modal-backdrop.noobtour-backdrop.body-minus-footer {
-  bottom: 28px;
-}
-.modal-backdrop.noobtour-backdrop.footer-minus-add-server {
-  top: inherit;
-  bottom: 0px;
-  left: 31px;
-  height: 28px;
-}
-
-.noobtour-popover.popover.top .arrow {
-  left: 0 !important;
-  margin-left: 0 !important;
+.modal-dialog {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  padding: 10px;
+  z-index: 1050;
 }
 
-#server-connection-modal {
-  width: 590px;
-}
-#server-connection-modal h3, #server-connection-modal span.connection-status {
-  text-transform: capitalize;
+.modal-content {
+  position: relative;
+  background-color: white;
+  border: 1px solid #999999;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+  outline: none;
 }
 
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+  background-color: black;
+}
+.modal-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.modal-header {
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  min-height: 16.42857px;
+}
+
+.modal-header .close {
+  margin-top: -2px;
+}
+
+.modal-title {
+  margin: 0;
+  line-height: 1.42857;
+}
+
+.modal-body {
+  position: relative;
+  padding: 20px;
+}
+
+.modal-footer {
+  margin-top: 15px;
+  padding: 19px 20px 20px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.modal-footer:before, .modal-footer:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.modal-footer:after {
+  clear: both;
+}
+.modal-footer .btn + .btn {
+  margin-left: 5px;
+  margin-bottom: 0;
+}
+.modal-footer .btn-group .btn + .btn {
+  margin-left: -1px;
+}
+.modal-footer .btn-block + .btn-block {
+  margin-left: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+}
 .tooltip {
   position: absolute;
   z-index: 1030;
@@ -6301,7 +6485,6 @@ table.directory-explorer td [class^="icon-"] {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 1030;
   margin-bottom: 0;
   height: 49px;
   width: 100%;
@@ -6691,14 +6874,37 @@ footer #center_footerbar {
   flex: 1;
 }
 
-div.modal-footer.plain {
-  background-color: transparent;
-  border-top: none;
+#modal-container {
+  display: none;
+}
+#modal-container.modal-backdrop {
+  opacity: 0.6;
+}
+#modal-container .modal-dialog {
+  padding-top: 70px;
+}
+#modal-container .modal-content {
+  border-radius: 4px;
+}
+#modal-container .modal-title {
+  color: #000000;
 }
 
-#modal_add_server {
+.modal-dialog.modal-add-edit-server {
   width: 500px;
-  margin: 0 0 0 -250px;
+}
+.modal-dialog.modal-add-edit-server .modal-header {
+  padding-left: 20px;
+}
+.modal-dialog.modal-add-edit-server .modal-body {
+  padding: 20px 40px;
+}
+
+#server-connection-modal {
+  width: 590px;
+}
+#server-connection-modal h3, #server-connection-modal span.connection-status {
+  text-transform: capitalize;
 }
 
 .modal-backdrop.noobtour-backdrop.body-minus-footer {
@@ -6707,7 +6913,7 @@ div.modal-footer.plain {
 .modal-backdrop.noobtour-backdrop.footer-minus-add-server {
   top: inherit;
   bottom: 0px;
-  left: 31px;
+  left: 30px;
   height: 28px;
 }
 
@@ -6715,12 +6921,9 @@ div.modal-footer.plain {
   left: 0 !important;
   margin-left: 0 !important;
 }
-
-#server-connection-modal {
-  width: 590px;
-}
-#server-connection-modal h3, #server-connection-modal span.connection-status {
-  text-transform: capitalize;
+.noobtour-popover.popover.top .arrow:after {
+  bottom: 2px;
+  margin-left: -9px;
 }
 
 body > div._contextmenu_screen_ {
