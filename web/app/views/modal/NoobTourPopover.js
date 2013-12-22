@@ -4,8 +4,6 @@ define(function (require_browser) {
         Marionette = require_browser('marionette'),
         popoverTpl = require_browser('text!views/modal/templates/noob-tour-popover.html');
 
-    require_browser('bootstrap_tooltip');
-    require_browser('bootstrap_popover');
 
     return Marionette.ItemView.extend({
         template: _.template(popoverTpl),
@@ -13,8 +11,8 @@ define(function (require_browser) {
         className: 'noobtour-popover popover fade top in',
 
         onRender: function() {
-            var topCoord = $('#lsfb_btn_add_server').position().top - 133;
-            this.$el.css({top: topCoord, left: 2, display: 'block'});
+            var topCoord = $('#lsfb_btn_add_server').offset().top - 85;
+            this.$el.css({top: topCoord, left: 3, display: 'block'});
 
             this.resizeListener = _.bind(this.onWindowResize, this);
             $(window).resize(this.resizeListener);
@@ -22,7 +20,7 @@ define(function (require_browser) {
 
         onWindowResize: function() {
             if($('#lsfb_btn_add_server').length) {
-                var topCoord = $('#lsfb_btn_add_server').position().top - 133;
+                var topCoord = $('#lsfb_btn_add_server').offset().top - 85;
                 this.$el.css({top: topCoord});
             }
         },

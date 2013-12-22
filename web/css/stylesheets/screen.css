@@ -6917,6 +6917,9 @@ footer #center_footerbar {
   height: 27px;
 }
 
+.noobtour-popover.popover.top {
+  z-index: 1050;
+}
 .noobtour-popover.popover.top .arrow {
   left: 0 !important;
   margin-left: 0 !important;

@@ -5,8 +5,6 @@ define(function (require_browser) {
         User = require_browser('models/User'),
         ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
 
-    require_browser('bootstrap_tooltip');
-
     var Application = Marionette.Application.extend({
         getActiveServer: function() {
             if(this.activeServer !== undefined) {
@@ -37,7 +35,7 @@ define(function (require_browser) {
             });
 
             var noobTourPopover = new NoobTourPopover();
-            this.modalContainer.show(noobTourPopover);
+            this.popoverContainer.show(noobTourPopover);
         },
 
         onNoobTourResize: function() {
@@ -50,6 +48,7 @@ define(function (require_browser) {
 
         onNoobTourDeactivate: function() {
             $('.noobtour-backdrop').off('click').remove();
+            this.closePopover();
         },
 
         onSessionExpired: function() {
@@ -69,6 +68,10 @@ define(function (require_browser) {
         closeModal: function() {
             this.modalContainer.close();
             $(this.modalContainer.el).hide();
+        },
+
+        closePopover: function() {
+            this.popoverContainer.close();
         }
     });
 
@@ -78,7 +81,8 @@ define(function (require_browser) {
         mainToolbar: "#main-toolbar-container",
         mainViewport: "#viewport",
         mainFooterbar: '#main-footerbar-container',
-        modalContainer: '#modal-container'
+        modalContainer: '#modal-container',
+        popoverContainer: '#popover-container'
     });
 
     App.addInitializer(function(options) {

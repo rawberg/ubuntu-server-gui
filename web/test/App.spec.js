@@ -32,7 +32,7 @@ define(function (require_browser) {
 
             beforeEach(function() {
                 tourSpy = sinon.spy(App.vent._events['noobtour:activate'][0], 'callback');
-                posStub = sinon.stub($.prototype, 'position');
+                posStub = sinon.stub($.prototype, 'offset');
                 posStub.returns({top: 500, bottom: 540});
 
                 appendToSpy = sinon.spy($.prototype, 'appendTo');
@@ -77,10 +77,6 @@ define(function (require_browser) {
                 (popoverSpy).should.have.been.called;
             });
 
-            xit('should setup a listener for "window.resize" events', function() {
-                (windowResizeSpy.callCount).should.equal(2);
-            });
-
         });
 
         describe('onNoobTourDeActivate', function() {
@@ -104,10 +100,6 @@ define(function (require_browser) {
 
             it('should unbind the listener swallowing backdrop click events', function() {
                 (offSpy).should.have.been.calledWith('click');
-            });
-
-            it('should unbind "window.resize" event', function() {
-                (offSpy).should.have.been.calledWith('resize');
             });
 
             it('should remove noob tour backdrop elements from the dom', function() {

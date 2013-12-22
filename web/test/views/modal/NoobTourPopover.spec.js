@@ -6,7 +6,7 @@ define(function (require_browser) {
         var noobTourPopover, footerPosStub;
 
         beforeEach(function() {
-            footerPosStub = sinon.stub($.prototype, 'position');
+            footerPosStub = sinon.stub($.prototype, 'offset');
         });
 
         afterEach(function() {
@@ -17,7 +17,7 @@ define(function (require_browser) {
             var windowResizeSpy;
 
             beforeEach(function() {
-                footerPosStub.returns({top: 666});
+                footerPosStub.returns({top: 500});
                 windowResizeSpy = sinon.spy($.prototype, 'resize');
                 noobTourPopover = new NoobTourPopover();
                 noobTourPopover.render();
@@ -29,8 +29,8 @@ define(function (require_browser) {
             });
 
             it('should set "top" and "left" coordinates"', function() {
-                (noobTourPopover.$el.css('top')).should.equal('533px'); // 666 - 133
-                (noobTourPopover.$el.css('left')).should.equal('2px');
+                (noobTourPopover.$el.css('top')).should.equal('415px'); // 500 - 85
+                (noobTourPopover.$el.css('left')).should.equal('3px');
 
             });
 
@@ -46,7 +46,7 @@ define(function (require_browser) {
 
         describe('onWindowResize', function() {
             beforeEach(function() {
-                footerPosStub.returns({top: 444});
+                footerPosStub.returns({top: 400});
                 noobTourPopover = new NoobTourPopover();
                 noobTourPopover.render();
                 noobTourPopover.onWindowResize();
@@ -57,7 +57,7 @@ define(function (require_browser) {
             });
 
             it('should update "top" css coordinate', function() {
-                noobTourPopover.$el.css('top').should.equal('311px'); // 444 - 133
+                noobTourPopover.$el.css('top').should.equal('315px'); // 400 - 115
             });
         });
 

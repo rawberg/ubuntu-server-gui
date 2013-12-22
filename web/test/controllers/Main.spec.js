@@ -24,7 +24,7 @@ define(function (require_browser) {
             var dashboardLayout, leftSidebar, runningServices, footerPosStub;
 
             beforeEach(function() {
-                footerPosStub = sinon.stub($.prototype, 'position');
+                footerPosStub = sinon.stub($.prototype, 'offset');
                 footerPosStub.returns({top: 666});
                 leftsidebarSpy = sinon.stub(LeftSidebarView.prototype, 'render');
                 dashboardLayoutSpy = sinon.stub(DashboardLayout.prototype, 'render');

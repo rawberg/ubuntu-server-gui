@@ -37,7 +37,7 @@ define(function (require_browser) {
             var onRemoveServerSpy, ventTriggerSpy,
                 serverList, serverModel, footerPosStub;
             beforeEach(function() {
-                footerPosStub = sinon.stub($.prototype, 'position');
+                footerPosStub = sinon.stub($.prototype, 'offset');
                 onRemoveServerSpy = sinon.spy(ServerList.prototype, 'onRemove');
                 serverList = new ServerList();
                 ventTriggerSpy = sinon.spy(serverList.App.vent, 'trigger')
