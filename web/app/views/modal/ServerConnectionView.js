@@ -8,7 +8,6 @@ define(function (require_browser, exports, module) {
         serverConnectErrorTpl = require_browser('text!views/modal/templates/server-connection-error.html');
 
     require_browser('backbone_stickit');
-    require_browser('bootstrap_modal');
     /**
      * @params {model: Server}
      */

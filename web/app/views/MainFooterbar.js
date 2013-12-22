@@ -21,9 +21,7 @@ define(function (require_browser) {
             App.vent.trigger('noobtour:deactivate');
             eventObj.stopPropagation();
             eventObj.preventDefault();
-            this.App.showModal(new AddEditServerModal({
-                operationLabel: 'Add'
-            }));
+            App.showModal(new AddEditServerModal({operationLabel: 'Add'}));
         }
     });
 });

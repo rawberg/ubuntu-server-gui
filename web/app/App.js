@@ -2,10 +2,10 @@ define(function (require_browser) {
     var $ = require_browser('jquery'),
         Marionette = require_browser('marionette'),
         NoobTourPopover = require_browser('views/modal/NoobTourPopover'),
-        User = require_browser('models/User');
+        User = require_browser('models/User'),
+        ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
 
     require_browser('bootstrap_tooltip');
-    require_browser('bootstrap_modal');
 
     var Application = Marionette.Application.extend({
         getActiveServer: function() {
@@ -26,8 +26,8 @@ define(function (require_browser) {
 
         onNoobTourActivate: function() {
             var footerPos = $('footer').position();
-            $('<div class="modal-backdrop noobtour-backdrop body-minus-footer"></div>').appendTo('body');
-            $('<div class="modal-backdrop noobtour-backdrop footer-minus-add-server"></div>').appendTo('body');
+            $('<div class="modal-backdrop in noobtour-backdrop body-minus-footer"></div>').appendTo('body');
+            $('<div class="modal-backdrop in noobtour-backdrop footer-minus-add-server"></div>').appendTo('body');
 
             $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
             // swallow backdrop clicks
@@ -37,7 +37,7 @@ define(function (require_browser) {
             });
 
             var noobTourPopover = new NoobTourPopover();
-            this.modal.show(noobTourPopover);
+            this.modalContainer.show(noobTourPopover);
         },
 
         onNoobTourResize: function() {
@@ -49,9 +49,7 @@ define(function (require_browser) {
         },
 
         onNoobTourDeactivate: function() {
-            this.modal.close();
             $('.noobtour-backdrop').off('click').remove();
-            $(window).off('resize', this.onNoobTourResize);
         },
 
         onSessionExpired: function() {
@@ -64,30 +62,23 @@ define(function (require_browser) {
         },
 
         showModal: function(view) {
-            this.modal.show(view);
-            this.modal.currentView.$el.modal('show')
-                .on('hidden', _.bind(this.closeModal, this));
+            $(this.modalContainer.el).show();
+            this.modalContainer.show(view);
         },
 
         closeModal: function() {
-            if(this.modal.currentView.$el.hasClass('in')) {
-                this.modal.currentView.$el.modal('hide');
-            }
-
-            if(this.modal.currentView) {
-                this.modal.currentView.$el.off('hidden');
-            }
-            this.modal.close();
+            this.modalContainer.close();
+            $(this.modalContainer.el).hide();
         }
     });
 
     var App = new Application();
 
     App.addRegions({
-        mainToolbar: "#main_toolbar_container",
+        mainToolbar: "#main-toolbar-container",
         mainViewport: "#viewport",
-        mainFooterbar: '#main_footerbar_container',
-        modal: '#modal_container'
+        mainFooterbar: '#main-footerbar-container',
+        modalContainer: '#modal-container'
     });
 
     App.addInitializer(function(options) {
@@ -101,6 +92,7 @@ define(function (require_browser) {
         this.vent.on('noobtour:activate', this.onNoobTourActivate, this);
         this.vent.on('noobtour:deactivate', this.onNoobTourDeactivate, this);
         this.vent.on('session:expired', this.onSessionExpired, this);
+        this.vent.on('modal:close', this.closeModal, this);
     });
 
     /*

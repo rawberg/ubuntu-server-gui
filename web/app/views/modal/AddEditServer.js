@@ -2,25 +2,30 @@ define(function (require_browser) {
     var $ = require_browser('jquery'),
         _ = require_browser('underscore'),
         Marionette = require_browser('marionette'),
-        ModelBinder = require_browser('backbone_modelbinder'),
+        Stickit = require_browser('backbone_stickit'),
         App = require_browser('App'),
         Server = require_browser('models/Server'),
         BaseForm = require_browser('views/BaseForm'),
         addEditServerTpl = require_browser('text!views/modal/templates/add-edit-server.html');
 
-    require_browser('bootstrap_modal');
     /**
      * @params {model: Server}
      */
     return BaseForm.extend({
 
         tagName: 'div',
-        id: 'modal_add_server',
-        className: 'modal',
+        className: 'modal-dialog modal-add-edit-server',
         template: _.template(addEditServerTpl),
 
+        bindings: {
+            'input[name="name"]': 'name',
+            'input[name="ipv4"]': 'ipv4'
+        },
+
         events: {
-            'click #add_server_btn': 'onSubmit',
+            'click button[name="save"]': 'onSave',
+            'click button[name="cancel"]': 'onCancel',
+            'click a.close': 'onCancel',
             'keyup input': 'onInputKeyup'
         },
 
@@ -31,10 +36,13 @@ define(function (require_browser) {
         initialize: function(options) {
             this.App = options && options.App ? options.App : App;
             this.model = options && options.model ? options.model : new Server();
-            this.modelBinder = new ModelBinder();
         },
 
-        onSubmit: function(eventObj) {
+        onCancel: function(eventObj) {
+            App.vent.trigger('modal:close');
+        },
+
+        onSave: function(eventObj) {
             eventObj.stopPropagation();
             eventObj.preventDefault();
             eventObj.returnValue = false;
@@ -47,7 +55,6 @@ define(function (require_browser) {
                 connect: false       // Todo: add form field/button to select "save and connect"
             });
 
-            this.modelBinder.unbind();
             this.App.closeModal();
         },
 
@@ -68,7 +75,7 @@ define(function (require_browser) {
         onRender: function() {
             this.clearForm();
             this.enableForm();
-            this.modelBinder.bind(this.model, this.el);
+            this.stickit();
         },
 
         showError: function(msg) {

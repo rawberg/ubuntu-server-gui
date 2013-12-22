@@ -3,22 +3,19 @@ define(function (require_browser) {
         AddEditServerModal = require_browser('views/modal/AddEditServer'),
         Server = require_browser('models/Server');
 
-    require_browser('bootstrap_modal');
 
     describe('AddEditServer (modal) - ItemView', function() {
 
         describe('onRender', function() {
             var modalSpy, addEditServerModal;
-            beforeEach(function() {
-                modalSpy = sinon.spy($.prototype, 'modal');
 
+            beforeEach(function() {
                 addEditServerModal = new AddEditServerModal();
                 addEditServerModal.render();
             });
 
             afterEach(function() {
                 addEditServerModal.close();
-                modalSpy.restore();
             });
 
             it('should update the server model when form fields change', function() {

@@ -17,14 +17,7 @@ define(function (require_browser) {
             clickIconSpy.restore();
         });
 
-        describe('initialze', function() {
-
-            it('should set the main toolbar template', function() {
-                (mainToolbar.template).should.exist;
-            });
-        });
-
-        describe('highlightIcon', function() {
+        xdescribe('highlightIcon', function() {
 
             it('should add "active" css class to a toolbar icon and remove "active" class from existing icons', function() {
                 mainToolbar.highlightIcon('toolbar-dashboard');
@@ -35,7 +28,7 @@ define(function (require_browser) {
             });
         });
 
-        describe('onClickIcon', function() {
+        xdescribe('onClickIcon', function() {
 
             it('should add active class to an icon when clicked', function() {
                 mainToolbar.$('.toolbar-filemanager').click();

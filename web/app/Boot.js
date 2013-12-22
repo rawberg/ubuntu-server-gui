@@ -18,7 +18,6 @@ require_browser.config({
         backbone_stickit: '../libs/backbone.stickit/backbone.stickit',
 
         // Bootstrap & jQuery Plugins
-        bootstrap_modal: '../css/bootstrap/js/modal',
         bootstrap_tooltip: '../css/bootstrap/js/tooltip',
         bootstrap_popover: '../css/bootstrap/js/popover',
         bootstrap_transition: '../css/bootstrap/js/transition',
@@ -52,10 +51,6 @@ require_browser.config({
         },
         'backbone_dualstorage': {
             deps: ['backbone']
-        },
-        'bootstrap_modal': {
-            deps: ['jquery'],
-            exports: 'jQuery.fn.modal'
         },
         'bootstrap_tooltip': {
             deps: ['jquery']

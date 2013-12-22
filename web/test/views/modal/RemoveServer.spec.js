@@ -3,7 +3,6 @@ define(function (require_browser) {
         RemoveServerModal = require_browser('views/modal/RemoveServer'),
         Server = require_browser('models/Server');
 
-    require_browser('bootstrap_modal');
 
     describe('RemoveServer (modal) - ItemView', function() {
 

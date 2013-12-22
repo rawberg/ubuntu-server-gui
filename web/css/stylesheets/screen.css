@@ -6878,7 +6878,7 @@ footer #center_footerbar {
   display: none;
 }
 #modal-container.modal-backdrop {
-  opacity: 0.6;
+  background-color: rgba(0, 0, 0, 0.74);
 }
 #modal-container .modal-dialog {
   padding-top: 70px;
@@ -6908,13 +6908,13 @@ footer #center_footerbar {
 }
 
 .modal-backdrop.noobtour-backdrop.body-minus-footer {
-  bottom: 28px;
+  bottom: 27px;
 }
 .modal-backdrop.noobtour-backdrop.footer-minus-add-server {
   top: inherit;
   bottom: 0px;
   left: 30px;
-  height: 28px;
+  height: 27px;
 }
 
 .noobtour-popover.popover.top .arrow {

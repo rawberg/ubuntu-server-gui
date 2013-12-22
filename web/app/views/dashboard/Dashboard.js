@@ -16,7 +16,6 @@ define(function (require_browser, exports, module) {
 
         dashboardLayoutTpl = require_browser('text!views/dashboard/templates/layout.html');
 
-    require_browser('bootstrap_modal');
     require_browser('bootstrap_tooltip');
     require_browser('bootstrap_popover');
 

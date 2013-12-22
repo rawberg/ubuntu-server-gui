@@ -5,7 +5,6 @@ define(function (require_browser) {
         AddEditServerModal = require_browser('views/modal/AddEditServer'),
         NoobTourPopover = require_browser('views/modal/NoobTourPopover');
 
-    require_browser('bootstrap_modal');
 
     describe('App', function() {
 
@@ -78,7 +77,7 @@ define(function (require_browser) {
                 (popoverSpy).should.have.been.called;
             });
 
-            it('should setup a listener for "window.resize" events', function() {
+            xit('should setup a listener for "window.resize" events', function() {
                 (windowResizeSpy.callCount).should.equal(2);
             });
 
@@ -120,19 +119,16 @@ define(function (require_browser) {
             var modalSpy, viewRenderSpy;
 
             beforeEach(function() {
-                modalSpy = sinon.spy($.prototype, 'modal');
                 viewRenderSpy = sinon.spy(AddEditServerModal.prototype, 'render');
                 App.showModal(new AddEditServerModal());
             });
 
             afterEach(function() {
-                modalSpy.restore();
                 viewRenderSpy.restore();
                 App.closeModal();
             });
 
             it('should show the modal', function() {
-                (modalSpy).should.have.been.calledWith('show');
                 (viewRenderSpy).should.have.been.called;
             });
 
