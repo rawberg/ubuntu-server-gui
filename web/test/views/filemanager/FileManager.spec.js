@@ -11,7 +11,7 @@ define(function (require_browser) {
         FileManagerLayout = require_browser('views/filemanager/FileManager').FileManagerLayout,
         ServerConnectionModal = require_browser('views/modal/ServerConnectionView');
 
-    describe('FileManager', function() {
+    xdescribe('FileManager', function() {
 
         describe('onServerSelected', function() {
             var fileManagerLayout;

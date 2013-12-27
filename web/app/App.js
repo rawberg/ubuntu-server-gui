@@ -1,11 +1,37 @@
 define(function (require_browser) {
     var $ = require_browser('jquery'),
+        _ = require_browser('underscore'),
         Marionette = require_browser('marionette'),
+        // Views
+        AddEditServerModal = require_browser('views/modal/AddEditServer'),
         NoobTourPopover = require_browser('views/modal/NoobTourPopover'),
+        MainFooterbar = require_browser('views/MainFooterbar'),
+        MainToolbar = require_browser('views/MainToolbar'),
+        ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }}),
+        // Models / Collections
         User = require_browser('models/User'),
-        ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
+        ServerList = require_browser('collections/ServerList');
+
 
     var Application = Marionette.Application.extend({
+
+        _appToolbars: function() {
+            var toolbarView = new MainToolbar({servers:this.servers}),
+                footerbarView = new MainFooterbar();
+
+            this.mainToolbar.show(toolbarView);
+            toolbarView.on('server:add:click', _.bind(function(eventObj) {
+                this.execute('modal:show', new AddEditServerModal({operationLabel:'Add', App:this}));
+            }, this));
+
+
+            this.mainFooterbar.show(footerbarView);
+            footerbarView.on('server:add:click', _.bind(function() {
+                this.execute('noobtour:deactivate');
+                this.execute('modal:show', new AddEditServerModal({operationLabel:'Add', App:this}));
+            }, this));
+        },
+
         getActiveServer: function() {
             if(this.activeServer !== undefined) {
                 return this.activeServer;
@@ -86,17 +112,33 @@ define(function (require_browser) {
     });
 
     App.addInitializer(function(options) {
+        this.vent.on('server:selected', this.onServerSelected, this);
+        this.vent.on('session:expired', this.onSessionExpired, this);
+        this.commands.setHandler('noobtour:activate', this.onNoobTourActivate, this);
+        this.commands.setHandler('noobtour:deactivate', this.onNoobTourDeactivate, this);
+        this.commands.setHandler("modal:close", this.closeModal, this)
+        this.commands.setHandler("modal:show", this.showModal, this)
+
         var user = new User();
         this.user = function() { return user; };
 
         this.routers = {};
-        this.activeServer = undefined; // place holder for the server we're currently connected to
+        this.servers = new ServerList();
+        this._appToolbars();
 
-        this.vent.on('server:selected', this.onServerSelected, this);
-        this.vent.on('noobtour:activate', this.onNoobTourActivate, this);
-        this.vent.on('noobtour:deactivate', this.onNoobTourDeactivate, this);
-        this.vent.on('session:expired', this.onSessionExpired, this);
-        this.vent.on('modal:close', this.closeModal, this);
+        this.servers.fetch({success: _.bind(function() {
+            if(this.servers.length === 0) {
+                this.execute('noobtour:activate');
+            }
+        }, this)});
+
+        this.servers.on('remove', function(serverModel, serversCollection, options) {
+            if(serversCollection.length === 0) {
+                this.execute('noobtour:activate');
+            }
+        }, this);
+
+        this.activeServer = undefined; // place holder for the server we're currently connected to
     });
 
     /*

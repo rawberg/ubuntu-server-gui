@@ -3,34 +3,7 @@ define(function (require_browser) {
         ServerList = require_browser('collections/ServerList'),
         Server = require_browser('models/Server');
 
-    describe('ServerList - Collection', function() {
-
-        describe('addNewServer', function() {
-
-            var serverList, addNewServerSpy, serverModel;
-            beforeEach(function() {
-                addNewServerSpy = sinon.spy(ServerList.prototype, 'addNewServer');
-                serverList = new ServerList();
-                serverModel = new Server({name: 'Sample Server'});
-                App.vent.trigger('server:new-server-added', {
-                    server: serverModel
-                });
-            });
-
-            afterEach(function() {
-                addNewServerSpy.restore();
-                serverList.reset([], {silent: true});
-            });
-
-            it('should get called when a server is added to the collection', function() {
-                (addNewServerSpy).should.have.been.called;
-            });
-
-            it('should add a new server to the collection', function() {
-                (serverList.length).should.equal(1);
-            });
-
-        });
+    xdescribe('ServerList - Collection', function() {
 
         describe('onRemove', function() {
 

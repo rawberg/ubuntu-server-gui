@@ -3,7 +3,6 @@ define(function (require_browser) {
         _ = require_browser('underscore'),
         Marionette = require_browser('marionette'),
         Stickit = require_browser('backbone_stickit'),
-        App = require_browser('App'),
         Server = require_browser('models/Server'),
         BaseForm = require_browser('views/BaseForm'),
         addEditServerTpl = require_browser('text!views/modal/templates/add-edit-server.html');
@@ -39,7 +38,7 @@ define(function (require_browser) {
         },
 
         onCancel: function(eventObj) {
-            App.vent.trigger('modal:close');
+            this.App.execute('modal:close');
         },
 
         onSave: function(eventObj) {
@@ -55,7 +54,7 @@ define(function (require_browser) {
                 connect: false       // Todo: add form field/button to select "save and connect"
             });
 
-            this.App.closeModal();
+            this.App.execute('modal:close');
         },
 
         onInputKeyup: function(eventObj) {

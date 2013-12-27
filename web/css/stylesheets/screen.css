@@ -6845,7 +6845,6 @@ footer #left_sidebar_footerbar {
   flex: 0;
   min-width: 216px;
   width: 216px;
-  border-right: 1px solid #a5a5a5;
 }
 footer #left_sidebar_footerbar ul {
   list-style: none;

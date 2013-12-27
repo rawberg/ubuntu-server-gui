@@ -6,7 +6,7 @@ define(function (require_browser) {
 
     describe('AddEditServer (modal) - ItemView', function() {
 
-        describe('onRender', function() {
+        xdescribe('onRender', function() {
             var modalSpy, addEditServerModal;
 
             beforeEach(function() {

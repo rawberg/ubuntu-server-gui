@@ -5,8 +5,6 @@ define(function (require_browser) {
 
         DashboardLayout = require_browser('views/dashboard/Dashboard').DashboardLayout,
         FileManagerLayout = require_browser('views/filemanager/FileManager').FileManagerLayout,
-        MainFooterbar = require_browser('views/MainFooterbar'),
-        MainToolbar = require_browser('views/MainToolbar'),
 
         LeftSidebarView = require_browser('views/dashboard/LeftSidebar').LeftSidebar,
         ServerListCollection = require_browser('collections/ServerList');
@@ -15,14 +13,6 @@ define(function (require_browser) {
         initialize: function() {
             this.App = App;
             BaseController.prototype.initialize.apply(this, arguments);
-        },
-
-        _commonToolbars: function() {
-            var toolbarView = new MainToolbar(),
-                footerbarView = new MainFooterbar();
-
-            this.App.mainToolbar.show(toolbarView);
-            this.App.mainFooterbar.show(footerbarView);
         },
 
         _sidebarLeft: function(sidebarRegion) {
@@ -40,18 +30,12 @@ define(function (require_browser) {
 
         dashboard: function() {
             var dashboardLayout = this.dashboardLayout = new DashboardLayout();
-            this._commonToolbars();
-
             this.App.mainViewport.show(dashboardLayout);
-            this._sidebarLeft(dashboardLayout.sidebarLeftRegion);
         },
 
         filemanager: function() {
             var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout();
-            this._commonToolbars();
-
             this.App.mainViewport.show(fileManagerLayout);
-            this._sidebarLeft(fileManagerLayout.sidebarLeftRegion);
         }
     });
 

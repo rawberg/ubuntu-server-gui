@@ -1,9 +1,8 @@
 define(function (require_browser) {
     var $ = require_browser('jquery'),
         _ = require_browser('underscore'),
+        Backbone = require_browser('backbone'),
         Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-        AddEditServerModal = require_browser('views/modal/AddEditServer'),
         mainToolbarTpl = require_browser('text!views/templates/main-toolbar.html');
 
     return Marionette.ItemView.extend({
@@ -11,9 +10,29 @@ define(function (require_browser) {
         tagName: 'header',
         id: 'main-toolbar',
 
+        bindings: {
+            'select.server-select-toggle': {
+                observe: 'activeServer',
+                selectOptions: {
+                    collection: 'this.servers',
+                    labelPath: 'name',
+                    defaultOption: {name: 'Select/Add Server', label: 'Select/Add Server', value: null}
+                }
+            }
+        },
+
         events: {
-            'click #toolbar_nav li': 'onClickIcon',
-            'click .toolbar-server_rack a': 'onAddServerClick'
+            'click #toolbar_nav li': 'onClickIcon'
+        },
+
+        triggers: {
+            'click .toolbar-server_rack a': 'server:add:click'
+        },
+
+        initialize: function(options) {
+            this.model = options.model = new Backbone.Model({activeServer:null});
+            this.servers = options.servers;
+            this.servers.fetch();
         },
 
         highlightIcon: function(iconClass) {
@@ -21,14 +40,13 @@ define(function (require_browser) {
             this.$('li.' + iconClass).addClass('active');
         },
 
-        onAddServerClick: function(eventObj) {
-            eventObj.stopPropagation();
-            eventObj.preventDefault();
-            App.showModal(new AddEditServerModal({operationLabel: 'Add'}));
-        },
-
         onClickIcon: function(e) {
             this.highlightIcon(e.target.className);
+        },
+
+        onRender: function() {
+            this.stickit();
+//            this.model.set('activeServer', 0);
         }
     });
 });

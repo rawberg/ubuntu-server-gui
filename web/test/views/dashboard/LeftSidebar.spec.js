@@ -7,7 +7,7 @@ define(function (require_browser, exports, module) {
         ServerListCollection = require_browser('collections/ServerList');
 
 
-    describe('LeftSidebar - UsgCollectionView', function() {
+    xdescribe('LeftSidebar - UsgCollectionView', function() {
 
         var leftSidebar, listAddSpy, serversCollection,
             listRemoveSpy, listRightClickSpy, contextShowSpy,

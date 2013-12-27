@@ -7,15 +7,20 @@ define(function (require_browser) {
 
 
     describe('App', function() {
-
-        beforeEach(function() {
-            App._initCallbacks.run(undefined, App);
-        });
-
-        afterEach(function() {
-        });
-
         describe('start', function() {
+            var posStub;
+
+            beforeEach(function() {
+                posStub = sinon.stub($.prototype, 'offset');
+                posStub.returns({top: 500, bottom: 540});
+                App._initCallbacks.run(undefined, App);
+            });
+
+            afterEach(function() {
+                App.closeRegions();
+                posStub.restore();
+            });
+
             it('should have a user containing a session', function() {
                 (App.user()).should.exist;
                 (App.user().session()).should.exist;
@@ -31,28 +36,30 @@ define(function (require_browser) {
             var clickSwallowSpy, scrollTopSpy, popoverSpy;
 
             beforeEach(function() {
-                tourSpy = sinon.spy(App.vent._events['noobtour:activate'][0], 'callback');
-                posStub = sinon.stub($.prototype, 'offset');
-                posStub.returns({top: 500, bottom: 540});
-
                 appendToSpy = sinon.spy($.prototype, 'appendTo');
                 scrollTopSpy = sinon.spy($.prototype, 'animate');
                 clickSwallowSpy = sinon.spy($.prototype, 'click');
                 windowResizeSpy = sinon.spy($.prototype, 'resize');
 
                 popoverSpy = sinon.spy(NoobTourPopover.prototype, 'render');
-                App.vent.trigger('noobtour:activate');
+                posStub = sinon.stub($.prototype, 'offset');
+                posStub.returns({top: 500, bottom: 540});
+
+                App._initCallbacks.run(undefined, App);
+                tourSpy = sinon.spy(App.commands._wreqrHandlers['noobtour:activate'], 'callback');
+                App.execute('noobtour:activate');
             });
 
             afterEach(function() {
                 tourSpy.restore();
-                posStub.restore();
                 appendToSpy.restore();
                 scrollTopSpy.restore();
                 clickSwallowSpy.restore();
                 windowResizeSpy.restore();
                 popoverSpy.restore();
-                App.vent.trigger('noobtour:deactivate');
+                posStub.restore();
+                App.execute('noobtour:deactivate');
+                App.closeRegions();
             });
 
             it('should be called when the "noobtour:activate" App event is fired', function() {
@@ -81,17 +88,19 @@ define(function (require_browser) {
 
         describe('onNoobTourDeActivate', function() {
             var removeSpy, deactivateTourSpy, offSpy;
+
             beforeEach(function() {
-                deactivateTourSpy = sinon.spy(App.vent._events['noobtour:deactivate'][0], 'callback');
+                deactivateTourSpy = sinon.spy(App.commands._wreqrHandlers['noobtour:deactivate'], 'callback');
                 removeSpy = sinon.spy($.prototype, 'remove');
                 offSpy = sinon.spy($.prototype, 'off');
-                App.vent.trigger('noobtour:deactivate');
+                App.execute('noobtour:deactivate');
             });
 
             afterEach(function() {
                 deactivateTourSpy.restore();
                 removeSpy.restore();
                 offSpy.restore();
+                App.closeRegions();
             });
 
             it('should be called when the "noobtour:deactivate" App event is fired', function() {
@@ -112,12 +121,12 @@ define(function (require_browser) {
 
             beforeEach(function() {
                 viewRenderSpy = sinon.spy(AddEditServerModal.prototype, 'render');
-                App.showModal(new AddEditServerModal());
+                App.execute('modal:show', new AddEditServerModal({App:sinon.spy()}));
             });
 
             afterEach(function() {
                 viewRenderSpy.restore();
-                App.closeModal();
+                App.closeRegions();
             });
 
             it('should show the modal', function() {
@@ -131,7 +140,7 @@ define(function (require_browser) {
 
             beforeEach(function() {
                 viewRemoveSpy = sinon.spy(AddEditServerModal.prototype, 'remove');
-                App.showModal(new AddEditServerModal());
+                App.showModal(new AddEditServerModal({App:sinon.spy()}));
             });
 
             it('should call "remove" on the currentView in the modal region', function() {

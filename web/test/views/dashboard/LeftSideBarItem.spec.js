@@ -2,7 +2,7 @@ define(function (require_browser, exports, module) {
     var LeftSidebarItem = require_browser('views/dashboard/LeftSidebar').LeftSidebarItem,
         Server = require_browser('models/Server');
 
-    describe('LeftSidebarItem - ItemView', function() {
+    xdescribe('LeftSidebarItem - ItemView', function() {
 
         var leftSidebarItem, server;
         beforeEach(function() {
