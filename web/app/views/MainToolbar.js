@@ -12,9 +12,9 @@ define(function (require_browser) {
 
         bindings: {
             'select.server-select-toggle': {
-                observe: 'activeServer',
+                observe: 'model',
                 selectOptions: {
-                    collection: 'this.servers',
+                    collection: 'this.App.servers',
                     labelPath: 'name',
                     defaultOption: {name: 'Select/Add Server', label: 'Select/Add Server', value: null}
                 }
@@ -22,7 +22,7 @@ define(function (require_browser) {
         },
 
         events: {
-            'click #toolbar_nav li': 'onClickIcon'
+            'click .toolbar-nav li': 'onClickIcon'
         },
 
         triggers: {
@@ -30,13 +30,12 @@ define(function (require_browser) {
         },
 
         initialize: function(options) {
-            this.model = options.model = new Backbone.Model({activeServer:null});
-            this.servers = options.servers;
-            this.servers.fetch();
+            this.App = options.App;
+            this.model = this.App.activeServer;
         },
 
         highlightIcon: function(iconClass) {
-            this.$('#toolbar_nav li').removeClass('active');
+            this.$('.toolbar-nav li').removeClass('active');
             this.$('li.' + iconClass).addClass('active');
         },
 
@@ -46,7 +45,17 @@ define(function (require_browser) {
 
         onRender: function() {
             this.stickit();
-//            this.model.set('activeServer', 0);
+            this.App.servers.on('sync', this.reStickit, this);
+            this.App.servers.on('add', this.reStickit, this);
+        },
+
+        onClose: function() {
+            this.App.servers.off('sync', this.reStickit);
+            this.App.servers.off('add', this.reStickit);
+        },
+
+        reStickit: function() {
+            this.stickit();
         }
     });
 });

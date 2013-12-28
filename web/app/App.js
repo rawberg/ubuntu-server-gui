@@ -10,13 +10,14 @@ define(function (require_browser) {
         ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }}),
         // Models / Collections
         User = require_browser('models/User'),
+        Server = require_browser('models/Server'),
         ServerList = require_browser('collections/ServerList');
 
 
     var Application = Marionette.Application.extend({
 
         _appToolbars: function() {
-            var toolbarView = new MainToolbar({servers:this.servers}),
+            var toolbarView = new MainToolbar({App:this}),
                 footerbarView = new MainFooterbar();
 
             this.mainToolbar.show(toolbarView);
@@ -121,6 +122,7 @@ define(function (require_browser) {
 
         var user = new User();
         this.user = function() { return user; };
+        this.activeServer = new Server(); // place holder for the server we're currently connected to
 
         this.routers = {};
         this.servers = new ServerList();
@@ -138,7 +140,7 @@ define(function (require_browser) {
             }
         }, this);
 
-        this.activeServer = undefined; // place holder for the server we're currently connected to
+
     });
 
     /*
