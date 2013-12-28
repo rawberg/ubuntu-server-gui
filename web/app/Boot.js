@@ -7,9 +7,6 @@ require_browser.config({
         'backbone.babysitter': '../libs/backbone.marionette/backbone.babysitter',
         'backbone.wreqr': '../libs/backbone.marionette/backbone.wreqr',
         marionette: '../libs/backbone.marionette/backbone.marionette',
-        shoe: '../libs/shoe/shoe',
-        websocket: '../libs/websocket-stream/websocket-stream',
-        dnode: '../libs/dnode/dnode',
 
         // Addons
         backbone_dualstorage: '../libs/backbone.dualstorage/backbone.dualstorage',

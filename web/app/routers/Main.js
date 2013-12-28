@@ -4,12 +4,12 @@ define(function (require_browser) {
     return Marionette.AppRouter.extend({
 
         appRoutes: {
-            "": "filemanager",
+            "": "dashboard",
             "filemanager": "filemanager",
             "filemanager/*path": "filemanager",
             "dashboard": "dashboard",
             "auth/login": "login",
-            "*path": "filemanager"
+            "*path": "dashboard"
         }
     });
 });

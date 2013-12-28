@@ -21,7 +21,7 @@ define(function (require_browser) {
 
 
 
-    describe('Dashboard', function() {
+    xdescribe('Dashboard', function() {
 
         describe('showMonitoring', function() {
             var dashboardLayout;

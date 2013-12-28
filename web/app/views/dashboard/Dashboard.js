@@ -16,9 +16,6 @@ define(function (require_browser, exports, module) {
 
         dashboardLayoutTpl = require_browser('text!views/dashboard/templates/layout.html');
 
-    require_browser('bootstrap_tooltip');
-    require_browser('bootstrap_popover');
-
     module.exports.DashboardLayout = Marionette.Layout.extend({
         template: _.template(dashboardLayoutTpl),
         id: 'dashboard_layout',
@@ -41,7 +38,7 @@ define(function (require_browser, exports, module) {
 
         onRender: function() {
             var activeServer = App.getActiveServer();
-            if(activeServer) {
+            if(activeServer.get('ipv4') !== null) {
                 this.showMonitoring(activeServer);
             }
         },

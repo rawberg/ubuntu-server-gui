@@ -1,8 +1,6 @@
 define(function (require_browser) {
     var Backbone = require_browser('backbone'),
-        App = require_browser('App'),
-        websocket = require_browser('websocket'),
-        dnode = require_browser('dnode');
+        App = require_browser('App');
 
     return Backbone.Model.extend({
         initialize: function(attributes, options) {
@@ -18,9 +16,8 @@ define(function (require_browser) {
                     this.initiateLocalProxy();
                 }
             } else {
-                return function() {
-                    this.initiateRemoteProxy();
-                }
+                return false;
+//                throw 'no available via web browser';
             }
         }(),
 
@@ -92,57 +89,6 @@ define(function (require_browser) {
                     });
                 });
             }
-        },
-
-        initiateRemoteProxy: function(serverConnection) {
-            //TODO: replace show url with proper url
-            var wsStream = websocket('wss://localhost:8890/rox');
-            var dnodeStream = dnode();
-
-            dnodeStream.on('remote', _.bind(function (usgCloud) {
-                var ip = this.options.server.get('ipv4');
-                var port = this.options.server.get('port');
-
-                usgCloud.connect(ip, port, _.bind(function() {
-                    this.options.server.sshProxy = usgCloud;
-                    this.options.server.sftpProxy = usgCloud; // reference to dnode
-                    this.set('connection_status', 'connected');
-                    App.vent.trigger('server:connected', this.options.server);
-                }, this));
-
-            }, this));
-
-            wsStream.on('error', _.bind(function(errorEvent) {
-                dnodeStream.end();
-                // TODO: inspect errorEvent further to catch other cases
-                this.set('connection_status', 'connection error');
-                App.vent.trigger('session:expired');
-            }, this));
-
-            wsStream.on('connect', function() {
-                dnodeStream.pipe(wsStream).pipe(dnodeStream);
-            });
-
-            wsStream.on('close', function() {
-                console.log('websocket closed');
-                dnodeStream.close();
-            });
-
-            //TODO: find a better place or logging and error trapping
-            dnodeStream.on('error', function(err) {
-                console.log('Cloud Connection :: error :: ' + err);
-            });
-
-            dnodeStream.on('end', _.bind(function() {
-                wsStream.end();
-                App.vent.trigger('server:disconnected', this.options.server);
-                console.log('Cloud Connection :: end');
-            }, this));
-
-            dnodeStream.on('close', function(had_error) {
-                wsStream.close();
-                console.log('Cloud Connection :: close');
-            });
         }
 
     });
