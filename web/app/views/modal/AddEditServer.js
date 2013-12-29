@@ -48,12 +48,8 @@ define(function (require_browser) {
 
             this.hideError();
             this.disableForm();
-            this.model.save();
-            this.App.vent.trigger('server:new-server-added', {
-                server: this.model,
-                connect: false       // Todo: add form field/button to select "save and connect"
-            });
-
+            this.model = this.App.servers.add(this.model);
+            this.activeServer = this.model;
             this.App.execute('modal:close');
         },
 
@@ -62,7 +58,7 @@ define(function (require_browser) {
             eventObj.preventDefault();
             eventObj.returnValue = false;
             if (eventObj.keyCode === 13) {
-                this.onSubmit(eventObj);
+                this.onSave(eventObj);
             }
             return false;
         },

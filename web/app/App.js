@@ -83,8 +83,9 @@ define(function (require_browser) {
             //window.location = 'https://localhost:8890/signin';
         },
 
-        onServerSelected: function(server) {
-            this.activeServer = server;
+        onActiveServerChanged: function(server, options) {
+            // TODO check to make sure more than just the name changed
+            this.vent.trigger('server:selected', server);
         },
 
         showModal: function(view) {
@@ -113,7 +114,6 @@ define(function (require_browser) {
     });
 
     App.addInitializer(function(options) {
-        this.vent.on('server:selected', this.onServerSelected, this);
         this.vent.on('session:expired', this.onSessionExpired, this);
         this.commands.setHandler('noobtour:activate', this.onNoobTourActivate, this);
         this.commands.setHandler('noobtour:deactivate', this.onNoobTourDeactivate, this);
@@ -123,6 +123,7 @@ define(function (require_browser) {
         var user = new User();
         this.user = function() { return user; };
         this.activeServer = new Server(); // place holder for the server we're currently connected to
+        this.activeServer.on('change', this.onActiveServerChanged, this);
 
         this.routers = {};
         this.servers = new ServerList();

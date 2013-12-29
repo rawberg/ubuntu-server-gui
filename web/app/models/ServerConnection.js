@@ -16,10 +16,9 @@ define(function (require_browser) {
                     this.initiateLocalProxy();
                 }
             } else {
-                return false;
-//                throw 'no available via web browser';
+                throw 'cannot connect to a server from a web browser';
             }
-        }(),
+        },
 
         initiateLocalProxy: function(callback) {
             var SshConnection = require('ssh2');

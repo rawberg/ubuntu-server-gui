@@ -10,6 +10,7 @@ define(function (require_browser) {
         describe('connect', (function() {
             var server, serverConnection;
             var initiateLocalProxySpy, initiateRemoteProxySpy;
+
             beforeEach(function() {
                 server = new Server({name: 'test server', ipv4: '10.0.1.1'});
                 serverConnection = new ServerConnection({}, {server: server});
