@@ -34,11 +34,23 @@ define(function (require_browser) {
         },
 
         getActiveServer: function() {
-            if(this.activeServer !== undefined) {
-                return this.activeServer;
-            } else {
-                return false;
+            if(_.isUndefined(this.activeServer)) {
+                return this.setActiveServer(new Server());
             }
+            return this.activeServer;
+        },
+
+        setActiveServer: function(server) {
+            if(server instanceof Server) {
+                // remove events on current server
+                if(this.activeServer instanceof Server) {
+                    this.activeServer.off();
+                    this.activeServer.stopListening();
+                }
+                this.activeServer = server;
+                this.vent.trigger('active-server:changed', server);
+            }
+            return this.activeServer;
         },
 
         isDesktop: function() {
@@ -83,11 +95,6 @@ define(function (require_browser) {
             //window.location = 'https://localhost:8890/signin';
         },
 
-        onActiveServerChanged: function(server, options) {
-            // TODO check to make sure more than just the name changed
-            this.vent.trigger('server:selected', server);
-        },
-
         showModal: function(view) {
             $(this.modalContainer.el).show();
             this.modalContainer.show(view);
@@ -122,8 +129,7 @@ define(function (require_browser) {
 
         var user = new User();
         this.user = function() { return user; };
-        this.activeServer = new Server(); // place holder for the server we're currently connected to
-        this.activeServer.on('change', this.onActiveServerChanged, this);
+        this.setActiveServer(new Server()); // place holder for the server we're currently connected to
 
         this.routers = {};
         this.servers = new ServerList();

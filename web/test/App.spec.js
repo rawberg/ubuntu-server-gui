@@ -2,6 +2,7 @@ define(function (require_browser) {
     var $ = require_browser('jquery'),
         App = require_browser('App'),
         Session = require_browser('models/Session'),
+        Server = require_browser('models/Server'),
         AddEditServerModal = require_browser('views/modal/AddEditServer'),
         NoobTourPopover = require_browser('views/modal/NoobTourPopover');
 
@@ -147,6 +148,65 @@ define(function (require_browser) {
                 App.closeModal();
                 (viewRemoveSpy).should.have.been.called;
             });
+        });
+
+        describe('activeServer', function() {
+            var posStub;
+
+            beforeEach(function() {
+                posStub = sinon.stub($.prototype, 'offset');
+                posStub.returns({top: 500, bottom: 540});
+            });
+
+            afterEach(function() {
+                App.closeRegions();
+                posStub.restore();
+            });
+
+            describe('getActiveServer', function() {
+
+                it('sets a blank activeServer on startup', function() {
+                    App._initCallbacks.run(undefined, App);
+                    var activeServer = App.getActiveServer();
+                    expect(activeServer instanceof Server).to.be.true;
+                    expect(activeServer.get('ipv4')).to.be.null;
+                });
+            });
+
+            describe('setActiveServer', function() {
+                var activeServerSpy;
+
+                beforeEach(function() {
+                   activeServerSpy = sinon.spy(App.vent._events['active-server:changed'][0], 'callback');
+                    App._initCallbacks.run(undefined, App);
+                });
+
+                afterEach(function() {
+                    activeServerSpy.restore();
+                });
+
+                it('replaces existing active server', function() {
+                    var firstActiveServer = App.getActiveServer();
+                    var secondActiveServer = App.setActiveServer(new Server());
+                    expect(firstActiveServer.cid).to.not.equal(secondActiveServer.cid);
+                });
+
+                it('triggers App.vent "active-server:changed" when a new server is set', function() {
+                    expect(activeServerSpy.callCount).to.equal(0);
+                    App.setActiveServer(new Server());
+                    expect(activeServerSpy.callCount).to.equal(1);
+                });
+
+                it('unbinds existing listeners when activeServer is replaced', function() {
+                    var firstActiveServer = App.getActiveServer();
+                    firstActiveServer.on('change', sinon.spy());
+                    expect(firstActiveServer._events.change.length).to.equal(1);
+                    App.setActiveServer(new Server());
+                    expect(_.has(firstActiveServer._events, 'change')).to.be.false;
+                });
+
+            });
+
         });
 
     });
