@@ -13,9 +13,7 @@ define(function (require_browser) {
 
         connect: function() {
             if(typeof process !== 'undefined') {
-                return function() {
-                    this.initiateLocalProxy();
-                }
+                return this.initiateLocalProxy();
             } else {
                 throw 'cannot connect to a server from a web browser';
             }

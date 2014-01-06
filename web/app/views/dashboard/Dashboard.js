@@ -46,7 +46,7 @@ define(function (require_browser, exports, module) {
         onActiveServerChange: function(server) {
             var serverConnection = new ServerConnection({connection_status: 'connecting'}, {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
-//            serverConnection.connect();
+            serverConnection.connect();
         },
 
         showMonitoring: function(serverModel) {
