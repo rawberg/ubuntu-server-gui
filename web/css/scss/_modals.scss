@@ -34,9 +34,9 @@
 
 
 // Server Connection Modal
-#server-connection-modal {
-  width: 590px;
-  h3, span.connection-status {
+.modal-connection-server {
+  width: 500px;
+  h4, span.connection-status {
     text-transform: capitalize;
   }
 }

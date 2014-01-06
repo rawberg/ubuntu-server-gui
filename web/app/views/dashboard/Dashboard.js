@@ -27,7 +27,7 @@ define(function (require_browser, exports, module) {
         },
 
         initialize: function(options) {
-            App.vent.on('server:selected', this.onServerSelected, this);
+            App.vent.on('active-server:changed', this.onActiveServerChange, this);
             App.vent.on('server:connected', this.transitionToShowMonitoring, this);
         },
 
@@ -43,10 +43,10 @@ define(function (require_browser, exports, module) {
             }
         },
 
-        onServerSelected: function(server) {
-            var serverConnection = new ServerConnection(_.extend({connection_status: 'connecting'}, server.toJSON()), {server: server});
+        onActiveServerChange: function(server) {
+            var serverConnection = new ServerConnection({connection_status: 'connecting'}, {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
-            serverConnection.connect();
+//            serverConnection.connect();
         },
 
         showMonitoring: function(serverModel) {

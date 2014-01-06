@@ -6899,10 +6899,10 @@ footer #center_footerbar {
   padding: 20px 40px;
 }
 
-#server-connection-modal {
-  width: 590px;
+.modal-connection-server {
+  width: 500px;
 }
-#server-connection-modal h3, #server-connection-modal span.connection-status {
+.modal-connection-server h4, .modal-connection-server span.connection-status {
   text-transform: capitalize;
 }
 

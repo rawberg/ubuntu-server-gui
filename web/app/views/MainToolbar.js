@@ -12,10 +12,15 @@ define(function (require_browser) {
 
         bindings: {
             'select.server-select-toggle': {
-                observe: 'model',
+                observe: 'cid',
+                updateModel: function(val, event, options) {
+                    this.App.setActiveServer(this.App.servers.get(val));
+                    return false;
+                },
                 selectOptions: {
                     collection: 'this.App.servers',
                     labelPath: 'name',
+                    valuePath: 'id',
                     defaultOption: {name: 'Select/Add Server', label: 'Select/Add Server', value: null}
                 }
             }
@@ -32,6 +37,7 @@ define(function (require_browser) {
         initialize: function(options) {
             this.App = options.App;
             this.model = this.App.activeServer;
+            this.App.vent.on('active-server:changed', this.onActiveServerChange, this);
         },
 
         highlightIcon: function(iconClass) {
@@ -52,6 +58,10 @@ define(function (require_browser) {
         onClose: function() {
             this.App.servers.off('sync', this.reStickit);
             this.App.servers.off('add', this.reStickit);
+        },
+
+        onActiveServerChange: function(server) {
+            this.model = server;
         },
 
         reStickit: function() {

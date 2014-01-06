@@ -3,11 +3,12 @@ define(function (require_browser) {
         App = require_browser('App');
 
     return Backbone.Model.extend({
+
         initialize: function(attributes, options) {
             if(typeof options.server === "undefined") {
                 throw "Expected server to be provided.";
             }
-            this.options = options || {};
+            this.server = options.server;
         },
 
         connect: function() {
@@ -26,26 +27,26 @@ define(function (require_browser) {
 
             //TODO: make username and password dynamic
             sshProxy.connect({
-                host: this.options.server.get('ipv4'),
-                port: this.options.server.get('port'),
+                host: this.server.get('ipv4'),
+                port: this.server.get('port'),
                 username: 'stdissue',
                 password: 'devbox99'
             });
 
             sshProxy.on('ready', _.bind(function() {
-                this.options.server.sshProxy = sshProxy;
+                this.server.sshProxy = sshProxy;
                 this.set('connection_status', 'connected');
 
                 // also connect via sftp
                 sshProxy.sftp(_.bind(function (err, sftpConnection) {
-                    this.options.server.sftpProxy = sftpConnection;
+                    this.server.sftpProxy = sftpConnection;
                     if (err) throw err;
                     sftpConnection.on('end', function () {
                         console.log('SFTP :: SFTP session closed');
                     });
                 }, this));
 
-                App.vent.trigger('server:connected', this.options.server);
+                App.vent.trigger('server:connected', this.server);
             }, this));
 
             //TODO: find a better place or logging and error trapping
@@ -56,7 +57,7 @@ define(function (require_browser) {
 
             sshProxy.on('end', function() {
                 console.log('SSh Connection :: end');
-                App.vent.trigger('server:disconnected', this.options.server);
+                App.vent.trigger('server:disconnected', this.server);
             });
 
             sshProxy.on('close', function(had_error) {

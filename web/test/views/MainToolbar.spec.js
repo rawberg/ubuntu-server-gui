@@ -8,7 +8,7 @@ define(function (require_browser) {
 
         beforeEach(function() {
             serverList = new ServerList();
-            appSpy = {servers: serverList, activeServer: new Server()};
+            appSpy = {servers: serverList, activeServer: new Server(), vent: {on: sinon.spy()}};
             stickitSpy = sinon.spy(MainToolbar.prototype, 'stickit');
             mainToolbar = new MainToolbar({App:appSpy});
             mainToolbar.render();

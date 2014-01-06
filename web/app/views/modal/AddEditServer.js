@@ -48,6 +48,7 @@ define(function (require_browser) {
 
             this.hideError();
             this.disableForm();
+            this.model.save();
             this.model = this.App.servers.add(this.model);
             this.activeServer = this.model;
             this.App.execute('modal:close');

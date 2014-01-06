@@ -22,14 +22,14 @@ define(function (require_browser) {
             });
 
             it('displays connecting status and server name in the modal', function() {
-                (serverConnectionView.$('h3').text()).should.have.string('connecting');
+                (serverConnectionView.$('h4').text()).should.have.string('connecting');
                 (serverConnectionView.$('.modal-body').text()).should.have.string('Simple Server');
                 (serverConnectionView.$('div.modal-body').hasClass('connecting')).should.be.true;
             });
 
             it('displays connection error message in the modal', function() {
                 serverConnection.set('connection_status', 'connection error');
-                (serverConnectionView.$('h3').text()).should.have.string('connection error');
+                (serverConnectionView.$('h4').text()).should.have.string('connection error');
             });
 
             it('displays the correct template on connect error', function() {

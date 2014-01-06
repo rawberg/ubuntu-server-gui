@@ -12,11 +12,11 @@ define(function (require_browser, exports, module) {
      * @params {model: Server}
      */
     return Marionette.ItemView.extend({
-        className: 'modal hide fade',
-        id: 'server-connection-modal',
+        tagName: 'div',
+        className: 'modal-dialog modal-connection-server',
 
         connection_bindings: {
-            'h3': 'connection_status',
+            'h4.modal-title': 'connection_status',
             'span.connection-status': 'connection_status'
         },
 
@@ -28,6 +28,10 @@ define(function (require_browser, exports, module) {
 
         modelEvents: {
             "change:connection_status": "onStatusChange"
+        },
+
+        events: {
+            'click button[name="cancel"]': 'onCancel'
         },
 
         getTemplate: function() {
@@ -50,9 +54,13 @@ define(function (require_browser, exports, module) {
             }
         },
 
+        onCancel: function(eventObj) {
+            App.execute('modal:close');
+        },
+
         onRender: function() {
             this.stickit(this.model, this.connection_bindings);
-            this.stickit(this.model.options.server, this.server_bindings);
+            this.stickit(this.model.server, this.server_bindings);
         },
 
         onStatusChange: function(server, connection_status, changes) {
