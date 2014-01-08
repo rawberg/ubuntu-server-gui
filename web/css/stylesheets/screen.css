@@ -6543,57 +6543,6 @@ table.directory-explorer td [class^="icon-"] {
   float: right;
 }
 
-#dashboard_layout {
-  height: 100%;
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-}
-#dashboard_layout #main_content {
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-flex-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-}
-#dashboard_layout #dash_performance, #dashboard_layout #dash_software {
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-}
-#dashboard_layout #dash_performance {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  min-height: 260px;
-}
-#dashboard_layout #dash_platform {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
 #dashboard_layout .performance, #dashboard_layout .software {
   width: 100%;
   font-size: 13px;
@@ -6607,11 +6556,17 @@ table.directory-explorer td [class^="icon-"] {
   font-weight: normal;
   color: #616161;
 }
+#dashboard_layout .dashboard-container {
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 600px;
+  width: 600px;
+}
 #dashboard_layout #dash_performance, #dashboard_layout .performance, #dashboard_layout #dash_software, #dashboard_layout .software {
   background-color: #f5f5f5;
 }
 #dashboard_layout .performance {
-  padding: 10px 6px 0px 22px;
+  padding: 10px 6px 30px 22px;
 }
 #dashboard_layout .performance .left, #dashboard_layout .performance .right {
   display: inline-block;
@@ -6628,7 +6583,7 @@ table.directory-explorer td [class^="icon-"] {
   position: absolute;
   text-align: center;
   width: 100px;
-  font-family: 'Amaranth',sans-serif;
+  font-family: 'Amaranth', sans-serif;
   font-size: 24px;
   line-height: 30px;
   font-weight: bold;
@@ -6643,8 +6598,6 @@ table.directory-explorer td [class^="icon-"] {
   text-align: center;
 }
 #dashboard_layout .performance .left {
-  min-width: 31%;
-  margin-left: 6%;
   background-color: #f5f5f5;
 }
 #dashboard_layout .performance .left span.statbox {
@@ -6654,14 +6607,13 @@ table.directory-explorer td [class^="icon-"] {
   background-color: #F8F8F8;
   border-radius: 6px;
   border: 1px solid rgba(213, 213, 213, 0.53);
-  font-family: 'Amaranth',sans-serif;
+  font-family: 'Amaranth', sans-serif;
   font-size: 24px;
   line-height: 30px;
   font-weight: bold;
   text-align: center;
 }
 #dashboard_layout .performance .right {
-  min-width: 16%;
   background-color: #f5f5f5;
 }
 #dashboard_layout .performance .right span.gauge-text-value {
@@ -6676,31 +6628,39 @@ table.directory-explorer td [class^="icon-"] {
 }
 #dashboard_layout .software h2 {
   padding-left: 20px;
+  margin-bottom: 30px;
 }
-#dashboard_layout .software .container {
-  width: 100%;
-  text-align: center;
+#dashboard_layout .software .platform-container {
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 500px;
+  width: 500px;
 }
-#dashboard_layout .software .container span {
+#dashboard_layout .software .platform-container span {
   display: block;
   margin-bottom: 10px;
   background-color: transparent;
 }
-#dashboard_layout .software .container span.label {
+#dashboard_layout .software .platform-container span.label {
   color: rgba(51, 51, 51, 0.79);
   text-shadow: none;
   font-size: 13px;
 }
-#dashboard_layout .software .container .left {
+#dashboard_layout .software .platform-container .left {
   display: inline-block;
   min-height: 100%;
+  padding-left: 80px;
   padding-right: 5px;
+}
+#dashboard_layout .software .platform-container .left span {
   text-align: right;
 }
-#dashboard_layout .software .container .right {
+#dashboard_layout .software .platform-container .right {
   display: inline-block;
   min-height: 100%;
   padding: 0 160px 0 5px;
+}
+#dashboard_layout .software .platform-container .right span {
   text-align: left;
 }
 

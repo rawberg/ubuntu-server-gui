@@ -21,7 +21,6 @@ define(function (require_browser, exports, module) {
         id: 'dashboard_layout',
 
         regions: {
-            sidebarLeftRegion: '#sidebar_left',
             performanceRegion: '#dash_performance',
             platformRegion: '#dash_platform'
         },
