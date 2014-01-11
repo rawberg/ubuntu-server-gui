@@ -48,7 +48,7 @@ define(function (require_browser) {
             }, this));
 
             //TODO: find a better place or logging and error trapping
-            //TODO: decide how consumers will know sshProxy is no longer active
+            //TODO: decide how the app will handle sshProxy errors and disconnects
             sshProxy.on('error', function(err) {
                 console.log('SSH Connection :: error :: ', err);
             });
@@ -69,21 +69,6 @@ define(function (require_browser) {
                     }
                     sshStream.on('data', function (data, extended) {
                         callback(data.toString());
-                    });
-                });
-            }
-
-            sshProxy.usgOpendir = function(path, callback) {
-                sshProxy.opendir(path, function (err, handle) {
-                    // TODO: add recursion for readdir
-                    sshProxy.readdir(handle, function (err, list) {
-                        if (err) {
-                            throw err;
-                        }
-                        if (list === false) {
-                            callback(err, list);
-                        }
-                        callback(err, list);
                     });
                 });
             }

@@ -8,7 +8,7 @@
         "title": "Ubuntu Server GUI",
         "icon": "css/images/icons/USG.icns",
         "toolbar": true,
-        "width": 1140,
+        "width": 900,
         "height": 600,
         "position": "mouse",
         "min_width": 600,
@@ -16,9 +16,7 @@
     },
 
     "dependencies": {
-        "ssh2": "0.2.x",
-        "shoe": "0.0.11",
-        "dnode": "1.0.5"
+        "ssh2": "0.2.x"
     },
 
     "devDependencies": {

@@ -17,8 +17,6 @@ define(function (require_browser, exports, module) {
         directoryExplorerTpl = require_browser('text!views/filemanager/templates/directory-explorer.html'),
         directoryItemTpl = require_browser('text!views/filemanager/templates/directory-item.html');
 
-    require_browser('backbone_stickit');
-
     var DirectoryItemView = module.exports.DirectoryItemView = Marionette.ItemView.extend({
         template: _.template(directoryItemTpl),
         tagName: 'tr',

@@ -4,14 +4,20 @@ define(function (require_browser, exports, module) {
 
     var Directory = Backbone.Model.extend({
         parse: function(response, options) {
-            return {
-                filename: response.filename,
-                mode: response.attrs.mode,
-                atime: response.attrs.atime,
-                mtime: response.attrs.mtime,
-                size: response.attrs.size,
-                permissions: response.attrs.permissions
+            try {
+                result = {
+                    filename: response.filename,
+                    mode: response.attrs.mode,
+                    atime: response.attrs.atime,
+                    mtime: response.attrs.mtime,
+                    size: response.attrs.size,
+                    permissions: response.attrs.permissions
+                }
             }
+            catch(e) {
+                result = {};
+            }
+            return result;
         }
     });
 
@@ -33,10 +39,22 @@ define(function (require_browser, exports, module) {
 
         fetch: function(options) {
             var path = (options && options.path) ? options.path : '/';
-            this.server.sshProxy.usgOpendir(path, _.bind(function (err, list) {
-                //console.log(list);
-                this.add(list, {parse: true, sort: false});
-            }, this));
+            this.server.sftpProxy.opendir(path, _.bind(this.parseDir, this));
+        },
+
+        parseDir: function(err, buffer) {
+            if(err) {
+                console.log('parseDir error: ', err);
+            } else {
+                this.server.sftpProxy.readdir(buffer, _.bind(function(err, list) {
+                    if(err) {
+                        console.log('readdir error: ', err);
+                    } else if(list) {
+                        this.add(list, {parse: true, sort: false});
+                        this.parseDir(buffer);
+                    }
+                }, this));
+            }
         },
 
         filenameSort: function(modelOne, modelTwo) {
