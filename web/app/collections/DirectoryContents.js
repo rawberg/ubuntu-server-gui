@@ -32,28 +32,47 @@ define(function (require_browser, exports, module) {
             if(this.server === null || this.directoryExplorer === null) {
                 throw 'server and directoryExplorer required for DirectoryContents collection.';
             }
-            this.directoryExplorer.on('change:path', _.bind(this.fetch, this));
+            this.directoryExplorer.on('change:path', _.bind(this.onChangePath, this));
         },
 
         comparator: function(modelOne, modelTwo, otherStuff) {
             return this[this.sortProperty + 'Sort'].call(this, modelOne, modelTwo);
         },
 
-        fetch: function(options) {
-            var path = this.directoryExplorer.get('path');
-            this.server.sftpProxy.opendir(path, _.bind(this.parseDir, this));
+        onChangePath: function() {
+            // TODO check to make sure we can navigate to this path first
+            this.fetch({reset: true});
         },
 
-        parseDir: function(err, buffer) {
+        fetch: function(options) {
+            var path = this.directoryExplorer.get('path');
+            this.server.sftpProxy.opendir(path, _.bind(function(err, buffer) {
+                this.parseDir(err, buffer, options);
+            }, this));
+        },
+
+        parseDir: function(err, buffer, options) {
+            // TODO setup integration test harness to properly test this
+            options = options ? options : {};
+            options.listInProgress = options.listInProgress ? options.listInProgress : [];
+
             if(err) {
-                console.log('parseDir error');
-            } else {
+                console.log('parseDir error (continuing): ', err);
+            }
+
+            if(buffer) {
                 this.server.sftpProxy.readdir(buffer, _.bind(function(err, list) {
                     if(err) {
                         console.log('readdir error: ', err);
                     } else if(list) {
-                        this.add(list, {parse: true, sort: false});
-                        this.parseDir(buffer);
+                        options.listInProgress = options.listInProgress.concat(list);
+                        this.parseDir(undefined, buffer, options);
+                    } else {
+                        if(options.reset) {
+                            this.reset(options.listInProgress, {parse: true, sort: false});
+                        } else {
+                            this.add(options.listInProgress, {parse: true, sort: false});
+                        }
                     }
                 }, this));
             }

@@ -83,6 +83,7 @@ define(function (require_browser, exports, module) {
 
         onFilenameClick: function(itemView) {
             var dirObject = itemView.model;
+            console.log('dirObj clicked - mode: ', dirObject.get('mode'));
             if(dirObject.get('mode') === 16877) {
                 this.model.appendPath(dirObject.get('filename'));
             }
