@@ -46,7 +46,7 @@ define(function (require_browser, exports, module) {
 
         parseDir: function(err, buffer) {
             if(err) {
-                console.log('parseDir error: ', err);
+                console.log('parseDir error');
             } else {
                 this.server.sftpProxy.readdir(buffer, _.bind(function(err, list) {
                     if(err) {

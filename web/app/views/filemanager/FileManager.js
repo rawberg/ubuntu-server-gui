@@ -81,8 +81,11 @@ define(function (require_browser, exports, module) {
             this.off('itemview:filename:click');
         },
 
-        onFilenameClick: function() {
-            console.log('i filename was clicked');
+        onFilenameClick: function(itemView) {
+            var dirObject = itemView.model;
+            if(dirObject.get('mode') === 16877) {
+                this.directoryExplorer.appendPath(dirObject.get('filename'));
+            }
         },
 
         onSortByModified: function() {
@@ -139,7 +142,7 @@ define(function (require_browser, exports, module) {
         },
 
         showFileManager: function(server) {
-            var directoryExplorer = DirectoryExplorer();
+            var directoryExplorer = new DirectoryExplorer();
             var directoryContents = new DirectoryContents([], {directoryExplorer: directoryExplorer, server: server});
             var directoryExplorerView = new DirectoryExplorerView({model: directoryExplorer, collection: directoryContents});
             this.fileManagerExplorerRegion.show(directoryExplorerView);

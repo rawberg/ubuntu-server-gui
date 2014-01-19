@@ -1,6 +1,5 @@
 define(function (require_browser) {
-    var Backbone = require_browser('backbone'),
-        App = require_browser('App');
+    var Backbone = require_browser('backbone');
 
     return Backbone.Model.extend({
 
@@ -11,6 +10,13 @@ define(function (require_browser) {
 
         initialize: function(attributes, options) {
             this.on('change:path', _.bind(this.buildBreadcrumb, this));
+        },
+
+        appendPath: function(pathExtension) {
+            if(typeof pathExtension === 'string' && pathExtension != '') {
+                var newPath = this.get('path') + pathExtension + '/';
+                this.set('path', newPath);
+            }
         },
 
         buildBreadcrumb: function() {
