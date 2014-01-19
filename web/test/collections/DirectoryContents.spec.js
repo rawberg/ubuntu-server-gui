@@ -1,11 +1,14 @@
 define(function (require_browser) {
     var App = require_browser('App'),
+        DirectoryExplorer = require_browser('models/DirectoryExplorer'),
         DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents;
+
 
     describe('DirectoryContents - Collection', function() {
 
         describe('sort', function() {
-            var directoryContents;
+            var directoryContents, directoryExplorer;
+            var fetchSpy;
             var sampleData = [{
                 filename: 'one-file.jpg',
                 size: 434343,
@@ -25,10 +28,13 @@ define(function (require_browser) {
             }];
 
             beforeEach(function() {
-                directoryContents = new DirectoryContents(sampleData, {server: {}});
+                fetchSpy = sinon.stub(DirectoryContents.prototype, 'fetch');
+                directoryExplorer = new DirectoryExplorer();
+                directoryContents = new DirectoryContents(sampleData, {directoryExplorer: directoryExplorer, server: {}});
             });
 
             afterEach(function() {
+                fetchSpy.restore();
                 directoryContents.reset([], {silent: true});
             });
 
@@ -78,6 +84,13 @@ define(function (require_browser) {
 
                 directoryContents.sort({sortProperty: 'mtime'});
                 (directoryContents.sortDirection).should.equal('ASC');
+            });
+
+            it('calls fetch when directoryExplorer path changes', function() {
+                expect(fetchSpy.called).to.be.false;
+                directoryExplorer.set('path', '/new/path/');
+                expect(fetchSpy.called).to.be.true;
+
             });
 
         });

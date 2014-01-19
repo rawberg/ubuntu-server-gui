@@ -28,9 +28,11 @@ define(function (require_browser, exports, module) {
 
         initialize: function(models, options) {
             this.server = (options && options.server) ? options.server : null;
-            if(this.server === null) {
-                throw 'server required for DirectoryContents collection.';
+            this.directoryExplorer = (options && options.directoryExplorer) ? options.directoryExplorer : null;
+            if(this.server === null || this.directoryExplorer === null) {
+                throw 'server and directoryExplorer required for DirectoryContents collection.';
             }
+            this.directoryExplorer.on('change:path', _.bind(this.fetch, this));
         },
 
         comparator: function(modelOne, modelTwo, otherStuff) {
@@ -38,7 +40,7 @@ define(function (require_browser, exports, module) {
         },
 
         fetch: function(options) {
-            var path = (options && options.path) ? options.path : '/';
+            var path = this.directoryExplorer.get('path');
             this.server.sftpProxy.opendir(path, _.bind(this.parseDir, this));
         },
 

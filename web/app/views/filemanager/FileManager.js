@@ -7,6 +7,7 @@ define(function (require_browser, exports, module) {
         filesize = require_browser('filesize'),
 
     // Models & Collections
+        DirectoryExplorer = require_browser('models/DirectoryExplorer'),
         DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents,
         Server = require_browser('models/Server'),
         ServerConnection = require_browser('models/ServerConnection'),
@@ -20,6 +21,10 @@ define(function (require_browser, exports, module) {
     var DirectoryItemView = module.exports.DirectoryItemView = Marionette.ItemView.extend({
         template: _.template(directoryItemTpl),
         tagName: 'tr',
+
+        triggers: {
+            'click .filename': 'filename:click'
+        },
 
         bindings: {
             '.filename': 'filename',
@@ -68,7 +73,19 @@ define(function (require_browser, exports, module) {
             'sort': 'render toggleSortCaret'
         },
 
-        onSortByModified: function () {
+        initialize: function(options) {
+            this.on('itemview:filename:click', _.bind(this.onFilenameClick, this));
+        },
+
+        close: function() {
+            this.off('itemview:filename:click');
+        },
+
+        onFilenameClick: function() {
+            console.log('i filename was clicked');
+        },
+
+        onSortByModified: function() {
             this.collection.sort({sortProperty: 'mtime'});
         },
 
@@ -122,9 +139,10 @@ define(function (require_browser, exports, module) {
         },
 
         showFileManager: function(server) {
-            var directoryContents = new DirectoryContents([], {server: server});
-            var directoryExplorer = new DirectoryExplorerView({collection: directoryContents});
-            this.fileManagerExplorerRegion.show(directoryExplorer);
+            var directoryExplorer = DirectoryExplorer();
+            var directoryContents = new DirectoryContents([], {directoryExplorer: directoryExplorer, server: server});
+            var directoryExplorerView = new DirectoryExplorerView({model: directoryExplorer, collection: directoryContents});
+            this.fileManagerExplorerRegion.show(directoryExplorerView);
             directoryContents.fetch();
         },
 
