@@ -132,6 +132,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     'test/views/dashboard/Dashboard.spec.js',
                     // Views (filemanager)
                     'test/views/filemanager/FileManager.spec.js',
+                    'test/views/filemanager/DirectoryExplorerView.spec.js',
                     // Views (login-signup)
                     'test/views/login-signup/LoginSignup.spec.js',
 //                    'test/views/login-signup/Login.spec.js',
