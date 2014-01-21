@@ -1,5 +1,5 @@
 define(function (require_browser) {
-    var DirectoryExplorer = require_browser('models/DirectoryExplorer');
+    var DirectoryExplorer = require_browser('models/DirectoryExplorer').DirectoryExplorer;
 
 
     describe('DirectoryExplorer - Model', function() {
@@ -33,21 +33,6 @@ define(function (require_browser) {
                 expect(directoryExplorer.get('path')).to.equal('/');
                 directoryExplorer.appendPath(null);
                 expect(directoryExplorer.get('path')).to.equal('/');
-            });
-
-        });
-
-        describe('buildBreadcrumb', function() {
-            var directoryExplorer;
-
-            beforeEach(function() {
-                directoryExplorer = new DirectoryExplorer();
-            });
-
-            it('rebuilds breadcrumb when path changes', function() {
-                expect(directoryExplorer.get('breadcrumb')).to.equal('/');
-                directoryExplorer.set('path', '/home/users/home_folder/sub-folder/');
-                expect(directoryExplorer.get('breadcrumb')).to.equal('/ &gt; home &gt; users &gt; home_folder &gt; sub-folder');
             });
 
         });

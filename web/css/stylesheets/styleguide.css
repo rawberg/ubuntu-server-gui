@@ -119,25 +119,26 @@ table.directory-explorer td {
   height: 26px;
   cursor: default;
 }
-table.directory-explorer td .icon-mode-41471:before {
-  content: "\f016";
+table.directory-explorer td .icon_mode {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
 }
-table.directory-explorer td .icon-mode-16877:before {
-  content: "\f07b";
+table.directory-explorer td .icon_mode.M16877 {
+  background-image: url("../images/icons/file-explorer/folder.png");
 }
-table.directory-explorer td [class^="icon-"] {
-  display: inline;
-  font-size: 15px;
+table.directory-explorer td .icon_mode.M41471 {
+  background-image: url("../images/icons/file-explorer/file.png");
 }
 
 .directory-explorer.table-striped tbody > tr:nth-child(odd) > td,
 .directory-explorer.table-striped tbody > tr:nth-child(odd) > th {
-  background-color: #f3f6fa;
+  background-color: #FFFFFF;
 }
 
 .directory-explorer.table-hover tbody tr:hover > td,
 .directory-explorer.table-hover tbody tr:hover > th {
-  background-color: #f5f5f5;
+  background-color: #F3F6FA;
 }
 
 /* Tweak navbar brand link to be super sleek

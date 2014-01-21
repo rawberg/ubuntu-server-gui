@@ -1,6 +1,6 @@
 define(function (require_browser) {
     var App = require_browser('App'),
-        DirectoryExplorer = require_browser('models/DirectoryExplorer'),
+        DirectoryExplorer = require_browser('models/DirectoryExplorer').DirectoryExplorer,
         DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents;
 
 

@@ -1,15 +1,55 @@
-define(function (require_browser) {
-    var Backbone = require_browser('backbone');
+define(function (require_browser, exports, module) {
+    var Backbone = require_browser('backbone'),
+        _ = require_browser('underscore');
 
-    return Backbone.Model.extend({
-
+    var DirectoryBreadcrumb = module.exports.DirectoryBreadcrumb = Backbone.Model.extend({
         defaults: {
-            'path': '/',
-            'breadcrumb': '/'
+            'crumb': '',
+            'path': ''
+        }
+
+    });
+
+    var DirectoryBreadcrumbs = module.exports.DirectoryBreadcrumbs = Backbone.Collection.extend({
+        model: DirectoryBreadcrumb,
+
+        initialize: function(options) {
+            this.directoryExplorer = (options && options.directoryExplorer) ? options.directoryExplorer : null;
+            if(this.directoryExplorer === null) {
+                throw 'directoryExplorer required for DirectoryBreadcrumbs collection.';
+            }
+            this.directoryExplorer.on('change:path', _.bind(this.onChangePath, this));
+        },
+
+        onChangePath: function() {
+            this.fetch({reset: true, parse: false});
+        },
+
+        sync: function(syncmethod, context, options) {
+            var crumbs = [{crumb: '/', path: '/'}];
+            var pathPieces = this.directoryExplorer.get('path').replace(/^\/|\/$/g, '').split('/');
+            var pieceCount = pathPieces.length;
+            if(pathPieces[0] !== '') {  // maybe a better regex would avoid the need for this?
+                for(var pcounter = 0; pcounter < pieceCount; pcounter++) {
+                    crumbs.push({
+                        crumb: pathPieces[pcounter],
+                        path: '/' + pathPieces.slice(0, pcounter+1).join('/') + '/'
+                    });
+                }
+            }
+
+            options.success(crumbs);
+            return crumbs;
+        }
+    });
+
+    module.exports.DirectoryExplorer = Backbone.Model.extend({
+        defaults: {
+            'path': '/'
         },
 
         initialize: function(attributes, options) {
-            this.on('change:path', _.bind(this.buildBreadcrumb, this));
+
         },
 
         appendPath: function(pathExtension) {
@@ -17,14 +57,9 @@ define(function (require_browser) {
                 var newPath = this.get('path') + pathExtension + '/';
                 this.set('path', newPath);
             }
-        },
-
-        buildBreadcrumb: function() {
-            var pathPieces = this.get('path').split('/');
-            pathPieces.splice(1, 0, '/');
-            var breadcrumb = pathPieces.join(' &gt; ');
-            this.set('breadcrumb', breadcrumb.slice(6, -6));
         }
 
     });
+
+
 });

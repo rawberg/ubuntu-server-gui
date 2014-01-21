@@ -1,6 +1,6 @@
 define(function (require_browser) {
     var DirectoryExplorerView = require_browser('views/filemanager/FileManager').DirectoryExplorerView,
-        DirectoryExplorerModel = require_browser('models/DirectoryExplorer');
+        DirectoryExplorerModel = require_browser('models/DirectoryExplorer').DirectoryExplorer;
 
 
     describe('DirectoryExplorerView', function() {

@@ -145,6 +145,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     // Collections
                     'test/collections/ServerList.spec.js',
                     'test/collections/DirectoryContents.spec.js',
+                    'test/collections/DirectoryBreadcrumbs.spec.js',
                     // Models
                     'test/models/DirectoryExplorer.spec.js',
                     'test/models/Server.spec.js',

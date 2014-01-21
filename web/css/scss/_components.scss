@@ -34,28 +34,28 @@ table.directory-explorer {
     height: 26px;
     cursor: default;
 
-    .icon-mode-41471:before {
-      content: "\f016";
-    }
+    .icon_mode {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
 
-    .icon-mode-16877:before {
-      content: "\f07b";
-    }
+      &.M16877 {
+        background-image: url("../images/icons/file-explorer/folder.png");
+      }
 
-    [class^="icon-"] {
-      display: inline;
-      font-size: 15px;
+      &.M41471 {
+        background-image: url("../images/icons/file-explorer/file.png");
+      }
     }
-
   }
 }
 
 .directory-explorer.table-striped tbody > tr:nth-child(odd) > td,
 .directory-explorer.table-striped tbody > tr:nth-child(odd) > th {
-  background-color: #f3f6fa;
+  background-color: #FFFFFF;
 }
 
 .directory-explorer.table-hover tbody tr:hover > td,
 .directory-explorer.table-hover tbody tr:hover > th {
-  background-color: #f5f5f5;
+  background-color: #F3F6FA;
 }

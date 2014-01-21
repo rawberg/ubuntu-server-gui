@@ -7,7 +7,7 @@ define(function (require_browser, exports, module) {
         filesize = require_browser('filesize'),
 
     // Models & Collections
-        DirectoryExplorer = require_browser('models/DirectoryExplorer'),
+        DirectoryExplorer = require_browser('models/DirectoryExplorer').DirectoryExplorer,
         DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents,
         Server = require_browser('models/Server'),
         ServerConnection = require_browser('models/ServerConnection'),
@@ -45,7 +45,7 @@ define(function (require_browser, exports, module) {
                     name: 'class',
                     observe: 'mode',
                     onGet: function(val, options) {
-                        return 'icon-mode-' + val;
+                        return 'icon_mode M' + val;
                     }
                 }]
             }
@@ -83,7 +83,6 @@ define(function (require_browser, exports, module) {
 
         onFilenameClick: function(itemView) {
             var dirObject = itemView.model;
-            console.log('dirObj clicked - mode: ', dirObject.get('mode'));
             if(dirObject.get('mode') === 16877) {
                 this.model.appendPath(dirObject.get('filename'));
             }
@@ -114,9 +113,8 @@ define(function (require_browser, exports, module) {
         id: 'file-manager-layout',
 
         regions: {
-            sidebarLeftRegion: '#sidebar_left',
-            fileManagerHeaderRegion: '#file-manager-header',
-            fileManagerExplorerRegion: '#file-manager-explorer'
+            breadcrumbRegion: '#file-manager-breadcrumbs',
+            explorerRegion: '#file-manager-explorer'
         },
 
         initialize: function(options) {
@@ -146,7 +144,7 @@ define(function (require_browser, exports, module) {
             var directoryExplorer = new DirectoryExplorer();
             var directoryContents = new DirectoryContents([], {directoryExplorer: directoryExplorer, server: server});
             var directoryExplorerView = new DirectoryExplorerView({model: directoryExplorer, collection: directoryContents});
-            this.fileManagerExplorerRegion.show(directoryExplorerView);
+            this.explorerRegion.show(directoryExplorerView);
             directoryContents.fetch();
         },
 
