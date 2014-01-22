@@ -157,3 +157,9 @@ ul {
     }
   }
 }
+
+.breadcrumb > li + li:before {
+  content: "\003e";
+  margin: 0 2px;
+  color: #c4c4c4;
+}

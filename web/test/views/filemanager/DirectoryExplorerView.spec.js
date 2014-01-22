@@ -14,6 +14,7 @@ define(function (require_browser) {
                 directoryExplorerModel = new DirectoryExplorerModel();
                 appendPathSpy = sinon.spy(directoryExplorerModel, 'appendPath');
                 directoryExplorerView = new DirectoryExplorerView({model: directoryExplorerModel});
+                directoryExplorerView.render();
             });
 
             afterEach(function() {

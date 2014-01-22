@@ -40,14 +40,14 @@ define(function (require_browser) {
             this.App.vent.on('active-server:changed', this.onActiveServerChange, this);
         },
 
-        highlightIcon: function(iconClass) {
-            this.$('.toolbar-nav li').removeClass('active');
-            this.$('li.' + iconClass).addClass('active');
-        },
-
-        onClickIcon: function(e) {
-            this.highlightIcon(e.target.className);
-        },
+//        highlightIcon: function(iconClass) {
+//            this.$('.toolbar-nav li').removeClass('active');
+//            this.$('li.' + iconClass).addClass('active');
+//        },
+//
+//        onClickIcon: function(e) {
+//            this.highlightIcon(e.target.className);
+//        },
 
         onRender: function() {
             this.stickit();

@@ -8,6 +8,7 @@ define(function (require_browser, exports, module) {
 
     // Models & Collections
         DirectoryExplorer = require_browser('models/DirectoryExplorer').DirectoryExplorer,
+        DirectoryBreadcrumbs = require_browser('models/DirectoryExplorer').DirectoryBreadcrumbs,
         DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents,
         Server = require_browser('models/Server'),
         ServerConnection = require_browser('models/ServerConnection'),
@@ -17,6 +18,38 @@ define(function (require_browser, exports, module) {
         fileManagerLayoutTpl = require_browser('text!views/filemanager/templates/filemanager-layout.html'),
         directoryExplorerTpl = require_browser('text!views/filemanager/templates/directory-explorer.html'),
         directoryItemTpl = require_browser('text!views/filemanager/templates/directory-item.html');
+
+    var DirectoryBreadcrumbItemView = Marionette.ItemView.extend({
+        template: _.template('<span class="crumb"></span>'),
+        tagName: 'li',
+
+        triggers: {
+            'click .crumb': 'crumb:click'
+        },
+
+        bindings: {
+            '.crumb': 'crumb'
+        },
+
+        onRender: function() {
+            this.stickit();
+        }
+    });
+
+    var DirectoryBreadcrumbView = module.exports.DirectoryBreadcrumbView = Marionette.CollectionView.extend({
+        tagName: 'ol',
+        className: 'breadcrumb',
+        itemView: DirectoryBreadcrumbItemView,
+
+        initialize: function(options) {
+            this.on('itemview:crumb:click', _.bind(this.onCrumbClick, this));
+        },
+
+        onCrumbClick: function(itemView) {
+            var pathCrumb = itemView.model.get('path');
+            this.options.directoryExplorer.set('path', pathCrumb);
+        }
+    });
 
     var DirectoryItemView = module.exports.DirectoryItemView = Marionette.ItemView.extend({
         template: _.template(directoryItemTpl),
@@ -143,9 +176,16 @@ define(function (require_browser, exports, module) {
         showFileManager: function(server) {
             var directoryExplorer = new DirectoryExplorer();
             var directoryContents = new DirectoryContents([], {directoryExplorer: directoryExplorer, server: server});
+            var directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
+
             var directoryExplorerView = new DirectoryExplorerView({model: directoryExplorer, collection: directoryContents});
+            var directoryBreadcrumbView = new DirectoryBreadcrumbView({collection: directoryBreadcrumbs, directoryExplorer: directoryExplorer});
+
             this.explorerRegion.show(directoryExplorerView);
+            this.breadcrumbRegion.show(directoryBreadcrumbView);
             directoryContents.fetch();
+            directoryBreadcrumbs.fetch();
+
         },
 
         transitionToShowFileManager: function(server) {

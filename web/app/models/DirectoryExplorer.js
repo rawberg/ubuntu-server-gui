@@ -13,7 +13,7 @@ define(function (require_browser, exports, module) {
     var DirectoryBreadcrumbs = module.exports.DirectoryBreadcrumbs = Backbone.Collection.extend({
         model: DirectoryBreadcrumb,
 
-        initialize: function(options) {
+        initialize: function(models, options) {
             this.directoryExplorer = (options && options.directoryExplorer) ? options.directoryExplorer : null;
             if(this.directoryExplorer === null) {
                 throw 'directoryExplorer required for DirectoryBreadcrumbs collection.';

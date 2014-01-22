@@ -133,6 +133,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     // Views (filemanager)
                     'test/views/filemanager/FileManager.spec.js',
                     'test/views/filemanager/DirectoryExplorerView.spec.js',
+                    'test/views/filemanager/DirectoryBreadcrumbView.spec.js',
                     // Views (login-signup)
                     'test/views/login-signup/LoginSignup.spec.js',
 //                    'test/views/login-signup/Login.spec.js',
