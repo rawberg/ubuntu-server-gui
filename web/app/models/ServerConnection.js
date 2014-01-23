@@ -25,9 +25,9 @@ define(function (require_browser) {
 
             //TODO: make username and password dynamic
             sshProxy.connect({
-                debug: function(msg) {
-                    console.log(msg);
-                },
+//                debug: function(msg) {
+//                    console.log(msg);
+//                },
                 host: this.server.get('ipv4'),
                 port: this.server.get('port'),
                 username: 'stdissue',

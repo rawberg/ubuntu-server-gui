@@ -122,15 +122,18 @@ define(function (require_browser, exports, module) {
         },
 
         onSortByModified: function() {
-            this.collection.sort({sortProperty: 'mtime'});
+            var sortDirection = (this.collection.sortDirection === 'DSC') ? 'ASC': 'DSC';
+            this.collection.sort({sortProperty: 'mtime', sortDirection: sortDirection});
         },
 
         onSortByName: function() {
-            this.collection.sort({sortProperty: 'filename'});
+            var sortDirection = (this.collection.sortDirection === 'DSC') ? 'ASC': 'DSC';
+            this.collection.sort({sortProperty: 'filename', sortDirection: sortDirection});
         },
 
         onSortBySize: function() {
-            this.collection.sort({sortProperty: 'size'});
+            var sortDirection = (this.collection.sortDirection === 'DSC') ? 'ASC': 'DSC';
+            this.collection.sort({sortProperty: 'size', sortDirection: sortDirection});
         },
 
         toggleSortCaret: function() {

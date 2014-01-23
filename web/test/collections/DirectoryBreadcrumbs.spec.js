@@ -26,7 +26,7 @@ define(function (require_browser) {
             });
 
             async.it('builds initial breadcrumb trail when path is 1 level', function(done) {
-                directoryBreadcrumbs = new DirectoryBreadcrumbs({directoryExplorer: directoryExplorer});
+                directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryBreadcrumbs.fetch({reset: true, success: function() {
                     expect(directoryBreadcrumbs.length).to.equal(1);
                     expect(directoryBreadcrumbs.models[0].get('crumb')).to.equal('/');
@@ -37,7 +37,7 @@ define(function (require_browser) {
 
             async.it('builds initial breadcrumb trail when path is n+1 levels', function(done) {
                 directoryExplorer.set('path', '/home/long/way/to/go');
-                directoryBreadcrumbs = new DirectoryBreadcrumbs({directoryExplorer: directoryExplorer});
+                directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryBreadcrumbs.fetch({reset: true, success: function() {
                     expect(directoryBreadcrumbs.length).to.equal(6);
                     expect(directoryBreadcrumbs.models[0].get('crumb')).to.equal('/');
@@ -63,7 +63,7 @@ define(function (require_browser) {
 
             it('rebuilds breadcrumb when path changes', function() {
                 fetchSpy = sinon.spy(DirectoryBreadcrumbs.prototype, 'fetch');
-                directoryBreadcrumbs = new DirectoryBreadcrumbs({directoryExplorer: directoryExplorer});
+                directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryExplorer.set('path', '/hello/path');
                 sinon.assert.calledOnce(fetchSpy);
             });

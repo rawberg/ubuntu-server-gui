@@ -69,9 +69,9 @@ define(function (require_browser, exports, module) {
                         this.parseDir(undefined, buffer, options);
                     } else {
                         if(options.reset) {
-                            this.reset(options.listInProgress, {parse: true, sort: false});
+                            this.reset(options.listInProgress, _.extend(options, {parse: true, sort: true}));
                         } else {
-                            this.add(options.listInProgress, {parse: true, sort: false});
+                            this.add(options.listInProgress, _.extend(options, {parse: true, sort: true}));
                         }
                     }
                 }, this));
@@ -108,12 +108,6 @@ define(function (require_browser, exports, module) {
 
             var currentSortProperty = this.sortProperty;
             this.sortProperty = options.sortProperty ? options.sortProperty : 'filename';
-
-            if (currentSortProperty === this.sortProperty) {
-                this.sortDirection = (this.sortDirection === 'DSC') ? 'ASC': 'DSC';
-            } else {
-                this.sortDirection = 'ASC';
-            }
 
             this.sortDirection = options.sortDirection ? options.sortDirection : this.sortDirection;
             this.models.sort(_.bind(this.comparator, this));

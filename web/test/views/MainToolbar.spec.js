@@ -19,7 +19,7 @@ define(function (require_browser) {
             stickitSpy.restore();
         });
 
-        describe('highlightIcon', function() {
+        xdescribe('highlightIcon', function() {
 
             it('should add "active" css class to a toolbar icon and remove "active" class from existing icons', function() {
                 mainToolbar.highlightIcon('toolbar-dashboard');
@@ -30,7 +30,7 @@ define(function (require_browser) {
             });
         });
 
-        describe('onClickIcon', function() {
+        xdescribe('onClickIcon', function() {
 
             it('should add active class to an icon when clicked', function() {
                 mainToolbar.$('.toolbar-file_cabinet').click();
