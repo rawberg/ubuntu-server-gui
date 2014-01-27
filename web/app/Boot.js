@@ -29,7 +29,8 @@ require_browser.config({
         // Testing Libs
         jasmine: '../libs/jasmine/jasmine',
         jasmine_html: '../libs/jasmine/jasmine-html',
-        jasmine_async: '../libs/jasmine/jasmine.async',
+        jasmine_console: '../libs/jasmine/jasmine-console',
+        jasmine_boot: '../libs/jasmine/jasmine-boot',
         sinon: '../libs/sinon/sinon-1.7.1',
         chai: '../libs/chai/chai',
         sinon_chai: '../libs/chai/sinon-chai'
@@ -64,7 +65,10 @@ require_browser.config({
         'jasmine_html': {
             deps: ['jasmine']
         },
-        'jasmine_async': {
+        'jasmine_console': {
+            deps: ['jasmine']
+        },
+        'jasmine_boot': {
             deps: ['jasmine']
         },
         'sinon': {
@@ -110,9 +114,9 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
 //            });
         }
     );
-} else {
-    require_browser(['jquery', 'chai', 'sinon_chai', 'sinon', 'jasmine', 'jasmine_html', 'jasmine_async'],
-        function($, chai, sinonChai) {
+} else if(window.appunittests) {
+    require_browser(['jquery', 'chai', 'sinon_chai', 'sinon', 'jasmine', 'jasmine_html', 'jasmine_console', 'jasmine_boot'],
+        function($, chai, sinonChai, sinon, jasmine, jasmine_html, jasmine_console, jasmine_boot) {
             $(document).ready(function() {
                 // Chai
                 assert = chai.assert;
@@ -120,57 +124,61 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                 expect = chai.expect;
 
                 require_browser([
-                    'test/App.spec.js',
+                    'tests/app-unit/App.spec.js',
                     // Mock Responses
-//                    'test/mock-responses/Sessions.response.js',
+//                    'tests/app-unit/mock-responses/Sessions.response.js',
                     // Views
-                    'test/views/MainToolbar.spec.js',
-                    'test/views/MainFooterbar.spec.js',
+                    'tests/app-unit/views/MainToolbar.spec.js',
+                    'tests/app-unit/views/MainFooterbar.spec.js',
                     // Views (dashboard)
-                    'test/views/dashboard/LeftSidebar.spec.js',
-                    'test/views/dashboard/LeftSidebarItem.spec.js',
-                    'test/views/dashboard/Dashboard.spec.js',
+                    'tests/app-unit/views/dashboard/LeftSidebar.spec.js',
+                    'tests/app-unit/views/dashboard/LeftSidebarItem.spec.js',
+                    'tests/app-unit/views/dashboard/Dashboard.spec.js',
                     // Views (filemanager)
-                    'test/views/filemanager/FileManager.spec.js',
-                    'test/views/filemanager/DirectoryExplorerView.spec.js',
-                    'test/views/filemanager/DirectoryBreadcrumbView.spec.js',
+                    'tests/app-unit/views/filemanager/FileManager.spec.js',
+                    'tests/app-unit/views/filemanager/DirectoryExplorerView.spec.js',
+//                    'tests/app-unit/views/filemanager/DirectoryBreadcrumbView.spec.js',
                     // Views (login-signup)
-                    'test/views/login-signup/LoginSignup.spec.js',
-//                    'test/views/login-signup/Login.spec.js',
-                    'test/views/login-signup/Signup.spec.js',
+                    'tests/app-unit/views/login-signup/LoginSignup.spec.js',
+//                    'tests/app-unit/views/login-signup/Login.spec.js',
+//                    'tests/app-unit/views/login-signup/Signup.spec.js',
                     // Modals/Popovers
-                    'test/views/modal/AddEditServer.spec.js',
-                    'test/views/modal/RemoveServer.spec.js',
-                    'test/views/modal/NoobTourPopover.spec.js',
-                    'test/views/modal/ServerConnectionView.spec.js',
+                    'tests/app-unit/views/modal/AddEditServer.spec.js',
+                    'tests/app-unit/views/modal/RemoveServer.spec.js',
+                    'tests/app-unit/views/modal/NoobTourPopover.spec.js',
+                    'tests/app-unit/views/modal/ServerConnectionView.spec.js',
                     // Collections
-                    'test/collections/ServerList.spec.js',
-                    'test/collections/DirectoryContents.spec.js',
-                    'test/collections/DirectoryBreadcrumbs.spec.js',
+                    'tests/app-unit/collections/ServerList.spec.js',
+                    'tests/app-unit/collections/DirectoryContents.spec.js',
+//                    'tests/app-unit/collections/DirectoryBreadcrumbs.spec.js',
                     // Models
-                    'test/models/DirectoryExplorer.spec.js',
-                    'test/models/Server.spec.js',
-                    'test/models/ServerConnection.spec.js',
-//                    'test/models/User.spec.js',
-//                    'test/models/Session.spec.js',
+//                    'tests/app-unit/models/DirectoryExplorer.spec.js',
+//                    'tests/app-unit/models/Server.spec.js',
+                    'tests/app-unit/models/ServerConnection.spec.js',
+//                    'tests/app-unit/models/User.spec.js',
+//                    'tests/app-unit/models/Session.spec.js',
                     // Controllers
-                    'test/controllers/Main.spec.js',
+                    'tests/app-unit/controllers/Main.spec.js',
                     // Routers
-                    'test/routers/Base.spec.js'
+                    'tests/app-unit/routers/Base.spec.js'
                 ],
                     function() {
                         chai.use(sinonChai);
-                        var jasmineEnv = jasmine.getEnv();
-                        jasmineEnv.updateInterval = 250;
-
-                        var htmlReporter = new jasmine.HtmlReporter();
-                        jasmineEnv.addReporter(htmlReporter);
-
-                        jasmineEnv.specFilter = function(spec) {
-                            return htmlReporter.specFilter(spec);
-                        };
-
-                        jasmineEnv.execute();
+                        window.onload();
+//                        debugger;
+//                          htmlReporter.initialize();
+//                          env.execute();
+//                        var jasmineEnv = jasmine.getEnv();
+//                        jasmineEnv.updateInterval = 250;
+//
+//                        var htmlReporter = new jasmine.HtmlReporter();
+//                        jasmineEnv.addReporter(htmlReporter);
+//
+//                        jasmineEnv.specFilter = function(spec) {
+//                            return htmlReporter.specFilter(spec);
+//                        };
+//
+//                        jasmineEnv.execute();
                     }
                 );
 

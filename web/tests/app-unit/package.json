@@ -1,0 +1,9 @@
+{
+  "name": "USG - App Unit Tests",
+  "version": "0.0.0",
+  "main": "../../testrunner_app-unit.html",
+  "window": {
+    "title": "USG - App Unit Tests",
+    "show": false
+  }
+}

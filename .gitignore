@@ -11,6 +11,7 @@ desktop/win
 ######################
 node_modules
 web/node_modules
+tests/app-node/node_modules
 
 # Logs and databases #
 ######################

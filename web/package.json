@@ -3,6 +3,7 @@
     "name": "Ubuntu Server GUI",
     "description": "Ubuntu Server GUI desktop app.",
     "version": "0.8.0",
+    "main": "index.html",
     "nodejs": true,
     "window": {
         "title": "Ubuntu Server GUI",

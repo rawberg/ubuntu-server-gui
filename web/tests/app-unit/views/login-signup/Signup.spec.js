@@ -1,7 +1,7 @@
 define(function (require_browser) {
     var User = require_browser('models/User'),
         SignupView = require_browser('views/login-signup/SignupView'),
-        responses = JSON.parse(require_browser('text!/test/mock-responses/register.json'));
+        responses = JSON.parse(require_browser('text!/tests/app-unit/mock-responses/register.json'));
 
     describe('SignupView - ItemView', function() {
 
