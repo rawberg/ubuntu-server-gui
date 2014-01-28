@@ -114,7 +114,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
 //            });
         }
     );
-} else if(window.appunittests) {
+} else {
     require_browser(['jquery', 'chai', 'sinon_chai', 'sinon', 'jasmine', 'jasmine_html', 'jasmine_console', 'jasmine_boot'],
         function($, chai, sinonChai, sinon, jasmine, jasmine_html, jasmine_console, jasmine_boot) {
             $(document).ready(function() {
@@ -122,66 +122,58 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                 assert = chai.assert;
                 should = chai.should();
                 expect = chai.expect;
+                var testfiles = [];
 
-                require_browser([
-                    'tests/app-unit/App.spec.js',
-                    // Mock Responses
-//                    'tests/app-unit/mock-responses/Sessions.response.js',
-                    // Views
-                    'tests/app-unit/views/MainToolbar.spec.js',
-                    'tests/app-unit/views/MainFooterbar.spec.js',
-                    // Views (dashboard)
-                    'tests/app-unit/views/dashboard/LeftSidebar.spec.js',
-                    'tests/app-unit/views/dashboard/LeftSidebarItem.spec.js',
-                    'tests/app-unit/views/dashboard/Dashboard.spec.js',
-                    // Views (filemanager)
-                    'tests/app-unit/views/filemanager/FileManager.spec.js',
-                    'tests/app-unit/views/filemanager/DirectoryExplorerView.spec.js',
-//                    'tests/app-unit/views/filemanager/DirectoryBreadcrumbView.spec.js',
-                    // Views (login-signup)
-                    'tests/app-unit/views/login-signup/LoginSignup.spec.js',
-//                    'tests/app-unit/views/login-signup/Login.spec.js',
-//                    'tests/app-unit/views/login-signup/Signup.spec.js',
-                    // Modals/Popovers
-                    'tests/app-unit/views/modal/AddEditServer.spec.js',
-                    'tests/app-unit/views/modal/RemoveServer.spec.js',
-                    'tests/app-unit/views/modal/NoobTourPopover.spec.js',
-                    'tests/app-unit/views/modal/ServerConnectionView.spec.js',
-                    // Collections
-                    'tests/app-unit/collections/ServerList.spec.js',
-                    'tests/app-unit/collections/DirectoryContents.spec.js',
-//                    'tests/app-unit/collections/DirectoryBreadcrumbs.spec.js',
-                    // Models
-//                    'tests/app-unit/models/DirectoryExplorer.spec.js',
-//                    'tests/app-unit/models/Server.spec.js',
-                    'tests/app-unit/models/ServerConnection.spec.js',
-//                    'tests/app-unit/models/User.spec.js',
-//                    'tests/app-unit/models/Session.spec.js',
-                    // Controllers
-                    'tests/app-unit/controllers/Main.spec.js',
-                    // Routers
-                    'tests/app-unit/routers/Base.spec.js'
-                ],
-                    function() {
-                        chai.use(sinonChai);
-                        window.onload();
-//                        debugger;
-//                          htmlReporter.initialize();
-//                          env.execute();
-//                        var jasmineEnv = jasmine.getEnv();
-//                        jasmineEnv.updateInterval = 250;
-//
-//                        var htmlReporter = new jasmine.HtmlReporter();
-//                        jasmineEnv.addReporter(htmlReporter);
-//
-//                        jasmineEnv.specFilter = function(spec) {
-//                            return htmlReporter.specFilter(spec);
-//                        };
-//
-//                        jasmineEnv.execute();
-                    }
-                );
+                if(window.appunittests) {
+                    testfiles = [
+                        'tests/app-unit/App.spec.js',
+                        // Mock Responses
+    //                    'tests/app-unit/mock-responses/Sessions.response.js',
+                        // Views
+                        'tests/app-unit/views/MainToolbar.spec.js',
+                        'tests/app-unit/views/MainFooterbar.spec.js',
+                        // Views (dashboard)
+                        'tests/app-unit/views/dashboard/LeftSidebar.spec.js',
+                        'tests/app-unit/views/dashboard/LeftSidebarItem.spec.js',
+                        'tests/app-unit/views/dashboard/Dashboard.spec.js',
+                        // Views (filemanager)
+                        'tests/app-unit/views/filemanager/FileManager.spec.js',
+                        'tests/app-unit/views/filemanager/DirectoryExplorerView.spec.js',
+    //                    'tests/app-unit/views/filemanager/DirectoryBreadcrumbView.spec.js',
+                        // Views (login-signup)
+                        'tests/app-unit/views/login-signup/LoginSignup.spec.js',
+    //                    'tests/app-unit/views/login-signup/Login.spec.js',
+    //                    'tests/app-unit/views/login-signup/Signup.spec.js',
+                        // Modals/Popovers
+                        'tests/app-unit/views/modal/AddEditServer.spec.js',
+                        'tests/app-unit/views/modal/RemoveServer.spec.js',
+                        'tests/app-unit/views/modal/NoobTourPopover.spec.js',
+                        'tests/app-unit/views/modal/ServerConnectionView.spec.js',
+                        // Collections
+                        'tests/app-unit/collections/ServerList.spec.js',
+                        'tests/app-unit/collections/DirectoryContents.spec.js',
+    //                    'tests/app-unit/collections/DirectoryBreadcrumbs.spec.js',
+                        // Models
+    //                    'tests/app-unit/models/DirectoryExplorer.spec.js',
+    //                    'tests/app-unit/models/Server.spec.js',
+    //                    'tests/app-unit/models/User.spec.js',
+    //                    'tests/app-unit/models/Session.spec.js',
+                        // Controllers
+                        'tests/app-unit/controllers/Main.spec.js',
+                        // Routers
+                        'tests/app-unit/routers/Base.spec.js'
+                    ];
+                } else if(window.appnodetests) {
+                    testfiles = [
+                        // Models
+                        'tests/app-node/models/ServerConnection.spec.js'
+                    ]
+                }
 
+                require_browser(testfiles, function() {
+                    chai.use(sinonChai);
+                    window.onload();
+                });
             });
         }
     );

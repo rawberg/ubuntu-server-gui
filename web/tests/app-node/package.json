@@ -1,0 +1,9 @@
+{
+  "name": "USG - App Node Tests",
+  "version": "0.0.0",
+  "main": "../../testrunner_app-node.html",
+  "window": {
+    "title": "USG - App Node Tests",
+    "show": true
+  }
+}

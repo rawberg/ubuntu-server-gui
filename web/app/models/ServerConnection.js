@@ -21,7 +21,7 @@ define(function (require_browser) {
 
         initiateLocalProxy: function(callback) {
             var SshConnection = require('ssh2');
-            var sshProxy = new SshConnection();
+            var sshProxy = this.sshProxy = new SshConnection();
 
             //TODO: make username and password dynamic
             sshProxy.connect({
@@ -48,6 +48,9 @@ define(function (require_browser) {
                 }, this));
 
                 App.vent.trigger('server:connected', this.server);
+                if(callback) {
+                    callback();
+                }
             }, this));
 
             //TODO: find a better place or logging and error trapping
@@ -61,7 +64,7 @@ define(function (require_browser) {
             });
 
             sshProxy.on('close', function(had_error) {
-                console.log('SSH Connection :: close');
+                App.vent.trigger('server:closed', this.server);
             });
 
             sshProxy.usgExec = function (cmd, options, callback) {
