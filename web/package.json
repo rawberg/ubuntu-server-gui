@@ -1,9 +1,8 @@
 {
-    "main": "index.html",
-    "name": "Ubuntu Server GUI",
-    "description": "Ubuntu Server GUI desktop app.",
+    "name": "Ubuntu-Server-GUI",
     "version": "0.8.0",
     "main": "index.html",
+    "description": "Ubuntu Server GUI desktop app.",
     "nodejs": true,
     "window": {
         "title": "Ubuntu Server GUI",
@@ -21,11 +20,7 @@
     },
 
     "devDependencies": {
-        "grunt": ">0.0.0",
-        "grunt-contrib": ">0.0.0",
-        "grunt-compass": ">0.0.0",
-        "grunt-mocha": ">0.0.0",
-        "grunt-shell": ">0.0.0"
+        "gulp" : ">0.0.0"
     },
 
     "licenses": [{
