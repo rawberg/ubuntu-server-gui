@@ -1560,7 +1560,6 @@ getJasmineRequireObj().ReportDispatcher = function() {
     return this;
 
     function dispatch(method, args) {
-      debugger
       for (var i = 0; i < reporters.length; i++) {
         var reporter = reporters[i];
         if (reporter[method]) {

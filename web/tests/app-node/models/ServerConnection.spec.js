@@ -7,15 +7,15 @@ define(function (require_browser) {
 
         describe('initiateLocalProxy', function() {
             var server, serverConnection;
-            var connectionStatusSpy, appVentConnectSpy, appVentClosedSpy;
+            var connectionStatusSpy, appVentConnectSpy, appVentDisconnectSpy;
 
             beforeEach(function() {
                 // TODO: make this dynamic from vagrant server output
                 connectionStatusSpy = sinon.spy();
                 appVentConnectSpy = sinon.spy();
-                appVentClosedSpy = sinon.spy();
+                appVentDisconnectSpy = sinon.spy();
                 App.vent.on('server:connected', appVentConnectSpy);
-                App.vent.on('server:closed', appVentClosedSpy);
+                App.vent.on('server:disconnected', appVentDisconnectSpy);
 
                 server = new Server({name: 'test server', ipv4: '10.10.1.5'});
                 serverConnection = new ServerConnection({}, {server: server});
@@ -37,11 +37,15 @@ define(function (require_browser) {
                 });
             });
             
-            xit('triggers server:disconnected App event when ssh connection is disconnected', function(done) {
-                sinon.assert.notCalled(appVentClosedSpy);
+            it('triggers server:disconnected App event when ssh connection is disconnected', function(done) {
+                sinon.assert.notCalled(appVentDisconnectSpy);
                 serverConnection.initiateLocalProxy(function() {
+                    serverConnection.sshProxy.on('end', function() {
+                        sinon.assert.calledOnce(appVentDisconnectSpy);
+                        done();
+                    });
                     serverConnection.sshProxy.end();
-                    sinon.assert.calledOnce(appVentClosedSpy);
+
                 });
             });
 
