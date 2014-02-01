@@ -19,6 +19,10 @@ tests/app-node/node_modules
 *.sql
 *.sqlite
 
+# Dyanmic Fixtures #
+####################
+web/tests/app-node/dynamic_fixtures.json
+
 # OS generated files #
 ######################
 .DS_Store

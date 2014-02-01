@@ -20,7 +20,8 @@
     },
 
     "devDependencies": {
-        "gulp" : ">0.0.0"
+        "gulp": ">0.0.0",
+        "gulp-util": ">0.0.0"
     },
 
     "licenses": [{

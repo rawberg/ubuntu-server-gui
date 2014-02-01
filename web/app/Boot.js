@@ -172,6 +172,21 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
 
                 require_browser(testfiles, function() {
                     chai.use(sinonChai);
+                    var gui = require('nw.gui'),
+                        fs = require('fs'),
+                        Server = require_browser('models/Server');
+
+                    var server_fixtures = [];
+                    try {
+                        server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
+                    } catch(e) {
+                        process.stdout.write('no fixture data was found: ('+e.message+')\n');
+                    }
+
+                    server_fixtures.forEach(function(server) {
+                        new Server(server).save();
+                    });
+
                     window.onload();
                 });
             });
