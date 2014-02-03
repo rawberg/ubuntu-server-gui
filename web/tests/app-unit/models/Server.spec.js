@@ -1,9 +1,6 @@
 define(['models/Server', 'app'], function(Server, App) {
 
     describe('Server - Model', function() {
-        // set up the async spec
-        var async = new AsyncSpec(this);
-
         describe('url', function() {
             var server;
 

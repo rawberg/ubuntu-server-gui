@@ -7,8 +7,6 @@ define(function (require_browser) {
     describe('DirectoryBreadcrumbs - Collection', function() {
 
         describe('fetch', function() {
-            // set up the async spec
-            var async = new AsyncSpec(this);
             var directoryExplorer, directoryBreadcrumbs;
 
             beforeEach(function() {
@@ -25,7 +23,7 @@ define(function (require_browser) {
                 sinon.assert.threw(execptSpy);
             });
 
-            async.it('builds initial breadcrumb trail when path is 1 level', function(done) {
+            it('builds initial breadcrumb trail when path is 1 level', function(done) {
                 directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryBreadcrumbs.fetch({reset: true, success: function() {
                     expect(directoryBreadcrumbs.length).to.equal(1);
@@ -35,7 +33,7 @@ define(function (require_browser) {
                 }});
             });
 
-            async.it('builds initial breadcrumb trail when path is n+1 levels', function(done) {
+            it('builds initial breadcrumb trail when path is n+1 levels', function(done) {
                 directoryExplorer.set('path', '/home/long/way/to/go');
                 directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryBreadcrumbs.fetch({reset: true, success: function() {
@@ -54,7 +52,6 @@ define(function (require_browser) {
         });
 
         describe('onChangePath', function() {
-            var async = new AsyncSpec(this);
             var directoryExplorer, directoryBreadcrumbs, fetchSpy;
 
             beforeEach(function() {

@@ -139,7 +139,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         // Views (filemanager)
                         'tests/app-unit/views/filemanager/FileManager.spec.js',
                         'tests/app-unit/views/filemanager/DirectoryExplorerView.spec.js',
-    //                    'tests/app-unit/views/filemanager/DirectoryBreadcrumbView.spec.js',
+                        'tests/app-unit/views/filemanager/DirectoryBreadcrumbView.spec.js',
                         // Views (login-signup)
                         'tests/app-unit/views/login-signup/LoginSignup.spec.js',
     //                    'tests/app-unit/views/login-signup/Login.spec.js',
@@ -152,10 +152,10 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         // Collections
                         'tests/app-unit/collections/ServerList.spec.js',
                         'tests/app-unit/collections/DirectoryContents.spec.js',
-    //                    'tests/app-unit/collections/DirectoryBreadcrumbs.spec.js',
+                        'tests/app-unit/collections/DirectoryBreadcrumbs.spec.js',
                         // Models
-    //                    'tests/app-unit/models/DirectoryExplorer.spec.js',
-    //                    'tests/app-unit/models/Server.spec.js',
+                        'tests/app-unit/models/DirectoryExplorer.spec.js',
+                        'tests/app-unit/models/Server.spec.js',
     //                    'tests/app-unit/models/User.spec.js',
     //                    'tests/app-unit/models/Session.spec.js',
                         // Controllers
@@ -172,21 +172,24 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
 
                 require_browser(testfiles, function() {
                     chai.use(sinonChai);
-                    var gui = require('nw.gui'),
-                        fs = require('fs'),
-                        Server = require_browser('models/Server');
 
-                    var server_fixtures = [];
-                    try {
-                        server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
-                        window.localStorage.clear();
-                    } catch(e) {
-                        process.stdout.write('no fixture data was found: ('+e.message+')\n');
+                    if(typeof process !== 'undefined') {
+                        var gui = require('nw.gui'),
+                            fs = require('fs'),
+                            Server = require_browser('models/Server');
+
+                        var server_fixtures = [];
+                        try {
+                            server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
+                            window.localStorage.clear();
+                        } catch(e) {
+                            process.stdout.write('no fixture data was found: ('+e.message+')\n');
+                        }
+
+                        server_fixtures.forEach(function(server) {
+                            new Server(server).save();
+                        });
                     }
-
-                    server_fixtures.forEach(function(server) {
-                        new Server(server).save();
-                    });
 
                     window.onload();
                 });

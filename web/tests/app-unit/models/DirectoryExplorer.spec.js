@@ -3,9 +3,6 @@ define(function (require_browser) {
 
 
     describe('DirectoryExplorer - Model', function() {
-        // set up the async spec
-        var async = new AsyncSpec(this);
-
         describe('appendPath', function() {
             var directoryExplorer;
 
