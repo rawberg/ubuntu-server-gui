@@ -23,16 +23,27 @@ define(function (require_browser) {
             var SshConnection = require('ssh2');
             var sshProxy = this.sshProxy = new SshConnection();
 
-            //TODO: make username and password dynamic
-            sshProxy.connect({
+            var connectOptions = {
 //                debug: function(msg) {
 //                    console.log(msg);
 //                },
                 host: this.server.get('ipv4'),
                 port: this.server.get('port'),
-                username: 'stdissue',
-                password: 'devbox99'
-            });
+                username: this.server.get('username')
+            };
+
+            if(this.server.get('keyPath') !== null) {
+                try {
+                    connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
+                } catch(e) {
+                    // TODO: alert the user
+                    console.log('no key or password provided');
+                }
+            }
+            else {
+                connectOptions.password = 'vagrant'; // TODO: prompt for password
+            }
+            sshProxy.connect(connectOptions);
 
             sshProxy.on('ready', _.bind(function() {
                 this.server.sshProxy = sshProxy;

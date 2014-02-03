@@ -12,7 +12,9 @@ define(function (require_browser) {
         defaults: {
             name: null,
             ipv4: null,
-            port: 22
+            port: 22,
+            username: null,
+            keyPath: null
         },
 
         parse: function(serverInfo, jqXHR) {

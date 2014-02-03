@@ -1,44 +1,71 @@
 define(function (require_browser) {
-    var App = require_browser('App'),
+    var _ = require_browser('underscore'),
+        App = require_browser('App'),
         Server = require_browser('models/Server'),
+        ServerList = require_browser('collections/ServerList'),
         ServerConnection = require_browser('models/ServerConnection');
 
     describe('ServerConnection - Model', function() {
 
         describe('initiateLocalProxy', function() {
-            var server, serverConnection;
+            var server, serversCollection, serverConnection;
             var connectionStatusSpy, appVentConnectSpy, appVentDisconnectSpy;
 
-            beforeEach(function() {
-                // TODO: make this dynamic from vagrant server output
+            beforeEach(function(done) {
                 connectionStatusSpy = sinon.spy();
                 appVentConnectSpy = sinon.spy();
                 appVentDisconnectSpy = sinon.spy();
                 App.vent.on('server:connected', appVentConnectSpy);
                 App.vent.on('server:disconnected', appVentDisconnectSpy);
 
-                server = new Server({name: 'test server', ipv4: '10.10.1.5'});
-                serverConnection = new ServerConnection({}, {server: server});
-                serverConnection.on('change:connection_status', connectionStatusSpy);
+                serversCollection = new ServerList();
+                serversCollection.fetch({success: function() {
+                    server = serversCollection.at(0);
+                    serverConnection = new ServerConnection({}, {server: server});
+                    serverConnection.on('change:connection_status', connectionStatusSpy);
+                    done();
+                }});
+
             });
 
             afterEach(function() {
                 serverConnection.destroy();
-                server.destroy();
             });
 
-            it('changes connection_status attribute and triggers server:connected App event after succesful ssh connection', function(done) {
-                sinon.assert.notCalled(appVentConnectSpy);
-                sinon.assert.notCalled(connectionStatusSpy);
+            it('connects via ssh key', function(done) {
+                appVentConnectSpy.should.not.have.been.called;
+                connectionStatusSpy.should.not.have.been.called;
                 serverConnection.initiateLocalProxy(function() {
-                    sinon.assert.calledOnce(appVentConnectSpy);
-                    sinon.assert.calledOnce(connectionStatusSpy);
+                    try {
+                        appVentConnectSpy.should.have.been.calledOnce;
+                        connectionStatusSpy.should.have.been.calledOnce;
+                    } catch(e) {
+                        console.log(e.message);
+                    }
+                    done();
+                });
+            });
+
+            it('connects via ssh username/password', function(done) {
+                var attributes = _.clone(serverConnection.attributes);
+                serverConnection.attributes['keyPath'] = null;
+
+                appVentConnectSpy.should.not.have.been.called;
+                connectionStatusSpy.should.not.have.been.called;
+                serverConnection.initiateLocalProxy(function() {
+                    try {
+                        appVentConnectSpy.should.have.been.calledOnce;
+                        connectionStatusSpy.should.have.been.calledOnce;
+                    } catch(e) {
+                        console.log(e.message);
+                    }
+                    serverConnection.attributes['keyPath'] = attributes['keyPath'];
                     done();
                 });
             });
             
             it('triggers server:disconnected App event when ssh connection is disconnected', function(done) {
-                sinon.assert.notCalled(appVentDisconnectSpy);
+                appVentDisconnectSpy.should.not.have.been.called;
                 serverConnection.initiateLocalProxy(function() {
                     serverConnection.sshProxy.on('end', function() {
                         sinon.assert.calledOnce(appVentDisconnectSpy);

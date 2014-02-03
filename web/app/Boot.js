@@ -179,6 +179,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     var server_fixtures = [];
                     try {
                         server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
+                        window.localStorage.clear();
                     } catch(e) {
                         process.stdout.write('no fixture data was found: ('+e.message+')\n');
                     }
