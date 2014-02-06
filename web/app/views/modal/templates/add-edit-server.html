@@ -5,14 +5,31 @@
     </div>
     <div class="modal-body">
         <form action="#" autocomplete="on" role="form" onSubmit="return false;">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="server_name" class="form-control" name="name" autofocus="true">
-            </div>
-            <div class="form-group">
-              <label for="ipv4">IP Address</label>
-              <input type="text" class="form-control" name="ipv4">
-            </div>
+            <fieldset>
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control input-sm" name="name" autofocus="true">
+                </div>
+                <div class="form-group">
+                  <label>IP Address</label>
+                  <input type="text" class="form-control input-sm" name="ipv4">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Authentication</legend>
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control input-sm" name="username">
+                </div>
+                <div class="form-group">
+                  <label>SSH Key</label>
+                  <div class="input-group input-group-sm">
+                      <span class="input-group-addon"><input type="checkbox" name="auth_key" checked></span>
+                      <input type="text" class="form-control" name="ssh_keypath" placeholder="path to private ssh key">
+                      <span class="input-group-btn"><button class="btn btn-default" type="button">Change</button></span>
+                  </div>
+                </div>
+            </fieldset>
         </form>
     </div>
     <div class="modal-footer">

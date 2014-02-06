@@ -1,8 +1,6 @@
 define(function (require_browser) {
     var $ = require_browser('jquery'),
         _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        Stickit = require_browser('backbone_stickit'),
         Server = require_browser('models/Server'),
         BaseForm = require_browser('views/BaseForm'),
         addEditServerTpl = require_browser('text!views/modal/templates/add-edit-server.html');
@@ -18,7 +16,21 @@ define(function (require_browser) {
 
         bindings: {
             'input[name="name"]': 'name',
-            'input[name="ipv4"]': 'ipv4'
+            'input[name="ipv4"]': 'ipv4',
+            'input[name="ssh_keypath"]': {
+                observe: 'keyPath',
+                onGet: 'getDefaultSshPath'
+            },
+            'input[name="auth_key"]': {
+                observe: 'keyPath',
+                updateModel: function(val, event, options) {
+                    if(event.currentTarget.checked === false) {
+                        this.model.set('keyPath', null);
+                    }
+                    this.ui.ssh_keypath.val(this.getDefaultSshPath());
+                    return false;
+                }
+            }
         },
 
         events: {
@@ -26,6 +38,11 @@ define(function (require_browser) {
             'click button[name="cancel"]': 'onCancel',
             'click a.close': 'onCancel',
             'keyup input': 'onInputKeyup'
+        },
+
+        ui: {
+            auth_key_checkbox: "input[name=auth_key]",
+            ssh_keypath: "input[name=ssh_keypath]"
         },
 
         templateHelpers: function() {
@@ -72,6 +89,14 @@ define(function (require_browser) {
             this.clearForm();
             this.enableForm();
             this.stickit();
+        },
+
+        getDefaultSshPath: function() {
+            var currentPath = this.model.get('keyPath')
+            if((currentPath === '' | currentPath === null) && this.ui.auth_key_checkbox[0].checked) {
+                return '~/.ssh/id_rsa'; // TODO: make this platform specific
+            }
+            return currentPath;
         },
 
         showError: function(msg) {

@@ -6,11 +6,15 @@ define(function (require_browser) {
 
     describe('AddEditServer (modal) - ItemView', function() {
 
-        xdescribe('onRender', function() {
+        describe('onRender', function() {
             var modalSpy, addEditServerModal;
+            var server;
 
             beforeEach(function() {
-                addEditServerModal = new AddEditServerModal();
+                var App = sinon.spy();
+                App.vent = {trigger: sinon.spy(), bind: sinon.spy()};
+                server = new Server();
+                addEditServerModal = new AddEditServerModal({App: App, model: server});
                 addEditServerModal.render();
             });
 
@@ -18,16 +22,30 @@ define(function (require_browser) {
                 addEditServerModal.close();
             });
 
-            it('should update the server model when form fields change', function() {
-                addEditServerModal.$('form input[name=name]').val('Sample Server');
-                addEditServerModal.$('form input[name=name]').trigger('change');
-                addEditServerModal.$('form input[name=ipv4]').val('10.0.0.1');
-                addEditServerModal.$('form input[name=ipv4]').trigger('change');
-
-                (addEditServerModal.model.get('name')).should.equal('Sample Server');
-                (addEditServerModal.model.get('ipv4')).should.equal('10.0.0.1');
+            it('defaults auth_key checkbox to checked', function() {
+                expect(addEditServerModal.ui.auth_key_checkbox[0].checked).to.be.true;
             });
 
+            it('it defaults ssh_keypath to osx default key path', function() {
+                expect(addEditServerModal.ui.ssh_keypath.val()).to.equal('~/.ssh/id_rsa');
+            });
+
+            it('removes/adds default ssh_keypath value when auth_key checkbox is unchecked/checked', function() {
+                expect(server.get('keyPath')).to.be.a('null');
+                expect(addEditServerModal.ui.ssh_keypath.val()).to.equal('~/.ssh/id_rsa');
+
+                addEditServerModal.ui.auth_key_checkbox[0].checked = false;
+                addEditServerModal.$('input[name=auth_key]').change();
+
+                expect(server.get('keyPath')).to.be.a('null');
+                expect(addEditServerModal.ui.ssh_keypath.val()).to.equal('');
+
+                addEditServerModal.ui.auth_key_checkbox[0].checked = true;
+                addEditServerModal.$('input[name=auth_key]').change();
+
+                expect(server.get('keyPath')).to.be.a('null');
+                expect(addEditServerModal.ui.ssh_keypath.val()).to.equal('~/.ssh/id_rsa');
+            });
         });
     });
 });

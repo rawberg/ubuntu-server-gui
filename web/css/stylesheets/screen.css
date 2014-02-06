@@ -6860,6 +6860,11 @@ footer #center_footerbar {
 .modal-dialog.modal-add-edit-server .modal-body {
   padding: 20px 40px;
 }
+.modal-dialog.modal-add-edit-server legend {
+  font-size: 16px;
+  color: #868686;
+  margin-bottom: 14px;
+}
 
 .modal-connection-server {
   width: 500px;
