@@ -89,8 +89,8 @@ define(function (require_browser) {
         },
 
         onRender: function() {
-//            this.clearForm();
-//            this.enableForm();
+            this.clearForm();
+            this.enableForm();
             this.stickit();
         },
 
