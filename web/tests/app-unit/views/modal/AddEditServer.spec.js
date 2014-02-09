@@ -31,7 +31,7 @@ define(function (require_browser) {
             });
 
             it('removes/adds default ssh_keypath value when auth_key checkbox is unchecked/checked', function() {
-                expect(server.get('keyPath')).to.be.a('null');
+                expect(server.get('keyPath')).to.equal('~/.ssh/id_rsa');
                 expect(addEditServerModal.ui.ssh_keypath.val()).to.equal('~/.ssh/id_rsa');
 
                 addEditServerModal.ui.auth_key_checkbox[0].checked = false;
@@ -43,7 +43,7 @@ define(function (require_browser) {
                 addEditServerModal.ui.auth_key_checkbox[0].checked = true;
                 addEditServerModal.$('input[name=auth_key]').change();
 
-                expect(server.get('keyPath')).to.be.a('null');
+                expect(server.get('keyPath')).to.equal('~/.ssh/id_rsa');
                 expect(addEditServerModal.ui.ssh_keypath.val()).to.equal('~/.ssh/id_rsa');
             });
         });

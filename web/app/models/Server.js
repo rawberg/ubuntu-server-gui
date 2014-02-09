@@ -23,6 +23,10 @@ define(function (require_browser) {
 
         getUrl: function() {
             return 'http://' + this.get('ipv4') + ':' + this.get('port');
+        },
+
+        setDefaultKeyPath: function() {
+            this.set('keyPath', '~/.ssh/id_rsa'); // TODO: make this platform specific
         }
     });
 });

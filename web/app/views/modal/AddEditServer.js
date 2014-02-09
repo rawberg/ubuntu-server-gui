@@ -17,17 +17,19 @@ define(function (require_browser) {
         bindings: {
             'input[name="name"]': 'name',
             'input[name="ipv4"]': 'ipv4',
-            'input[name="ssh_keypath"]': {
-                observe: 'keyPath',
-                onGet: 'getDefaultSshPath'
-            },
+            'input[name="ssh_keypath"]': 'keyPath',
             'input[name="auth_key"]': {
                 observe: 'keyPath',
+                update: function($el, val, model, options) {
+                    var checked = (val !== null && val !== '' && typeof val !== 'undefined');
+                    $el.prop('checked', checked);
+                },
                 updateModel: function(val, event, options) {
                     if(event.currentTarget.checked === false) {
                         this.model.set('keyPath', null);
+                    } else {
+                        this.setDefaultKeyPath();
                     }
-                    this.ui.ssh_keypath.val(this.getDefaultSshPath());
                     return false;
                 }
             }
@@ -52,6 +54,7 @@ define(function (require_browser) {
         initialize: function(options) {
             this.App = options && options.App ? options.App : App;
             this.model = options && options.model ? options.model : new Server();
+            this.setDefaultKeyPath();
         },
 
         onCancel: function(eventObj) {
@@ -86,17 +89,16 @@ define(function (require_browser) {
         },
 
         onRender: function() {
-            this.clearForm();
-            this.enableForm();
+//            this.clearForm();
+//            this.enableForm();
             this.stickit();
         },
 
-        getDefaultSshPath: function() {
-            var currentPath = this.model.get('keyPath')
-            if((currentPath === '' | currentPath === null) && this.ui.auth_key_checkbox[0].checked) {
-                return '~/.ssh/id_rsa'; // TODO: make this platform specific
+        setDefaultKeyPath: function() {
+            var currentPath = this.model.get('keyPath');
+            if(currentPath === null || currentPath === '' || typeof currentPath === 'undefined') {
+                this.model.set('keyPath', '~/.ssh/id_rsa'); // TODO: make this platform specific
             }
-            return currentPath;
         },
 
         showError: function(msg) {
