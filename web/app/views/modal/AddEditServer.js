@@ -17,7 +17,7 @@ define(function (require_browser) {
         bindings: {
             'input[name="name"]': 'name',
             'input[name="ipv4"]': 'ipv4',
-            'input[name="ssh_keypath"]': 'keyPath',
+            'input[name=ssh_keypath]': 'keyPath',
             'input[name="auth_key"]': {
                 observe: 'keyPath',
                 update: function($el, val, model, options) {
@@ -27,7 +27,7 @@ define(function (require_browser) {
                 updateModel: function(val, event, options) {
                     if(event.currentTarget.checked === false) {
                         this.model.set('keyPath', null);
-                    } else {
+                    } else if (val === '') {
                         this.setDefaultKeyPath();
                     }
                     return false;
@@ -38,13 +38,16 @@ define(function (require_browser) {
         events: {
             'click button[name="save"]': 'onSave',
             'click button[name="cancel"]': 'onCancel',
+            'click button[name="change"]': 'onClickChangeKeypath',
             'click a.close': 'onCancel',
-            'keyup input': 'onInputKeyup'
+            'keyup input': 'onInputKeyup',
+            'change input[type=file]': 'onUpdateKeypath'
         },
 
         ui: {
             auth_key_checkbox: "input[name=auth_key]",
-            ssh_keypath: "input[name=ssh_keypath]"
+            ssh_keypath_text: "input[name=ssh_keypath]",
+            ssh_keypath_file: "input[type=file]"
         },
 
         templateHelpers: function() {
@@ -59,6 +62,14 @@ define(function (require_browser) {
 
         onCancel: function(eventObj) {
             this.App.execute('modal:close');
+        },
+
+        onClickChangeKeypath: function(eventObj) {
+            this.ui.ssh_keypath_file.click();
+        },
+
+        onUpdateKeypath: function() {
+            this.model.set('keyPath', this.ui.ssh_keypath_file.val());
         },
 
         onSave: function(eventObj) {
