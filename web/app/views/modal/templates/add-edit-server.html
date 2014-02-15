@@ -15,8 +15,8 @@
                   <input type="text" class="form-control input-sm" name="ipv4">
                 </div>
             </fieldset>
-            <fieldset>
-                <legend>Authentication</legend>
+            <!--<fieldset>-->
+                <!--<legend>Authentication</legend>-->
                 <div class="form-group">
                   <label>Username</label>
                   <input type="text" class="form-control input-sm" name="username">
@@ -25,11 +25,16 @@
                   <label>SSH Key</label>
                   <div class="input-group input-group-sm">
                       <span class="input-group-addon"><input type="checkbox" name="auth_key" checked></span>
-                      <input type="text" name="ssh_keypath" class="form-control"><span class="input-group-btn"><button name="change" class="btn btn-default" type="button">Change</button></span>
-                      <input type="file" nwworkingdir="" style="display:none;">
+                      <input type="text" name="ssh_keypath" class="form-control">
+                      <span class="input-group-btn">
+                        <button name="change" class="btn btn-default" type="button">Change</button>
+                      </span>
+                  </div>
+                  <div class="input-group input-group-sm">
+                    <input type="file" nwworkingdir="" style="display:none;">
                   </div>
                 </div>
-            </fieldset>
+            <!--</fieldset>-->
         </form>
     </div>
     <div class="modal-footer">

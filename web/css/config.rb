@@ -1,4 +1,5 @@
 # Require any additional compass plugins here.
+require 'bootstrap-sass'
 environment   = :production
 project_type  = :stand_alone
 output_style  = :expanded

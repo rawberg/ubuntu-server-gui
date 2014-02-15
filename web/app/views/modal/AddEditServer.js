@@ -23,6 +23,8 @@ define(function (require_browser) {
                 update: function($el, val, model, options) {
                     var checked = (val !== null && val !== '' && typeof val !== 'undefined');
                     $el.prop('checked', checked);
+                    this.ui.ssh_keypath_text.attr('disabled', !checked);
+                    this.ui.ssh_keypath_button.attr('disabled', !checked);
                 },
                 updateModel: function(val, event, options) {
                     if(event.currentTarget.checked === false) {
@@ -47,7 +49,8 @@ define(function (require_browser) {
         ui: {
             auth_key_checkbox: "input[name=auth_key]",
             ssh_keypath_text: "input[name=ssh_keypath]",
-            ssh_keypath_file: "input[type=file]"
+            ssh_keypath_file: "input[type=file]",
+            ssh_keypath_button: "button[name='change']"
         },
 
         templateHelpers: function() {

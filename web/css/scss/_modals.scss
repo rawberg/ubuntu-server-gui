@@ -31,6 +31,12 @@
         padding: 20px 40px;
     }
 
+    .btn-default[disabled] {
+      background-color: #EEE;
+      color: #9C9CA7;
+      opacity: 1;
+    }
+
     legend {
       font-size: 16px;
       color: rgba(134, 134, 134, 1);
@@ -49,8 +55,12 @@
 
 
 // Noob Tour Styles
+.noobtour-popover {
+  border-bottom-left-radius: 0px;
+}
+
 .modal-backdrop.noobtour-backdrop {
-    &.body-minus-footer {
+  &.body-minus-footer {
         bottom: 27px;
     }
 
@@ -65,11 +75,17 @@
 .noobtour-popover.popover.top {
     z-index: 1050;
     .arrow {
-        left:  0 !important;
+        left:  -1px !important;
         margin-left: 0 !important;
+        border-bottom-width: 0;
+        border-top-color: rgba(0,0,0,.25);
+        bottom: -22px;
+        border-width: 11px;
         &:after {
-            bottom: 2px;
-            margin-left: -9px;
+            content: " ";
+            margin-left: -10px;
+            border-bottom-width: 0;
+            border-top-color: #fff;
         }
     }
 }

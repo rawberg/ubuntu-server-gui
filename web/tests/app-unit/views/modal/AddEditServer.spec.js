@@ -26,8 +26,21 @@ define(function (require_browser) {
                 expect(addEditServerModal.ui.auth_key_checkbox[0].checked).to.be.true;
             });
 
-            it('it defaults ssh_keypath to osx default key path', function() {
+            it('defaults ssh_keypath to osx default key path', function() {
                 expect(addEditServerModal.ui.ssh_keypath_text.val()).to.equal('~/.ssh/id_rsa');
+            });
+
+            it('disables/enables ssh_keypath text field and change button when auth_key is checked/unchecked', function() {
+                expect(addEditServerModal.ui.ssh_keypath_text.attr('disabled')).to.be.undefined;
+                expect(addEditServerModal.ui.ssh_keypath_button.attr('disabled')).to.be.undefined;
+
+                addEditServerModal.ui.auth_key_checkbox.prop('checked', false).change();
+                expect(addEditServerModal.ui.ssh_keypath_text.attr('disabled')).to.equal('disabled');
+                expect(addEditServerModal.ui.ssh_keypath_button.attr('disabled')).to.equal('disabled');
+
+                addEditServerModal.ui.auth_key_checkbox.prop('checked', true).change();
+                expect(addEditServerModal.ui.ssh_keypath_text.attr('disabled')).to.be.undefined;
+                expect(addEditServerModal.ui.ssh_keypath_button.attr('disabled')).to.be.undefined;
             });
 
             it('removes/adds default ssh_keypath value when auth_key checkbox is unchecked/checked', function() {

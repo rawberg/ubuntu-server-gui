@@ -1,11 +1,4 @@
-[submodule "web/css/fuelux"]
-	path = web/css/fuelux
-	url = git://github.com/ExactTarget/fuelux.git
-	branch = 73a3c7d6e6dcf91e6a80ec7f9d762b0518e67e78
 [submodule "web/css/font-awesome"]
 	path = web/css/font-awesome
 	url = git://github.com/FortAwesome/Font-Awesome.git
 	branch = v3.1.1
-[submodule "web/css/bootstrap"]
-	path = web/css/bootstrap
-	url = git://github.com/jlong/sass-bootstrap.git

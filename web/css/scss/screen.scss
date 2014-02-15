@@ -10,55 +10,8 @@
 
 /* Bootstrap Styles
 -------------------------------------------------- */
-// Core variables and mixins
-@import "../bootstrap/lib/variables";
-@import "../bootstrap/lib/mixins";
-
-// Reset
-@import "../bootstrap/lib/normalize";
-@import "../bootstrap/lib/print";
-
-// Core CSS
-@import "../bootstrap/lib/scaffolding";
-@import "../bootstrap/lib/type";
-@import "../bootstrap/lib/code";
-@import "../bootstrap/lib/grid";
-@import "../bootstrap/lib/tables";
-@import "../bootstrap/lib/forms";
-@import "../bootstrap/lib/buttons";
-
-// Components
-@import "../bootstrap/lib/component-animations";
-@import "../bootstrap/lib/glyphicons";
-@import "../bootstrap/lib/dropdowns";
-@import "../bootstrap/lib/button-groups";
-@import "../bootstrap/lib/input-groups";
-@import "../bootstrap/lib/navs";
-@import "../bootstrap/lib/navbar";
-@import "../bootstrap/lib/breadcrumbs";
-@import "../bootstrap/lib/pagination";
-@import "../bootstrap/lib/pager";
-@import "../bootstrap/lib/labels";
-@import "../bootstrap/lib/badges";
-@import "../bootstrap/lib/jumbotron";
-@import "../bootstrap/lib/thumbnails";
-@import "../bootstrap/lib/alerts";
-@import "../bootstrap/lib/progress-bars";
-@import "../bootstrap/lib/media";
-@import "../bootstrap/lib/list-group";
-@import "../bootstrap/lib/panels";
-@import "../bootstrap/lib/wells";
-@import "../bootstrap/lib/close";
-
-// Components w/ JavaScript
-@import "../bootstrap/lib/modals";
-@import "../bootstrap/lib/tooltip";
-@import "../bootstrap/lib/popovers";
-@import "../bootstrap/lib/carousel";
-
-// Utility classes
-@import "../bootstrap/lib/utilities";
-@import "../bootstrap/lib/responsive-utilities";
+@import "variables";
+@import "bootstrap";
 
 
 /* Application Core Styles
