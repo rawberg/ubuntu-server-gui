@@ -6813,6 +6813,9 @@ footer #center_footerbar {
   color: #868686;
   margin-bottom: 14px;
 }
+.modal-dialog.modal-add-edit-server .form-control-static.msg {
+  font-style: italic;
+}
 
 .modal-connection-server {
   width: 500px;
