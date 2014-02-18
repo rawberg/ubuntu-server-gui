@@ -25,6 +25,7 @@ define(function (require_browser) {
                     $el.prop('checked', checked);
                     this.ui.ssh_keypath_text.attr('disabled', !checked);
                     this.ui.ssh_keypath_button.attr('disabled', !checked);
+                    this.ui.manual_password_notice.toggle(!checked);
                 },
                 updateModel: function(val, event, options) {
                     if(event.currentTarget.checked === false) {
@@ -48,6 +49,7 @@ define(function (require_browser) {
 
         ui: {
             auth_key_checkbox: "input[name=auth_key]",
+            manual_password_notice: ".form-group.manual-password",
             ssh_keypath_text: "input[name=ssh_keypath]",
             ssh_keypath_file: "input[type=file]",
             ssh_keypath_button: "button[name='change']"

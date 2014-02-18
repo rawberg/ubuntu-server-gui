@@ -59,6 +59,17 @@ define(function (require_browser) {
                 expect(server.get('keyPath')).to.equal('~/.ssh/id_rsa');
                 expect(addEditServerModal.ui.ssh_keypath_text.val()).to.equal('~/.ssh/id_rsa');
             });
+
+            it('hides/shows manual password notice when auth_key checkbox is unchecked/checked', function() {
+                expect(addEditServerModal.ui.manual_password_notice.css('display')).to.equal('none');
+                addEditServerModal.ui.auth_key_checkbox[0].checked = false;
+                addEditServerModal.$('input[name=auth_key]').change();
+
+                expect(addEditServerModal.ui.manual_password_notice.css('display')).to.equal('block');
+                addEditServerModal.ui.auth_key_checkbox[0].checked = true;
+                addEditServerModal.$('input[name=auth_key]').change();
+                expect(addEditServerModal.ui.manual_password_notice.css('display')).to.equal('none');
+            });
         });
     });
 });
