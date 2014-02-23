@@ -36,12 +36,13 @@ define(function (require_browser) {
                 try {
                     connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
                 } catch(e) {
-                    // TODO: alert the user
-                    console.log('no key or password provided');
+                    // TODO: prompt user to choose key
+                    console.log('error with ssh key');
                 }
             }
             else {
-                connectOptions.password = 'vagrant'; // TODO: prompt for password
+                // TODO: prompt for password
+                connectOptions.password = 'vagrant';
             }
             sshProxy.connect(connectOptions);
 

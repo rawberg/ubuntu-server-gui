@@ -5,6 +5,7 @@ define(function (require_browser, exports, module) {
         App = require_browser('App'),
         Server = require_browser('models/Server'),
         serverConnectingTpl = require_browser('text!views/modal/templates/server-connection-connecting.html'),
+        serverConnectPasswordPromptTpl = require_browser('text!views/modal/templates/server-connection-password.html'),
         serverConnectErrorTpl = require_browser('text!views/modal/templates/server-connection-error.html');
 
     require_browser('backbone_stickit');
@@ -22,6 +23,7 @@ define(function (require_browser, exports, module) {
 
         server_bindings: {
             'span.server-name': 'name',
+            'span.server-username': 'username',
             'span.server-port': 'port',
             'span.server-addr': 'ipv4'
         },
@@ -37,6 +39,8 @@ define(function (require_browser, exports, module) {
         getTemplate: function() {
             if(this.model.get('connection_status') === 'connecting') {
                 return _.template(serverConnectingTpl);
+            } else if(this.model.get('connection_status') === 'password_required') {
+                return _.template(serverConnectPasswordPromptTpl);
             } else {
                 return _.template(serverConnectErrorTpl);
             }

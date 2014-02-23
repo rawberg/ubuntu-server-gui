@@ -1,9 +1,14 @@
 define(function (require_browser) {
+    var _ = require_browser('underscore'),
     // Models
-    var Server = require_browser('models/Server'),
+        Server = require_browser('models/Server'),
         ServerConnection = require_browser('models/ServerConnection'),
     // Views
-        ServerConnectionView = require_browser('views/modal/ServerConnectionView');
+        ServerConnectionView = require_browser('views/modal/ServerConnectionView'),
+    // Templates
+        serverConnectingTpl = require_browser('text!views/modal/templates/server-connection-connecting.html'),
+        serverConnectPasswordPromptTpl = require_browser('text!views/modal/templates/server-connection-password.html'),
+        serverConnectErrorTpl = require_browser('text!views/modal/templates/server-connection-error.html');
 
     describe('ServerConnectionView', function() {
         describe('onRender', function() {
@@ -31,10 +36,42 @@ define(function (require_browser) {
                 serverConnection.set('connection_status', 'connection error');
                 (serverConnectionView.$('h4').text()).should.have.string('connection error');
             });
+        });
 
-            it('displays the correct template on connect error', function() {
-                serverConnection.set('connection_status', 'connection error');
-                (serverConnectionView.$('div.modal-body').hasClass('connection-error')).should.be.true;
+        describe('getTemplate', function() {
+            var server, serverConnection;
+            var serverConnectionView, templateSpy;
+
+            beforeEach(function() {
+                templateSpy = sinon.spy(_, 'template');
+                server = new Server({ipv4: '10.0.0.1', name: 'Simple Server'});
+                serverConnection = new ServerConnection({connection_status: 'connecting'}, {server: server});
+                serverConnectionView = new ServerConnectionView({model: serverConnection});
+            });
+
+            afterEach(function() {
+                templateSpy.restore();
+                serverConnectionView.close();
+            });
+
+            it('retrieves the correct tempate on "connecting" status', function() {
+                serverConnectionView.render();
+                sinon.assert.calledOnce(templateSpy);
+                sinon.assert.calledWith(templateSpy, serverConnectingTpl);
+            });
+
+            it('retrieves the correct tempate on "password_required" status', function() {
+                serverConnection.set('connection_status', 'password_required');
+                serverConnectionView.render();
+                sinon.assert.calledOnce(templateSpy);
+                sinon.assert.calledWith(templateSpy, serverConnectPasswordPromptTpl);
+            });
+
+            it('retrieves the correct tempate on "error" status', function() {
+                serverConnection.set('connection_status', 'error');
+                serverConnectionView.render();
+                sinon.assert.calledOnce(templateSpy);
+                sinon.assert.calledWith(templateSpy, serverConnectErrorTpl);
             });
         });
     });
