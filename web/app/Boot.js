@@ -84,6 +84,23 @@ require_browser.config({
     }
 });
 
+function resetLocalStorageLoadFixtures() {
+    var fs = require('fs'),
+    Server = require_browser('models/Server');
+
+    var server_fixtures = [];
+    window.localStorage.clear();
+    try {
+        server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
+    } catch(e) {
+        process.stdout.write('no fixture data was found: ('+e.message+')\n');
+    }
+
+    server_fixtures.forEach(function(server) {
+        new Server(server).save();
+    });
+}
+
 // testrunner should not automatically start the application
 if(typeof(window.TESTRUNNER) === 'undefined') {
     require_browser(['jquery', 'backbone', 'App', 'controllers/Main', 'routers/Main'],
@@ -94,6 +111,10 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
             if(location.pathname.indexOf('/web/index.html') !== -1) {
                 rootPath = location.pathname.substring(0, location.pathname.lastIndexOf('/web/index.html')+18);
                 pushState = false;
+            }
+
+            if(window.appintegrationtests) {
+                resetLocalStorageLoadFixtures();
             }
 
             App.start();
@@ -174,21 +195,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     chai.use(sinonChai);
 
                     if(typeof process !== 'undefined') {
-                        var gui = require('nw.gui'),
-                            fs = require('fs'),
-                            Server = require_browser('models/Server');
-
-                        var server_fixtures = [];
-                        try {
-                            server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
-                            window.localStorage.clear();
-                        } catch(e) {
-                            process.stdout.write('no fixture data was found: ('+e.message+')\n');
-                        }
-
-                        server_fixtures.forEach(function(server) {
-                            new Server(server).save();
-                        });
+                        resetLocalStorageLoadFixtures();
                     }
 
                     window.onload();

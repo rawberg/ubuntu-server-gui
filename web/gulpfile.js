@@ -11,10 +11,9 @@ function _vagrant_destroy(cb) {
 
 gulp.task('_vagrant-distro-check', function(cb) {
     if(gulp_util.env.distro === '' || typeof gulp_util.env.distro === 'undefined') {
-        cb('--distro flag required');
+        cb('distro flag required (--distro lucid)');
     } else {
-        // TODO: add more checking
-        console.log('distro: ', gulp_util.env.distro);
+        console.log('distro selected: ', gulp_util.env.distro);
         cb();
     }
 })
@@ -30,7 +29,6 @@ gulp.task('vagrant-up', ['_vagrant-distro-check'], function(cb) {
             cb('^^ vagrant up failed see above ^^');
         }
     });
-
 });
 
 gulp.task('vagrant-ssh-config', ['vagrant-up'], function(cb) {
@@ -51,11 +49,51 @@ gulp.task('vagrant-destroy', ['_vagrant-distro-check'], function(cb) {
     _vagrant_destroy(cb);
 });
 
-gulp.task('_vagrant-destroy', ['_noderunner'], function(cb) {
+gulp.task('integration-vagrant-destroy', ['_integration-runner'], function(cb) {
     _vagrant_destroy(cb);
 });
 
-gulp.task('_noderunner', ['vagrant-ssh-config'], function(cb) {
+gulp.task('node-vagrant-destroy', ['_node-runner'], function(cb) {
+    _vagrant_destroy(cb);
+});
+
+gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
+    if(gulp_util.env.hosts.length > 0) {
+        fs.writeFileSync('tests/app-integration/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
+    }
+
+    // rename __package.json file to bring it into play - TODO: find a better solution
+    fs.renameSync('../desktop/osx/__package.json', '../desktop/osx/package.json')
+
+    var selenium_server = exec('selenium-server -Dwebdriver.chrome.driver=../desktop/osx/chromedriver2_server');
+
+    selenium_server.stdout.on('data', function (data) {
+        process.stdout.write(data);
+
+        if(/SocketListener/.test(data)) {
+            var integration_tests = exec('node_modules/mocha/bin/mocha -t 15000 -R spec tests/app-integration/.');
+            var timer = setTimeout(function() {
+                integration_tests.kill();
+                selenium_server.kill();
+                fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
+                cb();
+            }, 90000);
+
+            integration_tests.stdout.on('data', function (data) {
+                process.stdout.write(data);
+                if(/passing/.test(data)) {
+                    clearTimeout(timer);
+                    integration_tests.kill();
+                    selenium_server.kill();
+                    fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
+                    cb();
+                }
+            });
+        }
+    });
+});
+
+gulp.task('_node-runner', ['vagrant-ssh-config'], function(cb) {
     if(gulp_util.env.hosts.length > 0) {
         fs.writeFileSync('tests/app-node/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
     }
@@ -63,6 +101,7 @@ gulp.task('_noderunner', ['vagrant-ssh-config'], function(cb) {
     var nodetests = exec('../desktop/osx/node-webkit.app/Contents/MacOS/node-webkit tests/app-node/');
     var timer = setTimeout(function() {
         nodetests.kill();
+        cb();
     }, 90000);
 
     nodetests.stdout.on('data', function (data) {
@@ -76,10 +115,7 @@ gulp.task('_noderunner', ['vagrant-ssh-config'], function(cb) {
     });
 });
 
-gulp.task('app-node', ['_noderunner', '_vagrant-destroy']);
-
-
-gulp.task('app-unit', function() {
+gulp.task('_unit-runner', function() {
     var unittests = exec('../desktop/osx/node-webkit.app/Contents/MacOS/node-webkit tests/app-unit/');
     var timer = setTimeout(function() {
         unittests.kill();
@@ -96,3 +132,6 @@ gulp.task('app-unit', function() {
 });
 
 
+gulp.task('app-unit', ['_unit-runner']);
+gulp.task('app-node', ['_node-runner', 'node-vagrant-destroy']);
+gulp.task('app-integration', ['_integration-runner', 'integration-vagrant-destroy']);
