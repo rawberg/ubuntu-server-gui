@@ -21,7 +21,7 @@ tests/app-node/node_modules
 
 # Dyanmic Fixtures #
 ####################
-web/tests/app-node/dynamic_fixtures.json
+web/tests/*/dynamic_fixtures.json
 
 # OS generated files #
 ######################
