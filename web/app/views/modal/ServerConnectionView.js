@@ -68,9 +68,7 @@ define(function (require_browser, exports, module) {
         },
 
         onStatusChange: function(server, connection_status, changes) {
-            if(connection_status === 'connection error') {
-                this.render();
-            }
+            this.render();
         }
     });
 });
