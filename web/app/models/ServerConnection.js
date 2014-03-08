@@ -20,6 +20,7 @@ define(function (require_browser) {
         },
 
         initiateLocalProxy: function(callback) {
+            callback = _.isFunction(callback) ? callback : function() {};
             var SshConnection = require('ssh2');
             var sshProxy = this.sshProxy = new SshConnection();
 
@@ -36,15 +37,23 @@ define(function (require_browser) {
                 try {
                     connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
                 } catch(e) {
-                    // TODO: prompt user to choose key
-                    console.log('error with ssh key');
+                    this.set('connection_status', 'ssh key error');
+                    callback();
+                    return;
                 }
             }
             else {
                 // TODO: prompt for password
                 connectOptions.password = 'vagrant';
             }
-            sshProxy.connect(connectOptions);
+
+            try {
+                sshProxy.connect(connectOptions);
+            } catch(e) {
+                this.set('connection_status', 'connection error');
+                callback();
+                return;
+            }
 
             sshProxy.on('ready', _.bind(function() {
                 this.server.sshProxy = sshProxy;
@@ -60,16 +69,17 @@ define(function (require_browser) {
                 }, this));
 
                 App.vent.trigger('server:connected', this.server);
-                if(callback) {
                     callback();
-                }
             }, this));
 
             //TODO: find a better place or logging and error trapping
             //TODO: decide how the app will handle sshProxy errors and disconnects
-            sshProxy.on('error', function(err) {
-                console.log('SSH Connection :: error :: ', err);
-            });
+            sshProxy.on('error', _.bind(function(err) {
+//                console.log('SSH Connection :: error :: ', err);
+                this.set('connection_status', 'connection error');
+                callback();
+                return;
+            }, this));
 
             sshProxy.on('end', function() {
                 App.vent.trigger('server:disconnected', this.server);

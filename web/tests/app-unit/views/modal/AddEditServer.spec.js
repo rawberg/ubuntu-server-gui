@@ -1,19 +1,21 @@
 define(function (require_browser) {
     var $ = require_browser('jquery'),
         AddEditServerModal = require_browser('views/modal/AddEditServer'),
-        Server = require_browser('models/Server');
+        Server = require_browser('models/Server'),
+        ServerConnection = require_browser('models/ServerConnection');
 
 
     describe('AddEditServer (modal) - ItemView', function() {
 
         describe('onRender', function() {
             var modalSpy, addEditServerModal;
-            var server;
+            var server, serverConnection;
 
             beforeEach(function() {
                 var App = sinon.spy();
                 App.vent = {trigger: sinon.spy(), bind: sinon.spy()};
                 server = new Server();
+                serverConnection = new ServerConnection({}, {server: server});
                 addEditServerModal = new AddEditServerModal({App: App, model: server});
                 addEditServerModal.render();
             });

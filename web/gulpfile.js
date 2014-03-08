@@ -124,7 +124,7 @@ gulp.task('_unit-runner', function() {
     unittests.stdout.on('data', function (data) {
         process.stdout.write(data);
 
-        if(/seconds\n$/.test(data)) {
+        if(/seconds/g.test(data)) {
             clearTimeout(timer);
             unittests.kill();
         }

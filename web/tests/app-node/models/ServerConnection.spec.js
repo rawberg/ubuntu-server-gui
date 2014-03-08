@@ -5,6 +5,8 @@ define(function (require_browser) {
         ServerList = require_browser('collections/ServerList'),
         ServerConnection = require_browser('models/ServerConnection');
 
+    var fs = require('fs');
+
     describe('ServerConnection - Model', function() {
 
         describe('initiateLocalProxy', function() {
@@ -33,42 +35,76 @@ define(function (require_browser) {
             });
 
             it('connects via ssh key', function(done) {
-                appVentConnectSpy.should.not.have.been.called;
-                connectionStatusSpy.should.not.have.been.called;
+                jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
+                jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
                 serverConnection.initiateLocalProxy(function() {
                     try {
-                        appVentConnectSpy.should.have.been.calledOnce;
-                        connectionStatusSpy.should.have.been.calledOnce;
+                        jasmine.getEnv().expect(appVentConnectSpy.calledOnce).toBeTruthy();
+                        // work-around for sinon calledWith being flakey
+                        jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('connected');
+                        done();
                     } catch(e) {
-                        console.log(e.message);
+                        console.log(e);
                     }
-                    done();
                 });
             });
 
             it('connects via ssh username/password', function(done) {
                 var attributes = _.clone(serverConnection.attributes);
-                serverConnection.attributes['keyPath'] = null;
+                serverConnection.server.attributes['keyPath'] = null;
 
-                appVentConnectSpy.should.not.have.been.called;
-                connectionStatusSpy.should.not.have.been.called;
+                jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
+                jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
                 serverConnection.initiateLocalProxy(function() {
                     try {
-                        appVentConnectSpy.should.have.been.calledOnce;
-                        connectionStatusSpy.should.have.been.calledOnce;
+                        jasmine.getEnv().expect(appVentConnectSpy.calledOnce).toBeTruthy();
+                        // work-around for sinon calledWith being flakey
+                        jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('connected');
+                        done();
                     } catch(e) {
-                        console.log(e.message);
+                        console.log(e);
                     }
-                    serverConnection.attributes['keyPath'] = attributes['keyPath'];
-                    done();
+                });
+            });
+
+            it("sets connection_status to 'ssh key error' when ssh key path is invalid", function(done) {
+                jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
+                jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
+
+                serverConnection.server.attributes['keyPath'] = '/some/wrong/path';
+                serverConnection.initiateLocalProxy(function() {
+                    try {
+                        jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('ssh key error');
+                        done();
+                    } catch(e) {
+                        console.log(e);
+                    }
+                });
+            });
+
+            it("sets connection_status to 'connect error' when connection fails", function(done) {
+                jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
+                jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
+
+                fs.writeFileSync('/tmp/bogus.key', ' ');
+                serverConnection.server.attributes['keyPath'] = '/tmp/bogus.key';
+                serverConnection.initiateLocalProxy(function() {
+                    try {
+                        jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('connection error');
+                        fs.unlinkSync('/tmp/bogus.key');
+                        done();
+                    } catch(e) {
+                       fs.unlinkSync('/tmp/bogus.key');
+                       console.log(e);
+                    }
                 });
             });
             
             it('triggers server:disconnected App event when ssh connection is disconnected', function(done) {
-                appVentDisconnectSpy.should.not.have.been.called;
+                jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy()
                 serverConnection.initiateLocalProxy(function() {
                     serverConnection.sshProxy.on('end', function() {
-                        sinon.assert.calledOnce(appVentDisconnectSpy);
+                        jasmine.getEnv().expect(appVentDisconnectSpy.calledOnce).toBeTruthy();
                         done();
                     });
                     serverConnection.sshProxy.end();
