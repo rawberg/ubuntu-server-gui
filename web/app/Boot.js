@@ -31,7 +31,7 @@ require_browser.config({
         jasmine_html: '../libs/jasmine/jasmine-html',
         jasmine_console: '../libs/jasmine/jasmine-console',
         jasmine_boot: '../libs/jasmine/jasmine-boot',
-        sinon: '../libs/sinon/sinon-1.7.1',
+        sinon: '../libs/sinon/sinon-1.7.3',
         chai: '../libs/chai/chai',
         sinon_chai: '../libs/chai/sinon-chai'
     },
@@ -71,9 +71,6 @@ require_browser.config({
         'jasmine_boot': {
             deps: ['jasmine']
         },
-        'sinon': {
-            exports: 'sinon'
-        },
         'gauge': {
             deps: ['jquery'],
             exports: 'Donut'
@@ -93,7 +90,7 @@ function resetLocalStorageLoadFixtures() {
     try {
         server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
     } catch(e) {
-        process.stdout.write('no fixture data was found: ('+e.message+')\n');
+//        process.stdout.write('no fixture data was found: ('+e.message+')\n');
     }
 
     server_fixtures.forEach(function(server) {
@@ -185,6 +182,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         'tests/app-unit/routers/Base.spec.js'
                     ];
                 } else if(window.appnodetests) {
+//                    require('nw.gui').Window.get().showDevTools();
                     testfiles = [
                         // Models
                         'tests/app-node/models/ServerConnection.spec.js'

@@ -95,7 +95,7 @@ getJasmineRequireObj().base = function(j$) {
   };
 
   j$.MAX_PRETTY_PRINT_DEPTH = 40;
-  j$.DEFAULT_TIMEOUT_INTERVAL = 5000;
+  j$.DEFAULT_TIMEOUT_INTERVAL = 9000;
 
   j$.getGlobal = (function() {
     var jasmineGlobal = eval.call(null, "this");
