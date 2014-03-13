@@ -37,7 +37,7 @@ define(function (require_browser, exports, module) {
         },
 
         getTemplate: function() {
-            if(this.model.get('connection_status') === 'connecting') {
+            if(this.model.get('connection_status') === 'connecting' || this.model.get('connection_status') === 'connected') {
                 return _.template(serverConnectingTpl);
             } else if(this.model.get('connection_status') === 'password_required') {
                 return _.template(serverConnectPasswordPromptTpl);

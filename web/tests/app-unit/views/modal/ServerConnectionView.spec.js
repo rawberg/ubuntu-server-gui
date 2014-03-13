@@ -60,17 +60,21 @@ define(function (require_browser) {
                 sinon.assert.calledWith(templateSpy, serverConnectingTpl);
             });
 
+            it('retrieves the correct tempate on "connected" status', function() {
+                serverConnection.set('connection_status', 'connected');
+                serverConnectionView.render();
+                sinon.assert.calledWith(templateSpy, serverConnectingTpl);
+            });
+
             it('retrieves the correct tempate on "password_required" status', function() {
                 serverConnection.set('connection_status', 'password_required');
                 serverConnectionView.render();
-                sinon.assert.calledOnce(templateSpy);
                 sinon.assert.calledWith(templateSpy, serverConnectPasswordPromptTpl);
             });
 
             it('retrieves the correct tempate on "error" status', function() {
                 serverConnection.set('connection_status', 'error');
                 serverConnectionView.render();
-                sinon.assert.calledOnce(templateSpy);
                 sinon.assert.calledWith(templateSpy, serverConnectErrorTpl);
             });
         });
