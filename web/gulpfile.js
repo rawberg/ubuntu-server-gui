@@ -59,7 +59,7 @@ gulp.task('node-vagrant-destroy', ['_node-runner'], function(cb) {
 
 gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
     if(gulp_util.env.hosts.length > 0) {
-        fs.writeFileSync('tests/app-integration/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
+        fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
     }
 
     // rename __package.json file to bring it into play - TODO: find a better solution
@@ -71,7 +71,7 @@ gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
         process.stdout.write(data);
 
         if(/SocketListener/.test(data)) {
-            var integration_tests = exec('node_modules/mocha/bin/mocha -t 15000 -R spec tests/app-integration/.');
+            var integration_tests = exec('node_modules/nightwatch/bin/nightwatch --config tests/app-integration/');
             var timer = setTimeout(function() {
                 integration_tests.kill();
                 selenium_server.kill();
@@ -95,7 +95,7 @@ gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
 
 gulp.task('_node-runner', ['vagrant-ssh-config'], function(cb) {
     if(gulp_util.env.hosts.length > 0) {
-        fs.writeFileSync('tests/app-node/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
+        fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
     }
 
     var nodetests = exec('../desktop/osx/node-webkit.app/Contents/MacOS/node-webkit tests/app-node/');

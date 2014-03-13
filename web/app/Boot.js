@@ -82,15 +82,16 @@ require_browser.config({
 });
 
 function resetLocalStorageLoadFixtures() {
+//    require('nw.gui').Window.get().showDevTools();
     var fs = require('fs'),
     Server = require_browser('models/Server');
 
     var server_fixtures = [];
     window.localStorage.clear();
     try {
-        server_fixtures = JSON.parse(fs.readFileSync('dynamic_fixtures.json'));
+        server_fixtures = JSON.parse(fs.readFileSync('tests/fixtures/dynamic_fixtures.json'));
     } catch(e) {
-//        process.stdout.write('no fixture data was found: ('+e.message+')\n');
+        console.log('no fixture data was found: ('+e.message+')');
     }
 
     server_fixtures.forEach(function(server) {
@@ -182,7 +183,6 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         'tests/app-unit/routers/Base.spec.js'
                     ];
                 } else if(window.appnodetests) {
-//                    require('nw.gui').Window.get().showDevTools();
                     testfiles = [
                         // Models
                         'tests/app-node/models/ServerConnection.spec.js'

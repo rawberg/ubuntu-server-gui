@@ -22,10 +22,8 @@
     "devDependencies": {
         "gulp": ">0.0.0",
         "gulp-util": ">0.0.0",
-        "wd": ">0.0.0",
-        "chai": ">0.0.0",
-        "chai-as-promised": ">0.0.0",
-        "mocha": ">0.0.0"
+        "nightwatch": ">0.0.0",
+        "chai": ">0.0.0"
     },
 
     "licenses": [{
