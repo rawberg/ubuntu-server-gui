@@ -58,6 +58,7 @@ gulp.task('node-vagrant-destroy', ['_node-runner'], function(cb) {
 });
 
 gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
+    console.log(process.cwd());
     if(gulp_util.env.hosts.length > 0) {
         fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
     }
@@ -65,27 +66,35 @@ gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
     // rename __package.json file to bring it into play - TODO: find a better solution
     fs.renameSync('../desktop/osx/__package.json', '../desktop/osx/package.json')
 
-    var selenium_server = exec('selenium-server -Dwebdriver.chrome.driver=../desktop/osx/chromedriver2_server');
+    var selenium_server = exec('/usr/local/bin/selenium-server -Dwebdriver.chrome.driver=../desktop/osx/chromedriver2_server');
 
     selenium_server.stdout.on('data', function (data) {
         process.stdout.write(data);
 
-        if(/SocketListener/.test(data)) {
-            var integration_tests = exec('node_modules/nightwatch/bin/nightwatch --config tests/app-integration/');
+        if(/jetty/.test(data)) {
+            var integration_tests = exec('node_modules/nightwatch/bin/nightwatch --env default --config tests/app-integration/settings.json --test tests/app-integration/*');
             var timer = setTimeout(function() {
                 integration_tests.kill();
                 selenium_server.kill();
-                fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
+                try {
+                    fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
+                } catch(e) {
+                    console.log('could not rename __pakage.json: ', e);
+                }
                 cb();
-            }, 90000);
+            }, 120000);
 
             integration_tests.stdout.on('data', function (data) {
                 process.stdout.write(data);
-                if(/passing/.test(data)) {
+                if(/assertions/.test(data)) {
                     clearTimeout(timer);
                     integration_tests.kill();
                     selenium_server.kill();
-                    fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
+                    try {
+                        fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
+                    } catch(e) {
+                        console.log('could not rename __pakage.json: ', e);
+                    }
                     cb();
                 }
             });

@@ -88,9 +88,12 @@ function resetLocalStorageLoadFixtures() {
 
     var server_fixtures = [];
     window.localStorage.clear();
-//    console.log('cwd: ', process.cwd());
     try {
-        server_fixtures = JSON.parse(fs.readFileSync('../fixtures/dynamic_fixtures.json'));
+        if(window.appintegrationtests) {
+            server_fixtures = JSON.parse(fs.readFileSync('../../web/tests/fixtures/dynamic_fixtures.json'));
+        } else if(window.appnodetests) {
+            server_fixtures = JSON.parse(fs.readFileSync('../fixtures/dynamic_fixtures.json'));
+        }
     } catch(e) {
         console.log('no fixture data was found: ('+e.message+')');
     }
@@ -113,6 +116,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
             }
 
             if(window.appintegrationtests) {
+                process.mainModule.paths = [ '../../web/node_modules' ].concat(process.mainModule.paths);
                 resetLocalStorageLoadFixtures();
             }
 

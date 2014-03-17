@@ -21,7 +21,16 @@ tests/app-node/node_modules
 
 # Dyanmic Fixtures #
 ####################
-web/tests/*/dynamic_fixtures.json
+web/tests/fixtures/dynamic_fixtures.json
+dynamic_fixtures.json
+
+# Vagrant Artifacts #
+#####################
+.vagrant/
+
+# Testing Artifacts #
+#####################
+tests_output/
 
 # OS generated files #
 ######################

@@ -1,0 +1,19 @@
+{
+  "output_folder": false,
+  "test_settings" : {
+    "default" : {
+      "silent": true,
+      "chrome_driver": true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "webStorageEnabled": true
+      }
+    }
+  }
+}
