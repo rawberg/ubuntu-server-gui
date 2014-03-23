@@ -55,11 +55,27 @@ define(function (require_browser) {
 
                 jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
                 jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
-                serverConnection.initiateLocalProxy(function() {
+                serverConnection.connect({password: 'vagrant'}, function() {
                     try {
                         jasmine.getEnv().expect(appVentConnectSpy.calledOnce).toBeTruthy();
                         // work-around for sinon calledWith being flakey
                         jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('connected');
+                        done();
+                    } catch(e) {
+                        console.log(e);
+                    }
+                });
+            });
+
+            it("sets connection_status to 'password_required' when there's no key and password is empty", function(done) {
+                serverConnection.server.attributes['keyPath'] = null;
+
+                jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
+                jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
+                serverConnection.connect({}, function() {
+                    try {
+                        jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('password_required');
+                        jasmine.getEnv().expect(appVentConnectSpy.calledOnce).toBeFalsy();
                         done();
                     } catch(e) {
                         console.log(e);

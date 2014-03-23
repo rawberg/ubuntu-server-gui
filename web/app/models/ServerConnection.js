@@ -8,14 +8,35 @@ define(function (require_browser) {
             if(typeof options.server === "undefined") {
                 throw "Expected server to be provided.";
             }
-            this.server = options.server;
+            this.server = options.server
+
+            this.connectOptions = {
+//                debug: function(msg) {
+//                    console.log(msg);
+//                },
+                host: this.server.get('ipv4'),
+                port: this.server.get('port'),
+                username: this.server.get('username')
+            };
         },
 
-        connect: function() {
-            if(typeof process !== 'undefined') {
-                return this.initiateLocalProxy();
-            } else {
+        connect: function(options, callback) {
+            options = _.isObject(options) ? options : {};
+            if(typeof process === 'undefined') {
                 throw 'cannot connect to a server from a web browser';
+            }
+
+            if(!_.isUndefined(options.password)) {
+                this.connectOptions.password = options.password;
+            }
+
+            if((this.server.get('keyPath') !== null) || !_.isUndefined(this.connectOptions.password)) {
+                this.initiateLocalProxy(callback);
+            } else if(_.isUndefined(options.password)) {
+                this.set('connection_status', 'password_required');
+                if(_.isFunction(callback)) {
+                    callback();
+                }
             }
         },
 
@@ -24,31 +45,18 @@ define(function (require_browser) {
             var SshConnection = require('ssh2');
             var sshProxy = this.sshProxy = new SshConnection();
 
-            var connectOptions = {
-//                debug: function(msg) {
-//                    console.log(msg);
-//                },
-                host: this.server.get('ipv4'),
-                port: this.server.get('port'),
-                username: this.server.get('username')
-            };
-
             if(this.server.get('keyPath') !== null) {
                 try {
-                    connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
+                    this.connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
                 } catch(e) {
                     this.set('connection_status', 'ssh key error');
                     callback();
                     return;
                 }
             }
-            else {
-                // TODO: prompt for password
-                connectOptions.password = 'vagrant';
-            }
 
             try {
-                sshProxy.connect(connectOptions);
+                sshProxy.connect(this.connectOptions);
             } catch(e) {
                 this.set('connection_status', 'connection error');
                 callback();

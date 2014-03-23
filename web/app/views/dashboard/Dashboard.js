@@ -43,6 +43,7 @@ define(function (require_browser, exports, module) {
         },
 
         onActiveServerChange: function(server) {
+            // TODO: make sure previously connected server is disconnected
             var serverConnection = new ServerConnection({connection_status: 'connecting'}, {server: server});
             App.showModal(new ServerConnectionModal({model: serverConnection}));
             serverConnection.connect();
