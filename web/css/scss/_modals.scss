@@ -55,6 +55,20 @@
   h4, span.connection-status {
     text-transform: capitalize;
   }
+
+  .connection-error {
+    ul {
+      margin-left: 38px;
+      list-style-type: circle;
+    }
+  }
+
+  .password-required {
+    .server-username {
+      font-style: italic;
+      font-weight: bold;
+    }
+  }
 }
 
 

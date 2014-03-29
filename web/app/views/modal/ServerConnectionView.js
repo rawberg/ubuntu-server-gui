@@ -18,14 +18,15 @@ define(function (require_browser, exports, module) {
 
         connection_bindings: {
             'h4.modal-title': 'connection_status',
-            'span.connection-status': 'connection_status'
+            'span.connection-status': 'connection_status',
+            'input[name="ssh_password"]': 'ssh_password'
         },
 
         server_bindings: {
-            'span.server-name': 'name',
-            'span.server-username': 'username',
-            'span.server-port': 'port',
-            'span.server-addr': 'ipv4'
+            '.server-name': 'name',
+            '.server-username': 'username',
+            '.server-port': 'port',
+            '.server-addr': 'ipv4'
         },
 
         modelEvents: {
@@ -33,13 +34,14 @@ define(function (require_browser, exports, module) {
         },
 
         events: {
-            'click button[name="cancel"]': 'onCancel'
+            'click button[name="cancel"]': 'onCancel',
+            'click button[name="connect"]': 'onClickConnect'
         },
 
         getTemplate: function() {
             if(this.model.get('connection_status') === 'connecting' || this.model.get('connection_status') === 'connected') {
                 return _.template(serverConnectingTpl);
-            } else if(this.model.get('connection_status') === 'password_required') {
+            } else if(this.model.get('connection_status') === 'password required') {
                 return _.template(serverConnectPasswordPromptTpl);
             } else {
                 return _.template(serverConnectErrorTpl);
@@ -60,6 +62,10 @@ define(function (require_browser, exports, module) {
 
         onCancel: function(eventObj) {
             App.execute('modal:close');
+        },
+
+        onClickConnect: function(eventObj) {
+            this.model.connect();
         },
 
         onRender: function() {

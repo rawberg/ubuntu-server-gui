@@ -11,6 +11,7 @@ define(function (require_browser) {
         serverConnectErrorTpl = require_browser('text!views/modal/templates/server-connection-error.html');
 
     describe('ServerConnectionView', function() {
+        // TODO: convert these to integration tests
         describe('onRender', function() {
             var server, serverConnection;
             var serverConnectionView;
@@ -67,7 +68,7 @@ define(function (require_browser) {
             });
 
             it('retrieves the correct tempate on "password_required" status', function() {
-                serverConnection.set('connection_status', 'password_required');
+                serverConnection.set('connection_status', 'password required');
                 serverConnectionView.render();
                 sinon.assert.calledWith(templateSpy, serverConnectPasswordPromptTpl);
             });

@@ -6823,6 +6823,14 @@ footer #center_footerbar {
 .modal-connection-server h4, .modal-connection-server span.connection-status {
   text-transform: capitalize;
 }
+.modal-connection-server .connection-error ul {
+  margin-left: 38px;
+  list-style-type: circle;
+}
+.modal-connection-server .password-required .server-username {
+  font-style: italic;
+  font-weight: bold;
+}
 
 .noobtour-popover {
   border-bottom-left-radius: 0px;
