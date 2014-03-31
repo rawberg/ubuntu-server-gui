@@ -36,7 +36,8 @@ define(function (require_browser, exports, module) {
 
         events: {
             'click button[name="cancel"]': 'onCancel',
-            'click button[name="connect"]': 'onClickConnect'
+            'click button[name="connect"]': 'onClickConnect',
+            'keyup input': 'onInputKeyup',
         },
 
         getTemplate: function() {
@@ -61,15 +62,33 @@ define(function (require_browser, exports, module) {
             }
         },
 
+        onInputKeyup: function(eventObj) {
+            eventObj.stopPropagation();
+            eventObj.preventDefault();
+            eventObj.returnValue = false;
+            if (eventObj.keyCode === 13) {
+                this.onClickConnect(eventObj);
+            }
+            return false;
+        },
+
         onCancel: function(eventObj) {
             App.execute('modal:close');
         },
 
         onClickConnect: function(eventObj) {
-            this.model.connect();
+            eventObj.stopPropagation();
+            eventObj.preventDefault();
+            eventObj.returnValue = false;
+
+            this.hideError();
+            this.disableForm();
+            this.model.connect();    
         },
 
         onRender: function() {
+            this.clearForm();
+            this.enableForm();
             this.stickit(this.model, this.connection_bindings);
             this.stickit(this.model.server, this.server_bindings);
         },
