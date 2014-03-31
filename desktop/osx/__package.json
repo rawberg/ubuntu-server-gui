@@ -1,0 +1,12 @@
+{
+    "main": "file:///Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/web/testrunner_app-int.html",
+    "name": "Ubuntu Server GUI - App Integration Testrunner",
+    "window": {
+        "width": 1000,
+        "height": 800,
+        "position": "mouse",
+        "min_width": 600,
+        "min_height": 400,
+        "resizeable": true
+    }
+}

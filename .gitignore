@@ -2,11 +2,6 @@
 #####################
 web/.sass-cache
 
-# Node-Webkit        #
-######################
-desktop/osx
-desktop/win
-
 # Node Modules #
 ######################
 node_modules
