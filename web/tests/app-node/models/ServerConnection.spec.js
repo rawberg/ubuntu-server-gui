@@ -54,7 +54,7 @@ define(function (require_browser) {
                         jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('connected');
                         done();
                     } catch(e) {
-                        console.log(e);
+                        console.log('catch error: ', e);
                     }
                 });
             });
@@ -66,14 +66,14 @@ define(function (require_browser) {
 
                 jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
                 jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
-                serverConnection.connect({}, function() {
+                serverConnection.connect(function() {
                     try {
                         jasmine.getEnv().expect(appVentConnectSpy.calledOnce).toBeTruthy();
                         // work-around for sinon calledWith being flakey
                         jasmine.getEnv().expect(connectionStatusSpy.args[1][1]).toBe('connected');
                         done();
                     } catch(e) {
-                        console.log(e);
+                        console.log('catch error: ', e);
                     }
                 });
             });
@@ -83,13 +83,13 @@ define(function (require_browser) {
 
                 jasmine.getEnv().expect(appVentConnectSpy.called).toBeFalsy();
                 jasmine.getEnv().expect(connectionStatusSpy.called).toBeFalsy();
-                serverConnection.connect({}, function() {
+                serverConnection.connect(function() {
                     try {
                         jasmine.getEnv().expect(connectionStatusSpy.args[1][1]).toBe('password required');
                         jasmine.getEnv().expect(appVentConnectSpy.calledOnce).toBeFalsy();
                         done();
                     } catch(e) {
-                        console.log(e);
+                        console.log('catch error: ', e);
                     }
                 });
             });
@@ -104,7 +104,7 @@ define(function (require_browser) {
                         jasmine.getEnv().expect(connectionStatusSpy.args[0][1]).toBe('ssh key error');
                         done();
                     } catch(e) {
-                        console.log(e);
+                        console.log('catch error: ', e);
                     }
                 });
             });
@@ -122,7 +122,6 @@ define(function (require_browser) {
                         done();
                     } catch(e) {
                        fs.unlinkSync('/tmp/bogus.key');
-                       console.log(e);
                     }
                 });
             });

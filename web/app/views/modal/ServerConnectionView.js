@@ -3,6 +3,7 @@ define(function (require_browser, exports, module) {
         _ = require_browser('underscore'),
         Marionette = require_browser('marionette'),
         App = require_browser('App'),
+        BaseForm = require_browser('views/BaseForm'),
         Server = require_browser('models/Server'),
         serverConnectingTpl = require_browser('text!views/modal/templates/server-connection-connecting.html'),
         serverConnectPasswordPromptTpl = require_browser('text!views/modal/templates/server-connection-password.html'),
@@ -12,7 +13,7 @@ define(function (require_browser, exports, module) {
     /**
      * @params {model: Server}
      */
-    return Marionette.ItemView.extend({
+    return BaseForm.extend({
         tagName: 'div',
         className: 'modal-dialog modal-connection-server',
 

@@ -5,7 +5,7 @@ define(function (require_browser) {
     return Backbone.Model.extend({
         defaults: {
             connection_status: undefined,
-            ssh_password: undefined,
+            ssh_password: '',
             sshProxy: undefined,
         },
 
@@ -16,20 +16,18 @@ define(function (require_browser) {
             this.server = options.server
         },
 
-        connect: function(options, callback) {
-            options = _.isObject(options) ? options : {};
+        connect: function(callback) {
+            callback = _.isFunction(callback) ? callback : function() {};
             if(typeof process === 'undefined') {
                 throw 'cannot connect to a server from a web browser';
             }
 
             this.set('connection_status', 'connecting');
-            if((this.server.get('keyPath') !== null) || !_.isUndefined(this.get('ssh_password'))) {
+            if((this.server.get('keyPath') !== null) || this.get('ssh_password') !== '') { // typeof this.get('ssh_password') !== 'undefined') {
                 this.initiateLocalProxy(callback);
-            } else if(_.isUndefined(this.get('ssh_password'))) {
+            } else if(this.get('ssh_password') === '') {
                 this.set('connection_status', 'password required');
-                if(_.isFunction(callback)) {
-                    callback();
-                }
+                callback();
             }
         },
 
@@ -59,26 +57,6 @@ define(function (require_browser) {
                 port: this.server.get('port'),
                 username: this.server.get('username')
             };
-
-            if(this.server.get('keyPath') !== null) {
-                try {
-                    connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
-                } catch(e) {
-                    this.set('connection_status', 'ssh key error');
-                    callback();
-                    return;
-                }
-            } else if(this.get('ssh_password')) {
-                connectOptions.password = this.get('ssh_password');
-            }
-
-            try {
-                sshProxy.connect(connectOptions);
-            } catch(e) {
-                this.set('connection_status', 'connection error');
-                callback();
-                return;
-            }
 
             sshProxy.on('ready', _.bind(function() {
 //                connectOptions.password = undefined;
@@ -126,6 +104,24 @@ define(function (require_browser) {
                         callback(data.toString());
                     });
                 });
+            }
+
+            if(this.server.get('keyPath') !== null) {
+                try {
+                    connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
+                } catch(e) {
+                    this.set('connection_status', 'ssh key error');
+                    callback();
+                }
+            } else if(this.get('ssh_password')) {
+                connectOptions.password = this.get('ssh_password');
+            }
+
+            try {
+                sshProxy.connect(connectOptions);
+            } catch(e) {
+                this.set('connection_status', 'connection error');
+                callback();
             }
         }
 

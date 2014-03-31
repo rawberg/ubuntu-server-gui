@@ -42,8 +42,16 @@ define(function (require_browser) {
 
         setActiveServer: function(server) {
             if(server instanceof Server) {
-                // remove events on current server
+                // TODO: cleanup deactivation/disconnection
                 if(this.activeServer instanceof Server) {
+                    // disconnect network connections
+                    if(this.activeServer.sshProxy) {
+                        this.activeServer.sshProxy.end();
+                    }
+                    if(this.activeServer.sftpProxy) {
+                        this.activeServer.sftpProxy.end();
+                    }
+                    // remove events on current server
                     this.activeServer.off();
                     this.activeServer.stopListening();
                 }
