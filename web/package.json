@@ -20,10 +20,11 @@
     },
 
     "devDependencies": {
-        "gulp": ">0.0.0",
-        "gulp-util": ">0.0.0",
         "nightwatch": ">0.0.0",
-        "chai": ">0.0.0"
+        "chai": ">0.0.0",
+        "less": "1.7.0",
+        "gulp": ">0.0.0",
+        "gulp-util": ">0.0.0"
     },
 
     "licenses": [{

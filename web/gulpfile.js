@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     gulp_util = require('gulp-util'),
     exec = require('child_process').exec,
+    less = require('less'),
+    path = require('path'),
     fs = require('fs');
 
 function _vagrant_destroy(cb) {
@@ -8,6 +10,11 @@ function _vagrant_destroy(cb) {
     vagrant_process.stdout.pipe(process.stdout);
     cb();
 }
+
+gulp.task('less-dev', function () {
+    var vagrant_process = exec('lessc main.less ../stylesheets/main.css', {cwd: 'css/less'});
+    vagrant_process.stdout.pipe(process.stdout);
+});
 
 gulp.task('_vagrant-distro-check', function(cb) {
     if(gulp_util.env.distro === '' || typeof gulp_util.env.distro === 'undefined') {
@@ -138,6 +145,10 @@ gulp.task('_unit-runner', function() {
             unittests.kill();
         }
     });
+});
+
+gulp.task('watch', function() {
+    gulp.watch('css/less/**/*.less', ['less-dev']);
 });
 
 

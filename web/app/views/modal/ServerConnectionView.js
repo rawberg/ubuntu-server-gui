@@ -83,7 +83,7 @@ define(function (require_browser, exports, module) {
 
             this.hideError();
             this.disableForm();
-            this.model.connect();    
+            this.model.connect();
         },
 
         onRender: function() {

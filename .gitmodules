@@ -1,4 +1,12 @@
+[submodule "web/css/bootstrap"]
+	path = web/css/bootstrap
+	url = https://github.com/rawberg/bootstrap.git
+	branch = release-v3.1.1
 [submodule "web/css/font-awesome"]
 	path = web/css/font-awesome
-	url = git://github.com/FortAwesome/Font-Awesome.git
-	branch = v3.1.1
+	url = https://github.com/rawberg/Font-Awesome.git
+	branch = release-v4.0.3
+[submodule "web/css/lesshat"]
+	path = web/css/lesshat
+	url = https://github.com/rawberg/lesshat.git
+	branch = release-v2.0.15

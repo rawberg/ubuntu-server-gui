@@ -1,0 +1,29 @@
+#file-manager-layout {
+  width: 100%;
+  min-height: 100%;
+//  @include display-flex;
+//  @include flex-direction(row);
+//  @include align-items(stretch);
+
+  #main_content {
+    overflow-y: scroll;
+  }
+
+  ::-moz-selection {
+    background-color: #FFFFFF;
+  }
+
+  ::selection {
+    background-color: #FFFFFF;
+  }
+
+  thead {
+    th {
+      i {
+        display: none;
+        margin-left: 5px;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,109 @@
+// Base Modal Styles
+#modal-container {
+    display: none;
+
+    &.modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.74);
+    }
+
+    .modal-dialog {
+        padding-top: 70px;
+    }
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .modal-title {
+        color: #000000;
+    }
+}
+
+// Add/Edit Server Modal
+.modal-dialog.modal-add-edit-server {
+    width: 500px;
+
+    .modal-header {
+        padding-left: 20px;
+    }
+
+    .modal-body {
+        padding: 20px 40px;
+    }
+
+    .btn-default[disabled] {
+      background-color: #EEE;
+      color: #9C9CA7;
+      opacity: 1;
+    }
+
+    legend {
+      font-size: 16px;
+      color: rgba(134, 134, 134, 1);
+      margin-bottom: 14px;
+    }
+
+    .form-control-static.msg {
+      font-style: italic;
+    }
+}
+
+
+// Server Connection Modal
+.modal-connection-server {
+  width: 500px;
+  h4, span.connection-status {
+    text-transform: capitalize;
+  }
+
+  .connection-error {
+    ul {
+      margin-left: 38px;
+      list-style-type: circle;
+    }
+  }
+
+  .password-required {
+    .server-username {
+      font-style: italic;
+      font-weight: bold;
+    }
+  }
+}
+
+
+// Noob Tour Styles
+.noobtour-popover {
+  border-bottom-left-radius: 0px;
+}
+
+.modal-backdrop.noobtour-backdrop {
+  &.body-minus-footer {
+        bottom: 27px;
+    }
+
+    &.footer-minus-add-server {
+        top: inherit;
+        bottom:  0px;
+        left: 30px;
+        height: 27px;
+    }
+}
+
+.noobtour-popover.popover.top {
+    z-index: 1050;
+    .arrow {
+        left:  -1px !important;
+        margin-left: 0 !important;
+        border-bottom-width: 0;
+        border-top-color: rgba(0,0,0,.25);
+        bottom: -22px;
+        border-width: 11px;
+        &:after {
+            content: " ";
+            margin-left: -10px;
+            border-bottom-width: 0;
+            border-top-color: #fff;
+        }
+    }
+}

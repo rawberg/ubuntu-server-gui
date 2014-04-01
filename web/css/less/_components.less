@@ -1,0 +1,61 @@
+table.directory-explorer {
+  width: 100%;
+  height: 100%;
+  table-layout: fixed;
+
+  thead {
+    th:first-of-type {
+      max-width: 60px;
+      min-width: 60px;
+      width: 60px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 15px;
+      color: #807B7B;
+      width: 100%;
+      height: 24px;
+      cursor: default;
+    }
+  }
+
+  tr {
+    td:first-of-type {
+      min-width: 60px;
+      max-width: 60px;
+      width: 60px;
+      text-align: center;
+    }
+  }
+
+  td {
+    text-overflow: ellipsis;
+    height: 26px;
+    cursor: default;
+
+    .icon_mode {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+
+      &.M16877 {
+        background-image: url("../images/icons/file-explorer/folder.png");
+      }
+
+      &.M41471 {
+        background-image: url("../images/icons/file-explorer/file.png");
+      }
+    }
+  }
+}
+
+.directory-explorer.table-striped tbody > tr:nth-child(odd) > td,
+.directory-explorer.table-striped tbody > tr:nth-child(odd) > th {
+  background-color: #FFFFFF;
+}
+
+.directory-explorer.table-hover tbody tr:hover > td,
+.directory-explorer.table-hover tbody tr:hover > th {
+  background-color: #F3F6FA;
+}
