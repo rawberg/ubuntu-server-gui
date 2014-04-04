@@ -39,13 +39,31 @@
 
 // Bootstrap - Components w/ JavaScript
 @import "../bootstrap/less/modals.less";
-//@import "../bootstrap/less/tooltip.less";
-//@import "../bootstrap/less/popovers.less";
+@import "../bootstrap/less/tooltip.less";
+@import "../bootstrap/less/popovers.less";
 //@import "../bootstrap/less/carousel.less";
 
 // Bootstrap - Utility classes
 @import "../bootstrap/less/utilities.less";
 //@import "../bootstrap/less/responsive-utilities.less";
+
+// FontAwesome
+@import "../font-awesome/less/variables";
+@fa-font-path: "../font-awesome/fonts/";
+@import "../font-awesome/less/mixins";
+@import "../font-awesome/less/path";
+@import "../font-awesome/less/core";
+@import "../font-awesome/less/larger";
+@import "../font-awesome/less/fixed-width";
+@import "../font-awesome/less/list";
+@import "../font-awesome/less/bordered-pulled";
+@import "../font-awesome/less/spinning";
+@import "../font-awesome/less/rotated-flipped";
+@import "../font-awesome/less/stacked";
+@import "../font-awesome/less/icons";
+
+// LESSHat
+@import "../lesshat/build/lesshat-prefixed.less";
 
 
 // USG - Core CSS
@@ -58,6 +76,87 @@
 // USG - Components
 @import "_components.less";
 @import "_context-menu.less";
+@import "_main-toolbar.less";
+@import "_main-footerbar.less";
 @import "_dashboard.less";
 @import "_login-signup.less";
 @import "_modals.less";
+
+html {
+  width: 100%;
+  min-height:100%;
+  height:100%;
+  cursor: default;
+}
+
+body {
+  position: relative;
+  height:100%;
+  cursor: default;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+#viewport {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin-bottom: -30px;
+}
+
+#main_content {
+  .lh-flex(1, 1, auto);
+  padding-top: 50px;
+  // clears top toolbar
+}
+
+.breadcrumb > li + li:before {
+  content: "\003e";
+  margin: 0 2px;
+  color: #c4c4c4;
+}
+
+//#sidebar_left {
+//  .offwhite-background();
+//  .side-panel-container();
+//  min-width: 216px;
+//  width: 216px;
+//  min-height: 100%;
+//  padding-top: 50px;
+//
+//  ul {
+//    .list-spacing();
+//    .list-background();
+//    position: fixed;
+//    min-width: 216px;
+//
+//    li {
+//      .full-width-spacing();
+//      .centered-text();
+//
+//      max-width: 215px;
+//      // allow 1px for right border
+//      height: 110px;
+//      background-image: url(../images/icons/sidebar-left/server-silver-small.png);
+//      background-position: 50% 50%;
+//      background-repeat: no-repeat;
+//      .side-panel-background();
+//      border-bottom: 1px solid #c1c1c1;
+//      border-right: 1px solid #a5a5a5;
+//
+//      &:hover {
+//        .side-panel-hover-background();
+//      }
+//
+//      span {
+//        position: relative;
+//        top: 84px;
+//        .side-panel-text();
+//        cursor: default;
+//      }
+//    }
+//  }
+//}

@@ -12,8 +12,9 @@ function _vagrant_destroy(cb) {
 }
 
 gulp.task('less-dev', function () {
-    var vagrant_process = exec('lessc main.less ../stylesheets/main.css', {cwd: 'css/less'});
-    vagrant_process.stdout.pipe(process.stdout);
+    var less_process = exec('lessc main.less ../stylesheets/main.css', {cwd: process.cwd() + '/css/less'});
+    less_process.stdout.pipe(process.stdout);
+    less_process.stderr.pipe(process.stderr);
 });
 
 gulp.task('_vagrant-distro-check', function(cb) {

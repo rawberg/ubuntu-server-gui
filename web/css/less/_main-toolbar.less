@@ -1,5 +1,27 @@
-@import "icons/toolbar/*.png";
-@include all-toolbar-sprites;
+.toolbar-sprite, .toolbar-dashboard, .toolbar-directions, .toolbar-file_cabinet, .toolbar-gear, .toolbar-server_rack {
+  background-image: url('../images/icons/toolbar-s86fc8e2e06.png');
+  background-repeat: no-repeat;
+}
+
+.toolbar-dashboard {
+  background-position: 0 0;
+}
+
+.toolbar-directions {
+  background-position: 0 -28px;
+}
+
+.toolbar-file_cabinet {
+  background-position: 0 -56px;
+}
+
+.toolbar-gear {
+  background-position: 0 -84px;
+}
+
+.toolbar-server_rack {
+  background-position: 0 -112px;
+}
 
 #main-toolbar {
     position: fixed;
@@ -9,7 +31,7 @@
     margin-bottom: 0;
     height: 49px;
     width: 100%;
-    @include background-image(linear-gradient(#262626, #222222));
+    .lh-background-image(linear-gradient(#262626, #222222));
     border-top: 1px solid #323232;
     border-bottom: 1px solid #101010;
 

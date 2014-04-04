@@ -2,21 +2,16 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-//  @include display-flex;
-//  @include flex-direction(row);
-//  @include align-items(stretch);
+  .lh-display(flex);
+  .lh-flex(1 1 auto);
+  .lh-flex-direction(row);
   background-color: #f3f4f4;
-//  @include background(linear, top, rgb(243, 244, 244), rgb(235, 235, 235), 'left top, left bottom');
-//  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#f3f4f4', EndColorStr='#ebebeb');
+  .lh-background-image(linear-gradient(rgb(243, 244, 244), rgb(235, 235, 235)));
   div#left_sidebar_footerbar, div#center_footerbar {
-    @include display-flex;
-//    @include box-sizing(border-box);
-//    @include flex-direction(row);
-//    @include align-items(stretch);
     border-top: 1px solid #d4d4d4;
   }
   #left_sidebar_footerbar {
-//    @include flex(0);
+    .lh-flex(0 1 auto);
     min-width: 216px;
     width: 216px;
 //    border-right: 1px solid #a5a5a5;
@@ -45,7 +40,7 @@ footer {
     }
   }
   #center_footerbar {
-//    @include flex(1);
+    .lh-flex(1 1 auto);
   }
 
 }
