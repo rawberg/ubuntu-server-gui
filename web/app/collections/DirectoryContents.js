@@ -78,6 +78,13 @@ define(function (require_browser, exports, module) {
             }
         },
 
+        parse: function(resp, options) {
+            // TODO consider achieving this result by overriding SFTP opendir config
+            return _.reject(resp, function(item) {
+                return item.filename === '.' || item.filename === '..';
+            })
+        },
+
         filenameSort: function(modelOne, modelTwo) {
             if(this.sortDirection === 'ASC') {
                 return (modelOne.get('filename')) > (modelTwo.get('filename')) ? 1 : -1;
