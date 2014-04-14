@@ -6777,54 +6777,6 @@ button.close {
 .list-spacing {
   margin: 0;
 }
-table.directory-explorer {
-  width: 100%;
-  height: 100%;
-  table-layout: fixed;
-}
-table.directory-explorer thead th:first-of-type {
-  max-width: 60px;
-  min-width: 60px;
-  width: 60px;
-}
-table.directory-explorer thead th {
-  text-align: left;
-  font-size: 15px;
-  color: #807B7B;
-  width: 100%;
-  height: 24px;
-  cursor: default;
-}
-table.directory-explorer tr td:first-of-type {
-  min-width: 60px;
-  max-width: 60px;
-  width: 60px;
-  text-align: center;
-}
-table.directory-explorer td {
-  text-overflow: ellipsis;
-  height: 26px;
-  cursor: default;
-}
-table.directory-explorer td .icon_mode {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-}
-table.directory-explorer td .icon_mode.M16877 {
-  background-image: url("../images/icons/file-explorer/folder.png");
-}
-table.directory-explorer td .icon_mode.M41471 {
-  background-image: url("../images/icons/file-explorer/file.png");
-}
-.directory-explorer.table-striped tbody > tr:nth-child(odd) > td,
-.directory-explorer.table-striped tbody > tr:nth-child(odd) > th {
-  background-color: #FFFFFF;
-}
-.directory-explorer.table-hover tbody tr:hover > td,
-.directory-explorer.table-hover tbody tr:hover > th {
-  background-color: #F3F6FA;
-}
 body div._contextmenu_screen_ {
   position: fixed;
   top: 0;
@@ -7257,6 +7209,76 @@ footer #center_footerbar {
 }
 #dashboard_layout .software .platform-container .right span {
   text-align: left;
+}
+#file-manager-layout {
+  width: 100%;
+  min-height: 100%;
+}
+#file-manager-layout #main_content {
+  overflow-y: scroll;
+}
+#file-manager-layout ::-moz-selection {
+  background-color: #FFFFFF;
+}
+#file-manager-layout ::selection {
+  background-color: #FFFFFF;
+}
+#file-manager-layout thead th i {
+  display: none;
+  margin-left: 5px;
+}
+table.directory-explorer {
+  width: 100%;
+  height: 100%;
+  table-layout: fixed;
+}
+table.directory-explorer thead th:first-of-type {
+  max-width: 60px;
+  min-width: 60px;
+  width: 60px;
+}
+table.directory-explorer thead th {
+  text-align: left;
+  font-size: 15px;
+  color: #807B7B;
+  width: 100%;
+  height: 24px;
+  cursor: default;
+}
+table.directory-explorer tr td:first-of-type {
+  min-width: 60px;
+  max-width: 60px;
+  width: 60px;
+  text-align: center;
+  vertical-align: bottom;
+}
+table.directory-explorer td {
+  text-overflow: ellipsis;
+  height: 26px;
+  cursor: default;
+}
+table.directory-explorer td .icon_mode {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+table.directory-explorer td .icon_mode.M16877 {
+  background-image: url("../images/icons/file-explorer/folder.png");
+}
+table.directory-explorer td .icon_mode.M41471 {
+  background-image: url("../images/icons/file-explorer/file.png");
+}
+.directory-explorer.table-striped tbody > tr:nth-child(odd) > td,
+.directory-explorer.table-striped tbody > tr:nth-child(odd) > th {
+  background-color: #FFFFFF;
+}
+.directory-explorer.table-striped tbody > tr:nth-child(even) > td,
+.directory-explorer.table-striped tbody > tr:nth-child(even) > th {
+  background-color: #f3f6fa;
+}
+.directory-explorer.table-hover tbody tr:hover > td,
+.directory-explorer.table-hover tbody tr:hover > th {
+  background-color: #F3F6FA;
 }
 .login-signup-layout {
   width: 100%;
