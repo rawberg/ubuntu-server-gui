@@ -1,5 +1,6 @@
 footer {
   position: fixed;
+  z-index: 99999;
   bottom: 0;
   width: 100%;
   .lh-display(flex);
@@ -7,9 +8,11 @@ footer {
   .lh-flex-direction(row);
   background-color: #f3f4f4;
   .lh-background-image(linear-gradient(rgb(243, 244, 244), rgb(235, 235, 235)));
+
   div#left_sidebar_footerbar, div#center_footerbar {
     border-top: 1px solid #d4d4d4;
   }
+
   #left_sidebar_footerbar {
     .lh-flex(0 1 auto);
     min-width: 216px;
@@ -39,6 +42,7 @@ footer {
       }
     }
   }
+
   #center_footerbar {
     .lh-flex(1 1 auto);
   }

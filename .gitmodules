@@ -10,3 +10,7 @@
 	path = web/css/lesshat
 	url = https://github.com/rawberg/lesshat.git
 	branch = release-v2.0.15
+[submodule "web/libs/codemirror"]
+	path = web/libs/codemirror
+	url = https://github.com/rawberg/CodeMirror.git
+	branch = release-v4.0.3

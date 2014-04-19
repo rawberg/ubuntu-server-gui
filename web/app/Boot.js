@@ -21,6 +21,9 @@ require_browser.config({
         gauge: '../libs/gauge.js/gauge.min',
         contextmenu: '../libs/contextmenu/contextmenu',
 
+        // CodeMirror
+        codemirror: '../libs/codemirror/lib/codemirror',
+
         // Misc
         text: '../libs/require/text',
         moment: '../libs/moment/moment',

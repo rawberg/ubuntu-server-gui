@@ -1,3 +1,7 @@
+@import "../../libs/codemirror/lib/codemirror.css";
+@import "../../libs/codemirror/theme/twilight.css";
+@import "../../libs/codemirror/theme/monokai.css";
+@import "../../libs/codemirror/theme/pastel-on-dark.css";
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -7013,6 +7017,7 @@ body menu {
 }
 footer {
   position: fixed;
+  z-index: 99999;
   bottom: 0;
   width: 100%;
   display: -webkit-box;
@@ -7279,6 +7284,30 @@ table.directory-explorer td .icon_mode.M41471 {
 .directory-explorer.table-hover tbody tr:hover > td,
 .directory-explorer.table-hover tbody tr:hover > th {
   background-color: #F3F6FA;
+}
+#editor_layout {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding-top: 50px;
+  background-color: rgba(0, 0, 0, 0.79);
+}
+#editor-region {
+  height: 100%;
+  min-height: 100%;
+}
+.CodeMirror,
+.CodeMirror-scroll {
+  min-height: 100%;
+  height: 100%;
+  padding-bottom: 30px;
+  margin-bottom: 0px;
+}
+.CodeMirror-gutter {
+  margin-bottom: 0px;
+}
+.CodeMirror-gutters {
+  margin-bottom: 0px;
 }
 .login-signup-layout {
   width: 100%;
