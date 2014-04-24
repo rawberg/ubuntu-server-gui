@@ -8,7 +8,6 @@ define(function (require_browser) {
             "filemanager": "filemanager",
             "filemanager/*path": "filemanager",
             "dashboard": "dashboard",
-            "editor": "editor",
             "auth/login": "login",
             "*path": "dashboard"
         }

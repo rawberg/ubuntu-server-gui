@@ -107,17 +107,18 @@ define(function (require_browser, exports, module) {
         },
 
         initialize: function(options) {
-            this.on('itemview:filename:click', _.bind(this.onFilenameClick, this));
+            this.listenTo(this, 'itemview:filename:click', this.onFilenameClick);
         },
 
         close: function() {
-            this.off('itemview:filename:click');
         },
 
         onFilenameClick: function(itemView) {
-            var dirObject = itemView.model;
+            var dirObject = itemView.model
             if(dirObject.get('mode') === 16877) {
                 this.model.appendPath(dirObject.get('filename'));
+            } else {
+                this.trigger('filemanager:file:click', itemView.model, this.model.get('path'));
             }
         },
 
@@ -154,6 +155,9 @@ define(function (require_browser, exports, module) {
         },
 
         initialize: function(options) {
+            if(typeof options.controllerTriggers === 'undefined') {
+                throw 'controllerTriggers is a required option';
+            }
             App.vent.on('server:selected', this.onServerSelected, this);
             App.vent.on('server:connected', this.transitionToShowFileManager, this);
         },
@@ -161,6 +165,11 @@ define(function (require_browser, exports, module) {
         close: function() {
             App.vent.off('server:selected', this.onServerSelected);
             App.vent.off('server:connected', this.transitionToShowFileManager);
+        },
+
+        onFileClick: function(fileModel, path) {
+            var filePath = path + fileModel.get('filename');
+            this.options.controllerTriggers.execute('filemanager:file:click', filePath);
         },
 
         onRender: function() {
@@ -182,13 +191,14 @@ define(function (require_browser, exports, module) {
             var directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
 
             var directoryExplorerView = new DirectoryExplorerView({model: directoryExplorer, collection: directoryContents});
+            this.listenTo(directoryExplorerView, 'filemanager:file:click', this.onFileClick);
+
             var directoryBreadcrumbView = new DirectoryBreadcrumbView({collection: directoryBreadcrumbs, directoryExplorer: directoryExplorer});
 
             this.explorerRegion.show(directoryExplorerView);
             this.breadcrumbRegion.show(directoryBreadcrumbView);
             directoryContents.fetch();
             directoryBreadcrumbs.fetch();
-
         },
 
         transitionToShowFileManager: function(server) {

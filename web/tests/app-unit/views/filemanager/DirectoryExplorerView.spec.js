@@ -31,12 +31,16 @@ define(function (require_browser) {
                 sinon.assert.calledOnce(appendPathSpy);
             });
 
-            it("doesn't call directoryExplorer.appendPath if model is not a directory", function() {
+            it("triggers filemanager:filename:click if model is not a directory", function() {
+                var filenameClickSpy = sinon.spy();
                 var modeStub = sinon.stub();
-                mockClickedDirObj = {model: {get: modeStub.withArgs('mode').returns(99977)}};
+                mockClickedDirObj = {model: {get: modeStub.withArgs('mode').returns(26977)}};
 
-                sinon.assert.notCalled(appendPathSpy)
+                directoryExplorerView.on('filemanager:file:click', filenameClickSpy);
                 directoryExplorerView.onFilenameClick(mockClickedDirObj);
+
+                jasmine.getEnv().expect(filenameClickSpy.args[0].length).toBe(2);
+                sinon.assert.calledOnce(filenameClickSpy);
                 sinon.assert.notCalled(appendPathSpy);
             })
         });
