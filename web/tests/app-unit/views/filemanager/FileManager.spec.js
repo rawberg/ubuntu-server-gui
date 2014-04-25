@@ -11,17 +11,21 @@ define(function (require_browser) {
         FileManagerLayout = require_browser('views/filemanager/FileManager').FileManagerLayout,
         ServerConnectionModal = require_browser('views/modal/ServerConnectionView');
 
-    xdescribe('FileManager', function() {
+    describe('FileManager', function() {
 
         describe('onServerSelected', function() {
-            var fileManagerLayout;
+            var fileManagerLayout, posStub;
             var modalShowSpy, serverConnectSpy;
 
             beforeEach(function() {
-                App._initCallbacks.run(undefined, App);
-                fileManagerLayout = new FileManagerLayout();
+                posStub = sinon.stub($.prototype, 'offset');
+                posStub.returns({top: 500, bottom: 540});
+
                 modalShowSpy = sinon.stub(App, 'showModal');
-                serverConnectSpy = sinon.spy(ServerConnection.prototype, 'connect');
+                serverConnectSpy = sinon.stub(ServerConnection.prototype, 'connect');
+
+                App._initCallbacks.run(undefined, App);
+                fileManagerLayout = new FileManagerLayout({controllerTriggers: sinon.stub()});
 
                 var fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
                 App.vent.trigger('server:selected', fakeServer);
@@ -30,44 +34,62 @@ define(function (require_browser) {
             afterEach(function() {
                 modalShowSpy.restore();
                 serverConnectSpy.restore();
+                posStub.restore();
                 App.activeServer = undefined; // avoid test pollution
             });
 
             it('calls connect on the ServerConnection model', function() {
-                (serverConnectSpy).should.have.been.called;
+                sinon.assert.called(serverConnectSpy);
             });
 
             it('shows the server connection modal', function() {
-                (modalShowSpy).should.have.been.called;
-                (modalShowSpy.args[0][0]).should.be.an.instanceof(ServerConnectionModal);
+                sinon.assert.called(modalShowSpy);
+                expect(modalShowSpy.args[0][0]).to.be.an.instanceof(ServerConnectionModal);
             });
         });
 
-        describe('onRender', function() {
+        describe('initialize', function() {
             var fileManagerLayout, fakeServer;
             var showFileManagerSpy;
 
             beforeEach(function() {
-                fileManagerLayout = new FileManagerLayout();
+            });
+
+            afterEach(function() {
+            });
+
+            it('trhows an exception if options.controllerTriggers is not defined', function() {
+                var exceptSpy = sinon.spy(FileManagerLayout.prototype, 'initialize');
+                try {
+                    directoryBreadcrumbs = new FileManagerLayout();
+                } catch(e) {
+                    sinon.assert.threw(exceptSpy);
+                }
+                sinon.assert.threw(exceptSpy);
+            });
+
+        });
+
+        describe('onRender', function() {
+            var fileManagerLayout, fakeServer;
+            var getActiveServerSpy, showFileManagerSpy;
+
+            beforeEach(function() {
+                fileManagerLayout = new FileManagerLayout({controllerTriggers: sinon.stub()});
                 showFileManagerSpy = sinon.stub(FileManagerLayout.prototype, 'showFileManager');
 
                 fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
             });
 
             afterEach(function() {
+                getActiveServerSpy.restore();
                 showFileManagerSpy.restore();
             });
 
             it('doesn\'t call showFileManager without an actively selected Server', function() {
-                App.activeServer = undefined;
+                getActiveServerSpy = sinon.stub(App, 'getActiveServer').returns(undefined);
                 fileManagerLayout.render();
                 (showFileManagerSpy).should.not.have.been.called;
-            });
-
-            it('calls showFileManager when a Server is actively selected', function() {
-                App.activeServer = fakeServer;
-                fileManagerLayout.render();
-                (showFileManagerSpy).should.have.been.called;
             });
 
         });
