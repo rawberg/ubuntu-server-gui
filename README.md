@@ -1,32 +1,40 @@
 Ubuntu Server GUI
 =================
 
-GUI client app designed to work with the [Ubuntu Server API](https://github.com/rawberg/ubuntu-server-api).
+Open Source node-webkit based GUI manager for Ubuntu Servers.
 
-### Status - Developer Preview
-This is a very early version of the app I'm releasing to get developer feedback.
+### Tech Specs
+- Single Page JavaScript app using Backbone, Marionette, StickIt, RequireJS & Gulp
+- Jasmine unit tests for client side app and nodejs components
+- Selenium + Vagrant handles integration between GUI app and server operations
+- Gulp driven tooling for smooth test orchestration
+- NodeJS makes direct SSH connections to servers and handles local & remote i/o
+- Ansible driven configuration management
 
-### Install For Developers
-    git clone git@github.com:rawberg/ubuntu-server-gui.git ubuntu-server-gui
-    cd ubuntu-server-gui
-    npm install .
-    setup a local web server to point to public/index.html
-    (getting started will be easier soon, I promise)
-    
-### Install Notes
-- make sure you install the [server side application]((https://github.com/rawberg/ubuntu-server-api) on any servers you'd like to connect too
+### Dev Setup on OSX
+- git clone git@github.com:rawberg/ubuntu-server-gui.git usg
+- git submodule init
+- git submodule update
+- npm install .
 
-### Deployment
-    running grunt build will create a "deployable" directory containing an optimized version ready for deployment
+### Running
+- cd usg/web
+- ../desktop/osx/node-webkit.app/Contents/MacOS/node-webkit .
 
-### Tests
-- written with [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/api/bdd/)
-- open public/test/TestRunner.html in a browser to run them
+### Testing
+- brew install vagrant
+- npm install .
+- gulp app-unit // runs all the unit tests
+- gulp app-node // run the node component tests
+- gulp app-integration  // run the integration tests (uses selenium and vagrant)
+
+### Status - Beta
+I re-architected this app 3+ times over the last two years but it's finally ready to blossom.
 
 ### Documentation
 - for now the tests and source code are the best documentation
 - all test cases have been carefully worded to explain what each unit is responsible for
-- pretty documentation is coming soon
+
 
 ### License
 [GPL 3.0](http://opensource.org/licenses/GPL-3.0)
