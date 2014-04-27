@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/rawberg/ubuntu-server-gui.png?label=ready&title=Ready)](https://waffle.io/rawberg/ubuntu-server-gui)
 Ubuntu Server GUI
 =================
 
