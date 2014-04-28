@@ -44,8 +44,8 @@ Security issues are treated with the highest priority. Please report any potenti
 * [node ssh2 library](https://github.com/mscdex/ssh2) 
 
 ### Contact
-\#\#ubuntu-server-gui on freenode 
-@ubuntu-server-gui on twitter
+\#\#ubuntu-server-gui on freenode  
+@ubuntu-server-gui on twitter  
 
 ### License
 [GPL 3.0](http://opensource.org/licenses/GPL-3.0)
