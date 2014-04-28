@@ -13,6 +13,28 @@ define(function (require_browser) {
 
     describe('FileManager', function() {
 
+        describe('initialize', function() {
+            var fileManagerLayout, fakeServer;
+            var showFileManagerSpy;
+
+            beforeEach(function() {
+            });
+
+            afterEach(function() {
+            });
+
+            it('trhows an exception if options.controllerTriggers is not defined', function() {
+                var exceptSpy = sinon.spy(FileManagerLayout.prototype, 'initialize');
+                try {
+                    directoryBreadcrumbs = new FileManagerLayout();
+                } catch(e) {
+                    sinon.assert.threw(exceptSpy);
+                }
+                sinon.assert.threw(exceptSpy);
+            });
+
+        });
+
         describe('onServerSelected', function() {
             var fileManagerLayout, posStub;
             var modalShowSpy, serverConnectSpy;
@@ -46,28 +68,6 @@ define(function (require_browser) {
                 sinon.assert.called(modalShowSpy);
                 expect(modalShowSpy.args[0][0]).to.be.an.instanceof(ServerConnectionModal);
             });
-        });
-
-        describe('initialize', function() {
-            var fileManagerLayout, fakeServer;
-            var showFileManagerSpy;
-
-            beforeEach(function() {
-            });
-
-            afterEach(function() {
-            });
-
-            it('trhows an exception if options.controllerTriggers is not defined', function() {
-                var exceptSpy = sinon.spy(FileManagerLayout.prototype, 'initialize');
-                try {
-                    directoryBreadcrumbs = new FileManagerLayout();
-                } catch(e) {
-                    sinon.assert.threw(exceptSpy);
-                }
-                sinon.assert.threw(exceptSpy);
-            });
-
         });
 
         describe('onRender', function() {

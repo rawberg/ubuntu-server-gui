@@ -30,12 +30,17 @@ Open Source node-webkit based GUI manager for Ubuntu Servers.
 - ```gulp app-integration  // run the integration tests (uses selenium and vagrant)```
 
 ### Status - Beta
-I re-architected this app 3+ times over the last two years but it's finally ready to blossom.
+I re-architected this app 3+ times over the last two years but it's finally ready to blossom!
 
 ### Documentation
 - for now the tests and source code are the best documentation
 - all test cases have been carefully worded to explain what each unit is responsible for
 
+### Security
+
+### Contact
+##ubuntu-server-gui on freenode
+@ubuntu-server-gui on twitter
 
 ### License
 [GPL 3.0](http://opensource.org/licenses/GPL-3.0)

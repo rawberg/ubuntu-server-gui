@@ -158,6 +158,7 @@ define(function (require_browser, exports, module) {
             if(typeof options.controllerTriggers === 'undefined') {
                 throw 'controllerTriggers is a required option';
             }
+            options.path = options.path ? options.path : '/';
             App.vent.on('server:selected', this.onServerSelected, this);
             App.vent.on('server:connected', this.transitionToShowFileManager, this);
         },
@@ -169,7 +170,7 @@ define(function (require_browser, exports, module) {
 
         onFileClick: function(fileModel, path) {
             var filePath = path + fileModel.get('filename');
-            this.options.controllerTriggers.execute('filemanager:file:click', filePath);
+            this.options.controllerTriggers.execute('navigate', 'editor', {file: fileModel.get('filename'), path: path});
         },
 
         onRender: function() {
@@ -186,7 +187,7 @@ define(function (require_browser, exports, module) {
         },
 
         showFileManager: function(server) {
-            var directoryExplorer = new DirectoryExplorer();
+            var directoryExplorer = new DirectoryExplorer({path: this.options.path});
             var directoryContents = new DirectoryContents([], {directoryExplorer: directoryExplorer, server: server});
             var directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
 

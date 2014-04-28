@@ -11,8 +11,6 @@ define(function (require_browser) {
         initialize: function() {
             this.App = App;
             BaseController.prototype.initialize.apply(this, arguments);
-            this.controllerTriggers = new Backbone.Wreqr.Commands();
-            this.controllerTriggers.setHandler('filemanager:file:click', this._editor, this);
         },
 
         dashboard: function() {
@@ -20,13 +18,20 @@ define(function (require_browser) {
             this.App.mainViewport.show(dashboardLayout);
         },
 
-        _editor: function(filePath) {
-            var editorLayout = new EditorLayout();
+        editor: function(options) {
+            var editorLayout = new EditorLayout({
+                controllerTriggers: this.controllerTriggers,
+                file: options.file,
+                path: options.path
+            });
             this.App.mainViewport.show(editorLayout);
         },
 
-        filemanager: function() {
-            var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout({controllerTriggers: this.controllerTriggers});
+        filemanager: function(dirPath) {
+            var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout({
+                controllerTriggers: this.controllerTriggers,
+                path: dirPath
+            });
             this.App.mainViewport.show(fileManagerLayout);
         }
     });
