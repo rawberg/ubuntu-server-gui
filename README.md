@@ -37,7 +37,7 @@ I re-architected this app 3+ times over the last two years but it's finally read
 - all test cases have been carefully worded to explain what each unit is responsible for
 
 ### Security
-Security issues will be treated with the highest priority. Please report any potential security concerns via the channels below and they will handled immediately!
+Security issues are treated with the highest priority. Please report any potential security concerns via the channels below and they be will handled immediately!
 
 ###### Links
 * [node-webkit security wiki page](https://github.com/rogerwang/node-webkit/wiki/Security) 
