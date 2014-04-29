@@ -72,10 +72,11 @@ define(function (require_browser) {
                     sftpConnection.on('end', function () {
                         console.log('SFTP :: SFTP session closed');
                     });
+
+                    App.vent.trigger('server:connected', this.server);
+                    callback();
                 }, this));
 
-                App.vent.trigger('server:connected', this.server);
-                callback();
             }, this));
 
             //TODO: find a better place or logging and error trapping

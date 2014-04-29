@@ -5,7 +5,9 @@ define(function (require_browser) {
         ServerList = require_browser('collections/ServerList'),
         ServerConnection = require_browser('models/ServerConnection');
 
-    var fs = require('fs');
+    var fs = require('fs'),
+        StringDecoder = require('string_decoder').StringDecoder;
+
 
     describe('ServerConnection - Model', function() {
 
@@ -137,6 +139,59 @@ define(function (require_browser) {
                 });
             });
 
+        });
+
+    });
+
+    describe('ServerConnection - sftpConnection', function() {
+
+        describe('sftpProxy', function() {
+            var server, serversCollection, serverConnection;
+
+            beforeEach(function(done) {
+                serversCollection = new ServerList();
+                serversCollection.fetch({success: function() {
+                    server = serversCollection.at(0);
+                    serverConnection = new ServerConnection({}, {server: server});
+                    serverConnection.initiateLocalProxy(function() {
+                        done();
+                    });
+                }});
+            });
+
+            afterEach(function(done) {
+                serverConnection.disconnect();
+                if(serverConnection.sshProxy && serverConnection.sshProxy._state !== 'closed') {
+                    serverConnection.sshProxy.on('end', function() {
+                       done();
+                    });
+                    try {
+                        serverConnection.sshProxy.end();
+                        done();
+                    } catch(e) {
+                        console.log(e);
+                        done();
+                    }
+                } else {
+                    done();
+                }
+            });
+
+            it('reads a remote file', function(done) {
+                var decoder = new StringDecoder('utf8');
+                var contents = '';
+                jasmine.getEnv().expect(server.sftpProxy).toBeDefined();
+                var fsStream = server.sftpProxy.createReadStream('/etc/hostname', {encoding: 'utf8'});
+
+                fsStream.on('data', function(chunk) {
+                    contents += decoder.write(chunk);
+                });
+
+                fsStream.on('end', function() {
+                    jasmine.getEnv().expect(contents).toEqual('lucid64\n');
+                    done();
+                });
+            });
         });
 
     });
