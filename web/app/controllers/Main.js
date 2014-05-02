@@ -22,7 +22,8 @@ define(function (require_browser) {
             var editorLayout = new EditorLayout({
                 controllerTriggers: this.controllerTriggers,
                 file: options.file,
-                path: options.path
+                path: options.path,
+                server: App.getActiveServer()
             });
             this.App.mainViewport.show(editorLayout);
         },

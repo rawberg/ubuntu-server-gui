@@ -144,7 +144,8 @@ define(function (require_browser) {
     });
 
     describe('ServerConnection - sftpConnection', function() {
-
+        // These tests are really just testing ssh2 module sftp functionality
+        // since that library doesn't have it's own tests, keeping these for now.
         describe('sftpProxy', function() {
             var server, serversCollection, serverConnection;
 
@@ -190,6 +191,35 @@ define(function (require_browser) {
                 fsStream.on('end', function() {
                     jasmine.getEnv().expect(contents).toEqual('lucid64\n');
                     done();
+                });
+            });
+
+            it('throws expected error when file doesn\'t exist', function(done) {
+                var fsStream = server.sftpProxy.createReadStream('/etc/doesnotexist', {encoding: 'utf8'});
+                fsStream.on('error', function(err) {
+                    jasmine.getEnv().expect(err.type).toBe('NO_SUCH_FILE');
+                    done();
+                });
+            });
+
+            it('throws expected file permissions error', function(done) {
+                var fsStream = server.sftpProxy.createReadStream('/etc/sudoers', {encoding: 'utf8'});
+                fsStream.on('error', function(err) {
+                    jasmine.getEnv().expect(err.type).toBe('PERMISSION_DENIED');
+                    done();
+                });
+            });
+
+            it('writes a new remote file', function(done) {
+                var writeStream = server.sftpProxy.createWriteStream('/tmp/testfile.txt', {encoding: 'utf8'});
+                writeStream.end(new Buffer('test string from app-node test runner\n', 'utf8'), 'utf8', function() {
+                    server.sftpProxy.stat('/tmp/testfile.txt', function(err, stats) {
+                        jasmine.getEnv().expect(err).toBeUndefined();
+                        jasmine.getEnv().expect(stats.size).toBe(38);
+                        server.sftpProxy.unlink('/tmp/testfile.txt', function() {
+                            done();
+                        })
+                    });
                 });
             });
         });
