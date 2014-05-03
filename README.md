@@ -13,10 +13,14 @@ Open Source node-webkit based GUI manager for Ubuntu Servers.
 - Ansible driven configuration management
 
 ### Dev Setup on OSX
-- ```git clone git@github.com:rawberg/ubuntu-server-gui.git usg```
-- ```git submodule init```
-- ```git submodule update```
-- ```npm install .```
+```
+git clone git@github.com:rawberg/ubuntu-server-gui.git usg
+cd usg  
+git submodule init  
+git submodule update
+cd web
+npm install .
+```
 
 ### Running
 - ```cd usg/web```
