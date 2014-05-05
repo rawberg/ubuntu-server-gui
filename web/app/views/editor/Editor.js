@@ -19,13 +19,13 @@ define(function (require_browser, exports, module) {
         },
 
         initialize: function(options) {
-            // TODO: test
-            if(typeof options.file === 'undefined' || typeof options.path === 'undefined' || typeof options.server === 'undefined') {
+            if(typeof options.fileContents === 'undefined' || typeof options.dirPath === 'undefined' || typeof options.server === 'undefined') {
                 throw 'missing required options parameters';
             }
+
+            this.fileContents = options.fileContents;
             this.server = options.server;
-            this.dirPath = options.path;
-            this.filePath = options.path + options.file;
+            this.dirPath = options.dirPath;
             this.controllerTriggers = options.controllerTriggers;
             codemirror.commands.save = this.onSave;
         },
@@ -43,9 +43,8 @@ define(function (require_browser, exports, module) {
         },
 
         onShow: function() {
-            var StringDecoder = require('string_decoder').StringDecoder;
-            var decoder = new StringDecoder('utf8');
             var cm = this.cm = codemirror(this.ui.editorRegion[0], {
+                value: this.fileContents,
                 mode: 'shell',
                 theme: 'pastel-on-dark',
                 lineNumbers: true,
@@ -53,14 +52,7 @@ define(function (require_browser, exports, module) {
                 extraKeys: {'Ctrl-Esc': _.bind(this.onCloseEditor, this)}
             });
 
-            var fileStream = this.server.sftpProxy.createReadStream(this.filePath, {encoding: 'utf8'});
-            fileStream.on('data', function(chunk) {
-                cm.doc.replaceRange(decoder.write(chunk), {line: Infinity});
-            });
-
-            fileStream.on('end', function() {
-                cm.doc.setCursor(0);
-            });
+            cm.doc.setCursor(0);
         },
 
         close: function() {

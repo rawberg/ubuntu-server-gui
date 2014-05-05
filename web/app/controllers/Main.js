@@ -19,13 +19,18 @@ define(function (require_browser) {
         },
 
         editor: function(options) {
-            var editorLayout = new EditorLayout({
-                controllerTriggers: this.controllerTriggers,
-                file: options.file,
-                path: options.path,
-                server: App.getActiveServer()
-            });
-            this.App.mainViewport.show(editorLayout);
+            var server = App.getActiveServer();
+            var filePath = options.path + options.file;
+
+            server.connection.readStream(filePath, _.bind(function(fileContents) {
+                var editorLayout = new EditorLayout({
+                    controllerTriggers: this.controllerTriggers,
+                    server: App.getActiveServer(),
+                    fileContents: fileContents,
+                    dirPath: options.path
+                });
+                this.App.mainViewport.show(editorLayout);
+            }, this));
         },
 
         filemanager: function(dirPath) {

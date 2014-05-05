@@ -2,6 +2,7 @@ define(function (require_browser) {
         // Libs
     var Marionette = require_browser('marionette'),
         MainController = require_browser('controllers/Main'),
+        App = require_browser('App'),
 
         // Models
         Server = require_browser('models/Server'),
@@ -45,6 +46,33 @@ define(function (require_browser) {
 
             it("should show the dashboard layout", function() {
                 (dashboardLayoutSpy).should.have.been.called;
+            });
+        });
+
+
+        describe('editor', function() {
+            var posStub, fakeServer, readStreamMock;
+            var mainController;
+
+            beforeEach(function() {
+                posStub = sinon.stub($.prototype, 'offset');
+                posStub.returns({top: 500, bottom: 540});
+
+                App._initCallbacks.run(undefined, App);
+                var fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
+
+                fakeServer.connection = {readStream: sinon.stub().yields('valid contents')};
+                sinon.stub(App, 'getActiveServer').returns(fakeServer);
+
+                mainController = new MainController();
+                sinon.spy(mainController.App.mainViewport, 'show');
+            });
+
+            it('should show the file editor when the server returns file contents', function() {
+                mainController.editor({path: '/valid/path/', file: 'valid.txt'});
+                sinon.assert.called(mainController.App.mainViewport.show);
+                expect(mainController.App.mainViewport.show.args[0][0].options.fileContents).to.equal('valid contents');
+                expect(mainController.App.mainViewport.show.args[0][0].options.dirPath).to.equal('/valid/path/');
             });
         });
 

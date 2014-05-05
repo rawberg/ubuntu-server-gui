@@ -144,12 +144,15 @@ define(function (require_browser) {
     });
 
     describe('ServerConnection - sftpConnection', function() {
-        // These tests are really just testing ssh2 module sftp functionality
-        // since that library doesn't have it's own tests, keeping these for now.
-        describe('sftpProxy', function() {
+
+        describe('readStream', function() {
             var server, serversCollection, serverConnection;
+            var appVentReadStreamError;
 
             beforeEach(function(done) {
+                appVentReadStreamError = sinon.spy();
+                App.vent.on('file:read:error', appVentReadStreamError);
+
                 serversCollection = new ServerList();
                 serversCollection.fetch({success: function() {
                     server = serversCollection.at(0);
@@ -179,38 +182,51 @@ define(function (require_browser) {
             });
 
             it('reads a remote file', function(done) {
-                var decoder = new StringDecoder('utf8');
-                var contents = '';
-                jasmine.getEnv().expect(server.sftpProxy).toBeDefined();
-                var fsStream = server.sftpProxy.createReadStream('/etc/hostname', {encoding: 'utf8'});
-
-                fsStream.on('data', function(chunk) {
-                    contents += decoder.write(chunk);
-                });
-
-                fsStream.on('end', function() {
-                    jasmine.getEnv().expect(contents).toEqual('lucid64\n');
+                jasmine.getEnv().expect(server.connection).toBeDefined();
+                server.connection.readStream({filePath: '/etc/hostname'}, function(fileContents) {
+                    jasmine.getEnv().expect(fileContents).toEqual('lucid64\n');
                     done();
                 });
             });
 
-            it('throws expected error when file doesn\'t exist', function(done) {
-                var fsStream = server.sftpProxy.createReadStream('/etc/doesnotexist', {encoding: 'utf8'});
-                fsStream.on('error', function(err) {
-                    jasmine.getEnv().expect(err.type).toBe('NO_SUCH_FILE');
+            it('triggers App.vent error when the file doesn\'t exist', function(done) {
+                server.connection.readStream({filePath: '/etc/doesnotexist'});
+                setTimeout(function() {
+                    sinon.assert.calledWith(appVentReadStreamError, 'The file could not be found.');
                     done();
-                });
+                }, 150);
             });
 
-            it('throws expected file permissions error', function(done) {
-                var fsStream = server.sftpProxy.createReadStream('/etc/sudoers', {encoding: 'utf8'});
-                fsStream.on('error', function(err) {
-                    jasmine.getEnv().expect(err.type).toBe('PERMISSION_DENIED');
+            it('triggers App.vent error on insufficient permissions', function(done) {
+                server.connection.readStream({filePath: '/etc/sudoers'});
+                setTimeout(function() {
+                    sinon.assert.calledWith(appVentReadStreamError, 'Insufficient file permissions.');
                     done();
-                });
+                }, 150);
+            });
+        });
+
+
+        // TODO: create/test writeStream wrapper
+        xdescribe('writeStream', function() {
+            var server, serversCollection, serverConnection;
+            var appVentWriteStreamError;
+
+            beforeEach(function(done) {
+                appVentWriteStreamError = sinon.spy();
+                App.vent.on('file:read:error', appVentWriteStreamError);
+
+                serversCollection = new ServerList();
+                serversCollection.fetch({success: function() {
+                    server = serversCollection.at(0);
+                    serverConnection = new ServerConnection({}, {server: server});
+                    serverConnection.initiateLocalProxy(function() {
+                        done();
+                    });
+                }});
             });
 
-            it('writes a new remote file', function(done) {
+            xit('writes a new remote file', function(done) {
                 var writeStream = server.sftpProxy.createWriteStream('/tmp/testfile.txt', {encoding: 'utf8'});
                 writeStream.end(new Buffer('test string from app-node test runner\n', 'utf8'), 'utf8', function() {
                     server.sftpProxy.stat('/tmp/testfile.txt', function(err, stats) {

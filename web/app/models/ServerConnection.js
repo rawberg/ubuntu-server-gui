@@ -2,6 +2,7 @@ define(function (require_browser) {
     var Backbone = require_browser('backbone'),
         App = require_browser('App');
 
+
     return Backbone.Model.extend({
         defaults: {
             connection_status: undefined,
@@ -13,7 +14,8 @@ define(function (require_browser) {
             if(typeof options.server === "undefined") {
                 throw "Expected server to be provided.";
             }
-            this.server = options.server
+            this.server = options.server;
+            this.server.connection = this;
         },
 
         connect: function(callback) {
@@ -124,6 +126,42 @@ define(function (require_browser) {
                 this.set('connection_status', 'connection error');
                 callback();
             }
+        },
+
+        readStream: function(filePath, callback) {
+            callback = _.isFunction(callback) ? callback : function() {};
+
+            var StringDecoder = require('string_decoder').StringDecoder;
+            var decoder = new StringDecoder('utf8');
+            var fileContents = '';
+            
+            if(typeof filePath === 'undefined') {
+                throw 'filePath option required';
+            }
+            var fsStream = this.server.sftpProxy.createReadStream(filePath, {encoding: 'utf8'});
+
+            fsStream.on('data', function(chunk) {
+                fileContents += decoder.write(chunk);
+            });
+
+            fsStream.on('end', function() {
+               callback(fileContents);
+            });
+
+            fsStream.on('error', function(err) {
+                var errorMsg;
+                switch(err.type) {
+                    case 'NO_SUCH_FILE':
+                        errorMsg = 'The file could not be found.'
+                        break;
+                    case 'PERMISSION_DENIED':
+                        errorMsg = 'Insufficient file permissions.'
+                        break;
+                    default:
+                        errorMsg = 'Error reading file.';
+                }
+                App.vent.trigger('file:read:error', errorMsg, filePath);
+            });
         }
 
     });

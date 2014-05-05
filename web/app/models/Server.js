@@ -7,6 +7,7 @@ define(function (require_browser) {
     return Backbone.Model.extend({
         url: 'Servers',
         local: true,
+        connection: undefined,
         sshProxy: undefined,
         sftpProxy: undefined,
         defaults: {
