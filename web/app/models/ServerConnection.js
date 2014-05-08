@@ -1,6 +1,7 @@
 define(function (require_browser) {
     var Backbone = require_browser('backbone'),
-        App = require_browser('App');
+        App = require_browser('App'),
+        FileOpsNotice = require_browser('views/modal/FileOpsNotice');
 
 
     return Backbone.Model.extend({
@@ -129,15 +130,16 @@ define(function (require_browser) {
         },
 
         readStream: function(filePath, callback) {
+            if(typeof filePath === 'undefined') {
+                throw 'filePath option required';
+            }
+
             callback = _.isFunction(callback) ? callback : function() {};
 
             var StringDecoder = require('string_decoder').StringDecoder;
             var decoder = new StringDecoder('utf8');
             var fileContents = '';
-            
-            if(typeof filePath === 'undefined') {
-                throw 'filePath option required';
-            }
+
             var fsStream = this.server.sftpProxy.createReadStream(filePath, {encoding: 'utf8'});
 
             fsStream.on('data', function(chunk) {
@@ -155,12 +157,12 @@ define(function (require_browser) {
                         errorMsg = 'The file could not be found.'
                         break;
                     case 'PERMISSION_DENIED':
-                        errorMsg = 'Insufficient file permissions.'
+                        errorMsg = 'Insufficient permissions.'
                         break;
                     default:
                         errorMsg = 'Error reading file.';
                 }
-                App.vent.trigger('file:read:error', errorMsg, filePath);
+                App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
             });
         }
 
