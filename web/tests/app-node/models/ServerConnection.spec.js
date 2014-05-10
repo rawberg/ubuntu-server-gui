@@ -147,11 +147,11 @@ define(function (require_browser) {
 
         describe('readStream', function() {
             var server, serversCollection, serverConnection;
-            var appVentReadStreamError;
+            var showModalSpy;
 
             beforeEach(function(done) {
-                appVentReadStreamError = sinon.spy();
-                App.vent.on('file:read:error', appVentReadStreamError);
+                showModalSpy = sinon.spy();
+                App.commands.setHandler('modal:show', showModalSpy);
 
                 serversCollection = new ServerList();
                 serversCollection.fetch({success: function() {
@@ -164,6 +164,7 @@ define(function (require_browser) {
             });
 
             afterEach(function(done) {
+                App.commands.removeHandler(showModalSpy);
                 serverConnection.disconnect();
                 if(serverConnection.sshProxy && serverConnection.sshProxy._state !== 'closed') {
                     serverConnection.sshProxy.on('end', function() {
@@ -183,26 +184,28 @@ define(function (require_browser) {
 
             it('reads a remote file', function(done) {
                 jasmine.getEnv().expect(server.connection).toBeDefined();
-                server.connection.readStream({filePath: '/etc/hostname'}, function(fileContents) {
+                server.connection.readStream('/etc/hostname', function(fileContents) {
                     jasmine.getEnv().expect(fileContents).toEqual('lucid64\n');
                     done();
                 });
             });
 
-            it('triggers App.vent error when the file doesn\'t exist', function(done) {
-                server.connection.readStream({filePath: '/etc/doesnotexist'});
+            it('displays an error modal when the file doesn\'t exist', function(done) {
+                server.connection.readStream('/etc/doesnotexist');
                 setTimeout(function() {
-                    sinon.assert.calledWith(appVentReadStreamError, 'The file could not be found.');
+                    sinon.assert.calledOnce(showModalSpy);
+                    expect(showModalSpy.args[0][0].options).to.have.keys(['errorMsg', 'filePath']);
                     done();
-                }, 150);
+                }, 250);
             });
 
-            it('triggers App.vent error on insufficient permissions', function(done) {
-                server.connection.readStream({filePath: '/etc/sudoers'});
+            it('displays an error modal when user has insufficient file permissions', function(done) {
+                server.connection.readStream('/etc/sudoers');
                 setTimeout(function() {
-                    sinon.assert.calledWith(appVentReadStreamError, 'Insufficient file permissions.');
+                    sinon.assert.calledOnce(showModalSpy);
+                    expect(showModalSpy.args[0][0].options).to.have.keys(['errorMsg', 'filePath']);
                     done();
-                }, 150);
+                }, 250);
             });
         });
 
