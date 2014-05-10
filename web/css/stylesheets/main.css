@@ -7432,6 +7432,9 @@ table.directory-explorer td .icon_mode.M33152 {
 .modal-dialog.modal-add-edit-server .form-control-static.msg {
   font-style: italic;
 }
+.modal-dialog.modal-fileops {
+  width: 320px;
+}
 .modal-connection-server {
   width: 500px;
 }

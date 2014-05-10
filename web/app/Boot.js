@@ -112,9 +112,13 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
         function($, Backbone, App, MainController, MainRouter) {
             var rootPath = '/';
             var pushState = true;
+
             // support using Backbone router when app is loaded via file://
             if(location.pathname.indexOf('/web/index.html') !== -1) {
                 rootPath = location.pathname.substring(0, location.pathname.lastIndexOf('/web/index.html')+18);
+                pushState = false;
+            } else if (location.pathname.indexOf('testrunner_app-int.html') !== -1) {
+                rootPath = location.pathname.substring(0, location.pathname.lastIndexOf('testrunner_app-int.html')+23);
                 pushState = false;
             }
 

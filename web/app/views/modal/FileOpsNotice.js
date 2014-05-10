@@ -15,7 +15,7 @@ define(function (require_browser, exports, module) {
     return Marionette.ItemView.extend({
         tagName: 'div',
         template: _.template(operationErrorTpl),
-        className: 'modal-dialog modal-remove-server',
+        className: 'modal-dialog modal-fileops',
 
         events: {
             'click button[name=close]': 'onClickClose'
