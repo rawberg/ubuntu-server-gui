@@ -164,6 +164,39 @@ define(function (require_browser) {
                 }
                 App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
             });
+        },
+
+        writeStream: function(filePath, fileContents, callback) {
+            if(typeof filePath === 'undefined' | typeof fileContents === 'undefined') {
+                throw 'filePath and fileContens options are required';
+            }
+
+            callback = _.isFunction(callback) ? callback : function() {};
+            var wsStream = this.server.sftpProxy.createWriteStream(filePath, {encoding: 'utf8', autoClose: true});
+
+            wsStream.on('open', function() {
+               var contentsBuffer = new Buffer(fileContents, 'utf8');
+               wsStream.end(contentsBuffer, 'utf8');
+            });
+
+            wsStream.on('close', function() {
+                callback();
+            });
+
+            wsStream.on('error', function(err) {
+                var errorMsg;
+                switch(err.type) {
+                    case 'NO_SUCH_FILE':
+                        errorMsg = 'The file could not be found.'
+                        break;
+                    case 'PERMISSION_DENIED':
+                        errorMsg = 'Insufficient permissions.'
+                        break;
+                    default:
+                        errorMsg = 'Error saving file.';
+                }
+                App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
+            });
         }
 
     });

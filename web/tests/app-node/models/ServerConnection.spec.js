@@ -210,14 +210,13 @@ define(function (require_browser) {
         });
 
 
-        // TODO: create/test writeStream wrapper
-        xdescribe('writeStream', function() {
+        describe('writeStream', function() {
             var server, serversCollection, serverConnection;
-            var appVentWriteStreamError;
+            var showModalSpy;
 
             beforeEach(function(done) {
-                appVentWriteStreamError = sinon.spy();
-                App.vent.on('file:read:error', appVentWriteStreamError);
+                showModalSpy = sinon.spy();
+                App.commands.setHandler('modal:show', showModalSpy);
 
                 serversCollection = new ServerList();
                 serversCollection.fetch({success: function() {
@@ -229,13 +228,13 @@ define(function (require_browser) {
                 }});
             });
 
-            xit('writes a new remote file', function(done) {
-                var writeStream = server.sftpProxy.createWriteStream('/tmp/testfile.txt', {encoding: 'utf8'});
-                writeStream.end(new Buffer('test string from app-node test runner\n', 'utf8'), 'utf8', function() {
-                    server.sftpProxy.stat('/tmp/testfile.txt', function(err, stats) {
+            it('writes a new remote file', function(done) {
+                jasmine.getEnv().expect(server.connection).toBeDefined();
+                server.connection.writeStream('/tmp/test_write_new_file.txt', 'hello file', function() {
+                    server.sftpProxy.stat('/tmp/test_write_new_file.txt', function(err, stats) {
                         jasmine.getEnv().expect(err).toBeUndefined();
-                        jasmine.getEnv().expect(stats.size).toBe(38);
-                        server.sftpProxy.unlink('/tmp/testfile.txt', function() {
+                        jasmine.getEnv().expect(stats.size).toBe(10);
+                        server.sftpProxy.unlink('/tmp/test_write_new_file.txt', function() {
                             done();
                         })
                     });
