@@ -184,28 +184,29 @@ define(function (require_browser) {
 
             it('reads a remote file', function(done) {
                 jasmine.getEnv().expect(server.connection).toBeDefined();
-                server.connection.readStream('/etc/hostname', function(fileContents) {
+                server.connection.readStream('/etc/hostname', function(err, fileContents) {
+                    jasmine.getEnv().expect(err).toBeUndefined();
                     jasmine.getEnv().expect(fileContents).toEqual('lucid64\n');
                     done();
                 });
             });
 
             it('displays an error modal when the file doesn\'t exist', function(done) {
-                server.connection.readStream('/etc/doesnotexist');
-                setTimeout(function() {
+                server.connection.readStream('/etc/doesnotexist', function(err, fileContents) {
+                    jasmine.getEnv().expect(err).toBeDefined();
                     sinon.assert.calledOnce(showModalSpy);
                     expect(showModalSpy.args[0][0].options).to.have.keys(['errorMsg', 'filePath']);
                     done();
-                }, 250);
+                });
             });
 
             it('displays an error modal when user has insufficient file permissions', function(done) {
-                server.connection.readStream('/etc/sudoers');
-                setTimeout(function() {
+                server.connection.readStream('/etc/sudoers', function(err, fileContents) {
+                    jasmine.getEnv().expect(err).toBeDefined();
                     sinon.assert.calledOnce(showModalSpy);
                     expect(showModalSpy.args[0][0].options).to.have.keys(['errorMsg', 'filePath']);
                     done();
-                }, 250);
+                });
             });
         });
 
@@ -228,15 +229,63 @@ define(function (require_browser) {
                 }});
             });
 
+            afterEach(function() {
+                App.commands.removeHandler(showModalSpy);
+            });
+
             it('writes a new remote file', function(done) {
-                jasmine.getEnv().expect(server.connection).toBeDefined();
-                server.connection.writeStream('/tmp/test_write_new_file.txt', 'hello file', function() {
-                    server.sftpProxy.stat('/tmp/test_write_new_file.txt', function(err, stats) {
+                var testFilePath = '/tmp/test_write_new_file.txt';
+
+                server.connection.writeStream(testFilePath, 'hello file', {flags: 'w'}, function() {
+                    server.sftpProxy.stat(testFilePath, function(err, stats) {
                         jasmine.getEnv().expect(err).toBeUndefined();
                         jasmine.getEnv().expect(stats.size).toBe(10);
-                        server.sftpProxy.unlink('/tmp/test_write_new_file.txt', function() {
+                        server.sftpProxy.unlink(testFilePath, function() {
                             done();
                         })
+                    });
+                });
+            });
+
+            it('displays an error modal when the user has insufficient write permissions', function(done) {
+                var testFilePath = '/tmp/test_unwriteable_file.txt';
+
+                server.connection.writeStream(testFilePath, 'unwritable', {flags: 'w'}, function(err) {
+                    jasmine.getEnv().expect(err).toBeUndefined();
+                    sinon.assert.notCalled(showModalSpy);
+
+                    server.sftpProxy.chmod(testFilePath, 0444, function(err) {
+                        jasmine.getEnv().expect(err).toBeUndefined();
+                        server.connection.writeStream(testFilePath, 'new content', {}, function(err) {
+                            sinon.assert.calledOnce(showModalSpy);
+                            expect(showModalSpy.args[0][0].options).to.have.keys(['errorMsg', 'filePath']);
+                            server.sftpProxy.unlink(testFilePath, function(err) {
+                                jasmine.getEnv().expect(err).toBeUndefined();
+                                done();
+                            });
+                        });
+                    });
+                });
+            });
+
+            it('updates the contents of an existing file', function(done) {
+                var testFilePath = '/tmp/test_file_to_update.txt';
+
+                server.connection.writeStream(testFilePath, 're-write my contents', function(err) {
+                    jasmine.getEnv().expect(err).toBeUndefined();
+                    server.sftpProxy.stat(testFilePath, function(err, stats) {
+                        jasmine.getEnv().expect(err).toBeUndefined();
+                        server.connection.writeStream(testFilePath, 'new stuff', function(err) {
+                            jasmine.getEnv().expect(err).toBeUndefined();
+                            server.connection.readStream(testFilePath, function(err, fileContents) {
+                                jasmine.getEnv().expect(err).toBeUndefined();
+                                jasmine.getEnv().expect(fileContents).toEqual('new stuff');
+                                server.sftpProxy.unlink(testFilePath, function (err) {
+                                    jasmine.getEnv().expect(err).toBeUndefined();
+                                    done();
+                                });
+                            });
+                        });
                     });
                 });
             });

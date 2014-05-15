@@ -147,7 +147,7 @@ define(function (require_browser) {
             });
 
             fsStream.on('end', function() {
-               callback(fileContents);
+               callback(undefined, fileContents);
             });
 
             fsStream.on('error', function(err) {
@@ -163,25 +163,33 @@ define(function (require_browser) {
                         errorMsg = 'Error reading file.';
                 }
                 App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
+                callback(err);
             });
+
+            return fsStream;
         },
 
-        writeStream: function(filePath, fileContents, callback) {
+        writeStream: function(filePath, fileContents, options, callback) {
             if(typeof filePath === 'undefined' | typeof fileContents === 'undefined') {
-                throw 'filePath and fileContens options are required';
+                throw 'filePath and fileContens parameters are required';
             }
 
-            callback = _.isFunction(callback) ? callback : function() {};
-            var wsStream = this.server.sftpProxy.createWriteStream(filePath, {encoding: 'utf8', autoClose: true});
+            if(typeof options === 'undefined') {
+                options = {}
+            }
+            else if (typeof options === 'function' && typeof callback === 'undefined') {
+                callback = options;
+                options = {};
+            };
 
-            wsStream.on('open', function() {
-               var contentsBuffer = new Buffer(fileContents, 'utf8');
-               wsStream.end(contentsBuffer, 'utf8');
-            });
+            _.defaults(options, {encoding: 'utf8', autoClose: true, flags: 'w'});
 
-            wsStream.on('close', function() {
-                callback();
-            });
+            callback = typeof callback === 'function' ? callback : function() {};
+            var wsStream = this.server.sftpProxy.createWriteStream(filePath, options);
+
+//            wsStream.on('finish', function() {
+//                callback();
+//            });
 
             wsStream.on('error', function(err) {
                 var errorMsg;
@@ -196,7 +204,15 @@ define(function (require_browser) {
                         errorMsg = 'Error saving file.';
                 }
                 App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
+                callback(err);
             });
+
+            wsStream.on('open', function() {
+               var contentsBuffer = new Buffer(fileContents, 'utf8');
+               wsStream.write(contentsBuffer, 'utf8', callback);
+            });
+
+            return wsStream;
         }
 
     });
