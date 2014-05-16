@@ -16,14 +16,14 @@ module.exports = {
 
     'displays file operations error modal when attempting to access a remote file with insufficient permissions' : function (browser) {
         browser
-            .assert.elementNotPresent('.modal-fileops', 500)
+            .assert.elementNotPresent('.modal-fileops', 'error modal is not immediately open')
             // should be root, TODO: use xpath and text()=root
             // https://groups.google.com/forum/#!topic/nightwatchjs/d0p72Ub9Idg
             .click('.directory-explorer tr:nth-child(15) td.filename')
-            .assert.elementPresent('.modal-fileops .modal-body', 1000, 'file operation error modal displays')
+            .assert.elementPresent('.modal-fileops .modal-body', 'file operation error modal displays')
             .click('button[name=close]')
-            .assert.elementNotPresent('.modal-fileops', 500)
-            .assert.elementPresent('#file-manager-breadcrumbs .breadcrumb .crumb', 1000, 'user is back at root file manager')
+            .assert.elementNotPresent('.modal-fileops', 'modal is closed')
+            .assert.elementPresent('#file-manager-breadcrumbs .breadcrumb .crumb', 'user is back at root file manager')
             .end()
     }
 };

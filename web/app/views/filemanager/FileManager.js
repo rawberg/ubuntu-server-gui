@@ -170,7 +170,10 @@ define(function (require_browser, exports, module) {
 
         onFileClick: function(fileModel, path) {
             var filePath = path + fileModel.get('filename');
-            this.options.controllerTriggers.execute('navigate', 'editor', {file: fileModel.get('filename'), path: path});
+            this.options.controllerTriggers.execute('navigate', 'editor', {
+                file: fileModel.get('filename'),
+                path: path
+            });
         },
 
         onRender: function() {

@@ -22,14 +22,16 @@ define(function (require_browser) {
             var server = App.getActiveServer();
             var filePath = options.path + options.file;
 
-            server.connection.readStream(filePath, _.bind(function(fileContents) {
-                var editorLayout = new EditorLayout({
-                    controllerTriggers: this.controllerTriggers,
-                    server: App.getActiveServer(),
-                    fileContents: fileContents,
-                    dirPath: options.path
-                });
-                this.App.mainViewport.show(editorLayout);
+            server.connection.readStream(filePath, _.bind(function(err, fileContents) {
+                if(typeof err === 'undefined') {
+                    var editorLayout = new EditorLayout({
+                        controllerTriggers: this.controllerTriggers,
+                        server: App.getActiveServer(),
+                        fileContents: fileContents,
+                        dirPath: options.path
+                    });
+                    this.App.mainViewport.show(editorLayout);
+                }
             }, this));
         },
 
