@@ -275,11 +275,14 @@ define(function (require_browser) {
                     jasmine.getEnv().expect(err).toBeUndefined();
                     server.sftpProxy.stat(testFilePath, function(err, stats) {
                         jasmine.getEnv().expect(err).toBeUndefined();
+
                         server.connection.writeStream(testFilePath, 'new stuff', function(err) {
                             jasmine.getEnv().expect(err).toBeUndefined();
+
                             server.connection.readStream(testFilePath, function(err, fileContents) {
                                 jasmine.getEnv().expect(err).toBeUndefined();
                                 jasmine.getEnv().expect(fileContents).toEqual('new stuff');
+
                                 server.sftpProxy.unlink(testFilePath, function (err) {
                                     jasmine.getEnv().expect(err).toBeUndefined();
                                     done();

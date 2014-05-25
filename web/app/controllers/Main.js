@@ -27,9 +27,11 @@ define(function (require_browser) {
                     var editorLayout = new EditorLayout({
                         controllerTriggers: this.controllerTriggers,
                         server: App.getActiveServer(),
+                        fileName: options.file,
                         fileContents: fileContents,
                         dirPath: options.path
                     });
+                    Backbone.history.navigate("#editor", {trigger: false, replace: true});
                     this.App.mainViewport.show(editorLayout);
                 }
             }, this));

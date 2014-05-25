@@ -189,6 +189,10 @@ define(function (require_browser, exports, module) {
             serverConnection.connect();
         },
 
+        onShow: function() {
+          this.showFileManager(App.getActiveServer());
+        },
+
         showFileManager: function(server) {
             var directoryExplorer = new DirectoryExplorer({path: this.options.path});
             var directoryContents = new DirectoryContents([], {directoryExplorer: directoryExplorer, server: server});

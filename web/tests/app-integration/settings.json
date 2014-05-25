@@ -12,7 +12,8 @@
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
-        "webStorageEnabled": true
+        "webStorageEnabled": true,
+        "nativeEvents": true
       }
     }
   }

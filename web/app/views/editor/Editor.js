@@ -18,16 +18,20 @@ define(function (require_browser, exports, module) {
             editorRegion: '#editor-region'
         },
 
+        events: {},
+
         initialize: function(options) {
             if(typeof options.fileContents === 'undefined' || typeof options.dirPath === 'undefined' || typeof options.server === 'undefined') {
                 throw 'missing required options parameters';
             }
 
+            this.fileName = options.fileName;
             this.fileContents = options.fileContents;
             this.server = options.server;
             this.dirPath = options.dirPath;
             this.controllerTriggers = options.controllerTriggers;
-            codemirror.commands.save = this.onSave;
+
+            codemirror.commands.save = this.onSaveEditor;
         },
 
         onCloseEditor: function(cm) {
@@ -36,9 +40,10 @@ define(function (require_browser, exports, module) {
             this.controllerTriggers.execute('navigate', 'filemanager', this.path);
         },
 
-        onSave: function(cm) {
-            this.server.sftpProxy.createWriteStream(this.filePath, cm.doc.getValue(), function() {
-                console.log('saving complete');
+        onSaveEditor: function() {
+            var filePath = this.dirPath + this.fileName;
+            this.server.connection.writeStream(filePath, this.cm.doc.getValue(), {}, function() {
+                console.log('saved: ' + filePath);
             });
         },
 
@@ -49,7 +54,10 @@ define(function (require_browser, exports, module) {
                 theme: 'pastel-on-dark',
                 lineNumbers: true,
                 autofocus: true,
-                extraKeys: {'Ctrl-Esc': _.bind(this.onCloseEditor, this)}
+                extraKeys: {
+                    'Cmd-W': _.bind(this.onCloseEditor, this),
+                    'Cmd-S': _.bind(this.onSaveEditor, this)
+                }
             });
 
             cm.doc.setCursor(0);

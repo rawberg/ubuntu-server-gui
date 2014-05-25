@@ -76,6 +76,10 @@ define(function (require_browser) {
                         console.log('SFTP :: SFTP session closed');
                     });
 
+                    sftpConnection.on('error', function (err) {
+                        console.log('SFTP :: SFTP session error: ', err);
+                    });
+
                     App.vent.trigger('server:connected', this.server);
                     callback();
                 }, this));

@@ -17,4 +17,4 @@ module.exports = {
             .assert.elementNotPresent('.modal-body', 'connection model is removed after successful connection')
             .end()
   }
-};
+}
