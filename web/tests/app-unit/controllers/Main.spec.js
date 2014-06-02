@@ -51,28 +51,34 @@ define(function (require_browser) {
 
 
         describe('editor', function() {
-            var posStub, fakeServer, readStreamMock;
+            var posStub, fakeServer, readStreamMock, historyStub;
             var mainController;
 
             beforeEach(function() {
+                historyStub = sinon.stub(Backbone.history, 'navigate');
                 posStub = sinon.stub($.prototype, 'offset');
                 posStub.returns({top: 500, bottom: 540});
 
                 App._initCallbacks.run(undefined, App);
                 var fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
 
-                fakeServer.connection = {readStream: sinon.stub().yields('valid contents')};
+                fakeServer.connection = {readStream: sinon.stub().yields(undefined, 'valid contents')};
                 sinon.stub(App, 'getActiveServer').returns(fakeServer);
 
                 mainController = new MainController();
                 sinon.spy(mainController.App.mainViewport, 'show');
             });
 
-            it('should show the file editor when the server returns file contents', function() {
+            afterEach(function() {
+               historyStub.restore();
+            });
+
+            it('should show the file editor when the server returns file contents', function(done) {
                 mainController.editor({path: '/valid/path/', file: 'valid.txt'});
                 sinon.assert.called(mainController.App.mainViewport.show);
                 expect(mainController.App.mainViewport.show.args[0][0].options.fileContents).to.equal('valid contents');
                 expect(mainController.App.mainViewport.show.args[0][0].options.dirPath).to.equal('/valid/path/');
+                done();
             });
         });
 

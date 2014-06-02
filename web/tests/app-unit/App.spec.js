@@ -3,6 +3,7 @@ define(function (require_browser) {
         App = require_browser('App'),
         Session = require_browser('models/Session'),
         Server = require_browser('models/Server'),
+        MainToolbar = require_browser('views/MainToolbar'),
         AddEditServerModal = require_browser('views/modal/AddEditServer'),
         NoobTourPopover = require_browser('views/modal/NoobTourPopover');
 
@@ -151,15 +152,17 @@ define(function (require_browser) {
         });
 
         describe('activeServer', function() {
-            var posStub;
+            var posStub, activateToolbarItemsStub;
 
             beforeEach(function() {
+                activateToolbarItemsStub = sinon.stub(MainToolbar.prototype, 'activateToolbarItems');
                 posStub = sinon.stub($.prototype, 'offset');
                 posStub.returns({top: 500, bottom: 540});
             });
 
             afterEach(function() {
                 App.closeRegions();
+                activateToolbarItemsStub.restore();
                 posStub.restore();
             });
 

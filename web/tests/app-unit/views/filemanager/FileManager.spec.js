@@ -36,7 +36,7 @@ define(function (require_browser) {
         });
 
         describe('onServerSelected', function() {
-            var fileManagerLayout, posStub;
+            var fileManagerLayout, posStub, activateToolbarItemsStub;
             var modalShowSpy, serverConnectSpy;
 
             beforeEach(function() {

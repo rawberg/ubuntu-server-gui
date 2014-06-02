@@ -30,6 +30,10 @@ define(function (require_browser) {
             'click .toolbar-nav li': 'onClickIcon'
         },
 
+        ui: {
+            navItems: 'a.nav'
+        },
+
         triggers: {
             'click .toolbar-server_rack a': 'server:add:click'
         },
@@ -40,14 +44,17 @@ define(function (require_browser) {
             this.App.vent.on('active-server:changed', this.onActiveServerChange, this);
         },
 
-//        highlightIcon: function(iconClass) {
-//            this.$('.toolbar-nav li').removeClass('active');
-//            this.$('li.' + iconClass).addClass('active');
-//        },
-//
-//        onClickIcon: function(e) {
-//            this.highlightIcon(e.target.className);
-//        },
+        activateToolbarItems: function() {
+            this.ui.navItems.removeClass('disabled');
+        },
+
+        onClickIcon: function(e) {
+            // consider making these buttons instead of links
+            if($(e.target).hasClass('disabled')) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        },
 
         onRender: function() {
             this.stickit();
@@ -62,6 +69,7 @@ define(function (require_browser) {
 
         onActiveServerChange: function(server) {
             this.model = server;
+            this.activateToolbarItems();
         },
 
         reStickit: function() {

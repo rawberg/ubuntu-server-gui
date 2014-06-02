@@ -80,7 +80,7 @@ gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
         process.stdout.write(data);
 
         if(/jetty/.test(data)) {
-            var integration_tests = exec('node_modules/nightwatch/bin/nightwatch --env default --config tests/app-integration/settings.json --test tests/app-integration/*');
+            var integration_tests = exec('node_modules/nightwatch/bin/nightwatch --env default --config tests/app-integration/settings.json');
             var timer = setTimeout(function() {
                 integration_tests.kill();
                 selenium_server.kill();

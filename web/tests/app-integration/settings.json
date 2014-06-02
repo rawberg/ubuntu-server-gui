@@ -1,4 +1,5 @@
 {
+  "src_folders" : ["tests/app-integration"],
   "output_folder": false,
   "test_settings" : {
     "default" : {
