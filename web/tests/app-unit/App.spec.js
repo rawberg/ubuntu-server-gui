@@ -152,17 +152,17 @@ define(function (require_browser) {
         });
 
         describe('activeServer', function() {
-            var posStub, activateToolbarItemsStub;
+            var posStub, toggleToolbarItemsStub;
 
             beforeEach(function() {
-                activateToolbarItemsStub = sinon.stub(MainToolbar.prototype, 'activateToolbarItems');
+                toggleToolbarItemsStub = sinon.stub(MainToolbar.prototype, 'toggleToolbarItems');
                 posStub = sinon.stub($.prototype, 'offset');
                 posStub.returns({top: 500, bottom: 540});
             });
 
             afterEach(function() {
                 App.closeRegions();
-                activateToolbarItemsStub.restore();
+                toggleToolbarItemsStub.restore();
                 posStub.restore();
             });
 

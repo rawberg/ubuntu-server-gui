@@ -40,12 +40,17 @@ define(function (require_browser) {
 
         initialize: function(options) {
             this.App = options.App;
-            this.model = this.App.activeServer;
+            this.model = this.App.getActiveServer();
+            this.App.vent.on('server:disconnected', this.onActiveServerDisconnect, this);
             this.App.vent.on('active-server:changed', this.onActiveServerChange, this);
         },
 
-        activateToolbarItems: function() {
-            this.ui.navItems.removeClass('disabled');
+        toggleToolbarItems: function(enabled) {
+            if(enabled) {
+                this.ui.navItems.removeClass('disabled');
+            } else {
+                this.ui.navItems.addClass('disabled');
+            }
         },
 
         onClickIcon: function(e) {
@@ -68,8 +73,13 @@ define(function (require_browser) {
         },
 
         onActiveServerChange: function(server) {
-            this.model = server;
-            this.activateToolbarItems();
+            this.model = this.App.getActiveServer();
+            this.toggleToolbarItems(true);
+        },
+
+        onActiveServerDisconnect: function(server) {
+            this.$('.server-select-toggle').prop('selectedIndex', 0);
+            this.toggleToolbarItems(false);
         },
 
         reStickit: function() {

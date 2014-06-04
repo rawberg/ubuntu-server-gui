@@ -125,6 +125,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
             if(window.appintegrationtests) {
                 process.mainModule.paths = [ '../../web/node_modules' ].concat(process.mainModule.paths);
                 resetLocalStorageLoadFixtures();
+                window.App = App;
             }
 
             App.start();

@@ -8,7 +8,7 @@ define(function (require_browser) {
 
         beforeEach(function() {
             serverList = new ServerList();
-            appSpy = {servers: serverList, activeServer: new Server(), vent: {on: sinon.spy()}};
+            appSpy = {servers: serverList, getActiveServer: function() { return new Server(); }, vent: {on: sinon.spy()}};
             stickitSpy = sinon.spy(MainToolbar.prototype, 'stickit');
             mainToolbar = new MainToolbar({App:appSpy});
             mainToolbar.render();
@@ -17,25 +17,6 @@ define(function (require_browser) {
         afterEach(function() {
             mainToolbar.close();
             stickitSpy.restore();
-        });
-
-        xdescribe('highlightIcon', function() {
-
-            it('should add "active" css class to a toolbar icon and remove "active" class from existing icons', function() {
-                mainToolbar.highlightIcon('toolbar-dashboard');
-                (mainToolbar.$('.toolbar-dashboard').hasClass('active')).should.be.ok;
-                mainToolbar.highlightIcon('toolbar-file_cabinet');
-                (mainToolbar.$('.toolbar-dashboard').hasClass('active')).should.be.false;
-                (mainToolbar.$('.toolbar-file_cabinet').hasClass('active')).should.be.ok;
-            });
-        });
-
-        xdescribe('onClickIcon', function() {
-
-            it('should add active class to an icon when clicked', function() {
-                mainToolbar.$('.toolbar-file_cabinet').click();
-                (mainToolbar.$('.toolbar-file_cabinet').hasClass('active')).should.be.ok;
-            });
         });
 
         describe('stickit', function() {
