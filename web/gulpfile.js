@@ -1,9 +1,11 @@
 var gulp = require('gulp'),
     gulp_util = require('gulp-util'),
     exec = require('child_process').exec,
+    spawn = require('child_process').spawn,
     less = require('less'),
     path = require('path'),
-    fs = require('fs');
+    fs = require('fs'),
+    app_meta = require('./package.json');
 
 function _vagrant_destroy(cb) {
     var vagrant_process = exec('vagrant destroy -f', {cwd: '../vagrant/'+gulp_util.env.distro.trim()+''});
@@ -148,6 +150,39 @@ gulp.task('_unit-runner', function() {
     });
 });
 
+gulp.task('_prepare-osx', function() {
+    var releases_dir = '../../releases_osx/';
+
+    // copy over node-webkit.app directory
+    gulp.src(releases_dir + 'usg-node-webkit/node-webkit.app/**')
+        .pipe(gulp.dest(releases_dir + app_meta.version + '/USG.app'));
+
+    var dist_glob = [
+            'app/**',
+            'css/**',
+            'libs/**',
+            'node_modules/**',
+            'package.json',
+            'index.html',
+            'favicon.ico',
+            'USG.icns'
+    ];
+
+    // remove dev dependencies
+    for(dep in app_meta.devDependencies) {
+        dist_glob.push('!node_modules/' + dep, '!node_modules/' + dep + '/**');
+    }
+
+    return gulp.src(dist_glob, {base: './'})
+        .pipe(gulp.dest('../../releases_osx/' + app_meta.version + '/USG.app/Contents/Resources/app.nw'));
+});
+
+gulp.task('_compress-osx', ['_prepare-osx'], function() {
+    var zip_runner = exec('zip -r ' + app_meta.version + '.nw ' + app_meta.version, {cwd: '../../releases_osx/'});
+    zip_runner.stdout.pipe(process.stdout);
+    zip_runner.stderr.pipe(process.stderr);
+});
+
 gulp.task('watch', function() {
     gulp.watch('css/less/**/*.less', ['less-dev']);
 });
@@ -156,3 +191,5 @@ gulp.task('watch', function() {
 gulp.task('app-unit', ['_unit-runner']);
 gulp.task('app-node', ['_node-runner', 'node-vagrant-destroy']);
 gulp.task('app-integration', ['_integration-runner', 'integration-vagrant-destroy']);
+
+gulp.task('package-osx', ['_prepare-osx']);

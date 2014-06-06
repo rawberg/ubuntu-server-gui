@@ -1,18 +1,23 @@
 {
     "name": "Ubuntu-Server-GUI",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "main": "index.html",
     "description": "Ubuntu Server GUI desktop app.",
     "nodejs": true,
+
     "window": {
         "title": "Ubuntu Server GUI",
-        "icon": "css/images/icons/USG.icns",
-        "toolbar": true,
+        "icon": "USG.icns",
+        "toolbar": false,
         "width": 900,
         "height": 600,
         "position": "mouse",
         "min_width": 600,
         "min_height": 400
+    },
+
+    "webkit": {
+        "page-cache": false
     },
 
     "dependencies": {
