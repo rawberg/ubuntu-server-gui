@@ -27,24 +27,23 @@ define(function (require_browser) {
                     size: 999999,
                     mtime: 1330970070   // 3/5/2012 9:54:30 AM
                 }];
-                fetchSpy = sinon.stub(DirectoryContents.prototype, 'fetch');
+                fetchSpy = spyOn(DirectoryContents.prototype, 'fetch');
                 directoryExplorer = new DirectoryExplorer();
                 directoryContents = new DirectoryContents(sampleData, {directoryExplorer: directoryExplorer, server: {}});
             });
 
             afterEach(function() {
-                fetchSpy.restore();
                 directoryContents.reset([], {silent: true});
             });
 
             it('triggers onSort when data is sorted', function() {
-                var sortEventSpy = sinon.spy();
+                var sortEventSpy = jasmine.createSpy();
                 directoryContents.on('sort', sortEventSpy);
 
-                sortEventSpy.should.not.have.been.called;
+                expect(sortEventSpy).not.toHaveBeenCalled();
                 directoryContents.sort({sortProperty: 'mtime'});
-                sortEventSpy.should.have.been.called;
-                (sortEventSpy.args[0][1]['sortProperty']).should.equal('mtime');
+                expect(sortEventSpy).toHaveBeenCalled();
+                (sortEventSpy.calls.argsFor(0)[1]['sortProperty']).should.equal('mtime');
             });
 
             it('default sorts by filename (ASC)', function() {
@@ -100,20 +99,19 @@ define(function (require_browser) {
 
         describe('fetch', function() {
             beforeEach(function() {
-                fetchSpy = sinon.stub(DirectoryContents.prototype, 'fetch');
+                fetchSpy = spyOn(DirectoryContents.prototype, 'fetch');
                 directoryExplorer = new DirectoryExplorer();
                 directoryContents = new DirectoryContents(sampleData, {directoryExplorer: directoryExplorer, server: {}});
             });
 
             afterEach(function() {
-                fetchSpy.restore();
                 directoryContents.reset([], {silent: true});
             });
 
             it('calls fetch when directoryExplorer path changes', function() {
-                expect(fetchSpy.called).to.be.false;
+                expect(fetchSpy).not.toHaveBeenCalled();
                 directoryExplorer.set('path', '/new/path/');
-                expect(fetchSpy.called).to.be.true;
+                expect(fetchSpy).toHaveBeenCalled();
             });
         });
     });

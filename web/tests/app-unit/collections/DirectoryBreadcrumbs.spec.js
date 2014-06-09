@@ -14,21 +14,21 @@ define(function (require_browser) {
             });
 
             it('throws an error is directoryExplorer is not provided', function() {
-                var execptSpy = sinon.spy(DirectoryBreadcrumbs.prototype, 'initialize');
+                var execptSpy = spyOn(DirectoryBreadcrumbs.prototype, 'initialize');
                 try {
                     directoryBreadcrumbs = new DirectoryBreadcrumbs();
                 } catch(e) {
-                    sinon.assert.threw(execptSpy);
+                    expect(execptSpy).toHaveBeenCalled();
                 }
-                sinon.assert.threw(execptSpy);
+                expect(execptSpy).toHaveBeenCalled();
             });
 
             it('builds initial breadcrumb trail when path is 1 level', function(done) {
                 directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryBreadcrumbs.fetch({reset: true, success: function() {
-                    expect(directoryBreadcrumbs.length).to.equal(1);
-                    expect(directoryBreadcrumbs.models[0].get('crumb')).to.equal('/');
-                    expect(directoryBreadcrumbs.models[0].get('path')).to.equal('/');
+                    expect(directoryBreadcrumbs.length).toBe(1);
+                    expect(directoryBreadcrumbs.models[0].get('crumb')).toBe('/');
+                    expect(directoryBreadcrumbs.models[0].get('path')).toBe('/');
                     done();
                 }});
             });
@@ -37,13 +37,13 @@ define(function (require_browser) {
                 directoryExplorer.set('path', '/home/long/way/to/go');
                 directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryBreadcrumbs.fetch({reset: true, success: function() {
-                    expect(directoryBreadcrumbs.length).to.equal(6);
-                    expect(directoryBreadcrumbs.models[0].get('crumb')).to.equal('/');
-                    expect(directoryBreadcrumbs.models[0].get('path')).to.equal('/');
-                    expect(directoryBreadcrumbs.models[1].get('crumb')).to.equal('home');
-                    expect(directoryBreadcrumbs.models[1].get('path')).to.equal('/home/');
-                    expect(directoryBreadcrumbs.models[3].get('crumb')).to.equal('way');
-                    expect(directoryBreadcrumbs.models[3].get('path')).to.equal('/home/long/way/');
+                    expect(directoryBreadcrumbs.length).toBe(6);
+                    expect(directoryBreadcrumbs.models[0].get('crumb')).toBe('/');
+                    expect(directoryBreadcrumbs.models[0].get('path')).toBe('/');
+                    expect(directoryBreadcrumbs.models[1].get('crumb')).toBe('home');
+                    expect(directoryBreadcrumbs.models[1].get('path')).toBe('/home/');
+                    expect(directoryBreadcrumbs.models[3].get('crumb')).toBe('way');
+                    expect(directoryBreadcrumbs.models[3].get('path')).toBe('/home/long/way/');
                     done();
                 }});
 
@@ -59,10 +59,10 @@ define(function (require_browser) {
             });
 
             it('rebuilds breadcrumb when path changes', function() {
-                fetchSpy = sinon.spy(DirectoryBreadcrumbs.prototype, 'fetch');
+                fetchSpy = spyOn(DirectoryBreadcrumbs.prototype, 'fetch');
                 directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
                 directoryExplorer.set('path', '/hello/path');
-                sinon.assert.calledOnce(fetchSpy);
+                expect(fetchSpy).toHaveBeenCalled();
             });
         });
     });

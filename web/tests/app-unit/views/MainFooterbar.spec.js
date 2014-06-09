@@ -1,5 +1,6 @@
 define(function (require_browser) {
-    var MainFooterbar = require_browser('views/MainFooterbar'),
+    var $ = require_browser('jquery'),
+        MainFooterbar = require_browser('views/MainFooterbar'),
         App = require_browser('App'),
         AddEditServerModal = require_browser('views/modal/AddEditServer');
 
@@ -7,15 +8,13 @@ define(function (require_browser) {
         var mainFooterbar, addServerClickSpy;
         var modalRenderSpy, deactivateTourSpy;
         beforeEach(function() {
-            deactivateTourSpy = sinon.spy(App.vent._events['noobtour:deactivate'][0], 'callback');
-            modalRenderSpy = sinon.spy(AddEditServerModal.prototype, 'render');
+            deactivateTourSpy = spyOn(App.vent._events['noobtour:deactivate'][0], 'callback');
+            modalRenderSpy = spyOn(AddEditServerModal.prototype, 'render');
             App._initCallbacks.run(undefined, App);
         });
 
         afterEach(function() {
             App.mainFooterbar.close();
-            modalRenderSpy.restore();
-            deactivateTourSpy.restore();
         });
 
         describe('clicking add server button', function() {
@@ -28,11 +27,11 @@ define(function (require_browser) {
             });
 
             it('should render the "AddEditServerModal"', function() {
-                (modalRenderSpy).should.have.been.called;
+                expect(modalRenderSpy).toHaveBeenCalled();
             });
 
             it('should trigger the "noobtour:deactivate" event', function() {
-                (deactivateTourSpy).should.have.been.called;
+                expect(deactivateTourSpy).toHaveBeenCalled();
             });
         });
     });

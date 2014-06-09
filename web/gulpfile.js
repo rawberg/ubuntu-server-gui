@@ -135,7 +135,7 @@ gulp.task('_node-runner', ['vagrant-ssh-config'], function(cb) {
 });
 
 gulp.task('_unit-runner', function() {
-    var unittests = exec('../desktop/osx/node-webkit.app/Contents/MacOS/node-webkit tests/app-unit/');
+    var unittests = exec('../desktop/osx/Atom.app/Contents/MacOS/Atom tests/app-unit/');
     var timer = setTimeout(function() {
         unittests.kill();
     }, 90000);

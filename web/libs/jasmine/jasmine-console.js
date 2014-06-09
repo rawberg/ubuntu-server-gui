@@ -23,12 +23,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 function getJasmineRequireObj() {
-  if (typeof module !== "undefined" && module.exports) {
-    return exports;
-  } else {
+//  if (typeof module !== "undefined" && module.exports) {
+//    return exports;
+//  } else {
     window.jasmineRequire = window.jasmineRequire || {};
     return window.jasmineRequire;
-  }
+//  }
 }
 
 getJasmineRequireObj().console = function(jRequire, j$) {

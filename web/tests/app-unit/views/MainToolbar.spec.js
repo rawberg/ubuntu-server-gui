@@ -8,29 +8,28 @@ define(function (require_browser) {
 
         beforeEach(function() {
             serverList = new ServerList();
-            appSpy = {servers: serverList, getActiveServer: function() { return new Server(); }, vent: {on: sinon.spy()}};
-            stickitSpy = sinon.spy(MainToolbar.prototype, 'stickit');
+            appSpy = {servers: serverList, getActiveServer: function() { return new Server(); }, vent: {on: jasmine.createSpy()}};
+            stickitSpy = spyOn(MainToolbar.prototype, 'stickit');
             mainToolbar = new MainToolbar({App:appSpy});
             mainToolbar.render();
         });
 
         afterEach(function() {
             mainToolbar.close();
-            stickitSpy.restore();
         });
 
         describe('stickit', function() {
 
             it('should call stickit when a new server is added to serverList', function() {
-                (stickitSpy.callCount).should.equal(1);
+                expect(stickitSpy.calls.count()).toBe(1);
                 serverList.add(new Server({name: 'fake server'}));
-                (stickitSpy.callCount).should.equal(2);
+                expect(stickitSpy.calls.count()).toBe(2);
             });
 
              it('should call stickit when serverList collected is synced', function() {
-                (stickitSpy.callCount).should.equal(1);
+                expect(stickitSpy.calls.count()).toBe(1);
                 serverList.trigger('sync');
-                (stickitSpy.callCount).should.equal(2);
+                expect(stickitSpy.calls.count()).toBe(2);
             });
         });
     });

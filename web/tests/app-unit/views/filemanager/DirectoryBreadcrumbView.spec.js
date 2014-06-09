@@ -13,7 +13,7 @@ define(function (require_browser) {
 
             beforeEach(function() {
                 directoryExplorerModel = new DirectoryExplorerModel({path: '/home/dir/'});
-                setPathSpy = sinon.spy(directoryExplorerModel, 'set');
+                setPathSpy = spyOn(directoryExplorerModel, 'set');
 
                 directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorerModel});
                 directoryBreadcrumbView = new DirectoryBreadcrumbView({collection: directoryBreadcrumbs, directoryExplorer: directoryExplorerModel});
@@ -22,18 +22,17 @@ define(function (require_browser) {
             });
 
             afterEach(function() {
-                setPathSpy.restore();
                 directoryBreadcrumbView.close();
             });
 
             it('calls directoryExplorer.set("path") when a crumb is clicked', function() {
                 var homeCrumb = directoryBreadcrumbs.models[1];
-                var pathStub = sinon.stub();
+                var pathStub = jasmine.createSpy();
                 mockClickedCrumbObj = {model: homeCrumb};
 
-                sinon.assert.notCalled(setPathSpy)
+                expect(setPathSpy).not.toHaveBeenCalled();
                 directoryBreadcrumbView.onCrumbClick(mockClickedCrumbObj);
-                sinon.assert.calledWith(setPathSpy, 'path', homeCrumb.get('path'));
+                expect(setPathSpy).toHaveBeenCalledWith('path', homeCrumb.get('path'));
             });
 
         });

@@ -1,6 +1,7 @@
 define(function (require_browser) {
         // Libs
-    var Marionette = require_browser('marionette'),
+    var $ = require_browser('jquery'),
+        Marionette = require_browser('marionette'),
         BaseController = require_browser('controllers/Base');
 
 
@@ -10,22 +11,19 @@ define(function (require_browser) {
             var baseController, footerPosStub, methodSpy;
 
             beforeEach(function() {
-                footerPosStub = sinon.stub($.prototype, 'offset');
-                footerPosStub.returns({top: 666});
+                footerPosStub = spyOn($.prototype, 'offset').and.returnValue({top: 666});
 
                 baseController = new BaseController();
-                methodSpy = sinon.stub(baseController, 'notFound');
+                methodSpy = spyOn(baseController, 'notFound');
             });
 
             afterEach(function() {
-                footerPosStub.restore();
-                methodSpy.restore();
             });
 
             it('controller methods called via controllerTriggers wreqr commands', function() {
                 baseController.controllerTriggers.execute('navigate', 'notFound', 'sampleArgument');
-                sinon.assert.called(methodSpy);
-                sinon.assert.calledWith(methodSpy, 'sampleArgument');
+                expect(methodSpy).toHaveBeenCalled();
+                expect(methodSpy).toHaveBeenCalledWith('sampleArgument');
             });
         });
 

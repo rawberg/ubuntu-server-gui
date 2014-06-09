@@ -24,13 +24,13 @@ define(function (require_browser) {
             });
 
             it('trhows an exception if options.controllerTriggers is not defined', function() {
-                var exceptSpy = sinon.spy(FileManagerLayout.prototype, 'initialize');
+                var exceptSpy = spyOn(FileManagerLayout.prototype, 'initialize');
                 try {
                     directoryBreadcrumbs = new FileManagerLayout();
                 } catch(e) {
-                    sinon.assert.threw(exceptSpy);
+                    expect(exceptSpy).toHaveBeenCalled();
                 }
-                sinon.assert.threw(exceptSpy);
+                expect(exceptSpy).toHaveBeenCalled();
             });
 
         });
@@ -40,33 +40,29 @@ define(function (require_browser) {
             var modalShowSpy, serverConnectSpy;
 
             beforeEach(function() {
-                posStub = sinon.stub($.prototype, 'offset');
-                posStub.returns({top: 500, bottom: 540});
+                posStub = spyOn($.prototype, 'offset').and.returnValue({top: 500, bottom: 540});
 
-                modalShowSpy = sinon.stub(App, 'showModal');
-                serverConnectSpy = sinon.stub(ServerConnection.prototype, 'connect');
+                modalShowSpy = spyOn(App, 'showModal');
+                serverConnectSpy = spyOn(ServerConnection.prototype, 'connect');
 
                 App._initCallbacks.run(undefined, App);
-                fileManagerLayout = new FileManagerLayout({controllerTriggers: sinon.stub()});
+                fileManagerLayout = new FileManagerLayout({controllerTriggers: jasmine.createSpy()});
 
                 var fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
                 App.vent.trigger('server:selected', fakeServer);
             });
 
             afterEach(function() {
-                modalShowSpy.restore();
-                serverConnectSpy.restore();
-                posStub.restore();
                 App.activeServer = undefined; // avoid test pollution
             });
 
             it('calls connect on the ServerConnection model', function() {
-                sinon.assert.called(serverConnectSpy);
+                expect(serverConnectSpy).toHaveBeenCalled();
             });
 
             it('shows the server connection modal', function() {
-                sinon.assert.called(modalShowSpy);
-                expect(modalShowSpy.args[0][0]).to.be.an.instanceof(ServerConnectionModal);
+                expect(modalShowSpy).toHaveBeenCalled();
+                (modalShowSpy.calls.argsFor(0)[0]).should.be.an.instanceof(ServerConnectionModal);
             });
         });
 
@@ -75,21 +71,16 @@ define(function (require_browser) {
             var getActiveServerSpy, showFileManagerSpy;
 
             beforeEach(function() {
-                fileManagerLayout = new FileManagerLayout({controllerTriggers: sinon.stub()});
-                showFileManagerSpy = sinon.stub(FileManagerLayout.prototype, 'showFileManager');
+                fileManagerLayout = new FileManagerLayout({controllerTriggers: jasmine.createSpy()});
+                showFileManagerSpy = spyOn(FileManagerLayout.prototype, 'showFileManager');
 
                 fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
             });
 
-            afterEach(function() {
-                getActiveServerSpy.restore();
-                showFileManagerSpy.restore();
-            });
-
             it('doesn\'t call showFileManager without an actively selected Server', function() {
-                getActiveServerSpy = sinon.stub(App, 'getActiveServer').returns(undefined);
+                getActiveServerSpy = spyOn(App, 'getActiveServer').and.returnValue(undefined);
                 fileManagerLayout.render();
-                (showFileManagerSpy).should.not.have.been.called;
+                expect(showFileManagerSpy).not.toHaveBeenCalled();
             });
 
         });
