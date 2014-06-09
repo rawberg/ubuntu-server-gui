@@ -167,14 +167,14 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         'tests/app-unit/views/dashboard/Dashboard.spec.js',
                         // Views (filemanager)
                         'tests/app-unit/views/filemanager/FileManager.spec.js',
-//                        'tests/app-unit/views/filemanager/DirectoryExplorerView.spec.js',
+                        'tests/app-unit/views/filemanager/DirectoryExplorerView.spec.js',
                         'tests/app-unit/views/filemanager/DirectoryBreadcrumbView.spec.js',
                         // Views (login-signup)
                         'tests/app-unit/views/login-signup/LoginSignup.spec.js',
     //                    'tests/app-unit/views/login-signup/Login.spec.js',
     //                    'tests/app-unit/views/login-signup/Signup.spec.js',
                         // Modals/Popovers
-//                        'tests/app-unit/views/modal/AddEditServer.spec.js',
+                        'tests/app-unit/views/modal/AddEditServer.spec.js',
                         'tests/app-unit/views/modal/RemoveServer.spec.js',
 //                        'tests/app-unit/views/modal/NoobTourPopover.spec.js',
 //                        'tests/app-unit/views/modal/ServerConnectionView.spec.js',

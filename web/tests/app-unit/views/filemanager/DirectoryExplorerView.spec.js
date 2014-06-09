@@ -12,36 +12,50 @@ define(function (require_browser) {
 
             beforeEach(function() {
                 directoryExplorerModel = new DirectoryExplorerModel();
-                appendPathSpy = sinon.spy(directoryExplorerModel, 'appendPath');
+                appendPathSpy = spyOn(directoryExplorerModel, 'appendPath');
                 directoryExplorerView = new DirectoryExplorerView({model: directoryExplorerModel});
                 directoryExplorerView.render();
             });
 
             afterEach(function() {
-                appendPathSpy.restore();
                 directoryExplorerView.close();
             });
 
             it('calls directoryExplorer.appendPath if model is a directory', function() {
-                var modeStub = sinon.stub();
-                mockClickedDirObj = {model: {get: modeStub.withArgs('mode').returns(16877)}};
+                var modeStub = jasmine.createSpy();
+                mockClickedDirObj = {model: {
+                    get: modeStub.and.callFake(function(attr) {
+                        if(attr == 'mode') {
+                            return 16877;
+                        } else {
+                            return '';
+                        }
+                    })
+                }};
 
-                sinon.assert.notCalled(appendPathSpy)
+                expect(appendPathSpy).not.toHaveBeenCalled();
                 directoryExplorerView.onFilenameClick(mockClickedDirObj);
-                sinon.assert.calledOnce(appendPathSpy);
+                expect(appendPathSpy).toHaveBeenCalled();
             });
 
             it("triggers filemanager:filename:click if model is not a directory", function() {
-                var filenameClickSpy = sinon.spy();
-                var modeStub = sinon.stub();
-                mockClickedDirObj = {model: {get: modeStub.withArgs('mode').returns(26977)}};
+                var filenameClickSpy = jasmine.createSpy();
+                var modeStub = jasmine.createSpy();
+                mockClickedDirObj = {model: {
+                    get: modeStub.and.callFake(function(attr) {
+                        if(attr == 'mode') {
+                            return 26977;
+                        } else {
+                            return '';
+                        }
+                    })
+                }};
 
                 directoryExplorerView.on('filemanager:file:click', filenameClickSpy);
                 directoryExplorerView.onFilenameClick(mockClickedDirObj);
 
-                jasmine.getEnv().expect(filenameClickSpy.args[0].length).toBe(2);
-                sinon.assert.calledOnce(filenameClickSpy);
-                sinon.assert.notCalled(appendPathSpy);
+                expect(filenameClickSpy).toHaveBeenCalled();
+                expect(appendPathSpy).not.toHaveBeenCalled();
             })
         });
     });
