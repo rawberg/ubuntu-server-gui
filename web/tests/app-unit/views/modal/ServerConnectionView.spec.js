@@ -44,39 +44,37 @@ define(function (require_browser) {
             var serverConnectionView, templateSpy;
 
             beforeEach(function() {
-                templateSpy = sinon.spy(_, 'template');
+                templateSpy = spyOn(_, 'template').and.callThrough();
                 server = new Server({ipv4: '10.0.0.1', name: 'Simple Server'});
                 serverConnection = new ServerConnection({connection_status: 'connecting'}, {server: server});
                 serverConnectionView = new ServerConnectionView({model: serverConnection});
             });
 
             afterEach(function() {
-                templateSpy.restore();
                 serverConnectionView.close();
             });
 
             it('retrieves the correct tempate on "connecting" status', function() {
                 serverConnectionView.render();
-                sinon.assert.calledOnce(templateSpy);
-                sinon.assert.calledWith(templateSpy, serverConnectingTpl);
+                expect(templateSpy).toHaveBeenCalledWith(serverConnectingTpl);
             });
 
             it('retrieves the correct tempate on "connected" status', function() {
                 serverConnection.set('connection_status', 'connected');
                 serverConnectionView.render();
-                sinon.assert.calledWith(templateSpy, serverConnectingTpl);
+                expect(templateSpy).toHaveBeenCalledWith(serverConnectingTpl);
             });
 
             it('retrieves the correct tempate on "password_required" status', function() {
                 serverConnection.set('connection_status', 'password required');
                 serverConnectionView.render();
-                sinon.assert.calledWith(templateSpy, serverConnectPasswordPromptTpl);
+                expect(templateSpy).toHaveBeenCalledWith(serverConnectPasswordPromptTpl);
             });
 
             it('retrieves the correct tempate on "error" status', function() {
                 serverConnection.set('connection_status', 'error');
                 serverConnectionView.render();
-                sinon.assert.calledWith(templateSpy, serverConnectErrorTpl);
+                expect(templateSpy).toHaveBeenCalledWith(serverConnectErrorTpl);
             });
         });
     });

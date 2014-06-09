@@ -6,25 +6,20 @@ define(function (require_browser) {
         var noobTourPopover, footerPosStub;
 
         beforeEach(function() {
-            footerPosStub = sinon.stub($.prototype, 'offset');
-        });
-
-        afterEach(function() {
-            footerPosStub.restore();
+            footerPosStub = spyOn($.prototype, 'offset');
         });
 
         describe('onRender', function() {
             var windowResizeSpy;
 
             beforeEach(function() {
-                footerPosStub.returns({top: 500});
-                windowResizeSpy = sinon.spy($.prototype, 'resize');
+                footerPosStub.and.returnValue({top: 500});
+                windowResizeSpy = spyOn($.prototype, 'resize');
                 noobTourPopover = new NoobTourPopover();
                 noobTourPopover.render();
             });
 
             afterEach(function() {
-                windowResizeSpy.restore();
                 noobTourPopover.close();
             });
 
@@ -39,14 +34,14 @@ define(function (require_browser) {
             });
 
             it('should bind to "window.resize"', function() {
-                (windowResizeSpy).should.have.been.called;
+                expect(windowResizeSpy).toHaveBeenCalled();
             });
 
         })
 
         describe('onWindowResize', function() {
             beforeEach(function() {
-                footerPosStub.returns({top: 400});
+                footerPosStub.and.returnValue({top: 400});
                 noobTourPopover = new NoobTourPopover();
                 noobTourPopover.render();
                 noobTourPopover.onWindowResize();
@@ -65,9 +60,9 @@ define(function (require_browser) {
 
             var offSpy, onCloseSpy;
             beforeEach(function() {
-                footerPosStub.returns({top: 505});
-                offSpy = sinon.spy($.prototype, 'off');
-                onCloseSpy = sinon.spy(NoobTourPopover.prototype, 'onClose');
+                footerPosStub.and.returnValue({top: 505});
+                offSpy = spyOn($.prototype, 'off');
+                onCloseSpy = spyOn(NoobTourPopover.prototype, 'onClose').and.callThrough();
 
                 noobTourPopover = new NoobTourPopover();
                 noobTourPopover.render();
@@ -75,17 +70,15 @@ define(function (require_browser) {
             });
 
             afterEach(function() {
-                offSpy.restore();
-                onCloseSpy.restore();
                 noobTourPopover.close();
             });
 
             it('should be called when an instance of NoobTourPopover is closed', function() {
-                (onCloseSpy).should.have.been.called;
+                expect(onCloseSpy).toHaveBeenCalled();
             });
 
             it('should unbind "window.resize" event', function() {
-                (offSpy).should.have.been.calledWith('resize');
+                expect(offSpy.calls.argsFor(1)[0]).toBe('resize');
             });
 
         });

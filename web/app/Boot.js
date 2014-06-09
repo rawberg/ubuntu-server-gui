@@ -155,7 +155,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
 
                 if(window.appunittests) {
                     testfiles = [
-//                        'tests/app-unit/App.spec.js',
+                        'tests/app-unit/App.spec.js',
                         // Mock Responses
     //                    'tests/app-unit/mock-responses/Sessions.response.js',
                         // Views
@@ -176,8 +176,8 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         // Modals/Popovers
                         'tests/app-unit/views/modal/AddEditServer.spec.js',
                         'tests/app-unit/views/modal/RemoveServer.spec.js',
-//                        'tests/app-unit/views/modal/NoobTourPopover.spec.js',
-//                        'tests/app-unit/views/modal/ServerConnectionView.spec.js',
+                        'tests/app-unit/views/modal/NoobTourPopover.spec.js',
+                        'tests/app-unit/views/modal/ServerConnectionView.spec.js',
                         // Collections
                         'tests/app-unit/collections/ServerList.spec.js',
                         'tests/app-unit/collections/DirectoryContents.spec.js',
