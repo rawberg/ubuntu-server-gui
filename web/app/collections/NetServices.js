@@ -1,6 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'App'],
-
-    function($, _, Backbone, App) {
+define(['jquery', 'underscore', 'backbone', 'App'], function($, _, Backbone, App) {
 
         return Backbone.Collection.extend({
 

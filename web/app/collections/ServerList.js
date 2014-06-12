@@ -1,8 +1,4 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Backbone = require_browser('backbone'),
-        Server = require_browser('models/Server');
+define(['jquery', 'underscore', 'backbone', 'models/Server'], function ($, _, Backbone, Server) {
 
     return Backbone.Collection.extend({
         url: 'Servers',
