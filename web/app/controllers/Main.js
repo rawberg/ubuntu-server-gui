@@ -1,11 +1,17 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
-        App = require_browser('App'),
-        BaseController = require_browser('controllers/Base'),
-        DashboardLayout = require_browser('views/dashboard/Dashboard').DashboardLayout,
-        EditorLayout = require_browser('views/editor/Editor').EditorLayout,
-        FileManagerLayout = require_browser('views/filemanager/FileManager').FileManagerLayout,
-        ServerListCollection = require_browser('collections/ServerList');
+define(['underscore',
+        'App',
+        'controllers/Base',
+        'views/dashboard/Dashboard',
+        'views/editor/Editor',
+        'views/filemanager/FileManager',
+        'collections/ServerList'], function (
+        _,
+        App,
+        BaseController,
+        DashboardLayout,
+        EditorLayout,
+        FileManagerLayout,
+        ServerListCollection) {
 
     return BaseController.extend({
         initialize: function() {
