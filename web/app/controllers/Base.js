@@ -1,9 +1,13 @@
-define(function (require_browser) {
-    var Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-        LoginSignupLayout = require_browser('views/login-signup/LoginSignupLayout'),
-        LoginView = require_browser('views/login-signup/LoginView'),
-        SignupView = require_browser('views/login-signup/SignupView');
+define(['marionette',
+        'App',
+        'views/login-signup/LoginSignupLayout',
+        'views/login-signup/LoginView',
+        'views/login-signup/SignupView'], function (
+        Marionette,
+        App,
+        LoginSignupLayout,
+        LoginView,
+        SignupView) {
 
     return Marionette.Controller.extend({
         controllerTriggers: new Backbone.Wreqr.Commands(),
