@@ -1,27 +1,6 @@
-define(function (require_browser, exports, module) {
-    var Backbone = require_browser('backbone'),
-        _ = require_browser('underscore');
+define(['backbone', 'underscore', 'models/Directory'], function (backbone, underscore, Directory) {
 
-    var Directory = Backbone.Model.extend({
-        parse: function(response, options) {
-            try {
-                result = {
-                    filename: response.filename,
-                    mode: response.attrs.mode,
-                    atime: response.attrs.atime,
-                    mtime: response.attrs.mtime,
-                    size: response.attrs.size,
-                    permissions: response.attrs.permissions
-                }
-            }
-            catch(e) {
-                result = {};
-            }
-            return result;
-        }
-    });
-
-    var DirectoryContents = module.exports.DirectoryContents = Backbone.Collection.extend({
+    return Backbone.Collection.extend({
         model: Directory,
         sortProperty: '',
         sortDirection: 'ASC',
