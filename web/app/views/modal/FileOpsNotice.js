@@ -1,14 +1,19 @@
-define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Backbone = require_browser('backbone'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-        Server = require_browser('models/Server'),
-        operationErrorTpl = require_browser('text!views/modal/templates/fileops-error.html');
-//        operationPendingTpl = require_browser('text!views/modal/templates/server-connection-connecting.html'),
+define(['jquery',
+        'underscore',
+        'backbone',
+        'marionette',
+        'App',
+        'models/Server',
+        'text!views/modal/templates/fileops-error.html',
+        'backbone_stickit'], function (
+        $,
+        _,
+        Backbone,
+        Marionette,
+        App,
+        Server,
+        operationErrorTpl) {
 
-    require_browser('backbone_stickit');
     /**
      * @params {}
      */
