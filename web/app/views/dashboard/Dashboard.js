@@ -1,22 +1,33 @@
-define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-    // Models & Collections
-        NetServices = require_browser('collections/NetServices'),
-        PlatformInfo = require_browser('models/PlatformInfo'),
-        ServerConnection = require_browser('models/ServerConnection'),
-        ServerOverview = require_browser('models/ServerOverview'),
-    // Views
-        PlatformStatsView = require_browser('views/dashboard/PlatformStats'),
-        RunningServicesView = require_browser('views/dashboard/RunningServices'),
-        UtilizationStatsView = require_browser('views/dashboard/UtilizationStats'),
-        ServerConnectionModal = require_browser('views/modal/ServerConnectionView'),
+define(['jquery',
+        'underscore',
+        'marionette',
+        'App',
+        'collections/NetServices',
+        'models/PlatformInfo',
+        'models/ServerConnection',
+        'models/ServerOverview',
+        'views/dashboard/PlatformStats',
+        'views/dashboard/RunningServices',
+        'views/dashboard/UtilizationStats',
+        'views/modal/ServerConnectionView',
+        'text!views/dashboard/templates/layout.html'], function (
+        $,
+        _,
+        Marionette,
+        App,
+        // Models & Collections
+        NetServices,
+        PlatformInfo,
+        ServerConnection,
+        // Views
+        ServerOverview,
+        PlatformStatsView,
+        RunningServicesView,
+        UtilizationStatsView,
+        ServerConnectionModal,
+        dashboardLayoutTpl) {
 
-        dashboardLayoutTpl = require_browser('text!views/dashboard/templates/layout.html');
-
-    module.exports.DashboardLayout = Marionette.Layout.extend({
+    return Marionette.Layout.extend({
         template: _.template(dashboardLayoutTpl),
         id: 'dashboard_layout',
 
