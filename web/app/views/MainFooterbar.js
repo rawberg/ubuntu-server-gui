@@ -1,7 +1,9 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        mainFooterbarTpl = require_browser('text!views/templates/main-footerbar.html');
+define(['underscore',
+        'marionette',
+        'text!views/templates/main-footerbar.html'], function (
+        _,
+        Marionette,
+        mainFooterbarTpl) {
 
     return Marionette.ItemView.extend({
         template: _.template(mainFooterbarTpl),
