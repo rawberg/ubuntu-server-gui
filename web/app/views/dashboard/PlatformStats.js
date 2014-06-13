@@ -1,10 +1,12 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        platformStatsTpl = require_browser('text!views/dashboard/templates/platform-stats.html');
-
-    require_browser('backbone_stickit');
+define(['jquery',
+        'underscore',
+        'marionette',
+        'text!views/dashboard/templates/platform-stats.html',
+        'backbone_stickit'], function (
+        $,
+        _,
+        Marionette,
+        platformStatsTpl) {
 
     return Marionette.ItemView.extend({
         template: _.template(platformStatsTpl),
