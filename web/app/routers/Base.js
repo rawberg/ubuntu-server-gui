@@ -1,8 +1,10 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
-        Backbone = require_browser('backbone'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App');
+define(['underscore',
+        'backbone',
+        'marionette'], function (
+        _,
+        Backbone,
+        Marionette,
+        App) {
 
     return Marionette.AppRouter.extend({
 
