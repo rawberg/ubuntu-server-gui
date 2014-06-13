@@ -1,15 +1,17 @@
-define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-        codemirror = require_browser('codemirror'),
+define(['jquery',
+        'underscore',
+        'marionette',
+        'App',
+        'codemirror',
+        'text!views/editor/templates/editor-layout.html'], function (
+        $,
+        _,
+        Marionette,
+        App,
+        codemirror,
+        editorLayoutTpl) {
 
-    // Templates
-        editorLayoutTpl = require_browser('text!views/editor/templates/editor-layout.html');
-
-
-    module.exports.EditorLayout = Marionette.ItemView.extend({
+    return Marionette.ItemView.extend({
         template: _.template(editorLayoutTpl),
         tagName: 'div',
         id: 'editor_layout',
