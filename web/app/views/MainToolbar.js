@@ -1,9 +1,13 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Backbone = require_browser('backbone'),
-        Marionette = require_browser('marionette'),
-        mainToolbarTpl = require_browser('text!views/templates/main-toolbar.html');
+define(['jquery',
+        'underscore',
+        'backbone',
+        'marionette',
+        'text!views/templates/main-toolbar.html'], function (
+        $,
+        _,
+        Backbone,
+        Marionette,
+        mainToolbarTpl) {
 
     return Marionette.ItemView.extend({
         template: _.template(mainToolbarTpl),
