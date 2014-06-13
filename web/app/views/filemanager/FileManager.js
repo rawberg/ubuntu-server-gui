@@ -1,151 +1,35 @@
-define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-        moment = require_browser('moment'),
-        filesize = require_browser('filesize'),
+define(['jquery',
+        'underscore',
+        'marionette',
+        'App',
+        'moment',
+        'filesize',
+        'collections/DirectoryBreadcrumbs',
+        'collections/DirectoryContents',
+        'models/DirectoryExplorer',
+        'models/Server',
+        'models/ServerConnection',
+        'views/modal/ServerConnectionView',
+        'views/filemanager/DirectoryExplorerView',
+        'views/filemanager/DirectoryBreadcrumbView',
+        'text!views/filemanager/templates/filemanager-layout.html'], function (
+        $,
+        _,
+        Marionette,
+        App,
+        moment,
+        filesize,
+        DirectoryBreadcrumbs,
+        DirectoryContents,
+        DirectoryExplorer,
+        Server,
+        ServerConnection,
+        ServerConnectionModal,
+        DirectoryExplorerView,
+        DirectoryBreadcrumbView,
+        fileManagerLayoutTpl) {
 
-    // Models & Collections
-        DirectoryExplorer = require_browser('models/DirectoryExplorer').DirectoryExplorer,
-        DirectoryBreadcrumbs = require_browser('models/DirectoryExplorer').DirectoryBreadcrumbs,
-        DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents,
-        Server = require_browser('models/Server'),
-        ServerConnection = require_browser('models/ServerConnection'),
-    // Views
-        ServerConnectionModal = require_browser('views/modal/ServerConnectionView'),
-    // Templates
-        fileManagerLayoutTpl = require_browser('text!views/filemanager/templates/filemanager-layout.html'),
-        directoryExplorerTpl = require_browser('text!views/filemanager/templates/directory-explorer.html'),
-        directoryItemTpl = require_browser('text!views/filemanager/templates/directory-item.html');
-
-    var DirectoryBreadcrumbItemView = Marionette.ItemView.extend({
-        template: _.template('<span class="crumb"></span>'),
-        tagName: 'li',
-
-        triggers: {
-            'click .crumb': 'crumb:click'
-        },
-
-        bindings: {
-            '.crumb': 'crumb'
-        },
-
-        onRender: function() {
-            this.stickit();
-        }
-    });
-
-    var DirectoryBreadcrumbView = module.exports.DirectoryBreadcrumbView = Marionette.CollectionView.extend({
-        tagName: 'ol',
-        className: 'breadcrumb',
-        itemView: DirectoryBreadcrumbItemView,
-
-        initialize: function(options) {
-            this.on('itemview:crumb:click', _.bind(this.onCrumbClick, this));
-        },
-
-        onCrumbClick: function(itemView) {
-            var pathCrumb = itemView.model.get('path');
-            this.options.directoryExplorer.set('path', pathCrumb);
-        }
-    });
-
-    var DirectoryItemView = module.exports.DirectoryItemView = Marionette.ItemView.extend({
-        template: _.template(directoryItemTpl),
-        tagName: 'tr',
-
-        triggers: {
-            'click .filename': 'filename:click'
-        },
-
-        bindings: {
-            '.filename': 'filename',
-            '.timestamp': {
-                observe: 'mtime',
-                onGet: function(val, options) {
-                    return moment.unix(val).format('llll');
-                }
-            },
-            '.size': {
-                observe: 'size',
-                onGet: function(val, options) {
-                    return val ? filesize(val, true) : '';
-                }
-            },
-            'i': {
-                attributes: [{
-                    name: 'class',
-                    observe: 'mode',
-                    onGet: function(val, options) {
-                        return 'icon_mode M' + val;
-                    }
-                }]
-            }
-        },
-
-        onRender: function() {
-            this.stickit();
-        }
-    });
-
-    var DirectoryExplorerView = module.exports.DirectoryExplorerView = Marionette.CompositeView.extend({
-        template: _.template(directoryExplorerTpl),
-        tagName: 'table',
-        className: 'directory-explorer table-striped',
-        itemView: DirectoryItemView,
-        itemViewContainer: 'tbody',
-
-        events: {
-            'click th.column-filename': 'onSortByName',
-            'click th.column-mtime': 'onSortByModified',
-            'click th.column-size': 'onSortBySize'
-        },
-
-        collectionEvents: {
-            'sort': 'render toggleSortCaret'
-        },
-
-        initialize: function(options) {
-            this.listenTo(this, 'itemview:filename:click', this.onFilenameClick);
-        },
-
-        close: function() {
-        },
-
-        onFilenameClick: function(itemView) {
-            var dirObject = itemView.model
-            if(dirObject.get('mode') === 16877) {
-                this.model.appendPath(dirObject.get('filename'));
-            } else {
-                this.trigger('filemanager:file:click', itemView.model, this.model.get('path'));
-            }
-        },
-
-        onSortByModified: function() {
-            var sortDirection = (this.collection.sortDirection === 'DSC') ? 'ASC': 'DSC';
-            this.collection.sort({sortProperty: 'mtime', sortDirection: sortDirection});
-        },
-
-        onSortByName: function() {
-            var sortDirection = (this.collection.sortDirection === 'DSC') ? 'ASC': 'DSC';
-            this.collection.sort({sortProperty: 'filename', sortDirection: sortDirection});
-        },
-
-        onSortBySize: function() {
-            var sortDirection = (this.collection.sortDirection === 'DSC') ? 'ASC': 'DSC';
-            this.collection.sort({sortProperty: 'size', sortDirection: sortDirection});
-        },
-
-        toggleSortCaret: function() {
-            var direction = (this.collection.sortDirection === 'ASC') ? 'up' : 'down';
-            this.$('th.column-' + this.collection.sortProperty + ' i').hide();
-            this.$('th.column-' + this.collection.sortProperty + ' i').attr('class', 'icon-caret-' + direction).show();
-        }
-
-    });
-
-    module.exports.FileManagerLayout = Marionette.Layout.extend({
+    return Marionette.Layout.extend({
         template: _.template(fileManagerLayoutTpl),
         id: 'file-manager-layout',
 
