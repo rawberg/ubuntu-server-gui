@@ -1,8 +1,6 @@
-define(function (require_browser) {
-    var Marionette = require_browser('marionette');
+define(['marionette'], function (Marionette) {
 
     return Marionette.AppRouter.extend({
-
         appRoutes: {
             "": "dashboard",
             "filemanager": "filemanager",
