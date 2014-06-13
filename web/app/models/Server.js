@@ -1,8 +1,8 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
-        Backbone = require_browser('backbone');
-
-    require_browser('backbone_dualstorage');
+define(['underscore',
+        'backbone',
+        'backbone_dualstorage'], function (
+        _,
+        Backbone) {
 
     return Backbone.Model.extend({
         url: 'Servers',
