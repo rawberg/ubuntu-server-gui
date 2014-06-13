@@ -1,14 +1,17 @@
-define(function(require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        Stickit = require_browser('backbone_stickit'),
-        App = require_browser('App'),
-        ServerOverview = require_browser('models/ServerOverview'),
-        utilizationStatsTpl = require_browser('text!views/dashboard/templates/utilization-stats.html');
-
-    require_browser('gauge');
-    require_browser('backbone_stickit');
+define(['jquery',
+        'underscore',
+        'marionette',
+        'App',
+        'models/ServerOverview',
+        'text!views/dashboard/templates/utilization-stats.html',
+        'gauge',
+        'backbone_stickit'], function(
+        $,
+        _,
+        Marionette,
+        App,
+        ServerOverview,
+        utilizationStatsTpl) {
 
     return Marionette.ItemView.extend({
         template: _.template(utilizationStatsTpl),
