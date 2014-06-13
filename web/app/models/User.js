@@ -1,8 +1,11 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Backbone = require_browser('backbone'),
-        Session = require_browser('models/Session');
+define(['jquery',
+        'underscore',
+        'backbone',
+        'models/Session'], function (
+        $,
+        _,
+        Backbone,
+        Session) {
 
     return Backbone.Model.extend({
         url: 'https://cloud.ubuntuservergui.com/register/',

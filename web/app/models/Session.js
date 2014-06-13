@@ -1,5 +1,4 @@
-define(function (require_browser) {
-    var Backbone = require_browser('backbone');
+define(['backbone'], function (Backbone) {
 
     return Backbone.Model.extend({
         url: 'https://cloud.ubuntuservergui.com/sessions/',
