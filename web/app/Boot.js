@@ -1,4 +1,4 @@
-require_browser.config({
+requirejs.config({
     paths: {
         // Core Libs
         jquery: '../libs/jquery/jquery-2.1.1',
@@ -85,13 +85,13 @@ require_browser.config({
 function resetLocalStorageLoadFixtures() {
 //    require('nw.gui').Window.get().showDevTools();
     var fs = require('fs'),
-    Server = require_browser('models/Server');
+    Server = requirejs('models/Server');
 
     var server_fixtures = [];
     window.localStorage.clear();
     try {
         if(window.appintegrationtests) {
-            server_fixtures = JSON.parse(fs.readFileSync('../../web/tests/fixtures/dynamic_fixtures.json'));
+            server_fixtures = JSON.parse(fs.readFileSync('tests/fixtures/dynamic_fixtures.json'));
         } else if(window.appnodetests) {
             server_fixtures = JSON.parse(fs.readFileSync('tests/fixtures/dynamic_fixtures.json'));
         }
@@ -106,7 +106,7 @@ function resetLocalStorageLoadFixtures() {
 
 // testrunner should not automatically start the application
 if(typeof(window.TESTRUNNER) === 'undefined') {
-    require_browser(['jquery', 'backbone', 'App', 'controllers/Main', 'routers/Main'],
+    requirejs(['jquery', 'backbone', 'App', 'controllers/Main', 'routers/Main'],
         function($, Backbone, App, MainController, MainRouter) {
             var rootPath = '/';
             var pushState = true;
@@ -145,7 +145,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
         }
     );
 } else {
-    require_browser(['jquery', 'chai', 'jasmine', 'jasmine_html', 'jasmine_console', 'jasmine_boot'],
+    requirejs(['jquery', 'chai', 'jasmine', 'jasmine_html', 'jasmine_console', 'jasmine_boot'],
         function($, chai, jasmine, jasmine_html, jasmine_console, jasmine_boot) {
             $(document).ready(function() {
                 // Chai
@@ -200,7 +200,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                     ]
                 }
 
-                require_browser(testfiles, function() {
+                requirejs(testfiles, function() {
                     if(typeof process !== 'undefined') {
                         resetLocalStorageLoadFixtures();
                     }
