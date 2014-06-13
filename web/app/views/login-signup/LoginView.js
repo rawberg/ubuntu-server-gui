@@ -1,7 +1,9 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
-        BaseForm = require_browser('views/BaseForm'),
-        loginTpl = require_browser('text!views/login-signup/templates/login.html');
+define(['underscore',
+        'views/BaseForm',
+        'text!views/login-signup/templates/login.html'], function (
+        _,
+        BaseForm,
+        loginTpl) {
 
     return BaseForm.extend({
         template: _.template(loginTpl),
