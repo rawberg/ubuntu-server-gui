@@ -1,19 +1,26 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        // Views
-        AddEditServerModal = require_browser('views/modal/AddEditServer'),
-        NoobTourPopover = require_browser('views/modal/NoobTourPopover'),
-        MainFooterbar = require_browser('views/MainFooterbar'),
-        MainToolbar = require_browser('views/MainToolbar'),
-        ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }}),
-        // Models / Collections
-        User = require_browser('models/User'),
-        Server = require_browser('models/Server'),
-        ServerList = require_browser('collections/ServerList');
+define(['jquery',
+        'underscore',
+        'marionette',
+        'views/modal/AddEditServer',
+        'views/modal/NoobTourPopover',
+        'views/MainFooterbar',
+        'views/MainToolbar',
+        'models/User',
+        'models/Server',
+        'collections/ServerList'], function (
+        $,
+        _,
+        Marionette,
+        AddEditServerModal,
+        NoobTourPopover,
+        MainFooterbar,
+        MainToolbar,
+        User,
+        Server,
+        ServerList) {
 
 
+    var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
     var Application = Marionette.Application.extend({
 
         _appToolbars: function() {
