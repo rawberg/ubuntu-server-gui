@@ -1,7 +1,4 @@
-define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Backbone = require_browser('backbone');
+define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
 
     return Backbone.Model.extend({
         remote: true,
