@@ -1,9 +1,11 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        popoverTpl = require_browser('text!views/modal/templates/noob-tour-popover.html');
-
+define(['jquery',
+        'underscore',
+        'marionette',
+        'text!views/modal/templates/noob-tour-popover.html'], function (
+        $,
+        _,
+        Marionette,
+        popoverTpl) {
 
     return Marionette.ItemView.extend({
         template: _.template(popoverTpl),
