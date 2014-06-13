@@ -1,8 +1,4 @@
-define(function (require_browser) {
-    var Backbone = require_browser('backbone'),
-        App = require_browser('App'),
-        FileOpsNotice = require_browser('views/modal/FileOpsNotice');
-
+define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App, FileOpsNotice) {
 
     return Backbone.Model.extend({
         defaults: {
