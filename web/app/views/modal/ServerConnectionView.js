@@ -1,15 +1,23 @@
-define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-        BaseForm = require_browser('views/BaseForm'),
-        Server = require_browser('models/Server'),
-        serverConnectingTpl = require_browser('text!views/modal/templates/server-connection-connecting.html'),
-        serverConnectPasswordPromptTpl = require_browser('text!views/modal/templates/server-connection-password.html'),
-        serverConnectErrorTpl = require_browser('text!views/modal/templates/server-connection-error.html');
+define(['jquery',
+        'underscore',
+        'marionette',
+        'App',
+        'views/BaseForm',
+        'models/Server',
+        'text!views/modal/templates/server-connection-connecting.html',
+        'text!views/modal/templates/server-connection-password.html',
+        'text!views/modal/templates/server-connection-error.html',
+        'backbone_stickit'], function (
+        $,
+        _,
+        Marionette,
+        App,
+        BaseForm,
+        Server,
+        serverConnectingTpl,
+        serverConnectPasswordPromptTpl,
+        serverConnectErrorTpl) {
 
-    require_browser('backbone_stickit');
     /**
      * @params {model: Server}
      */
