@@ -1,15 +1,19 @@
-define(function (require_browser, exports, module) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        AddEditServerModal = require_browser('views/modal/AddEditServer'),
-        App = require_browser('App'),
-        ContextMenu = require_browser('contextmenu'),
-        UsgCollectionView = require_browser('views/UsgCollectionView'),
-        RemoveServerModal = require_browser('views/modal/RemoveServer'),
-        leftSidebarItemTpl = require_browser('text!views/dashboard/templates/sidebar-left-item.html');
+define(['jquery',
+        'underscore',
+        'marionette',
+        'views/modal/AddEditServer',
+        'contextmenu',
+        'views/modal/RemoveServer',
+        'text!views/dashboard/templates/sidebar-left-item.html'], function (
+        $,
+        _,
+        Marionette,
+        AddEditServerModal,
+        ContextMenu,
+        RemoveServerModal,
+        leftSidebarItemTpl) {
 
-    var LeftSidebarItem = module.exports.LeftSidebarItem = Marionette.ItemView.extend({
+    var LeftSidebarItem = Marionette.ItemView.extend({
         tagName: 'li',
         className: 'vm-small',
         template: _.template(leftSidebarItemTpl),
@@ -23,10 +27,8 @@ define(function (require_browser, exports, module) {
         }
     });
 
-    /**
-     * @params {collection: ServerList}
-     */
-    module.exports.LeftSidebar = Marionette.CollectionView.extend({
+
+    return Marionette.CollectionView.extend({
         itemView: LeftSidebarItem,
         tagName: 'ul',
         id: 'left_sidebar_serverlist',
