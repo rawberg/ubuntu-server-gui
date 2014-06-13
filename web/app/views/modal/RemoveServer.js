@@ -1,10 +1,15 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
-        Server = require_browser('models/Server'),
-        removeServerTpl = require_browser('text!views/modal/templates/remove-server.html');
+define(['jquery',
+        'underscore',
+        'marionette',
+        'App',
+        'models/Server',
+        'text!views/modal/templates/remove-server.html'], function (
+        $,
+        _,
+        Marionette,
+        App,
+        Server,
+        removeServerTpl) {
 
     return Marionette.ItemView.extend({
         tagName: 'div',
