@@ -1,7 +1,7 @@
-define(function (require_browser) {
-    var App = require_browser('App'),
-        ServerList = require_browser('collections/ServerList'),
-        Server = require_browser('models/Server');
+define(function (requirejs) {
+    var App = requirejs('App'),
+        ServerList = requirejs('collections/ServerList'),
+        Server = requirejs('models/Server');
 
     xdescribe('ServerList - Collection', function() {
 

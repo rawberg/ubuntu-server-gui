@@ -1,7 +1,7 @@
-define(function (require_browser) {
-    var App = require_browser('App'),
-        DirectoryExplorer = require_browser('models/DirectoryExplorer').DirectoryExplorer,
-        DirectoryContents = require_browser('collections/DirectoryContents').DirectoryContents;
+define(function (requirejs) {
+    var App = requirejs('App'),
+        DirectoryExplorer = requirejs('models/DirectoryExplorer'),
+        DirectoryContents = requirejs('collections/DirectoryContents');
 
 
     describe('DirectoryContents - Collection', function() {

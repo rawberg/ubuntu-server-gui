@@ -1,6 +1,6 @@
-define(function (require_browser) {
-    var User = require_browser('models/User'),
-        Session = require_browser('models/Session');
+define(function (requirejs) {
+    var User = requirejs('models/User'),
+        Session = requirejs('models/Session');
 
     describe('User - Model', function() {
 

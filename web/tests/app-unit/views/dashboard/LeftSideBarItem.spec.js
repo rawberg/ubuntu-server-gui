@@ -1,6 +1,6 @@
-define(function (require_browser, exports, module) {
-    var LeftSidebarItem = require_browser('views/dashboard/LeftSidebar').LeftSidebarItem,
-        Server = require_browser('models/Server');
+define(function (requirejs, exports, module) {
+    var LeftSidebarItem = requirejs('views/dashboard/LeftSidebar').LeftSidebarItem,
+        Server = requirejs('models/Server');
 
     xdescribe('LeftSidebarItem - ItemView', function() {
 

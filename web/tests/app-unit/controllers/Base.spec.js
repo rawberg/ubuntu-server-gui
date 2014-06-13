@@ -1,8 +1,8 @@
-define(function (require_browser) {
+define(function (requirejs) {
         // Libs
-    var $ = require_browser('jquery'),
-        Marionette = require_browser('marionette'),
-        BaseController = require_browser('controllers/Base');
+    var $ = requirejs('jquery'),
+        Marionette = requirejs('marionette'),
+        BaseController = requirejs('controllers/Base');
 
 
     describe('Base - Controller', function() {

@@ -1,7 +1,7 @@
-define(function (require_browser) {
-    var DirectoryBreadcrumbView = require_browser('views/filemanager/FileManager').DirectoryBreadcrumbView,
-        DirectoryBreadcrumbs = require_browser('models/DirectoryExplorer').DirectoryBreadcrumbs,
-        DirectoryExplorerModel = require_browser('models/DirectoryExplorer').DirectoryExplorer;
+define(function (requirejs) {
+    var DirectoryBreadcrumbView = requirejs('views/filemanager/DirectoryBreadcrumbView'),
+        DirectoryBreadcrumbs = requirejs('collections/DirectoryBreadcrumbs'),
+        DirectoryExplorerModel = requirejs('models/DirectoryExplorer');
 
 
     describe('DirectoryBreadcrumbView', function() {

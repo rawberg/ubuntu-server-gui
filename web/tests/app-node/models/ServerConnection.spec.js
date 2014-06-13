@@ -1,9 +1,9 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
-        App = require_browser('App'),
-        Server = require_browser('models/Server'),
-        ServerList = require_browser('collections/ServerList'),
-        ServerConnection = require_browser('models/ServerConnection');
+define(function (requirejs) {
+    var _ = requirejs('underscore'),
+        App = requirejs('App'),
+        Server = requirejs('models/Server'),
+        ServerList = requirejs('collections/ServerList'),
+        ServerConnection = requirejs('models/ServerConnection');
 
     var fs = require('fs'),
         StringDecoder = require('string_decoder').StringDecoder;

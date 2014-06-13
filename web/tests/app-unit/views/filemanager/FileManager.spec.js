@@ -1,15 +1,15 @@
-define(function (require_browser) {
+define(function (requirejs) {
     // Libs
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
+    var $ = requirejs('jquery'),
+        _ = requirejs('underscore'),
+        Marionette = requirejs('marionette'),
+        App = requirejs('App'),
     // Models & Collections
-        Server = require_browser('models/Server'),
-        ServerConnection = require_browser('models/ServerConnection'),
+        Server = requirejs('models/Server'),
+        ServerConnection = requirejs('models/ServerConnection'),
     // Views
-        FileManagerLayout = require_browser('views/filemanager/FileManager').FileManagerLayout,
-        ServerConnectionModal = require_browser('views/modal/ServerConnectionView');
+        FileManagerLayout = requirejs('views/filemanager/FileManager'),
+        ServerConnectionModal = requirejs('views/modal/ServerConnectionView');
 
     describe('FileManager', function() {
 

@@ -1,6 +1,6 @@
-define(function (require_browser) {
-    var Backbone = require_browser('backbone');
-    var Session = require_browser('models/Session');
+define(function (requirejs) {
+    var Backbone = requirejs('backbone');
+    var Session = requirejs('models/Session');
 
     describe('Session - Model', function() {
 

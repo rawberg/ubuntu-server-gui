@@ -1,5 +1,5 @@
-define(function (require_browser) {
-    var DirectoryExplorer = require_browser('models/DirectoryExplorer').DirectoryExplorer;
+define(function (requirejs) {
+    var DirectoryExplorer = requirejs('models/DirectoryExplorer');
 
 
     describe('DirectoryExplorer - Model', function() {

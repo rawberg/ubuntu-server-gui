@@ -1,10 +1,10 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
-        Backbone = require_browser('backbone'),
-        BaseRouter = require_browser('routers/Base'),
-        BaseController = require_browser('controllers/Base'),
-        User = require_browser('models/User'),
-        Session = require_browser('models/Session');
+define(function (requirejs) {
+    var _ = requirejs('underscore'),
+        Backbone = requirejs('backbone'),
+        BaseRouter = requirejs('routers/Base'),
+        BaseController = requirejs('controllers/Base'),
+        User = requirejs('models/User'),
+        Session = requirejs('models/Session');
 
     describe('Base - Router', function() {
         var App, MockController, MockRouter;

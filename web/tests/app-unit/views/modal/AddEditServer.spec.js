@@ -1,8 +1,8 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        AddEditServerModal = require_browser('views/modal/AddEditServer'),
-        Server = require_browser('models/Server'),
-        ServerConnection = require_browser('models/ServerConnection');
+define(function (requirejs) {
+    var $ = requirejs('jquery'),
+        AddEditServerModal = requirejs('views/modal/AddEditServer'),
+        Server = requirejs('models/Server'),
+        ServerConnection = requirejs('models/ServerConnection');
 
 
     describe('AddEditServer (modal) - ItemView', function() {

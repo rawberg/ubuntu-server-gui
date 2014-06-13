@@ -1,8 +1,8 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        MainFooterbar = require_browser('views/MainFooterbar'),
-        App = require_browser('App'),
-        AddEditServerModal = require_browser('views/modal/AddEditServer');
+define(function (requirejs) {
+    var $ = requirejs('jquery'),
+        MainFooterbar = requirejs('views/MainFooterbar'),
+        App = requirejs('App'),
+        AddEditServerModal = requirejs('views/modal/AddEditServer');
 
     xdescribe('MainFooterbar - ItemView', function() {
         var mainFooterbar, addServerClickSpy;

@@ -1,21 +1,21 @@
-define(function (require_browser) {
+define(function (requirejs) {
         // Libs
-    var $ = require_browser('jquery'),
-        Marionette = require_browser('marionette'),
-        MainController = require_browser('controllers/Main'),
-        App = require_browser('App'),
+    var $ = requirejs('jquery'),
+        Marionette = requirejs('marionette'),
+        MainController = requirejs('controllers/Main'),
+        App = requirejs('App'),
 
         // Models
-        Server = require_browser('models/Server'),
+        Server = requirejs('models/Server'),
 
         // Collections
-        NetServicesCollection = require_browser('collections/NetServices'),
+        NetServicesCollection = requirejs('collections/NetServices'),
 
         // Views
-        DashboardLayout = require_browser('views/dashboard/Dashboard').DashboardLayout,
-        PlatformStatsView = require_browser('views/dashboard/PlatformStats'),
-        RunningServicesView = require_browser('views/dashboard/RunningServices'),
-        UtilizationStatsView = require_browser('views/dashboard/UtilizationStats');
+        DashboardLayout = requirejs('views/dashboard/Dashboard').DashboardLayout,
+        PlatformStatsView = requirejs('views/dashboard/PlatformStats'),
+        RunningServicesView = requirejs('views/dashboard/RunningServices'),
+        UtilizationStatsView = requirejs('views/dashboard/UtilizationStats');
 
     describe('Main - Controller', function() {
 

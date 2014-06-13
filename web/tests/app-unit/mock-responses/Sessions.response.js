@@ -1,4 +1,4 @@
-define(function (require_browser, exports, module) {
+define(function (requirejs, exports, module) {
     module.exports.SessionsResponse = {
         "https://cloud.ubuntuservergui.com/sessions/": {
             "POST": {

@@ -1,11 +1,11 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        App = require_browser('App'),
-        Session = require_browser('models/Session'),
-        Server = require_browser('models/Server'),
-        MainToolbar = require_browser('views/MainToolbar'),
-        AddEditServerModal = require_browser('views/modal/AddEditServer'),
-        NoobTourPopover = require_browser('views/modal/NoobTourPopover');
+define(function (requirejs) {
+    var $ = requirejs('jquery'),
+        App = requirejs('App'),
+        Session = requirejs('models/Session'),
+        Server = requirejs('models/Server'),
+        MainToolbar = requirejs('views/MainToolbar'),
+        AddEditServerModal = requirejs('views/modal/AddEditServer'),
+        NoobTourPopover = requirejs('views/modal/NoobTourPopover');
 
 
     describe('App', function() {

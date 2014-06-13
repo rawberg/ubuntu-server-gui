@@ -1,14 +1,14 @@
-define(function (require_browser) {
-    var _ = require_browser('underscore'),
+define(function (requirejs) {
+    var _ = requirejs('underscore'),
     // Models
-        Server = require_browser('models/Server'),
-        ServerConnection = require_browser('models/ServerConnection'),
+        Server = requirejs('models/Server'),
+        ServerConnection = requirejs('models/ServerConnection'),
     // Views
-        ServerConnectionView = require_browser('views/modal/ServerConnectionView'),
+        ServerConnectionView = requirejs('views/modal/ServerConnectionView'),
     // Templates
-        serverConnectingTpl = require_browser('text!views/modal/templates/server-connection-connecting.html'),
-        serverConnectPasswordPromptTpl = require_browser('text!views/modal/templates/server-connection-password.html'),
-        serverConnectErrorTpl = require_browser('text!views/modal/templates/server-connection-error.html');
+        serverConnectingTpl = requirejs('text!views/modal/templates/server-connection-connecting.html'),
+        serverConnectPasswordPromptTpl = requirejs('text!views/modal/templates/server-connection-password.html'),
+        serverConnectErrorTpl = requirejs('text!views/modal/templates/server-connection-error.html');
 
     describe('ServerConnectionView', function() {
         // TODO: convert these to integration tests

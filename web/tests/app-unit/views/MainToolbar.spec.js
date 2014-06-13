@@ -1,7 +1,7 @@
-define(function (require_browser) {
-    var MainToolbar = require_browser('views/MainToolbar'),
-        ServerList = require_browser('collections/ServerList'),
-        Server = require_browser('models/Server');
+define(function (requirejs) {
+    var MainToolbar = requirejs('views/MainToolbar'),
+        ServerList = requirejs('collections/ServerList'),
+        Server = requirejs('models/Server');
 
     describe('MainToolbar - ItemView', function() {
         var mainToolbar, appSpy, stickitSpy, serverList;

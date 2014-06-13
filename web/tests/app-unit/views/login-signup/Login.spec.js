@@ -1,7 +1,7 @@
-define(function (require_browser) {
-    var User = require_browser('models/User'),
-        LoginView = require_browser('views/login-signup/LoginView'),
-        responses = JSON.parse(require_browser('text!/tests/app-unit/mock-responses/sessions.json'));
+define(function (requirejs) {
+    var User = requirejs('models/User'),
+        LoginView = requirejs('views/login-signup/LoginView'),
+        responses = JSON.parse(requirejs('text!/tests/app-unit/mock-responses/sessions.json'));
 
     describe('LoginView - ItemView', function() {
 

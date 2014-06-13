@@ -1,23 +1,23 @@
-define(function (require_browser) {
+define(function (requirejs) {
     // Libs
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Marionette = require_browser('marionette'),
-        App = require_browser('App'),
+    var $ = requirejs('jquery'),
+        _ = requirejs('underscore'),
+        Marionette = requirejs('marionette'),
+        App = requirejs('App'),
     // Models
-        Server = require_browser('models/Server'),
-        PlatformInfo = require_browser('models/PlatformInfo'),
-        ServerOverview = require_browser('models/ServerOverview'),
-        ServerConnection = require_browser('models/ServerConnection'),
+        Server = requirejs('models/Server'),
+        PlatformInfo = requirejs('models/PlatformInfo'),
+        ServerOverview = requirejs('models/ServerOverview'),
+        ServerConnection = requirejs('models/ServerConnection'),
     // Collections
-        NetServicesCollection = require_browser('collections/NetServices'),
+        NetServicesCollection = requirejs('collections/NetServices'),
     // Views
-        DashboardLayout = require_browser('views/dashboard/Dashboard').DashboardLayout,
-        ServerConnectionModal = require_browser('views/modal/ServerConnectionView'),
-        LeftSidebarView = require_browser('views/dashboard/LeftSidebar'),
-        PlatformStatsView = require_browser('views/dashboard/PlatformStats'),
-        RunningServicesView = require_browser('views/dashboard/RunningServices'),
-        UtilizationStatsView = require_browser('views/dashboard/UtilizationStats');
+        DashboardLayout = requirejs('views/dashboard/Dashboard').DashboardLayout,
+        ServerConnectionModal = requirejs('views/modal/ServerConnectionView'),
+        LeftSidebarView = requirejs('views/dashboard/LeftSidebar'),
+        PlatformStatsView = requirejs('views/dashboard/PlatformStats'),
+        RunningServicesView = requirejs('views/dashboard/RunningServices'),
+        UtilizationStatsView = requirejs('views/dashboard/UtilizationStats');
 
 
 

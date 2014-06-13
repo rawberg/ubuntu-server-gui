@@ -1,7 +1,7 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        RemoveServerModal = require_browser('views/modal/RemoveServer'),
-        Server = require_browser('models/Server');
+define(function (requirejs) {
+    var $ = requirejs('jquery'),
+        RemoveServerModal = requirejs('views/modal/RemoveServer'),
+        Server = requirejs('models/Server');
 
 
     describe('RemoveServer (modal) - ItemView', function() {

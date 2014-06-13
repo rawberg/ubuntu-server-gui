@@ -1,6 +1,6 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        NoobTourPopover = require_browser('views/modal/NoobTourPopover');
+define(function (requirejs) {
+    var $ = requirejs('jquery'),
+        NoobTourPopover = requirejs('views/modal/NoobTourPopover');
 
     describe('NoobTourPopover - ItemView', function() {
         var noobTourPopover, footerPosStub;
