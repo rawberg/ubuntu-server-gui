@@ -4,7 +4,7 @@
  * see: http://github.com/requirejs/text for details
  */
 /*jslint regexp: true */
-/*global require_browser, XMLHttpRequest, ActiveXObject,
+/*global requirejs, XMLHttpRequest, ActiveXObject,
   define, window, process, Packages,
   java, location, Components, FileUtils */
 
@@ -235,8 +235,8 @@ define(['module'], function (module) {
     };
 
     if (masterConfig.env === 'node') {
-        //Using special require_browser.nodeRequire, something added by r.js.
-        fs = require_browser.nodeRequire('fs');
+        //Using special requirejs.nodeRequire, something added by r.js.
+        fs = requirejs.nodeRequire('fs');
 
         text.get = function (url, callback) {
             var file = fs.readFileSync(url, 'utf8');

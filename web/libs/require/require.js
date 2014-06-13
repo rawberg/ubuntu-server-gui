@@ -8,13 +8,13 @@
 /*jslint regexp: true, nomen: true, sloppy: true */
 /*global window, navigator, document, importScripts, setTimeout, opera */
 
-var requirejs, require_browser, define;
+var requirejs, requirejs, define;
 (function (global) {
     var req, s, head, baseElement, dataMain, src,
         interactiveScript, currentlyAddingScript, mainScript, subPath,
         version = '2.1.6',
         commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        cjsRequireRegExp = /[^.]\s*require_browser\s*\(\s*["']([^'"\s]+)["']\s*\)/g,
+        cjsRequireRegExp = /[^.]\s*requirejs\s*\(\s*["']([^'"\s]+)["']\s*\)/g,
         jsSuffixRegExp = /\.js$/,
         currDirRegExp = /^\.\//,
         op = Object.prototype,
@@ -184,11 +184,11 @@ var requirejs, require_browser, define;
         requirejs = undefined;
     }
 
-    //Allow for a require_browser config object
-    if (typeof require_browser !== 'undefined' && !isFunction(require_browser)) {
+    //Allow for a requirejs config object
+    if (typeof requirejs !== 'undefined' && !isFunction(requirejs)) {
         //assume it is a config object.
-        cfg = require_browser;
-        require_browser = undefined;
+        cfg = requirejs;
+        requirejs = undefined;
     }
 
     function newContext(contextName) {
@@ -271,7 +271,7 @@ var requirejs, require_browser, define;
             //Adjust any relative paths.
             if (name && name.charAt(0) === '.') {
                 //If have a base name, try to normalize against it,
-                //otherwise, assume it is a top-level require_browser that will
+                //otherwise, assume it is a top-level requirejs that will
                 //be relative to baseUrl in the end.
                 if (baseName) {
                     if (getOwn(config.pkgs, baseName)) {
@@ -377,8 +377,8 @@ var requirejs, require_browser, define;
                 //Pop off the first array value, since it failed, and
                 //retry
                 pathConfig.shift();
-                context.require_browser.undef(id);
-                context.require_browser([id]);
+                context.requirejs.undef(id);
+                context.requirejs([id]);
                 return true;
             }
         }
@@ -399,7 +399,7 @@ var requirejs, require_browser, define;
         /**
          * Creates a module mapping that includes plugin prefix, module
          * name, and path. If parentModuleMap is provided it will
-         * also normalize the name via require_browser.normalize()
+         * also normalize the name via requirejs.normalize()
          *
          * @param {String} name the module name
          * @param {String} [parentModuleMap] parent module map
@@ -419,7 +419,7 @@ var requirejs, require_browser, define;
                 isDefine = true,
                 normalizedName = '';
 
-            //If no name, then it means it is a require_browser call, generate an
+            //If no name, then it means it is a requirejs call, generate an
             //internal name.
             if (!name) {
                 isDefine = false;
@@ -555,11 +555,11 @@ var requirejs, require_browser, define;
         }
 
         handlers = {
-            'require_browser': function (mod) {
-                if (mod.require_browser) {
-                    return mod.require_browser;
+            'requirejs': function (mod) {
+                if (mod.requirejs) {
+                    return mod.requirejs;
                 } else {
-                    return (mod.require_browser = context.makeRequire(mod.map));
+                    return (mod.requirejs = context.makeRequire(mod.map));
                 }
             },
             'exports': function (mod) {
@@ -846,7 +846,7 @@ var requirejs, require_browser, define;
                 } else if (this.error) {
                     this.emit('error', this.error);
                 } else if (!this.defining) {
-                    //The factory could trigger another require_browser call
+                    //The factory could trigger another requirejs call
                     //that would result in checking this module to
                     //define itself again. If already in the process
                     //of doing that, skip this work.
@@ -856,7 +856,7 @@ var requirejs, require_browser, define;
                         if (isFunction(factory)) {
                             //If there is an error listener, favor passing
                             //to that instead of throwing an error. However,
-                            //only do it for define()'d  modules. require_browser
+                            //only do it for define()'d  modules. requirejs
                             //errbacks should not be called for failures in
                             //their callbacks (#699). However if a global
                             //onError is set, use that.
@@ -890,7 +890,7 @@ var requirejs, require_browser, define;
                             if (err) {
                                 err.requireMap = this.map;
                                 err.requireModules = this.map.isDefine ? [this.map.id] : null;
-                                err.requireType = this.map.isDefine ? 'define' : 'require_browser';
+                                err.requireType = this.map.isDefine ? 'define' : 'requirejs';
                                 return onError((this.error = err));
                             }
 
@@ -1120,7 +1120,7 @@ var requirejs, require_browser, define;
                     id = depMap.id;
                     mod = registry[id];
 
-                    //Skip special modules like 'require_browser', 'exports', 'module'
+                    //Skip special modules like 'requirejs', 'exports', 'module'
                     //Also, don't call enable if it is already enabled,
                     //important in circular dependency cases.
                     if (!hasProp(handlers, id) && mod && !mod.enabled) {
@@ -1250,7 +1250,7 @@ var requirejs, require_browser, define;
                     }
                 }
 
-                //Save off the paths and packages since they require_browser special processing,
+                //Save off the paths and packages since they requirejs special processing,
                 //they are additive.
                 var pkgs = config.pkgs,
                     shim = config.shim,
@@ -1333,10 +1333,10 @@ var requirejs, require_browser, define;
                 });
 
                 //If a deps array or a config callback is specified, then call
-                //require_browser with those args. This is useful when require_browser is defined as a
-                //config object before require_browser.js is loaded.
+                //requirejs with those args. This is useful when requirejs is defined as a
+                //config object before requirejs.js is loaded.
                 if (cfg.deps || cfg.callback) {
-                    context.require_browser(cfg.deps || [], cfg.callback);
+                    context.requirejs(cfg.deps || [], cfg.callback);
                 }
             },
 
@@ -1364,17 +1364,17 @@ var requirejs, require_browser, define;
                     if (typeof deps === 'string') {
                         if (isFunction(callback)) {
                             //Invalid call
-                            return onError(makeError('requireargs', 'Invalid require_browser call'), errback);
+                            return onError(makeError('requireargs', 'Invalid requirejs call'), errback);
                         }
 
-                        //If require_browser|exports|module are requested, get the
+                        //If requirejs|exports|module are requested, get the
                         //value for them from the special handlers. Caveat:
                         //this only works while module is being defined.
                         if (relMap && hasProp(handlers, deps)) {
                             return handlers[deps](registry[relMap.id]);
                         }
 
-                        //Synchronous access to one module. If require_browser.get is
+                        //Synchronous access to one module. If requirejs.get is
                         //available (as in the Node adapter), prefer that.
                         if (req.get) {
                             return req.get(context, deps, relMap, localRequire);
@@ -1389,7 +1389,7 @@ var requirejs, require_browser, define;
                                         id +
                                         '" has not been loaded yet for context: ' +
                                         contextName +
-                                        (relMap ? '' : '. Use require_browser([])')));
+                                        (relMap ? '' : '. Use requirejs([])')));
                         }
                         return defined[id];
                     }
@@ -1400,12 +1400,12 @@ var requirejs, require_browser, define;
                     //Mark all the dependencies as needing to be loaded.
                     context.nextTick(function () {
                         //Some defines could have been added since the
-                        //require_browser call, collect them.
+                        //requirejs call, collect them.
                         intakeDefines();
 
                         requireMod = getModule(makeModuleMap(null, relMap));
 
-                        //Store if map config should be applied to this require_browser
+                        //Store if map config should be applied to this requirejs
                         //call for dependencies.
                         requireMod.skipMap = options.skipMap;
 
@@ -1454,7 +1454,7 @@ var requirejs, require_browser, define;
                     }
                 });
 
-                //Only allow undef on top level require_browser calls
+                //Only allow undef on top level requirejs calls
                 if (!relMap) {
                     localRequire.undef = function (id) {
                         //Bind any waiting define() calls to this context,
@@ -1668,14 +1668,14 @@ var requirejs, require_browser, define;
             }
         };
 
-        context.require_browser = context.makeRequire();
+        context.requirejs = context.makeRequire();
         return context;
     }
 
     /**
      * Main entry point.
      *
-     * If the only argument to require_browser is a string, then the module that
+     * If the only argument to requirejs is a string, then the module that
      * is represented by that string is fetched for the appropriate context.
      *
      * If the first argument is an array, then it will be treated as an array
@@ -1683,7 +1683,7 @@ var requirejs, require_browser, define;
      * be specified to execute when all of those dependencies are available.
      *
      * Make a local req variable to help Caja compliance (it assumes things
-     * on a require_browser that are not standardized), and to give a short
+     * on a requirejs that are not standardized), and to give a short
      * name for minification/local scope use.
      */
     req = requirejs = function (deps, callback, errback, optional) {
@@ -1719,11 +1719,11 @@ var requirejs, require_browser, define;
             context.configure(config);
         }
 
-        return context.require_browser(deps, callback, errback);
+        return context.requirejs(deps, callback, errback);
     };
 
     /**
-     * Support require_browser.config() to make it easier to cooperate with other
+     * Support requirejs.config() to make it easier to cooperate with other
      * AMD loaders on globally agreed names.
      */
     req.config = function (config) {
@@ -1741,10 +1741,10 @@ var requirejs, require_browser, define;
     } : function (fn) { fn(); };
 
     /**
-     * Export require_browser as a global, but only if it does not already exist.
+     * Export requirejs as a global, but only if it does not already exist.
      */
-    if (!require_browser) {
-        require_browser = req;
+    if (!requirejs) {
+        requirejs = req;
     }
 
     req.version = version;
@@ -1760,7 +1760,7 @@ var requirejs, require_browser, define;
     //Create default context.
     req({});
 
-    //Exports some context-sensitive methods on global require_browser.
+    //Exports some context-sensitive methods on global requirejs.
     each([
         'toUrl',
         'undef',
@@ -1772,7 +1772,7 @@ var requirejs, require_browser, define;
         //with its config gets used.
         req[prop] = function () {
             var ctx = contexts[defContextName];
-            return ctx.require_browser[prop].apply(ctx, arguments);
+            return ctx.requirejs[prop].apply(ctx, arguments);
         };
     });
 
@@ -1788,7 +1788,7 @@ var requirejs, require_browser, define;
     }
 
     /**
-     * Any errors that require_browser explicitly generates will be passed to this
+     * Any errors that requirejs explicitly generates will be passed to this
      * function. Intercept/override it if you want custom error handling.
      * @param {Error} err the error object.
      */
@@ -1799,7 +1799,7 @@ var requirejs, require_browser, define;
      * Make this a separate function to allow other environments
      * to override it.
      *
-     * @param {Object} context the require_browser context to find state.
+     * @param {Object} context the requirejs context to find state.
      * @param {String} moduleName the name of the module.
      * @param {Object} url the URL to the module.
      */
@@ -1911,7 +1911,7 @@ var requirejs, require_browser, define;
 
     //Look for a data-main script attribute, which could also adjust the baseUrl.
     if (isBrowser) {
-        //Figure out baseUrl. Get it from the script tag with require_browser.js in it.
+        //Figure out baseUrl. Get it from the script tag with requirejs.js in it.
         eachReverse(scripts(), function (script) {
             //Set the 'head' where we can append children by
             //using the script's parent.
@@ -1957,7 +1957,7 @@ var requirejs, require_browser, define;
 
     /**
      * The function that handles definitions of modules. Differs from
-     * require_browser() in that a string for the module should be the first argument,
+     * requirejs() in that a string for the module should be the first argument,
      * and the function to execute after dependencies are loaded should
      * return a value to define the module corresponding to the first argument's
      * name.
@@ -1984,7 +1984,7 @@ var requirejs, require_browser, define;
         if (!deps && isFunction(callback)) {
             deps = [];
             //Remove comments from the callback string,
-            //look for require_browser calls, and pull them into the dependencies,
+            //look for requirejs calls, and pull them into the dependencies,
             //but only if there are function args.
             if (callback.length) {
                 callback
@@ -1994,12 +1994,12 @@ var requirejs, require_browser, define;
                         deps.push(dep);
                     });
 
-                //May be a CommonJS thing even without require_browser calls, but still
+                //May be a CommonJS thing even without requirejs calls, but still
                 //could use exports, and module. Avoid doing exports and module
-                //work though if it just needs require_browser.
+                //work though if it just needs requirejs.
                 //REQUIRES the function to expect the CommonJS variables in the
                 //order listed below.
-                deps = (callback.length === 1 ? ['require_browser'] : ['require_browser', 'exports', 'module']).concat(deps);
+                deps = (callback.length === 1 ? ['requirejs'] : ['requirejs', 'exports', 'module']).concat(deps);
             }
         }
 
