@@ -1,6 +1,4 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        Marionette = require_browser('marionette');
+define(['jquery', 'marionette'], function ($, Marionette) {
 
     return Marionette.ItemView.extend({
 
