@@ -1,9 +1,13 @@
-define(function (require_browser) {
-    var $ = require_browser('jquery'),
-        _ = require_browser('underscore'),
-        Server = require_browser('models/Server'),
-        BaseForm = require_browser('views/BaseForm'),
-        addEditServerTpl = require_browser('text!views/modal/templates/add-edit-server.html');
+define(['jquery',
+        'underscore',
+        'models/Server',
+        'views/BaseForm',
+        'text!views/modal/templates/add-edit-server.html'], function (
+        $,
+        _,
+        Server,
+        BaseForm,
+        addEditServerTpl) {
 
     /**
      * @params {model: Server}
