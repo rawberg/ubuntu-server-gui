@@ -109,7 +109,7 @@ define(function (requirejs) {
                 });
             });
 
-            xit("sets connection_status to 'connect error' when connection fails", function(done) {
+            it("sets connection_status to 'connect error' when connection fails", function(done) {
                 expect(appVentConnectSpy).not.toHaveBeenCalled();
                 expect(connectionStatusSpy).not.toHaveBeenCalled();
 
@@ -141,14 +141,14 @@ define(function (requirejs) {
 
     });
 
-    xdescribe('ServerConnection - sftpConnection', function() {
+    describe('ServerConnection - sftpConnection', function() {
 
         describe('readStream', function() {
             var server, serversCollection, serverConnection;
             var showModalSpy;
 
             beforeEach(function(done) {
-                showModalSpy = jasmine.createSpy();
+                showModalSpy = jasmine.createSpy('showModalSpy');
                 App.commands.setHandler('modal:show', showModalSpy);
 
                 serversCollection = new ServerList();
@@ -193,8 +193,8 @@ define(function (requirejs) {
                 server.connection.readStream('/etc/doesnotexist', function(err, fileContents) {
                     expect(err).toBeDefined();
                     expect(showModalSpy).toHaveBeenCalled();
-                    expect(showModalSpy.callCount).toBe(1);
-                    expect(showModalSpy.calls.argsFor(0)[0].options).to.have.keys(['errorMsg', 'filePath']);
+                    expect(showModalSpy.calls.count()).toBe(1);
+                    (showModalSpy.calls.argsFor(0)[0].options).should.have.keys(['errorMsg', 'filePath']);
                     done();
                 });
             });
@@ -203,20 +203,20 @@ define(function (requirejs) {
                 server.connection.readStream('/etc/sudoers', function(err, fileContents) {
                     expect(err).toBeDefined();
                     expect(showModalSpy).toHaveBeenCalled();
-                    expect(showModalSpy.callCount).toBe(1);
-                    expect(showModalSpy.calls.argsFor(0)[0].options).to.have.keys(['errorMsg', 'filePath']);
+                    expect(showModalSpy.calls.count()).toBe(1);
+                    (showModalSpy.calls.argsFor(0)[0].options).should.have.keys(['errorMsg', 'filePath']);
                     done();
                 });
             });
         });
 
 
-        xdescribe('writeStream', function() {
+        describe('writeStream', function() {
             var server, serversCollection, serverConnection;
             var showModalSpy;
 
             beforeEach(function(done) {
-                showModalSpy = sinon.spy();
+                showModalSpy = jasmine.createSpy('showModalSpy');
                 App.commands.setHandler('modal:show', showModalSpy);
 
                 serversCollection = new ServerList();
@@ -252,13 +252,13 @@ define(function (requirejs) {
 
                 server.connection.writeStream(testFilePath, 'unwritable', {flags: 'w'}, function(err) {
                     expect(err).toBeUndefined();
-                    sinon.assert.notCalled(showModalSpy);
+                    expect(showModalSpy).not.toHaveBeenCalled();
 
                     server.sftpProxy.chmod(testFilePath, 0444, function(err) {
                         expect(err).toBeUndefined();
                         server.connection.writeStream(testFilePath, 'new content', {}, function(err) {
-                            sinon.assert.calledOnce(showModalSpy);
-                            expect(showModalSpy.args[0][0].options).to.have.keys(['errorMsg', 'filePath']);
+                            expect(showModalSpy).toHaveBeenCalled();
+                            (showModalSpy.calls.argsFor(0)[0].options).should.have.keys(['errorMsg', 'filePath']);
                             server.sftpProxy.unlink(testFilePath, function(err) {
                                 expect(err).toBeUndefined();
                                 done();
