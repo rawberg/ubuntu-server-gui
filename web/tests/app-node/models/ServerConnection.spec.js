@@ -184,7 +184,7 @@ define(function (requirejs) {
                 expect(server.connection).toBeDefined();
                 server.connection.readStream('/etc/hostname', function(err, fileContents) {
                     expect(err).toBeUndefined();
-                    expect(fileContents).toEqual('lucid64\n');
+                    expect(fileContents).toMatch('vagrant-ubuntu');
                     done();
                 });
             });
