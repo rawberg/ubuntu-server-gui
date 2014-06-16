@@ -1,16 +1,25 @@
 {
   "src_folders" : ["tests/app-integration"],
   "output_folder": false,
-  "test_settings" : {
+  "selenium": {
+      "start_process": true,
+      "server_path": "/usr/local/Cellar/selenium-server-standalone/2.41.0/libexec/selenium-server-standalone-2.41.0.jar",
+      "cli_args": {
+          "webdriver.chrome.driver": "../desktop/osx/chromedriver2_server"
+      }
+  },
+   "test_settings" : {
     "default" : {
       "silent": true,
-      "chrome_driver": true,
       "screenshots" : {
         "enabled" : false,
         "path" : ""
       },
       "desiredCapabilities": {
         "browserName": "chrome",
+        "chromeOptions": {
+            "binary": "/Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/desktop/osx/node-webkit.app/Contents/MacOS/node-webkit"
+        },
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "webStorageEnabled": true,
