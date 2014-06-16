@@ -10,7 +10,6 @@ requirejs.config({
 
         // Addons
         backbone_dualstorage: '../libs/backbone.dualstorage/backbone.dualstorage',
-        backbone_modelbinder: '../libs/backbone.modelbinder/Backbone.ModelBinder',
         backbone_routefilter: '../libs/backbone.routefilter/backbone.routefilter',
         backbone_stickit: '../libs/backbone.stickit/backbone.stickit',
 
@@ -47,9 +46,6 @@ requirejs.config({
         },
         'backbone_stickit': {
             deps: ['jquery', 'backbone']
-        },
-        'backbone_dualstorage': {
-            deps: ['backbone']
         },
         'bootstrap_tooltip': {
             deps: ['jquery']
