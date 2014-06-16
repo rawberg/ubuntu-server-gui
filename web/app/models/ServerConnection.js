@@ -36,7 +36,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 try {
                     this.sshProxy.end();
                 } catch(e) {
-                    console.log('error trying to end sshProxy: ', e);
+                    console.log('SSH :: SSH error trying to end sshProxy :: ', e);
                 }
                 callback();
             } else {
@@ -66,7 +66,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
 
                 // also connect via sftp
                 sshProxy.sftp(_.bind(function (err, sftpConnection) {
-                    this.server.sftpProxy = sftpConnection;
+                    this.server.sftpProxy = this.sftpProxy = sftpConnection;
                     if (err) throw err;
                     sftpConnection.on('end', function () {
                         console.log('SFTP :: SFTP session closed');
@@ -87,8 +87,6 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             sshProxy.on('error', _.bind(function(err) {
                 console.log('SSH Connection :: error :: ', err);
                 this.set('connection_status', 'connection error');
-                callback();
-                return;
             }, this));
 
             sshProxy.on('end', function() {
