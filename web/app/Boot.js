@@ -91,9 +91,9 @@ function resetLocalStorageLoadFixtures() {
     window.localStorage.clear();
     try {
         if(window.appintegrationtests) {
-            server_fixtures = JSON.parse(fs.readFileSync('tests/fixtures/dynamic_fixtures.json'));
+            server_fixtures = JSON.parse(fs.readFileSync('../../web/tests/fixtures/dynamic_fixtures.json'));
         } else if(window.appnodetests) {
-            server_fixtures = JSON.parse(fs.readFileSync('tests/fixtures/dynamic_fixtures.json'));
+            server_fixtures = JSON.parse(fs.readFileSync('../fixtures/dynamic_fixtures.json'));
         }
     } catch(e) {
         console.log('no fixture data was found: ('+e.message+')');

@@ -1,3 +1,8 @@
+# Dev Scratch        #
+#####################
+web/scratch.js
+web/tests/app-integration/Scratch.int.js
+
 # CSS and SCSS       #
 #####################
 web/.sass-cache
