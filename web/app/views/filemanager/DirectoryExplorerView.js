@@ -2,12 +2,16 @@ define(['jquery',
         'underscore',
         'marionette',
         'text!views/filemanager/templates/directory-explorer.html',
-        'text!views/filemanager/templates/directory-item.html'], function(
+        'text!views/filemanager/templates/directory-item.html',
+        'filesize',
+        'moment'], function(
         $,
         _,
         Marionette,
         directoryExplorerTpl,
-        directoryItemTpl) {
+        directoryItemTpl,
+        filesize,
+        moment) {
 
     var DirectoryItemView = Marionette.ItemView.extend({
         template: _.template(directoryItemTpl),

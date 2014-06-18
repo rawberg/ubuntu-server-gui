@@ -44,6 +44,7 @@ define(['underscore',
         },
 
         filemanager: function(dirPath) {
+            var dirPath = dirPath ? dirPath: '/';
             var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout({
                 controllerTriggers: this.controllerTriggers,
                 path: dirPath

@@ -68,48 +68,42 @@ gulp.task('node-vagrant-destroy', ['_node-runner'], function(cb) {
 });
 
 gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
-    console.log(process.cwd());
     if(gulp_util.env.hosts.length > 0) {
         fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
     }
 
     // rename __package.json file to bring it into play - TODO: find a better solution
-    fs.renameSync('../desktop/osx/__package.json', '../desktop/osx/package.json')
+    try {
+        fs.renameSync('../desktop/osx/__package.json', '../desktop/osx/package.json')
+    } catch(e) {
+        console.log('could not rename __package.json - continuing anywway');
+    }
 
-    var selenium_server = exec('/usr/local/bin/selenium-server -Dwebdriver.chrome.driver=../desktop/osx/chromedriver2_server');
+        var integration_tests = exec('node_modules/nightwatch/bin/nightwatch --env default --config tests/app-integration/settings.json');
+        var timer = setTimeout(function() {
+            integration_tests.kill();
+            console.log('integration tests timed out, forcing shutdown..');
+            try {
+                fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
+            } catch(e) {
+                console.log('could not rename __pakage.json: ', e);
+            }
+            cb();
+        }, 120000);
 
-    selenium_server.stdout.on('data', function (data) {
-        process.stdout.write(data);
-
-        if(/jetty/.test(data)) {
-            var integration_tests = exec('node_modules/nightwatch/bin/nightwatch --env default --config tests/app-integration/settings.json');
-            var timer = setTimeout(function() {
-                integration_tests.kill();
-                selenium_server.kill();
+        integration_tests.stdout.on('data', function (data) {
+            process.stdout.write(data);
+            if(/^TEST|total assertions/.test(data)) {
+                clearTimeout(timer);
+                console.log('integration tests complete!');
                 try {
                     fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
                 } catch(e) {
                     console.log('could not rename __pakage.json: ', e);
                 }
                 cb();
-            }, 120000);
-
-            integration_tests.stdout.on('data', function (data) {
-                process.stdout.write(data);
-                if(/assertions/.test(data)) {
-                    clearTimeout(timer);
-                    integration_tests.kill();
-                    selenium_server.kill();
-                    try {
-                        fs.renameSync('../desktop/osx/package.json', '../desktop/osx/__package.json')
-                    } catch(e) {
-                        console.log('could not rename __pakage.json: ', e);
-                    }
-                    cb();
-                }
-            });
-        }
-    });
+            }
+        });
 });
 
 gulp.task('_node-runner', ['vagrant-ssh-config'], function(cb) {

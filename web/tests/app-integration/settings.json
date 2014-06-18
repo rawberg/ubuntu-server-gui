@@ -18,7 +18,7 @@
       "desiredCapabilities": {
         "browserName": "chrome",
         "chromeOptions": {
-            "binary": "/Users/david/Documents/Bergstyle/Web-P-and-D/Projects/NimbleVentures/Ubuntu-Server-GUI/code/app.ubuntuservergui/desktop/osx/node-webkit.app/Contents/MacOS/node-webkit"
+            "binary": "../desktop/osx/node-webkit.app/Contents/MacOS/node-webkit"
         },
         "javascriptEnabled": true,
         "acceptSslCerts": true,
