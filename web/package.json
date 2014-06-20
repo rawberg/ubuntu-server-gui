@@ -21,7 +21,7 @@
     },
 
     "dependencies": {
-        "ssh2": "git+https://github.com/mscdex/ssh2.git"
+        "ssh2": "0.3.0"
     },
 
     "devDependencies": {
