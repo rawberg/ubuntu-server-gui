@@ -22,10 +22,11 @@ define(['jquery',
 
     var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
     var Application = Marionette.Application.extend({
+        VERSION: '0.9.1',
 
         _appToolbars: function() {
             var toolbarView = new MainToolbar({App:this}),
-                footerbarView = new MainFooterbar();
+                footerbarView = new MainFooterbar({App:this});
 
             this.mainToolbar.show(toolbarView);
             toolbarView.on('server:add:click', _.bind(function(eventObj) {

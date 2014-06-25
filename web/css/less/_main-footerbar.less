@@ -9,7 +9,12 @@ footer {
   background-color: #f3f4f4;
   .lh-background-image(linear-gradient(rgb(243, 244, 244), rgb(235, 235, 235)));
 
-  div#left_sidebar_footerbar, div#center_footerbar {
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+
+  #left_sidebar_footerbar, #center_footerbar, #right_footerbar {
     border-top: 1px solid #d4d4d4;
   }
 
@@ -19,8 +24,6 @@ footer {
     width: 216px;
 //    border-right: 1px solid #a5a5a5;
     ul {
-      list-style: none;
-      margin: 0;
       li {
         width: 30px;
         line-height: 24px;
@@ -47,4 +50,17 @@ footer {
     .lh-flex(1 1 auto);
   }
 
+  #right_footerbar {
+    min-width: 200px;
+    width: 200px;
+    ul {
+      padding-right: 8px;
+      li {
+        float: right;
+        line-height: 28px;
+        font-size: 12px;
+        color: #A2A2A2;
+      }
+    }
+  }
 }
