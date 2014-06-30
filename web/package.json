@@ -33,6 +33,10 @@
         "gulp-util": ">0.0.0"
     },
 
+    "packages": {
+
+    },
+
     "licenses": [{
         "type": "GPL v3",
         "url": "http://opensource.org/licenses/GPL-3.0"

@@ -6991,6 +6991,7 @@ body menu {
 }
 #main-toolbar .toolbar-nav li.toolbar-gear {
   float: right;
+  visibility: hidden;
   margin: 10px 14px 0 18px;
 }
 #main-toolbar .toolbar-nav li.toolbar-separator {
@@ -7014,6 +7015,7 @@ body menu {
 }
 #main-toolbar .toolbar-nav li:last-child {
   float: right;
+  visibility: hidden;
 }
 footer {
   position: fixed;
@@ -7091,12 +7093,23 @@ footer #right_footerbar {
 }
 footer #right_footerbar ul {
   padding-right: 8px;
+  height: 27px;
 }
 footer #right_footerbar ul li {
   float: right;
-  line-height: 28px;
+  line-height: 24px;
+  padding-top: 2px;
+}
+footer #right_footerbar ul li.fb-version-info {
+  margin-left: 10px;
   font-size: 12px;
   color: #A2A2A2;
+}
+footer #right_footerbar ul li.fb-feedback {
+  padding: 2px 10px 1px 10px;
+  font-size: 14px;
+  border-left: 1px solid #c5c5c5;
+  border-right: 1px solid #c5c5c5;
 }
 #dashboard_layout .performance,
 #dashboard_layout .software {
