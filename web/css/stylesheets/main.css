@@ -7099,6 +7099,10 @@ footer #right_footerbar ul li {
   float: right;
   line-height: 24px;
   padding-top: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 footer #right_footerbar ul li.fb-version-info {
   margin-left: 10px;

@@ -10,19 +10,13 @@ module.exports = {
             .waitForElementPresent('.directory-explorer', 2000)
     },
 
-    tearDown : function() {
-
-    },
-
     'displays file operations error modal when attempting to access a remote file with insufficient permissions' : function (browser) {
         browser
             .assert.elementNotPresent('.modal-fileops', 'error modal is not immediately open')
-            // should be root, TODO: use xpath and text()=root
-            // https://groups.google.com/forum/#!topic/nightwatchjs/d0p72Ub9Idg
-            .click('.directory-explorer tr:nth-child(15) td.filename')
-            .assert.elementPresent('.modal-fileops .modal-body', 'file operation error modal displays')
+            .click('xpath', '//table//td[@class="filename"][text()="root"]')
+            .assert.elementPresent('.modal-fileops .modal-body', 'file operation error modal displays', 2000)
             .click('button[name=close]')
-            .assert.elementNotPresent('.modal-fileops', 'modal is closed')
+            .assert.elementNotPresent('.modal-fileops', 'modal is closed', 1500)
             .assert.elementPresent('#file-manager-breadcrumbs .breadcrumb .crumb', 'user is back at root file manager')
             .end()
     }

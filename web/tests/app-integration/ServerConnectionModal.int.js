@@ -13,7 +13,7 @@ module.exports = {
             .click('select.server-select-toggle option:last-child')
             .waitForElementPresent('.modal-body.connecting', 1000)
             .waitForElementPresent('.dashboard-container', 1000)
-            .pause(500)
+            .pause(1500)
             .assert.elementNotPresent('.modal-body', 'connection model is removed after successful connection')
             .end()
   }

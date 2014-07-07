@@ -14,7 +14,7 @@ module.exports = {
 
     },
 
-    'file editor displays contents on an existing file' : function (browser) {
+    'file editor displays contents of an existing file' : function (browser) {
         browser
             .click('xpath', '//table//td[@class="filename"][text()="vagrant"]')
             .waitForElementPresent('.directory-explorer tbody', 2000, 'directory explorer shows vagrant folder contents')
