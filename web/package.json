@@ -21,7 +21,7 @@
     },
 
     "dependencies": {
-        "ssh2": "0.3.0",
+        "ssh2": "0.3.3",
         "node-webkit-updater": "0.0.2"
     },
 
