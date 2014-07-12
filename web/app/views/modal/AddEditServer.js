@@ -21,6 +21,7 @@ define(['jquery',
         bindings: {
             'input[name="name"]': 'name',
             'input[name="ipv4"]': 'ipv4',
+            'input[name="username"]': 'username',
             'input[name=ssh_keypath]': 'keyPath',
             'input[name="auth_key"]': {
                 observe: 'keyPath',
