@@ -83,19 +83,19 @@ function resetLocalStorageLoadFixtures() {
     var fs = require('fs'),
     Server = requirejs('models/Server');
 
-    var server_fixtures = [];
+    var fixtures = [];
     window.localStorage.clear();
     try {
         if(window.appintegrationtests) {
-            server_fixtures = JSON.parse(fs.readFileSync('../../web/tests/fixtures/dynamic_fixtures.json'));
+            fixtures = JSON.parse(fs.readFileSync('../../web/tests/fixtures/dynamic_fixtures.json'));
         } else if(window.appnodetests) {
-            server_fixtures = JSON.parse(fs.readFileSync('../fixtures/dynamic_fixtures.json'));
+            fixtures = JSON.parse(fs.readFileSync('../fixtures/dynamic_fixtures.json'));
         }
     } catch(e) {
         console.log('no fixture data was found: ('+e.message+')');
     }
 
-    server_fixtures.forEach(function(server) {
+    fixtures.servers.forEach(function(server) {
         new Server(server).save();
     });
 }

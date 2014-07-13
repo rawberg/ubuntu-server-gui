@@ -21,7 +21,7 @@ gulp.task('less-dev', function () {
 
 gulp.task('_vagrant-distro-check', function(cb) {
     if(gulp_util.env.distro === '' || typeof gulp_util.env.distro === 'undefined') {
-        cb('distro flag required (--distro lucid)');
+        cb('distro flag required (--distro [lucid, precise, quantal, raring, saucy, trusty])');
     } else {
         console.log('distro selected: ', gulp_util.env.distro);
         cb();
@@ -41,18 +41,38 @@ gulp.task('vagrant-up', ['_vagrant-distro-check'], function(cb) {
     });
 });
 
-gulp.task('vagrant-ssh-config', ['vagrant-up'], function(cb) {
-    gulp_util.env.hosts = [];
-    var vagrant_process = exec('vagrant ssh-config', {cwd: '../vagrant/'+gulp_util.env.distro.trim()+''}, function(error, stdout, stderr) {
+gulp.task('vagrant-fixture-data', ['vagrant-up'], function(cb) {
+    var vbox_id_filepath = '../vagrant/'+gulp_util.env.distro.trim()+'/.vagrant/machines/default/virtualbox/id';
+    gulp_util.env.fixtures = {servers: [], active_vm: {}};
+    gulp_util.env.fixtures.active_vm['vbox_id'] = fs.readFileSync(vbox_id_filepath, {encoding: 'utf8'}).trim();
+
+    var vbox_ipfetcher = 'VBoxManage guestproperty get ' + gulp_util.env.fixtures.active_vm['vbox_id'] + ' "/VirtualBox/GuestInfo/Net/1/V4/IP"';
+
+    exec('vagrant ssh-config', {cwd: '../vagrant/'+gulp_util.env.distro.trim()+''}, function(error, stdout, stderr) {
         var output = stdout.split('\n'),
             host = output[1].trim().split(' ')[1],
             user = output[2].trim().split(' ')[1],
             port = output[3].trim().split(' ')[1],
             sshkey = output[7].trim().split(' ')[1];
 
-        gulp_util.env.hosts.push({name: 'Test Server', ipv4: host, username: user, port: port, keyPath: sshkey});
-        cb();
+        gulp_util.env.fixtures.servers.push({name: 'Test Server', ipv4: host, username: user, port: port, keyPath: sshkey});
+
+        // need to wait a few seconds for eth1 to be assigned a public ip
+        setTimeout(function() {
+            exec(vbox_ipfetcher, {cwd: '../vagrant/'+gulp_util.env.distro.trim()+''}, function(error, stdout, stderr) {
+                if(stdout != 'No value set!\n') {
+                    gulp_util.env.fixtures.active_vm['public_ip'] = stdout.split('\n')[0].split(':', 2)[1].trim();
+                    cb();
+                } else {
+                    cb('<-- could not retrieve vm public ip address -->');
+                }
+            });
+        }, 4000);
     });
+
+
+
+
 });
 
 gulp.task('vagrant-destroy', ['_vagrant-distro-check'], function(cb) {
@@ -67,9 +87,9 @@ gulp.task('node-vagrant-destroy', ['_node-runner'], function(cb) {
     _vagrant_destroy(cb);
 });
 
-gulp.task('_integration-runner', ['vagrant-ssh-config'], function(cb) {
-    if(gulp_util.env.hosts.length > 0) {
-        fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
+gulp.task('_integration-runner', ['vagrant-fixture-data'], function(cb) {
+    if(gulp_util.env.fixtures) {
+        fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.fixtures));
     }
 
     // rename __package.json file to bring it into play - TODO: find a better solution

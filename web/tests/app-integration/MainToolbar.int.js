@@ -1,6 +1,9 @@
+var fs = require('fs');
+
 module.exports = {
 
     setUp: function () {
+        this.fixtures = JSON.parse(fs.readFileSync('tests/fixtures/dynamic_fixtures.json'));
     },
 
     tearDown: function () {
@@ -59,5 +62,25 @@ module.exports = {
                     .assert.urlEquals(mainUrl, 'url is main app url')
             })
             .end();
-    }
+    },
+
+    'add server via top toolbar icon and connect to it via username/password auth': function(browser) {
+        browser
+            .waitForElementPresent('.toolbar-server_rack', 4000, 'wait for toolbar icons')
+            .click('.toolbar-server_rack a')
+            .assert.elementPresent('.modal-body')
+            .setValue('input[name=name]', 'AddedTestbox')
+            .setValue('input[name=ipv4]', this.fixtures.active_vm.public_ip)
+            .setValue('input[name=username]', 'vagrant')
+            .click('input[name=auth_key]')
+            .click('button[name=save]')
+            .waitForElementNotPresent('.modal-body', 2000)
+            .assert.containsText('select.server-select-toggle option:last-child', 'AddedTestbox', 'new server shows up in the server selection list')
+            .click('select.server-select-toggle option:last-child')
+            .waitForElementPresent('.modal-body.password-required', 2000)
+            .setValue('input[name=ssh_password]', 'vagrant')
+            .click('button[name=connect]')
+            .waitForElementPresent('.dashboard-container', 5000, 'dashboard displays')
+            .end()
+    },
 }
