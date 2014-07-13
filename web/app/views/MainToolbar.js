@@ -25,7 +25,7 @@ define(['jquery',
                     collection: 'this.App.servers',
                     labelPath: 'name',
                     valuePath: 'id',
-                    defaultOption: {name: 'Select/Add Server', label: 'Select/Add Server', value: null}
+                    defaultOption: {name: 'Select Server', label: 'Select Server', value: null}
                 }
             }
         },

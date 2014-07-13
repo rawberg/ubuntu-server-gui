@@ -7017,6 +7017,11 @@ body menu {
   float: right;
   visibility: hidden;
 }
+#main-toolbar .toolbar-nav li .server-select-toggle {
+  height: 26px;
+  margin-top: 0;
+  padding: 0;
+}
 footer {
   position: fixed;
   z-index: 99999;
