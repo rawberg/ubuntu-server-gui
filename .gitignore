@@ -2,6 +2,7 @@
 #####################
 web/scratch.js
 web/tests/app-integration/Scratch.int.js
+web/app/Boot.build.js
 
 # CSS and SCSS       #
 #####################
