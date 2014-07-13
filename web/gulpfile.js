@@ -69,10 +69,6 @@ gulp.task('vagrant-fixture-data', ['vagrant-up'], function(cb) {
             });
         }, 4000);
     });
-
-
-
-
 });
 
 gulp.task('vagrant-destroy', ['_vagrant-distro-check'], function(cb) {
