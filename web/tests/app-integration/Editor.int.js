@@ -4,8 +4,8 @@ module.exports = {
         browser
             .waitForElementPresent('select.server-select-toggle', 4000, 'select server drop down displays')
             .click('select.server-select-toggle option:last-child')
-            .waitForElementPresent('.dashboard-container', 3000, 'dashboard container displays')
-            .waitForElementNotPresent('.modal-body.connecting', 2000)
+            .waitForElementPresent('.dashboard-container', 5000, 'dashboard container displays')
+            .waitForElementNotPresent('.modal-body.connecting', 4000)
             .click('.toolbar-file_cabinet a')
             .waitForElementPresent('.directory-explorer', 2000, 'directory explorer displays')
     },
