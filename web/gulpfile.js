@@ -26,7 +26,7 @@ gulp.task('_vagrant-distro-check', function(cb) {
         console.log('distro selected: ', gulp_util.env.distro);
         cb();
     }
-})
+});
 
 gulp.task('vagrant-up', ['_vagrant-distro-check'], function(cb) {
     var vagrant_process = exec('vagrant up', {cwd: '../vagrant/'+gulp_util.env.distro.trim()+''});
@@ -62,6 +62,7 @@ gulp.task('vagrant-fixture-data', ['vagrant-up'], function(cb) {
             exec(vbox_ipfetcher, {cwd: '../vagrant/'+gulp_util.env.distro.trim()+''}, function(error, stdout, stderr) {
                 if(stdout != 'No value set!\n') {
                     gulp_util.env.fixtures.active_vm['public_ip'] = stdout.split('\n')[0].split(':', 2)[1].trim();
+                    fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.fixtures));
                     cb();
                 } else {
                     cb('<-- could not retrieve vm public ip address -->');
@@ -84,10 +85,6 @@ gulp.task('node-vagrant-destroy', ['_node-runner'], function(cb) {
 });
 
 gulp.task('_integration-runner', ['vagrant-fixture-data'], function(cb) {
-    if(gulp_util.env.fixtures) {
-        fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.fixtures));
-    }
-
     // rename __package.json file to bring it into play - TODO: find a better solution
     try {
         fs.renameSync('../desktop/osx/__package.json', '../desktop/osx/package.json')
@@ -109,7 +106,7 @@ gulp.task('_integration-runner', ['vagrant-fixture-data'], function(cb) {
 
         integration_tests.stdout.on('data', function (data) {
             process.stdout.write(data);
-            if(/^TEST|total assertions/.test(data)) {
+            if(/^TEST|total assertions|TEST FAILURE/.test(data)) {
                 clearTimeout(timer);
                 console.log('integration tests complete!');
                 try {
@@ -122,11 +119,7 @@ gulp.task('_integration-runner', ['vagrant-fixture-data'], function(cb) {
         });
 });
 
-gulp.task('_node-runner', ['vagrant-ssh-config'], function(cb) {
-    if(gulp_util.env.hosts.length > 0) {
-        fs.writeFileSync('tests/fixtures/dynamic_fixtures.json', JSON.stringify(gulp_util.env.hosts));
-    }
-
+gulp.task('_node-runner', ['vagrant-fixture-data'], function(cb) {
     var nodetests = exec('../desktop/osx/node-webkit.app/Contents/MacOS/node-webkit tests/app-node/');
     var timer = setTimeout(function() {
         nodetests.kill();
