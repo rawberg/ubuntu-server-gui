@@ -35,8 +35,8 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             if(this.sshProxy && this.sshProxy._state !== 'closed') {
                 try {
                     this.sshProxy.end();
-                } catch(e) {
-                    console.log('SSH :: SSH error trying to end sshProxy :: ', e);
+                } catch(err) {
+                    App.execute('log:error', {msg: 'SSH error trying to end sshProxy', severity: 'error', err: err});
                 }
                 callback();
             } else {
@@ -66,14 +66,24 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
 
                 // also connect via sftp
                 sshProxy.sftp(_.bind(function (err, sftpConnection) {
+                    if (err) {
+                        err['server-port'] = connectOptions['port'];
+                        App.execute('log:error', {msg: 'SFTP Connection Error', severity: 'error', err: err});
+                        throw err;
+                    }
                     this.server.sftpProxy = this.sftpProxy = sftpConnection;
-                    if (err) throw err;
+
                     sftpConnection.on('end', function () {
-                        console.log('SFTP :: SFTP session closed');
                     });
 
                     sftpConnection.on('error', function (err) {
-                        console.log('SFTP :: SFTP session error: ', err);
+                        err['server-port'] = connectOptions['port'];
+                        App.execute('log:error', {msg: 'SFTP Error', severity: 'error', err: err});
+                    });
+
+                    sftpConnection.on('timeout', function (err) {
+                        err['server-port'] = connectOptions['port'];
+                        App.execute('log:error', {msg: 'SFTP Timeout', severity: 'info', err: err});
                     });
 
                     App.vent.trigger('server:connected', this.server);
@@ -85,7 +95,8 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             //TODO: find a better place or logging and error trapping
             //TODO: decide how the app will handle sshProxy errors and disconnects
             sshProxy.on('error', _.bind(function(err) {
-                console.log('SSH Connection :: error :: ', err);
+                err['server-port'] = connectOptions['port'];
+                App.execute('log:error', {msg: 'SSH Error', severity: 'error', err: err});
                 this.set('connection_status', 'connection error');
             }, this));
 
@@ -97,6 +108,18 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 App.vent.trigger('server:closed', this.server);
             });
 
+            sshProxy.on('timeout', function(err) {
+                err['server-port'] = connectOptions['port'];
+                App.execute('log:error', {msg: 'SSH Timeout', severity: 'info', err: err});
+            });
+
+            sshProxy.on('change password', function() {
+                console.log('password change request');
+            });
+
+            sshProxy.on('banner', function(msg) {
+            });
+
             sshProxy.usgExec = function (cmd, options, callback) {
                 sshProxy.exec(cmd, options, function (err, sshStream) {
                     if (err) {
@@ -106,7 +129,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                         callback(data.toString());
                     });
                 });
-            }
+            };
 
             if(this.server.get('keyPath') !== null) {
                 try {
@@ -121,8 +144,10 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
 
             try {
                 sshProxy.connect(connectOptions);
-            } catch(e) {
+            } catch(err) {
                 this.set('connection_status', 'connection error');
+                err['server-port'] = connectOptions['port'];
+                App.execute('log:error', {msg: 'SSH Connection Error', severity: 'error', err: err});
                 callback();
             }
         },
@@ -202,6 +227,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                         errorMsg = 'Error saving file.';
                 }
                 App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
+                App.execute('log:error', {msg: 'Sever Connection File Write Stream Error', severity: 'error', err: err});
                 callback(err);
             });
 

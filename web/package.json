@@ -21,8 +21,10 @@
     },
 
     "dependencies": {
-        "ssh2": "0.3.3",
-        "node-webkit-updater": "0.0.2"
+        "ssh2": "0.3.4",
+        "node-webkit-updater": "0.0.2",
+        "rollbar": "0.3.10",
+        "mixpanel": "0.0.20"
     },
 
     "devDependencies": {

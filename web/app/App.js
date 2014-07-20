@@ -23,6 +23,7 @@ define(['jquery',
     var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
     var Application = Marionette.Application.extend({
         VERSION: '0.9.3',
+        loggers: {},
 
         _appToolbars: function() {
             var toolbarView = new MainToolbar({App:this}),
@@ -70,11 +71,7 @@ define(['jquery',
         },
 
         isDesktop: function() {
-            if(typeof process !== 'undefined') {
-                return true;
-            } else {
-                return false;
-            }
+            return (typeof process !== 'undefined');
         },
 
         onNoobTourActivate: function() {
@@ -134,6 +131,27 @@ define(['jquery',
         mainFooterbar: '#main-footerbar-container',
         modalContainer: '#modal-container',
         popoverContainer: '#popover-container'
+    });
+
+    App.addInitializer(function() {
+
+        // --- rollbar initialization placeholder --- //
+
+        this.commands.setHandler('log:error', function(options) {
+            options.severity = options.severity ? options.severity : 'error';
+            options.err['node-webkit'] = process.versions['node-webkit'];
+            options.err['nodejs'] = process.versions['node'];
+            options.err['desktop-os'] = process.platform;
+            if(this.loggers.hasOwnProperty('rollbar')) {
+                this.loggers.rollbar.reportMessageWithPayloadData(options.msg, {
+                    level: options.severity,
+                    err: options.err
+                });
+            } else {
+                console.log('Error Log: ', options);
+            }
+
+        }, this);
     });
 
     App.addInitializer(function(options) {
