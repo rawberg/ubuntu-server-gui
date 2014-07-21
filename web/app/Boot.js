@@ -105,15 +105,15 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
     requirejs(['jquery', 'backbone', 'App', 'controllers/Main', 'routers/Main'],
         function($, Backbone, App, MainController, MainRouter) {
             var rootPath = '/';
-            var pushState = true;
+            var pushState = false;
 
-            // support using Backbone router when app is loaded via file://
-            if(location.pathname.indexOf('/web/index.html') !== -1) {
+            if(location.pathname.indexOf('index.html') !== -1) {
+                rootPath = '/index.html';
+            } else if(location.pathname.indexOf('/web/index.html') !== -1) {
+                // support using Backbone router when app is loaded via file://
                 rootPath = location.pathname.substring(0, location.pathname.lastIndexOf('/web/index.html')+18);
-                pushState = false;
             } else if (location.pathname.indexOf('testrunner_app-int.html') !== -1) {
                 rootPath = location.pathname.substring(0, location.pathname.lastIndexOf('testrunner_app-int.html')+23);
-                pushState = false;
             }
 
             if(window.appintegrationtests) {
