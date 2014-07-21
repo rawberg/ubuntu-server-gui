@@ -184,7 +184,7 @@ define(['underscore',
                 expect(server.connection).toBeDefined();
                 server.connection.readStream('/etc/hostname', function(err, fileContents) {
                     expect(err).toBeUndefined();
-                    expect(fileContents).toMatch(/lucid|trusy|precise/);
+                    expect(fileContents).toMatch(/lucid|trusty|precise/);
                     done();
                 });
             });
