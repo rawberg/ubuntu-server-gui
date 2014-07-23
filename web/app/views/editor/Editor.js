@@ -17,20 +17,31 @@ define(['jquery',
         id: 'editor_layout',
 
         ui: {
-            editorRegion: '#editor-region'
+            editorRegion: '#editor-region',
         },
 
-        events: {},
+        bindings: {
+            '.filename': {
+                observe: 'fileName',
+            }
+        },
+
+        triggers: {
+            'click .file-close': 'close:editor',
+        },
 
         initialize: function(options) {
             if(typeof options.fileContents === 'undefined' || typeof options.dirPath === 'undefined' || typeof options.server === 'undefined') {
                 throw 'missing required options parameters';
             }
 
-            this.fileName = options.fileName;
+            this.model = new Backbone.Model({
+                fileName: options.fileName,
+                dirPath: options.dirPath,
+                filePath: options.dirPath + options.fileName,
+            });
+
             this.fileContents = options.fileContents;
-            this.server = options.server;
-            this.dirPath = options.dirPath;
             this.controllerTriggers = options.controllerTriggers;
 
             codemirror.commands.save = this.onSaveEditor;
@@ -42,10 +53,13 @@ define(['jquery',
             this.controllerTriggers.execute('navigate', 'filemanager', this.path);
         },
 
+        onRender: function() {
+            this.stickit();
+        },
+
         onSaveEditor: function() {
-            var filePath = this.dirPath + this.fileName;
-            this.server.connection.writeStream(filePath, this.cm.doc.getValue(), {}, function() {
-                console.log('saved: ' + filePath);
+            this.options.server.connection.writeStream(this.model.get('filePath'), this.cm.doc.getValue(), {}, function() {
+                console.log('saved');
             });
         },
 

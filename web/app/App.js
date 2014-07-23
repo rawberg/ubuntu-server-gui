@@ -135,7 +135,7 @@ define(['jquery',
 
     App.addInitializer(function() {
 
-        // --- rollbar initialization placeholder --- //
+        // --- Rollbar initialization placeholder --- //
 
         this.commands.setHandler('log:error', function(options) {
             options.severity = options.severity ? options.severity : 'error';

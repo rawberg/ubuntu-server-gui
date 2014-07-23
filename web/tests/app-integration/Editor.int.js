@@ -25,6 +25,18 @@ module.exports = {
             .end()
     },
 
+    'file editor tab closes file and returns user to file manager' : function (browser) {
+        browser
+            .click('xpath', '//table//td[@class="filename"][text()="vagrant"]')
+            .waitForElementPresent('.directory-explorer tbody', 2000, 'directory explorer shows vagrant folder contents')
+            .click('xpath', '//table//td[@class="filename"][text()="Z01-existing_file.txt"]')
+            .waitForElementPresent('#editor_layout', 2000, 'containing layout for code mirror displays')
+            .assert.elementPresent('.CodeMirror-lines', 'displays code mirror editor')
+            .click('.file-close')
+            .waitForElementPresent('.breadcrumb', 2000, 'back at file manager')
+            .end()
+    },
+
     'file editor displays edits and saves an existing file' : function (browser) {
         var windowHandle;
         browser.window_handle(function(result) {

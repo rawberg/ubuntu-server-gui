@@ -91,15 +91,21 @@
 
 html {
   width: 100%;
-  min-height:100%;
-  height:100%;
+  min-height:100vh;
+  height:100vh;
   cursor: default;
 }
 
 body {
   position: relative;
-  height:100%;
+  height:100vh;
   cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  -o-user-select: none;
+  user-select: none;
 }
 
 ul {
@@ -109,8 +115,8 @@ ul {
 
 #viewport {
     width: 100%;
-    height: 100%;
-    min-height: 100%;
+    height: 100vh;
+    min-height: 100vh;
     margin-bottom: -30px;
 }
 
@@ -125,45 +131,3 @@ ul {
   margin: 0 2px;
   color: #c4c4c4;
 }
-
-//#sidebar_left {
-//  .offwhite-background();
-//  .side-panel-container();
-//  min-width: 216px;
-//  width: 216px;
-//  min-height: 100%;
-//  padding-top: 50px;
-//
-//  ul {
-//    .list-spacing();
-//    .list-background();
-//    position: fixed;
-//    min-width: 216px;
-//
-//    li {
-//      .full-width-spacing();
-//      .centered-text();
-//
-//      max-width: 215px;
-//      // allow 1px for right border
-//      height: 110px;
-//      background-image: url(../images/icons/sidebar-left/server-silver-small.png);
-//      background-position: 50% 50%;
-//      background-repeat: no-repeat;
-//      .side-panel-background();
-//      border-bottom: 1px solid #c1c1c1;
-//      border-right: 1px solid #a5a5a5;
-//
-//      &:hover {
-//        .side-panel-hover-background();
-//      }
-//
-//      span {
-//        position: relative;
-//        top: 84px;
-//        .side-panel-text();
-//        cursor: default;
-//      }
-//    }
-//  }
-//}
