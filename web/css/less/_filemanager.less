@@ -1,98 +1,109 @@
 #file-manager-layout {
-  width: 100%;
-  min-height: 100%;
-//  @include display-flex;
-//  @include flex-direction(row);
-//  @include align-items(stretch);
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
 
-  #main_content {
-    overflow-y: scroll;
-  }
+    #file-manager-breadcrumbs {
+        margin-top: 49px;
+        position: fixed;
+        top: 0px;
+        width: 100%;
 
-  ::-moz-selection {
-    background-color: #FFFFFF;
-  }
-
-  ::selection {
-    background-color: #FFFFFF;
-  }
-
-  thead {
-    th {
-      i {
-        display: none;
-        margin-left: 5px;
-      }
+        .breadcrumbs {
+            border-radius: 0;
+        }
     }
-  }
+
+    ::-moz-selection {
+        background-color: #FFFFFF;
+    }
+
+    ::selection {
+        background-color: #FFFFFF;
+    }
+
+    thead {
+        th {
+            i {
+                display: none;
+                margin-left: 5px;
+            }
+        }
+    }
+
+    #file-manager-explorer {
+        padding-top: 90px;
+        padding-bottom: 30px;
+    }
 
 }
 
 table.directory-explorer {
-  width: 100%;
-  height: 100%;
-  table-layout: fixed;
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
 
-  thead {
-    th:first-of-type {
-      max-width: 60px;
-      min-width: 60px;
-      width: 60px;
+    thead {
+        th:first-of-type {
+            max-width: 60px;
+            min-width: 60px;
+            width: 60px;
+        }
+
+        th {
+            text-align: left;
+            font-size: 15px;
+            color: #807B7B;
+            width: 100%;
+            height: 24px;
+            cursor: default;
+        }
     }
 
-    th {
-      text-align: left;
-      font-size: 15px;
-      color: #807B7B;
-      width: 100%;
-      height: 24px;
-      cursor: default;
+    tr {
+        td:first-of-type {
+            min-width: 60px;
+            max-width: 60px;
+            width: 60px;
+            text-align: center;
+            vertical-align: bottom;
+        }
     }
-  }
 
-  tr {
-    td:first-of-type {
-      min-width: 60px;
-      max-width: 60px;
-      width: 60px;
-      text-align: center;
-      vertical-align: bottom;
+    td {
+        text-overflow: ellipsis;
+        height: 26px;
+        cursor: default;
+
+        .icon_mode {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+
+            // TODO: confirm these mean dir/file and they're not just permissions
+            &.M16877 {
+                //, &.M17407 (tmp dir) {
+                background-image: url("../images/icons/file-explorer/folder.png");
+            }
+
+            &.M41471, &.M33188, &.M33152 {
+                background-image: url("../images/icons/file-explorer/file.png");
+            }
+        }
     }
-  }
-
-  td {
-    text-overflow: ellipsis;
-    height: 26px;
-    cursor: default;
-
-    .icon_mode {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-
-      // TODO: confirm these mean dir/file and they're not just permissions
-      &.M16877 { //, &.M17407 (tmp dir) {
-        background-image: url("../images/icons/file-explorer/folder.png");
-      }
-
-      &.M41471, &.M33188, &.M33152 {
-        background-image: url("../images/icons/file-explorer/file.png");
-      }
-    }
-  }
 }
 
 .directory-explorer.table-striped tbody > tr:nth-child(odd) > td,
 .directory-explorer.table-striped tbody > tr:nth-child(odd) > th {
-  background-color: #FFFFFF;
+    background-color: #FFFFFF;
 }
 
 .directory-explorer.table-striped tbody > tr:nth-child(even) > td,
 .directory-explorer.table-striped tbody > tr:nth-child(even) > th {
-  background-color: #f3f6fa;
+    background-color: #f3f6fa;
 }
 
 .directory-explorer.table-hover tbody tr:hover > td,
 .directory-explorer.table-hover tbody tr:hover > th {
-  background-color: #F3F6FA;
+    background-color: #F3F6FA;
 }
