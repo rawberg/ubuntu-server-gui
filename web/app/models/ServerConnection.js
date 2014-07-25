@@ -193,7 +193,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
         },
 
         writeStream: function(filePath, fileContents, options, callback) {
-            if(typeof filePath === 'undefined' | typeof fileContents === 'undefined') {
+            if(typeof filePath === 'undefined' || typeof fileContents === 'undefined') {
                 throw 'filePath and fileContens parameters are required';
             }
 
