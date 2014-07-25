@@ -1,6 +1,6 @@
 {
     "name": "Ubuntu-Server-GUI",
-    "version": "0.8.5",
+    "version": "0.8.51",
     "main": "index.html",
     "description": "Ubuntu Server GUI desktop app.",
     "nodejs": true,
@@ -22,7 +22,7 @@
 
     "dependencies": {
         "ssh2": "0.3.4",
-        "node-webkit-updater": "0.0.2",
+        "node-webkit-updater": "rawberg/node-webkit-updater",
         "rollbar": "0.3.10",
         "mixpanel": "0.0.20"
     },
@@ -35,8 +35,12 @@
         "gulp-util": ">0.0.0"
     },
 
-    "packages": {
+    "manifestUrl": "http://app.ubuntuservergui.dev:8888/dl/updates.json",
 
+    "packages": {
+        "mac": "http://app.ubuntuservergui.com/dl/updates/mac/Ubuntu_Server_GUI.dmg",
+        "win": "http://app.ubuntuservergui.com/dl/updates/win/Ubuntu_Server_GUI.zip",
+        "linux64": "http://app.ubuntuservergui.com/dl/updates/linux64/Ubuntu_Server_GUI.tar.gz"
     },
 
     "licenses": [{
