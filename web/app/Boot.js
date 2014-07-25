@@ -83,7 +83,7 @@ function resetLocalStorageLoadFixtures() {
     var fs = require('fs'),
     Server = requirejs('models/Server');
 
-    var fixtures = [];
+    var fixtures = {servers:[]};
     window.localStorage.clear();
     try {
         if(window.appintegrationtests) {
