@@ -27,6 +27,7 @@ requirejs.config({
         text: '../libs/require/text',
         moment: '../libs/moment/moment',
         filesize: '../libs/filesize/filesize',
+        formatters: '../libs/usg/formatters',
 
         // Testing Libs
         jasmine: '../libs/jasmine/jasmine',

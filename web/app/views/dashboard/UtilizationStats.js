@@ -3,6 +3,7 @@ define(['jquery',
         'marionette',
         'App',
         'models/ServerOverview',
+        'formatters',
         'text!views/dashboard/templates/utilization-stats.html',
         'gauge',
         'backbone_stickit'], function(
@@ -11,6 +12,7 @@ define(['jquery',
         Marionette,
         App,
         ServerOverview,
+        Formatters,
         utilizationStatsTpl) {
 
     return Marionette.ItemView.extend({
@@ -32,7 +34,7 @@ define(['jquery',
         },
 
         cpuGaugeConverter: function(direction, value) {
-            return App.formatters.zeroPad(value, 1);
+            return Formatters.zeroPad(value, 1);
         },
 
         formatMemory: function(val) {
