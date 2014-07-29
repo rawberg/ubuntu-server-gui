@@ -1,10 +1,12 @@
 define(['jquery',
         'underscore',
+        'App',
         'models/Server',
         'views/BaseForm',
         'text!views/modal/templates/add-edit-server.html'], function (
         $,
         _,
+        App,
         Server,
         BaseForm,
         addEditServerTpl) {
@@ -65,13 +67,12 @@ define(['jquery',
         },
 
         initialize: function(options) {
-            this.App = options && options.App ? options.App : App;
             this.model = options && options.model ? options.model : new Server();
             this.setDefaultKeyPath();
         },
 
         onCancel: function(eventObj) {
-            this.App.execute('modal:close');
+            App.execute('modal:close');
         },
 
         onClickChangeKeypath: function(eventObj) {
@@ -90,9 +91,9 @@ define(['jquery',
             this.hideError();
             this.disableForm();
             this.model.save();
-            this.model = this.App.servers.add(this.model);
+            this.model = App.servers.add(this.model);
             this.activeServer = this.model;
-            this.App.execute('modal:close');
+            App.execute('modal:close');
         },
 
         onInputKeyup: function(eventObj) {

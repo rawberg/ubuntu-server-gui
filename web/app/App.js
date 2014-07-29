@@ -1,9 +1,6 @@
 define(['jquery',
         'underscore',
         'marionette',
-        'views/modal/AddEditServer',
-        'views/MainFooterbar',
-        'views/MainToolbar',
         'models/User',
         'models/Server',
         'collections/ServerList',
@@ -11,9 +8,6 @@ define(['jquery',
         $,
         _,
         Marionette,
-        AddEditServerModal,
-        MainFooterbar,
-        MainToolbar,
         User,
         Server,
         ServerList,
@@ -24,23 +18,6 @@ define(['jquery',
     var Application = Marionette.Application.extend({
         VERSION: '0.9.4',
         loggers: {},
-
-        _appToolbars: function() {
-            var toolbarView = new MainToolbar({App:this}),
-                footerbarView = new MainFooterbar({App:this});
-
-            this.mainToolbar.show(toolbarView);
-            toolbarView.on('server:add:click', _.bind(function(eventObj) {
-                this.execute('modal:show', new AddEditServerModal({operationLabel:'Add', App:this}));
-            }, this));
-
-
-            this.mainFooterbar.show(footerbarView);
-            footerbarView.on('server:add:click', _.bind(function() {
-                this.execute('noobtour:deactivate');
-                this.execute('modal:show', new AddEditServerModal({operationLabel:'Add', App:this}));
-            }, this));
-        },
 
         getActiveServer: function() {
             if(_.isUndefined(this.activeServer)) {
@@ -99,6 +76,7 @@ define(['jquery',
         popoverContainer: '#popover-container'
     });
 
+    // Loggers
     App.addInitializer(function() {
 
         // --- Rollbar initialization placeholder --- //
@@ -120,21 +98,19 @@ define(['jquery',
         }, this);
     });
 
+    // App Modules & Handlers
     App.addInitializer(function(options) {
         this.module("NoobTourModule", NoobTourModule);
-        this.vent.on('session:expired', this.onSessionExpired, this);
+
         this.commands.setHandler('noobtour:activate', this.NoobTourModule.activate, this.NoobTourModule);
         this.commands.setHandler('noobtour:deactivate', this.NoobTourModule.deactivate, this.NoobTourModule);
         this.commands.setHandler("modal:close", this.closeModal, this);
         this.commands.setHandler("modal:show", this.showModal, this);
 
-        var user = new User();
-        this.user = function() { return user; };
         this.setActiveServer(new Server()); // place holder for the server we're currently connected to
 
         this.routers = {};
         this.servers = new ServerList();
-        this._appToolbars();
 
         this.servers.fetch({success: _.bind(function() {
             if(this.servers.length === 0) {
@@ -147,8 +123,6 @@ define(['jquery',
                 this.execute('noobtour:activate');
             }
         }, this);
-
-
     });
 
     return App;

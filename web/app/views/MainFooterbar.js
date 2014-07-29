@@ -1,10 +1,12 @@
-define(['backbone',
-        'underscore',
+define(['underscore',
         'marionette',
+        'App',
+        'views/modal/AddEditServer',
         'text!views/templates/main-footerbar.html'], function (
-        Backbone,
         _,
         Marionette,
+        App,
+        AddEditServerModal,
         mainFooterbarTpl) {
 
     return Marionette.ItemView.extend({
@@ -19,16 +21,17 @@ define(['backbone',
             'click #lsfb_btn_add_server': 'server:add:click'
         },
 
-        initialize: function(options) {
-            this.App = options.App;
-        },
-
         onClickFeedback: function() {
             require('nw.gui').Shell.openExternal("https://github.com/rawberg/ubuntu-server-gui/issues");
         },
 
+        onServerAddClick: function() {
+            App.execute('noobtour:deactivate');
+            this.execute('modal:show', new AddEditServerModal({operationLabel:'Add'}));
+        },
+
         templateHelpers: function() {
-            return {appVersion: this.App.VERSION};
+            return {appVersion: App.VERSION};
         }
     });
 });

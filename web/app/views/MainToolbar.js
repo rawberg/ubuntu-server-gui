@@ -1,12 +1,14 @@
 define(['jquery',
         'underscore',
-        'backbone',
         'marionette',
+        'App',
+        'views/modal/AddEditServer',
         'text!views/templates/main-toolbar.html'], function (
         $,
         _,
-        Backbone,
         Marionette,
+        App,
+        AddEditServerModal,
         mainToolbarTpl) {
 
     return Marionette.ItemView.extend({
@@ -18,11 +20,11 @@ define(['jquery',
             'select.server-select-toggle': {
                 observe: 'cid',
                 updateModel: function(val, event, options) {
-                    this.App.setActiveServer(this.App.servers.get(val));
+                    App.setActiveServer(App.servers.get(val));
                     return false;
                 },
                 selectOptions: {
-                    collection: 'this.App.servers',
+                    collection: 'App.servers',
                     labelPath: 'name',
                     valuePath: 'id',
                     defaultOption: {name: 'Select Server', label: 'Select Server', value: null}
@@ -43,10 +45,9 @@ define(['jquery',
         },
 
         initialize: function(options) {
-            this.App = options.App;
-            this.model = this.App.getActiveServer();
-            this.App.vent.on('server:disconnected', this.onActiveServerDisconnect, this);
-            this.App.vent.on('active-server:changed', this.onActiveServerChange, this);
+            this.model = App.getActiveServer();
+            App.vent.on('server:disconnected', this.onActiveServerDisconnect, this);
+            App.vent.on('active-server:changed', this.onActiveServerChange, this);
         },
 
         toggleToolbarItems: function(enabled) {
@@ -67,17 +68,21 @@ define(['jquery',
 
         onRender: function() {
             this.stickit();
-            this.App.servers.on('sync', this.reStickit, this);
-            this.App.servers.on('add', this.reStickit, this);
+            App.servers.on('sync', this.reStickit, this);
+            App.servers.on('add', this.reStickit, this);
+        },
+
+        onServerAddClick: function() {
+            App.execute('modal:show', new AddEditServerModal({operationLabel:'Add'}));
         },
 
         onClose: function() {
-            this.App.servers.off('sync', this.reStickit);
-            this.App.servers.off('add', this.reStickit);
+            App.servers.off('sync', this.reStickit);
+            App.servers.off('add', this.reStickit);
         },
 
         onActiveServerChange: function(server) {
-            this.model = this.App.getActiveServer();
+            this.model = App.getActiveServer();
             this.toggleToolbarItems(true);
         },
 

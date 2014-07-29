@@ -1,6 +1,8 @@
 define(['underscore',
         'App',
         'controllers/Base',
+        'views/MainFooterbar',
+        'views/MainToolbar',
         'views/dashboard/Dashboard',
         'views/editor/Editor',
         'views/filemanager/FileManager',
@@ -8,6 +10,8 @@ define(['underscore',
         _,
         App,
         BaseController,
+        MainFooterbar,
+        MainToolbar,
         DashboardLayout,
         EditorLayout,
         FileManagerLayout,
@@ -15,16 +19,22 @@ define(['underscore',
 
     return BaseController.extend({
         initialize: function() {
-            this.App = App;
             BaseController.prototype.initialize.apply(this, arguments);
         },
 
+        _toolbars: function() {
+            App.mainToolbar.show(new MainToolbar());
+            App.mainFooterbar.show(new MainFooterbar());
+        },
+
         dashboard: function() {
+            this._toolbars();
             var dashboardLayout = this.dashboardLayout = new DashboardLayout();
-            this.App.mainViewport.show(dashboardLayout);
+            App.mainViewport.show(dashboardLayout);
         },
 
         editor: function(options) {
+            this._toolbars();
             var server = App.getActiveServer();
             var filePath = options.path + options.file;
 
@@ -38,18 +48,19 @@ define(['underscore',
                         dirPath: options.path
                     });
                     Backbone.history.navigate("#editor", {trigger: false, replace: true});
-                    this.App.mainViewport.show(editorLayout);
+                    App.mainViewport.show(editorLayout);
                 }
             }, this));
         },
 
         filemanager: function(dirPath) {
+            this._toolbars();
             dirPath = dirPath ? dirPath: '/';
             var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout({
                 controllerTriggers: this.controllerTriggers,
                 path: dirPath
             });
-            this.App.mainViewport.show(fileManagerLayout);
+            App.mainViewport.show(fileManagerLayout);
         }
     });
 

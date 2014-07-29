@@ -1,4 +1,4 @@
-define(['backbone', 'underscore'], function (backbone, underscore) {
+define(['backbone', 'underscore'], function (Backbone, _) {
 
     return Backbone.Model.extend({
         parse: function(response, options) {
