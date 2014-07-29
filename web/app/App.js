@@ -2,22 +2,22 @@ define(['jquery',
         'underscore',
         'marionette',
         'views/modal/AddEditServer',
-        'views/modal/NoobTourPopover',
         'views/MainFooterbar',
         'views/MainToolbar',
         'models/User',
         'models/Server',
-        'collections/ServerList'], function (
+        'collections/ServerList',
+        'modules/NoobTourModule'], function (
         $,
         _,
         Marionette,
         AddEditServerModal,
-        NoobTourPopover,
         MainFooterbar,
         MainToolbar,
         User,
         Server,
-        ServerList) {
+        ServerList,
+        NoobTourModule) {
 
 
     var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
@@ -74,40 +74,6 @@ define(['jquery',
             return (typeof process !== 'undefined');
         },
 
-        onNoobTourActivate: function() {
-            var footerPos = $('footer').position();
-            $('<div class="modal-backdrop in noobtour-backdrop body-minus-footer"></div>').appendTo('body');
-            $('<div class="modal-backdrop in noobtour-backdrop footer-minus-add-server"></div>').appendTo('body');
-
-            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-            // swallow backdrop clicks
-            $('noobtour-backdrop').click(function(eventObj) {
-                eventObj.preventDefault();
-                eventObj.stopPropagation();
-            });
-
-            var noobTourPopover = new NoobTourPopover();
-            this.popoverContainer.show(noobTourPopover);
-        },
-
-        onNoobTourResize: function() {
-            if($('footer').length) {
-                var topCoord = $('footer').position().top - 78;
-                $('.noobtour-backdrop.footer-minus-add-server').css({top: topCoord});
-                $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-            }
-        },
-
-        onNoobTourDeactivate: function() {
-            $('.noobtour-backdrop').off('click').remove();
-            this.closePopover();
-        },
-
-        onSessionExpired: function() {
-            // TODO: switch to the real url
-            //window.location = 'https://localhost:8890/signin';
-        },
-
         showModal: function(view) {
             $(this.modalContainer.el).show();
             this.modalContainer.show(view);
@@ -155,11 +121,12 @@ define(['jquery',
     });
 
     App.addInitializer(function(options) {
+        this.module("NoobTourModule", NoobTourModule);
         this.vent.on('session:expired', this.onSessionExpired, this);
-        this.commands.setHandler('noobtour:activate', this.onNoobTourActivate, this);
-        this.commands.setHandler('noobtour:deactivate', this.onNoobTourDeactivate, this);
-        this.commands.setHandler("modal:close", this.closeModal, this)
-        this.commands.setHandler("modal:show", this.showModal, this)
+        this.commands.setHandler('noobtour:activate', this.NoobTourModule.activate, this.NoobTourModule);
+        this.commands.setHandler('noobtour:deactivate', this.NoobTourModule.deactivate, this.NoobTourModule);
+        this.commands.setHandler("modal:close", this.closeModal, this);
+        this.commands.setHandler("modal:show", this.showModal, this);
 
         var user = new User();
         this.user = function() { return user; };

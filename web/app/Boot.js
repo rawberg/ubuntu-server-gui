@@ -184,6 +184,8 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         'tests/app-unit/models/Server.spec.js',
     //                    'tests/app-unit/models/User.spec.js',
     //                    'tests/app-unit/models/Session.spec.js',
+                        // Modules
+                        'tests/app-unit/modules/NoobTourModule.spec.js',
                         // Controllers
                         'tests/app-unit/controllers/Base.spec.js',
                         'tests/app-unit/controllers/Main.spec.js',
