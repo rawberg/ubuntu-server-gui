@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/rawberg/ubuntu-server-gui.png?label=ready&title=Ready)](https://waffle.io/rawberg/ubuntu-server-gui)
+[![Gitter chat](https://badges.gitter.im/rawberg/ubuntu-server-gui.png)](https://gitter.im/rawberg/ubuntu-server-gui)
 Ubuntu Server GUI
 =================
 
