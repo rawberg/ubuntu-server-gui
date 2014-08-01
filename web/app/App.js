@@ -3,20 +3,19 @@ define(['jquery',
         'marionette',
         'models/User',
         'models/Server',
-        'collections/ServerList',
         'modules/NoobTourModule'], function (
         $,
         _,
         Marionette,
         User,
         Server,
-        ServerList,
         NoobTourModule) {
 
 
     var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
     var Application = Marionette.Application.extend({
         VERSION: '0.9.4',
+        routers: {},
         loggers: {},
 
         getActiveServer: function() {
@@ -108,21 +107,6 @@ define(['jquery',
         this.commands.setHandler("modal:show", this.showModal, this);
 
         this.setActiveServer(new Server()); // place holder for the server we're currently connected to
-
-        this.routers = {};
-        this.servers = new ServerList();
-
-        this.servers.fetch({success: _.bind(function() {
-            if(this.servers.length === 0) {
-                this.execute('noobtour:activate');
-            }
-        }, this)});
-
-        this.servers.on('remove', function(serverModel, serversCollection, options) {
-            if(serversCollection.length === 0) {
-                this.execute('noobtour:activate');
-            }
-        }, this);
     });
 
     return App;

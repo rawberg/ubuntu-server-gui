@@ -15,7 +15,7 @@ define(['underscore',
         DashboardLayout,
         EditorLayout,
         FileManagerLayout,
-        ServerListCollection) {
+        ServerList) {
 
     return BaseController.extend({
         initialize: function() {
@@ -23,8 +23,17 @@ define(['underscore',
         },
 
         _toolbars: function() {
-            App.mainToolbar.show(new MainToolbar());
-            App.mainFooterbar.show(new MainFooterbar());
+            this.serverList = new ServerList();
+
+            this.mainToolbar = this.mainToolbar ? this.mainToolbar : new MainToolbar({
+                model: App.getActiveServer(),
+                servers: this.serverList
+            });
+            this.serverList.fetch();
+            this.mainFooterbar = this.mainFooterbar ? this.mainFooterbar : new MainFooterbar();
+
+            App.mainToolbar.show(this.mainToolbar);
+            App.mainFooterbar.show(this.mainFooterbar);
         },
 
         dashboard: function() {

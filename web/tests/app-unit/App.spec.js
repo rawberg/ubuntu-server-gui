@@ -71,7 +71,6 @@ define(function (requirejs) {
                 var activeServerSpy;
 
                 beforeEach(function() {
-                    debugger
                     activeServerSpy = spyOn(App.vent._events['active-server:changed'][0], 'callback');
                     App._initCallbacks.run(undefined, App);
                 });

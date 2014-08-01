@@ -2,12 +2,14 @@ define(['jquery',
         'underscore',
         'marionette',
         'App',
+        'collections/ServerList',
         'views/modal/AddEditServer',
         'text!views/templates/main-toolbar.html'], function (
         $,
         _,
         Marionette,
         App,
+        ServerList,
         AddEditServerModal,
         mainToolbarTpl) {
 
@@ -18,13 +20,13 @@ define(['jquery',
 
         bindings: {
             'select.server-select-toggle': {
-                observe: 'cid',
                 updateModel: function(val, event, options) {
-                    App.setActiveServer(App.servers.get(val));
+                    App.setActiveServer(this.options.servers.get(val));
                     return false;
                 },
+                observe: 'cid',
                 selectOptions: {
-                    collection: 'App.servers',
+                    collection: 'this.options.servers',
                     labelPath: 'name',
                     valuePath: 'id',
                     defaultOption: {name: 'Select Server', label: 'Select Server', value: null}
@@ -45,7 +47,6 @@ define(['jquery',
         },
 
         initialize: function(options) {
-            this.model = App.getActiveServer();
             App.vent.on('server:disconnected', this.onActiveServerDisconnect, this);
             App.vent.on('active-server:changed', this.onActiveServerChange, this);
         },
@@ -68,17 +69,10 @@ define(['jquery',
 
         onRender: function() {
             this.stickit();
-            App.servers.on('sync', this.reStickit, this);
-            App.servers.on('add', this.reStickit, this);
         },
 
         onServerAddClick: function() {
             App.execute('modal:show', new AddEditServerModal({operationLabel:'Add'}));
-        },
-
-        onClose: function() {
-            App.servers.off('sync', this.reStickit);
-            App.servers.off('add', this.reStickit);
         },
 
         onActiveServerChange: function(server) {
@@ -90,9 +84,5 @@ define(['jquery',
             this.$('.server-select-toggle').prop('selectedIndex', 0);
             this.toggleToolbarItems(false);
         },
-
-        reStickit: function() {
-            this.stickit();
-        }
     });
 });

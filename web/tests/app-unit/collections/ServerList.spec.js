@@ -3,39 +3,53 @@ define(function (requirejs) {
         ServerList = requirejs('collections/ServerList'),
         Server = requirejs('models/Server');
 
-    xdescribe('ServerList - Collection', function() {
+    describe('ServerList - Collection', function() {
+        describe('noobtour activation', function() {
+            var serverList, posStub, noobActivateSpy;
 
-        describe('onRemove', function() {
-
-            var onRemoveServerSpy, ventTriggerSpy,
-                serverList, serverModel, footerPosStub;
             beforeEach(function() {
-                footerPosStub = sinon.stub($.prototype, 'offset');
-                onRemoveServerSpy = sinon.spy(ServerList.prototype, 'onRemove');
+                posStub = spyOn($.prototype, 'offset').and.returnValue({top: 500, bottom: 540});
                 serverList = new ServerList();
-                ventTriggerSpy = sinon.spy(serverList.App.vent, 'trigger')
-                serverList.add([{name: 'Server One'}, {name: 'Server Two'}]);
+
+                App._initCallbacks.run(undefined, App);
+                noobActivateSpy = spyOn(App.commands._wreqrHandlers['noobtour:activate'], 'callback');
             });
 
             afterEach(function() {
-                onRemoveServerSpy.restore();
-                footerPosStub.restore();
-                ventTriggerSpy.restore();
                 serverList.reset([], {silent: true});
             });
 
-            it('should be called when a server is removed from the collection', function() {
+            it('called when all servers are removed from the collection', function() {
+                serverList.add([{name: 'Server One'}, {name: 'Server Two'}]);
                 serverList.pop();
-                (onRemoveServerSpy).should.have.been.called;
-                (ventTriggerSpy).should.not.have.been.called;
+                serverList.pop();
+                expect(noobActivateSpy).toHaveBeenCalled();
             });
 
-            it('should be called when all servers are removed from the collection and trigger "noobtour:activate"', function() {
-                footerPosStub.returns({top: 666});
-                serverList.pop();
-                serverList.pop();
-                (onRemoveServerSpy).should.have.been.calledTwice;
-                (ventTriggerSpy).should.have.been.called;
+            it('called when the server/local storage returns zero results', function() {
+                serverList.fetch();
+                expect(noobActivateSpy).toHaveBeenCalled();
+            });
+        });
+
+        describe('onAddServer', function() {
+            var posStub, onAddSpy, serverList;
+
+            beforeEach(function() {
+                posStub = spyOn($.prototype, 'offset').and.returnValue({top: 500, bottom: 540});
+                onAddSpy = spyOn(ServerList.prototype, 'onAddServer');
+
+                serverList = new ServerList();
+                App._initCallbacks.run(undefined, App);
+            });
+
+            afterEach(function() {
+                serverList.reset([], {silent: true});
+            });
+
+            it('called when App.vent add:server is triggered', function() {
+                App.vent.trigger('add:server', new Server());
+                expect(onAddSpy).toHaveBeenCalled();
             });
         });
     });

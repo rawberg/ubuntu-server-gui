@@ -91,7 +91,7 @@ define(['jquery',
             this.hideError();
             this.disableForm();
             this.model.save();
-            this.model = App.servers.add(this.model);
+            App.vent.trigger('add:server', this.model);
             this.activeServer = this.model;
             App.execute('modal:close');
         },

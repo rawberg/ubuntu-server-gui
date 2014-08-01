@@ -27,7 +27,7 @@ define(['underscore',
 
         onServerAddClick: function() {
             App.execute('noobtour:deactivate');
-            this.execute('modal:show', new AddEditServerModal({operationLabel:'Add'}));
+            App.execute('modal:show', new AddEditServerModal({operationLabel:'Add'}));
         },
 
         templateHelpers: function() {
