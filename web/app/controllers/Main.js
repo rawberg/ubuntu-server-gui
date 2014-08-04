@@ -30,6 +30,7 @@ define(['underscore',
                 servers: this.serverList
             });
             this.serverList.fetch();
+
             this.mainFooterbar = this.mainFooterbar ? this.mainFooterbar : new MainFooterbar();
 
             App.mainToolbar.show(this.mainToolbar);

@@ -71,16 +71,18 @@ define(function (requirejs) {
             var getActiveServerSpy, showFileManagerSpy;
 
             beforeEach(function() {
+                getActiveServerSpy = jasmine.createSpy().and.returnValue(undefined);
+                App.reqres._wreqrHandlers['active-server:get']['callback'] = getActiveServerSpy;
                 fileManagerLayout = new FileManagerLayout({controllerTriggers: jasmine.createSpy()});
                 showFileManagerSpy = spyOn(FileManagerLayout.prototype, 'showFileManager');
 
                 fakeServer = new Server({name: 'Fake Server', ipv4: '10.0.0.1'});
             });
 
-            it('doesn\'t call showFileManager without an actively selected Server', function() {
-                getActiveServerSpy = spyOn(App, 'getActiveServer').and.returnValue(undefined);
+            it("doesn\'t call showFileManager without an actively selected Server", function(done) {
                 fileManagerLayout.render();
                 expect(showFileManagerSpy).not.toHaveBeenCalled();
+                done();
             });
 
         });

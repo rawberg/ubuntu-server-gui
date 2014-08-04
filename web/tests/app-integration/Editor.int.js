@@ -10,10 +10,6 @@ module.exports = {
             .waitForElementPresent('.directory-explorer', 2000, 'directory explorer displays')
     },
 
-    tearDown : function() {
-
-    },
-
     'file editor displays contents of an existing file' : function (browser) {
         browser
             .click('xpath', '//table//td[@class="filename"][text()="vagrant"]')
@@ -84,12 +80,12 @@ module.exports = {
             .keys([browser.Keys.META, 's'])
             .keys(['w'])
             .keys([browser.Keys.META])
-            .waitForElementPresent('.breadcrumb', 2000, 'wait for breadcrumb bar')
+            .waitForElementPresent('.breadcrumb', 2500, 'wait for breadcrumb bar')
             .assert.containsText('.breadcrumb li:last-child span', '/', 'furthest breadcrumb is /')
             .click('xpath', '//table//td[@class="filename"][text()="vagrant"]')
-            .waitForElementPresent('.directory-explorer tbody', 2000, 'directory explorer shows vagrant folder contents')
+            .waitForElementPresent('.directory-explorer tbody', 2500, 'directory explorer shows vagrant folder contents')
             .click('xpath', '//table//td[@class="filename"][text()="Z01-existing_file.txt"]')
             .assert.containsText('.CodeMirror-lines pre span', 'existing content', 'existing file contents is shown in the editor')
             .end()
     }
-}
+};

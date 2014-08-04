@@ -21,7 +21,7 @@ define(['jquery',
         bindings: {
             'select.server-select-toggle': {
                 updateModel: function(val, event, options) {
-                    App.setActiveServer(this.options.servers.get(val));
+                    App.reqres.request('active-server:set', this.options.servers.get(val));
                     return false;
                 },
                 observe: 'cid',
@@ -76,7 +76,7 @@ define(['jquery',
         },
 
         onActiveServerChange: function(server) {
-            this.model = App.getActiveServer();
+            this.model = App.reqres.request('active-server:get');
             this.toggleToolbarItems(true);
         },
 

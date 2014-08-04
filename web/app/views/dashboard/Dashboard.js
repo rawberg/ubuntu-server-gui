@@ -47,7 +47,7 @@ define(['jquery',
         },
 
         onRender: function() {
-            var activeServer = App.getActiveServer();
+            var activeServer = App.reqres.request('active-server:get');
             if(activeServer.get('ipv4') !== null) {
                 this.showMonitoring(activeServer);
             }

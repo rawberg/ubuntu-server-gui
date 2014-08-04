@@ -106,7 +106,10 @@ define(['jquery',
         this.commands.setHandler("modal:close", this.closeModal, this);
         this.commands.setHandler("modal:show", this.showModal, this);
 
-        this.setActiveServer(new Server()); // place holder for the server we're currently connected to
+        this.reqres.setHandler('active-server:set', this.setActiveServer, this);
+        this.reqres.setHandler('active-server:get', this.getActiveServer, this);
+
+        this.reqres.request('active-server:set', new Server()); // place holder for the server we're currently connected to
     });
 
     return App;
