@@ -1,6 +1,7 @@
 define(['underscore',
         'backbone',
-        'marionette'], function (
+        'marionette',
+        'App'], function (
         _,
         Backbone,
         Marionette,
@@ -8,32 +9,22 @@ define(['underscore',
 
     return Marionette.AppRouter.extend({
 
-        initialize: function() {
-            this.App = App;
+        initialize: function(options) {
+            App.commands.setHandler('app:navigate', this._navigate, this);
         },
 
-//        ensureActiveSession: function() {
-//            if(!this.App.user().session().get('active')) {
-//                this.App.user().session().set('attemptedRoute', Backbone.history.getFragment());
-//                this.navigate('auth/login', {trigger: true});
-//                return false;
-//            } else {
-//                return true;
-//            }
-//        },
+        // provides a way to navigate between controller methods
+        // from views without requiring global App object.
+        _navigate: function() {
+            var args = Array.prototype.slice.call(arguments);
+            var method = args.shift();
 
-        route: function(route, name, callback) {
-            if(name !== 'login') {
-                var originalCallback = callback;
-
-                callback = _.bind(function() {
-                    if(this.ensureActiveSession()) {
-                        originalCallback.apply( this, arguments );
-                    }
-                }, this);
+            if (typeof(this.options.controller[method]) === 'function') {
+                this.options.controller[method].apply(this, args);
+            } else {
+                throw new Error('method: ' + method + ' not found on controller');
             }
-
-            Marionette.AppRouter.prototype.route.call(this, route, name, callback);
         }
+
     });
 });
