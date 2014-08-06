@@ -55,8 +55,8 @@ define(['jquery',
         template: _.template(directoryExplorerTpl),
         tagName: 'table',
         className: 'directory-explorer table-striped',
-        itemView: DirectoryItemView,
-        itemViewContainer: 'tbody',
+        childView: DirectoryItemView,
+        childViewContainer: 'tbody',
 
         events: {
             'click th.column-filename': 'onSortByName',
@@ -64,23 +64,20 @@ define(['jquery',
             'click th.column-size': 'onSortBySize'
         },
 
+        childEvents: {
+            'filename:click': 'onFilenameClick'
+        },
+
         collectionEvents: {
             'sort': 'render toggleSortCaret'
         },
 
-        initialize: function(options) {
-            this.listenTo(this, 'itemview:filename:click', this.onFilenameClick);
-        },
-
-        close: function() {
-        },
-
-        onFilenameClick: function(itemView) {
-            var dirObject = itemView.model
+        onFilenameClick: function(childView, cmvObj) {
+            var dirObject = childView.model;
             if(dirObject.get('mode') === 16877) {
                 this.model.appendPath(dirObject.get('filename'));
             } else {
-                this.trigger('filemanager:file:click', itemView.model, this.model.get('path'));
+                this.triggerMethod('filemanager:file:click', childView.model, this.model.get('path'));
             }
         },
 

@@ -1,6 +1,5 @@
 define(function (requirejs) {
-    var $ = requirejs('jquery'),
-        App = requirejs('App'),
+    var App = requirejs('App'),
         Session = requirejs('models/Session'),
         Server = requirejs('models/Server'),
         MainToolbar = requirejs('views/MainToolbar'),
@@ -10,51 +9,47 @@ define(function (requirejs) {
     describe('App', function() {
 
         describe('showModal', function() {
-            var modalSpy, viewRenderSpy, posStub;
+            var showSpy;
 
             beforeEach(function() {
-                posStub = spyOn($.prototype, 'offset').and.returnValue({top: 500, bottom: 540});
-                App._initCallbacks.run(undefined, App);
-                viewRenderSpy = spyOn(AddEditServerModal.prototype, 'render');
+                showSpy = spyOn(App.modalContainer, 'show');
                 App.execute('modal:show', new AddEditServerModal());
             });
 
             afterEach(function() {
-                App.closeRegions();
+                App.emptyRegions();
             });
 
             it('should show the modal', function() {
-                expect(viewRenderSpy).toHaveBeenCalled();
+                expect(showSpy).toHaveBeenCalled();
             });
 
         });
 
         describe('closeModal', function() {
-            var viewRemoveSpy, posStub;
+            var resetSpy, showSpy;
 
             beforeEach(function() {
-                posStub = spyOn($.prototype, 'offset').and.returnValue({top: 500, bottom: 540});
-                App._initCallbacks.run(undefined, App);
-                viewRemoveSpy = spyOn(AddEditServerModal.prototype, 'remove');
+                resetSpy = spyOn(App.modalContainer, 'reset');
+                showSpy = spyOn(App.modalContainer, 'show');
                 App.showModal(new AddEditServerModal());
             });
 
-            it('should call "remove" on the currentView in the modal region', function() {
+            it('should call "reset" on the modal region', function() {
                 App.closeModal();
-                expect(viewRemoveSpy).toHaveBeenCalled();
+                expect(resetSpy).toHaveBeenCalled();
             });
         });
 
         describe('activeServer', function() {
-            var posStub, toggleToolbarItemsStub;
+            var toggleToolbarItemsStub;
 
             beforeEach(function() {
                 toggleToolbarItemsStub = spyOn(MainToolbar.prototype, 'toggleToolbarItems');
-                posStub = spyOn($.prototype, 'offset').and.returnValue({top: 500, bottom: 540});
             });
 
             afterEach(function() {
-                App.closeRegions();
+                App.emptyRegions();
             });
 
             describe('getActiveServer', function() {
@@ -67,12 +62,11 @@ define(function (requirejs) {
                 });
             });
 
-            xdescribe('setActiveServer', function() {
+            describe('setActiveServer', function() {
                 var activeServerSpy;
 
                 beforeEach(function() {
-                    activeServerSpy = spyOn(App.vent._events['active-server:changed'][0], 'callback');
-                    App._initCallbacks.run(undefined, App);
+                    activeServerSpy = spyOn(App.vent, 'trigger');
                 });
 
                 it('replaces existing active server', function() {
@@ -82,9 +76,11 @@ define(function (requirejs) {
                 });
 
                 it('triggers App.vent "active-server:changed" when a new server is set', function() {
+                    var server = new Server();
                     expect(activeServerSpy.calls.count()).toBe(0);
-                    App.setActiveServer(new Server());
+                    App.setActiveServer(server);
                     expect(activeServerSpy.calls.count()).toBe(1);
+                    expect(activeServerSpy).toHaveBeenCalledWith('active-server:changed', server);
                 });
 
                 it('unbinds existing listeners when activeServer is replaced', function() {

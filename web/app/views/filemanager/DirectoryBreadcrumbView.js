@@ -27,10 +27,10 @@ define(['jquery',
     return Marionette.CollectionView.extend({
         tagName: 'ol',
         className: 'breadcrumb',
-        itemView: DirectoryBreadcrumbItemView,
+        childView: DirectoryBreadcrumbItemView,
 
-        initialize: function(options) {
-            this.on('itemview:crumb:click', _.bind(this.onCrumbClick, this));
+        childEvents: {
+            'crumb:click': 'onCrumbClick'
         },
 
         onCrumbClick: function(itemView) {

@@ -22,7 +22,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                directoryBreadcrumbView.close();
+                directoryBreadcrumbView.destroy();
             });
 
             it('calls directoryExplorer.set("path") when a crumb is clicked', function() {

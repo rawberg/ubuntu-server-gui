@@ -16,7 +16,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                removeServerModal.close();
+                removeServerModal.destroy();
                 modalSpy.restore();
             });
 

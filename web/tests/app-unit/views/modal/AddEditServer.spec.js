@@ -21,7 +21,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                addEditServerModal.close();
+                addEditServerModal.destroy();
             });
 
             it('defaults auth_key checkbox to checked', function() {

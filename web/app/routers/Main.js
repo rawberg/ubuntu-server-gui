@@ -1,12 +1,11 @@
-define(['marionette'], function (Marionette) {
+define(['routers/Base'], function (BaseRouter) {
 
-    return Marionette.AppRouter.extend({
+    return BaseRouter.extend({
         appRoutes: {
             "": "dashboard",
             "filemanager": "filemanager",
             "filemanager/*path": "filemanager",
             "dashboard": "dashboard",
-            "auth/login": "login",
             "*path": "dashboard"
         }
     });

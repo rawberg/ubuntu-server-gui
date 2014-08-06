@@ -155,12 +155,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         'tests/app-unit/App.spec.js',
                         // Mock Responses
     //                    'tests/app-unit/mock-responses/Sessions.response.js',
-                        // Views
-                        'tests/app-unit/views/MainToolbar.spec.js',
-                        'tests/app-unit/views/MainFooterbar.spec.js',
                         // Views (dashboard)
-                        'tests/app-unit/views/dashboard/LeftSidebar.spec.js',
-                        'tests/app-unit/views/dashboard/LeftSidebarItem.spec.js',
                         'tests/app-unit/views/dashboard/Dashboard.spec.js',
                         // Views (filemanager)
                         'tests/app-unit/views/filemanager/FileManager.spec.js',
@@ -187,7 +182,6 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         // Modules
                         'tests/app-unit/modules/NoobTourModule.spec.js',
                         // Controllers
-                        'tests/app-unit/controllers/Base.spec.js',
                         'tests/app-unit/controllers/Main.spec.js',
                         // Routers
                         'tests/app-unit/routers/Base.spec.js'

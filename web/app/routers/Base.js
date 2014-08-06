@@ -20,7 +20,7 @@ define(['underscore',
             var method = args.shift();
 
             if (typeof(this.options.controller[method]) === 'function') {
-                this.options.controller[method].apply(this, args);
+                this.options.controller[method].apply(this.options.controller, args);
             } else {
                 throw new Error('method: ' + method + ' not found on controller');
             }

@@ -20,7 +20,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                noobTourPopover.close();
+                noobTourPopover.destroy();
             });
 
             it('should set "top" and "left" coordinates"', function() {
@@ -37,7 +37,7 @@ define(function (requirejs) {
                 expect(windowResizeSpy).toHaveBeenCalled();
             });
 
-        })
+        });
 
         describe('onWindowResize', function() {
             beforeEach(function() {
@@ -48,7 +48,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                noobTourPopover.close();
+                noobTourPopover.destroy();
             });
 
             it('should update "top" css coordinate', function() {
@@ -56,25 +56,21 @@ define(function (requirejs) {
             });
         });
 
-        describe('onClose', function() {
+        describe('onDestroy', function() {
 
-            var offSpy, onCloseSpy;
+            var offSpy, onDestroySpy;
             beforeEach(function() {
                 footerPosStub.and.returnValue({top: 505});
                 offSpy = spyOn($.prototype, 'off');
-                onCloseSpy = spyOn(NoobTourPopover.prototype, 'onClose').and.callThrough();
+                onDestroySpy = spyOn(NoobTourPopover.prototype, 'onBeforeDestroy').and.callThrough();
 
                 noobTourPopover = new NoobTourPopover();
                 noobTourPopover.render();
-                noobTourPopover.close();
+                noobTourPopover.destroy();
             });
 
-            afterEach(function() {
-                noobTourPopover.close();
-            });
-
-            it('should be called when an instance of NoobTourPopover is closed', function() {
-                expect(onCloseSpy).toHaveBeenCalled();
+            it('should be called when an instance of NoobTourPopover is destroyed', function() {
+                expect(onDestroySpy).toHaveBeenCalled();
             });
 
             it('should unbind "window.resize" event', function() {

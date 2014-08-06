@@ -7,7 +7,7 @@ define(['jquery',
         Marionette,
         loginSignupLayoutTpl) {
 
-    return Marionette.Layout.extend({
+    return Marionette.LayoutView.extend({
         template: _.template(loginSignupLayoutTpl),
         tagName: 'div',
         className: 'login-signup-layout',

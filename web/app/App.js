@@ -18,6 +18,14 @@ define(['jquery',
         routers: {},
         loggers: {},
 
+        regions: {
+            mainToolbar: "#main-toolbar-container",
+            mainViewport: "#viewport",
+            mainFooterbar: '#main-footerbar-container',
+            modalContainer: '#modal-container',
+            popoverContainer: '#popover-container'
+        },
+
         getActiveServer: function() {
             if(_.isUndefined(this.activeServer)) {
                 return this.setActiveServer(new Server());
@@ -56,24 +64,17 @@ define(['jquery',
         },
 
         closeModal: function() {
-            this.modalContainer.close();
+            this.modalContainer.reset();
             $(this.modalContainer.el).hide();
         },
 
         closePopover: function() {
-            this.popoverContainer.close();
+            this.popoverContainer.reset();
         }
     });
 
     var App = new Application();
 
-    App.addRegions({
-        mainToolbar: "#main-toolbar-container",
-        mainViewport: "#viewport",
-        mainFooterbar: '#main-footerbar-container',
-        modalContainer: '#modal-container',
-        popoverContainer: '#popover-container'
-    });
 
     // Loggers
     App.addInitializer(function() {
@@ -109,7 +110,8 @@ define(['jquery',
         this.reqres.setHandler('active-server:set', this.setActiveServer, this);
         this.reqres.setHandler('active-server:get', this.getActiveServer, this);
 
-        this.reqres.request('active-server:set', new Server()); // place holder for the server we're currently connected to
+        // place holder for the server we're currently connected to
+        this.reqres.request('active-server:set', new Server());
     });
 
     return App;

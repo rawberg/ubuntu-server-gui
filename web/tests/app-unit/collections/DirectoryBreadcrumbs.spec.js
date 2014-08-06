@@ -14,13 +14,13 @@ define(function (requirejs) {
             });
 
             it('throws an error is directoryExplorer is not provided', function() {
-                var execptSpy = spyOn(DirectoryBreadcrumbs.prototype, 'initialize');
+                var exceptSpy = spyOn(DirectoryBreadcrumbs.prototype, 'initialize');
                 try {
                     directoryBreadcrumbs = new DirectoryBreadcrumbs();
                 } catch(e) {
-                    expect(execptSpy).toHaveBeenCalled();
+                    expect(exceptSpy).toHaveBeenCalled();
                 }
-                expect(execptSpy).toHaveBeenCalled();
+                expect(exceptSpy).toHaveBeenCalled();
             });
 
             it('builds initial breadcrumb trail when path is 1 level', function(done) {

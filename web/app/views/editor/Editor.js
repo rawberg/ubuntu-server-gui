@@ -42,15 +42,13 @@ define(['jquery',
             });
 
             this.fileContents = options.fileContents;
-            this.controllerTriggers = options.controllerTriggers;
-
             codemirror.commands.save = this.onSaveEditor;
         },
 
         onCloseEditor: function(cm) {
             this.ui.editorRegion.empty();
             delete this.cm;
-            this.controllerTriggers.execute('navigate', 'filemanager', this.path);
+            App.execute('app:navigate', 'filemanager', this.path);
         },
 
         onRender: function() {

@@ -24,7 +24,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                serverConnectionView.close();
+                serverConnectionView.destroy();
             });
 
             it('displays connecting status and server name in the modal', function() {
@@ -51,7 +51,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                serverConnectionView.close();
+                serverConnectionView.destroy();
             });
 
             it('retrieves the correct tempate on "connecting" status', function() {

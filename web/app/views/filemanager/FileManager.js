@@ -29,7 +29,7 @@ define(['jquery',
         DirectoryBreadcrumbView,
         fileManagerLayoutTpl) {
 
-    return Marionette.Layout.extend({
+    return Marionette.LayoutView.extend({
         template: _.template(fileManagerLayoutTpl),
         id: 'file-manager-layout',
 
@@ -39,22 +39,19 @@ define(['jquery',
         },
 
         initialize: function(options) {
-            if(typeof options.controllerTriggers === 'undefined') {
-                throw 'controllerTriggers is a required option';
-            }
             options.path = options.path ? options.path : '/';
             App.vent.on('server:selected', this.onServerSelected, this);
             App.vent.on('server:connected', this.transitionToShowFileManager, this);
         },
 
-        close: function() {
+        onBeforeDestroy: function() {
             App.vent.off('server:selected', this.onServerSelected);
             App.vent.off('server:connected', this.transitionToShowFileManager);
         },
 
         onFileClick: function(fileModel, path) {
             var filePath = path + fileModel.get('filename');
-            this.options.controllerTriggers.execute('navigate', 'editor', {
+            App.execute('app:navigate', 'editor', {
                 file: fileModel.get('filename'),
                 path: path
             });
@@ -81,13 +78,24 @@ define(['jquery',
 
         showFileManager: function(server) {
             var directoryExplorer = new DirectoryExplorer({path: this.options.path});
-            var directoryContents = new DirectoryContents([], {directoryExplorer: directoryExplorer, server: server});
-            var directoryBreadcrumbs = new DirectoryBreadcrumbs([], {directoryExplorer: directoryExplorer});
+            var directoryContents = new DirectoryContents([], {
+                directoryExplorer: directoryExplorer,
+                server: server});
 
-            var directoryExplorerView = new DirectoryExplorerView({model: directoryExplorer, collection: directoryContents});
+            var directoryBreadcrumbs = new DirectoryBreadcrumbs([], {
+                directoryExplorer: directoryExplorer
+            });
+
+            var directoryExplorerView = new DirectoryExplorerView({
+                model: directoryExplorer,
+                collection: directoryContents
+            });
             this.listenTo(directoryExplorerView, 'filemanager:file:click', this.onFileClick);
 
-            var directoryBreadcrumbView = new DirectoryBreadcrumbView({collection: directoryBreadcrumbs, directoryExplorer: directoryExplorer});
+            var directoryBreadcrumbView = new DirectoryBreadcrumbView({
+                collection: directoryBreadcrumbs,
+                directoryExplorer: directoryExplorer
+            });
 
             this.explorerRegion.show(directoryExplorerView);
             this.breadcrumbRegion.show(directoryBreadcrumbView);

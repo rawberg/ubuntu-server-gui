@@ -18,7 +18,7 @@ define(function (requirejs) {
             });
 
             afterEach(function() {
-                directoryExplorerView.close();
+                directoryExplorerView.destroy();
             });
 
             it('calls directoryExplorer.appendPath if model is a directory', function() {

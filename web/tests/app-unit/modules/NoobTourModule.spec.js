@@ -8,9 +8,9 @@ define(function (requirejs) {
 
 
     describe('NoobTourModule', function() {
-        describe('onNoobTourActivate', function () {
-            var tourSpy, appendToSpy, posStub, windowResizeSpy;
-            var clickSwallowSpy, scrollTopSpy, popoverSpy;
+        describe('activate', function () {
+            var appendToSpy, posStub, windowResizeSpy;
+            var clickSwallowSpy, scrollTopSpy, showSpy;
 
             beforeEach(function () {
                 appendToSpy = spyOn($.prototype, 'appendTo');
@@ -18,21 +18,16 @@ define(function (requirejs) {
                 clickSwallowSpy = spyOn($.prototype, 'click');
                 windowResizeSpy = spyOn($.prototype, 'resize');
 
-                popoverSpy = spyOn(NoobTourPopover.prototype, 'render');
+                App._initCallbacks.run(undefined, App);
+
+                showSpy = spyOn(App.NoobTourModule.app.popoverContainer, 'show');
                 posStub = spyOn($.prototype, 'offset').and.returnValue({top: 500, bottom: 540});
 
-                App._initCallbacks.run(undefined, App);
-                tourSpy = spyOn(App.commands._wreqrHandlers['noobtour:activate'], 'callback').and.callThrough();
-                App.execute('noobtour:activate');
+                App.NoobTourModule.activate();
             });
 
             afterEach(function () {
-                App.execute('noobtour:deactivate');
-                App.closeRegions();
-            });
-
-            it('should be called when the "noobtour:activate" App event is fired', function () {
-                expect(tourSpy).toHaveBeenCalled();
+                App.NoobTourModule.deactivate();
             });
 
             it('should add noob tour backdrop elements to the dom', function () {
@@ -48,13 +43,13 @@ define(function (requirejs) {
                 expect(clickSwallowSpy).toHaveBeenCalled();
             });
 
-            it('should render "NoobTourPopover"', function () {
-                expect(popoverSpy).toHaveBeenCalled();
+            it('should show "NoobTourPopover"', function () {
+                expect(showSpy).toHaveBeenCalled();
             });
 
         });
 
-        describe('onNoobTourDeActivate', function () {
+        describe('deactivate', function () {
             var removeSpy, deactivateTourSpy, offSpy;
 
             beforeEach(function () {
@@ -65,7 +60,7 @@ define(function (requirejs) {
             });
 
             afterEach(function () {
-                App.closeRegions();
+                App.emptyRegions();
             });
 
             it('should be called when the "noobtour:deactivate" App event is fired', function () {

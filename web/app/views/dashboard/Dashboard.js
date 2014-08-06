@@ -27,7 +27,7 @@ define(['jquery',
         ServerConnectionModal,
         dashboardLayoutTpl) {
 
-    return Marionette.Layout.extend({
+    return Marionette.LayoutView.extend({
         template: _.template(dashboardLayoutTpl),
         id: 'dashboard_layout',
 

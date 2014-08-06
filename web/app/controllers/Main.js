@@ -18,10 +18,6 @@ define(['underscore',
         ServerList) {
 
     return BaseController.extend({
-        initialize: function() {
-            BaseController.prototype.initialize.apply(this, arguments);
-        },
-
         _toolbars: function() {
             this.serverList = new ServerList();
 
@@ -51,7 +47,6 @@ define(['underscore',
             server.connection.readStream(filePath, _.bind(function(err, fileContents) {
                 if(typeof err === 'undefined') {
                     var editorLayout = new EditorLayout({
-                        controllerTriggers: this.controllerTriggers,
                         server: App.getActiveServer(),
                         fileName: options.file,
                         fileContents: fileContents,
@@ -66,11 +61,10 @@ define(['underscore',
         filemanager: function(dirPath) {
             this._toolbars();
             dirPath = dirPath ? dirPath: '/';
-            var fileManagerLayout = this.fileManagerLayout = new FileManagerLayout({
-                controllerTriggers: this.controllerTriggers,
-                path: dirPath
-            });
-            App.mainViewport.show(fileManagerLayout);
+
+            this.fileManagerLayout = new FileManagerLayout({path: dirPath});
+            // TODO don't force show, just make sure events get re-bound
+            App.mainViewport.show(this.fileManagerLayout, {forceShow: true});
         }
     });
 

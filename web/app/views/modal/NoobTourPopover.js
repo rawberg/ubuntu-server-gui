@@ -27,7 +27,7 @@ define(['jquery',
             }
         },
 
-        onClose: function() {
+        onBeforeDestroy: function() {
             $(window).off('resize', this.resizeListener);
         }
     });
