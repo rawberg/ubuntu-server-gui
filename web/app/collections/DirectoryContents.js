@@ -25,9 +25,13 @@ define(['backbone', 'underscore', 'models/Directory'], function (backbone, under
 
         fetch: function(options) {
             var path = this.directoryExplorer.get('path');
-            this.server.sftpProxy.opendir(path, _.bind(function(err, buffer) {
-                this.parseDir(err, buffer, options);
-            }, this));
+            try {
+                this.server.sftpProxy.opendir(path, _.bind(function (err, buffer) {
+                    this.parseDir(err, buffer, options);
+                }, this));
+            } catch(err) {
+                App.execute('log:error', {msg: 'tried opening a directory without active sftpProxy connection', severity: 'error', err: err});
+            }
         },
 
         parseDir: function(err, buffer, options) {
