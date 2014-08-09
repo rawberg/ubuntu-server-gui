@@ -35,8 +35,8 @@ define(['underscore',
 
         dashboard: function() {
             this._toolbars();
-            var dashboardLayout = this.dashboardLayout = new DashboardLayout();
-            App.mainViewport.show(dashboardLayout);
+            this.dashboardLayout = new DashboardLayout();
+            App.mainViewport.show(this.dashboardLayout);
         },
 
         editor: function(options) {

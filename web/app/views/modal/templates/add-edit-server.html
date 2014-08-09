@@ -7,36 +7,44 @@
         <form action="#" autocomplete="on" role="form" onSubmit="return false;">
             <fieldset>
                 <div class="form-group">
-                  <label>Name</label>
-                  <input type="text" class="form-control input-sm" name="name" autofocus="true">
+                    <label>Name</label>
+                    <input type="text" class="form-control input-sm" name="name" autofocus="true">
                 </div>
-                <div class="form-group">
-                  <label>IP Address</label>
-                  <input type="text" class="form-control input-sm" name="ipv4">
+                <div class="form-inline address-port">
+                    <div class="form-group">
+                        <label>IP Address</label>
+                        <input type="text" class="form-control inline input-sm" name="ipv4">
+                    </div>
+                    <div class="form-group">
+                        <label>Port</label>
+                        <input type="text" class="form-control inline input-sm" name="port">
+                    </div>
                 </div>
             </fieldset>
             <fieldset>
                 <legend>Authentication</legend>
                 <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" class="form-control input-sm" name="username">
+                    <label>Username</label>
+                    <input type="text" class="form-control input-sm" name="username">
                 </div>
                 <div class="form-group manual-password" style="display:none;">
-                  <label>Manual Password</label>
-                  <p class="form-control-static msg">You will be prompted for your password on every connection</p>
+                    <label>Manual Password</label>
+
+                    <p class="form-control-static msg">You will be prompted for your password on every connection</p>
                 </div>
                 <div class="form-group">
-                  <label>SSH Key</label>
-                  <div class="input-group input-group-sm">
-                      <span class="input-group-addon"><input type="checkbox" name="auth_key" checked></span>
-                      <input type="text" name="ssh_keypath" class="form-control">
+                    <label>SSH Key</label>
+
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"><input type="checkbox" name="auth_key" checked></span>
+                        <input type="text" name="ssh_keypath" class="form-control">
                       <span class="input-group-btn">
                         <button name="change" class="btn btn-default" type="button">Change</button>
                       </span>
-                  </div>
-                  <div class="input-group input-group-sm">
-                    <input type="file" nwworkingdir="" style="display:none;">
-                  </div>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <input type="file" nwworkingdir="" style="display:none;">
+                    </div>
                 </div>
             </fieldset>
         </form>

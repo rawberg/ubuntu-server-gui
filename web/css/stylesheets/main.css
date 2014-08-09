@@ -7514,6 +7514,19 @@ table.directory-explorer td .icon_mode.M33152 {
 .modal-dialog.modal-add-edit-server .modal-body {
   padding: 20px 40px;
 }
+.modal-dialog.modal-add-edit-server .modal-body form fieldset:first-of-type {
+  margin-bottom: 16px;
+}
+.modal-dialog.modal-add-edit-server .modal-body .address-port label {
+  display: block;
+}
+.modal-dialog.modal-add-edit-server .modal-body .address-port input[name=ipv4] {
+  width: 270px;
+  margin-right: 10px;
+}
+.modal-dialog.modal-add-edit-server .modal-body .address-port input[name=port] {
+  width: 134px;
+}
 .modal-dialog.modal-add-edit-server .btn-default[disabled] {
   background-color: #EEE;
   color: #9C9CA7;

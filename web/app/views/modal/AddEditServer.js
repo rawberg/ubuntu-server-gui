@@ -20,9 +20,27 @@ define(['jquery',
         className: 'modal-dialog modal-add-edit-server',
         template: _.template(addEditServerTpl),
 
+        ui: {
+            auth_key_checkbox: "input[name=auth_key]",
+            manual_password_notice: ".form-group.manual-password",
+            ssh_keypath_text: "input[name=ssh_keypath]",
+            ssh_keypath_file: "input[type=file]",
+            ssh_keypath_button: "button[name='change']"
+        },
+
+        events: {
+            'click button[name="save"]': 'onSave',
+            'click button[name="cancel"]': 'onCancel',
+            'click button[name="change"]': 'onClickChangeKeypath',
+            'click a.close': 'onCancel',
+            'keyup input': 'onInputKeyup',
+            'change input[type=file]': 'onUpdateKeypath'
+        },
+
         bindings: {
             'input[name="name"]': 'name',
             'input[name="ipv4"]': 'ipv4',
+            'input[name="port"]': 'port',
             'input[name="username"]': 'username',
             'input[name=ssh_keypath]': 'keyPath',
             'input[name="auth_key"]': {
@@ -43,23 +61,6 @@ define(['jquery',
                     return false;
                 }
             }
-        },
-
-        events: {
-            'click button[name="save"]': 'onSave',
-            'click button[name="cancel"]': 'onCancel',
-            'click button[name="change"]': 'onClickChangeKeypath',
-            'click a.close': 'onCancel',
-            'keyup input': 'onInputKeyup',
-            'change input[type=file]': 'onUpdateKeypath'
-        },
-
-        ui: {
-            auth_key_checkbox: "input[name=auth_key]",
-            manual_password_notice: ".form-group.manual-password",
-            ssh_keypath_text: "input[name=ssh_keypath]",
-            ssh_keypath_file: "input[type=file]",
-            ssh_keypath_button: "button[name='change']"
         },
 
         templateHelpers: function() {

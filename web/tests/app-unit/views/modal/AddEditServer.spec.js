@@ -32,7 +32,7 @@ define(function (requirejs) {
                 expect(addEditServerModal.ui.ssh_keypath_text.val()).toBe('~/.ssh/id_rsa');
             });
 
-            it('disables/enables ssh_keypath text field and change button when auth_key is checked/unchecked', function() {
+            it('disables/enables ssh_keypath and change button when auth_key is checked/unchecked', function() {
                 expect(addEditServerModal.ui.ssh_keypath_text.attr('disabled')).toBe(undefined);
                 expect(addEditServerModal.ui.ssh_keypath_button.attr('disabled')).toBe(undefined);
 
