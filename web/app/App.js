@@ -35,21 +35,8 @@ define(['jquery',
 
         setActiveServer: function(server) {
             if(server instanceof Server) {
-                // TODO: cleanup deactivation/disconnection
-                if(this.activeServer instanceof Server) {
-                    // disconnect network connections
-                    if(this.activeServer.sshProxy) {
-                        this.activeServer.sshProxy.end();
-                    }
-                    if(this.activeServer.sftpProxy) {
-                        this.activeServer.sftpProxy.end();
-                    }
-                    // remove events on current server
-                    this.activeServer.off();
-                    this.activeServer.stopListening();
-                }
                 this.activeServer = server;
-                this.vent.trigger('active-server:changed', server);
+                this.vent.trigger('server:changed', server);
             }
             return this.activeServer;
         },
@@ -60,7 +47,7 @@ define(['jquery',
 
         showModal: function(view) {
             $(this.modalContainer.el).show();
-            this.modalContainer.show(view);
+            this.modalContainer.show(view, {forceShow: true});
         },
 
         closeModal: function() {
@@ -107,11 +94,11 @@ define(['jquery',
         this.commands.setHandler("modal:close", this.closeModal, this);
         this.commands.setHandler("modal:show", this.showModal, this);
 
-        this.reqres.setHandler('active-server:set', this.setActiveServer, this);
-        this.reqres.setHandler('active-server:get', this.getActiveServer, this);
+        this.reqres.setHandler('server:set', this.setActiveServer, this);
+        this.reqres.setHandler('server:get', this.getActiveServer, this);
 
         // place holder for the server we're currently connected to
-        this.reqres.request('active-server:set', new Server());
+        this.reqres.request('server:set', new Server());
     });
 
     return App;
