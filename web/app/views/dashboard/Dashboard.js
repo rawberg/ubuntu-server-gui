@@ -37,8 +37,10 @@ define(['jquery',
         },
 
         initialize: function(options) {
-            App.vent.on('active-server:changed', this.onActiveServerChange, this);
+            App.vent.on('server:changed', this.onActiveServerChange, this);
+            App.vent.on('server:reconnect', this.onActiveServerChange, this);
             App.vent.on('server:connected', this.transitionToShowMonitoring, this);
+            App.vent.on('server:disconnected', this.onActiveServerDisconnected, this);
         },
 
         close: function() {
@@ -47,7 +49,7 @@ define(['jquery',
         },
 
         onRender: function() {
-            var activeServer = App.reqres.request('active-server:get');
+            var activeServer = App.reqres.request('server:get');
             if(activeServer.get('ipv4') !== null) {
                 this.showMonitoring(activeServer);
             }
@@ -55,9 +57,15 @@ define(['jquery',
 
         onActiveServerChange: function(server) {
             // TODO: make sure previously connected server is disconnected
-            var serverConnection = new ServerConnection({}, {server: server});
-            App.showModal(new ServerConnectionModal({model: serverConnection}));
+            var serverConnection = new ServerConnection({'connection_status': 'connecting'}, {server: server}),
+                connectionModal = new ServerConnectionModal({model: serverConnection});
+
+            App.execute('modal:show', connectionModal);
             serverConnection.connect();
+        },
+
+        onActiveServerDisconnected: function(server) {
+            this.regionManager.emptyRegions();
         },
 
         showMonitoring: function(serverModel) {
