@@ -20,4 +20,4 @@ module.exports = {
             .assert.elementPresent('#file-manager-breadcrumbs .breadcrumb .crumb', 'user is back at root file manager')
             .end()
     }
-}
+};

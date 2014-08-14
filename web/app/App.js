@@ -14,7 +14,7 @@ define(['jquery',
 
     var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
     var Application = Marionette.Application.extend({
-        VERSION: '0.9.4',
+        VERSION: '0.9.5',
         routers: {},
         loggers: {},
 

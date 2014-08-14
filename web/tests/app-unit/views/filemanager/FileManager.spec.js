@@ -72,7 +72,7 @@ define(function (requirejs) {
 
             beforeEach(function() {
                 getActiveServerSpy = jasmine.createSpy().and.returnValue(undefined);
-                App.reqres._wreqrHandlers['active-server:get']['callback'] = getActiveServerSpy;
+                App.reqres._wreqrHandlers['server:get']['callback'] = getActiveServerSpy;
                 fileManagerLayout = new FileManagerLayout({controllerTriggers: jasmine.createSpy()});
                 showFileManagerSpy = spyOn(FileManagerLayout.prototype, 'showFileManager');
 

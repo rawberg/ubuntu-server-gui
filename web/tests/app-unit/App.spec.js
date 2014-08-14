@@ -75,20 +75,12 @@ define(function (requirejs) {
                     expect(firstActiveServer.cid).not.toBe(secondActiveServer.cid);
                 });
 
-                it('triggers App.vent "active-server:changed" when a new server is set', function() {
+                it('triggers App.vent "server:changed" when a new server is set', function() {
                     var server = new Server();
                     expect(activeServerSpy.calls.count()).toBe(0);
                     App.setActiveServer(server);
                     expect(activeServerSpy.calls.count()).toBe(1);
-                    expect(activeServerSpy).toHaveBeenCalledWith('active-server:changed', server);
-                });
-
-                it('unbinds existing listeners when activeServer is replaced', function() {
-                    var firstActiveServer = App.getActiveServer();
-                    firstActiveServer.on('change', jasmine.createSpy());
-                    expect(firstActiveServer._events.change.length).toBe(1);
-                    App.setActiveServer(new Server());
-                    expect(firstActiveServer._events).toBeUndefined();
+                    expect(activeServerSpy).toHaveBeenCalledWith('server:changed', server);
                 });
 
             });

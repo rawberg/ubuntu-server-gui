@@ -8,15 +8,12 @@ define(function (requirejs) {
     describe('AddEditServer (modal) - ItemView', function() {
 
         describe('onRender', function() {
-            var modalSpy, addEditServerModal;
-            var server, serverConnection;
+            var server, serverConnection, addEditServerModal;
 
             beforeEach(function() {
-                var App = jasmine.createSpy();
-                App.vent = {trigger: jasmine.createSpy(), bind: jasmine.createSpy()};
                 server = new Server();
                 serverConnection = new ServerConnection({}, {server: server});
-                addEditServerModal = new AddEditServerModal({App: App, model: server});
+                addEditServerModal = new AddEditServerModal({model: server});
                 addEditServerModal.render();
             });
 
@@ -24,12 +21,15 @@ define(function (requirejs) {
                 addEditServerModal.destroy();
             });
 
-            it('defaults auth_key checkbox to checked', function() {
+            it('defaults auth_key to checked and sets ssh_keypath to osx default path', function() {
                 expect(addEditServerModal.ui.auth_key_checkbox[0].checked).toBeTruthy();
+                expect(addEditServerModal.ui.ssh_keypath_text.val()).toBe('~/.ssh/id_rsa');
             });
 
-            it('defaults ssh_keypath to osx default key path', function() {
-                expect(addEditServerModal.ui.ssh_keypath_text.val()).toBe('~/.ssh/id_rsa');
+            it('auth_key remains unchecked when ssh_keypath is null', function() {
+                addEditServerModal.model = new Server({keyPath: null});
+                addEditServerModal.render();
+                expect(addEditServerModal.ui.auth_key_checkbox[0].checked).toBeFalsy();
             });
 
             it('disables/enables ssh_keypath and change button when auth_key is checked/unchecked', function() {
