@@ -102,7 +102,7 @@ gulp.task('_integration-runner', ['vagrant-fixture-data'], function(cb) {
                 console.log('could not rename __pakage.json: ', e);
             }
             cb();
-        }, 120000);
+        }, 320000);
 
         integration_tests.stdout.on('data', function (data) {
             process.stdout.write(data);
