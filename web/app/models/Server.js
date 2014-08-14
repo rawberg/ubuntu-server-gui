@@ -15,7 +15,7 @@ define(['underscore',
             ipv4: null,
             port: 22,
             username: null,
-            keyPath: null
+            keyPath: ''
         },
 
         parse: function(serverInfo, jqXHR) {

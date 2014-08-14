@@ -13,6 +13,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             }
             this.server = options.server;
             this.server.connection = this;
+            App.vent.on('server:disconnect', this.disconnect, this);
         },
 
         connect: function(callback) {
@@ -22,7 +23,8 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             }
 
             this.set('connection_status', 'connecting');
-            if((this.server.get('keyPath') !== null) || this.get('ssh_password') !== '') { // typeof this.get('ssh_password') !== 'undefined') {
+            var keyPath = this.server.get('keyPath');
+            if((keyPath !== null && keyPath !== '') || this.get('ssh_password') !== '') {
                 this.initiateLocalProxy(callback);
             } else if(this.get('ssh_password') === '') {
                 this.set('connection_status', 'password required');
@@ -35,11 +37,21 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             if(this.sshProxy && this.sshProxy._state !== 'closed') {
                 try {
                     this.sshProxy.end();
+                    this.sftpProxy.end();
                 } catch(err) {
-                    App.execute('log:error', {msg: 'SSH error trying to end sshProxy', severity: 'error', err: err});
+                    App.execute('log:error', {
+                        msg: 'SSH error trying to end sshProxy',
+                        severity: 'error',
+                        err: err
+                    });
                 }
+                this.destroy();
+                this.off();
+                App.vent.trigger('server:disconnected');
                 callback();
             } else {
+                this.destroy();
+                this.off();
                 callback();
             }
         },
@@ -68,7 +80,11 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 sshProxy.sftp(_.bind(function (err, sftpConnection) {
                     if (err) {
                         err['server-port'] = connectOptions['port'];
-                        App.execute('log:error', {msg: 'SFTP Connection Error', severity: 'error', err: err});
+                        App.execute('log:error', {
+                            msg: 'SFTP Connection Error',
+                            severity: 'error',
+                            err: err
+                        });
                         throw err;
                     }
                     this.server.sftpProxy = this.sftpProxy = sftpConnection;
@@ -78,12 +94,20 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
 
                     sftpConnection.on('error', function (err) {
                         err['server-port'] = connectOptions['port'];
-                        App.execute('log:error', {msg: 'SFTP Error', severity: 'error', err: err});
+                        App.execute('log:error', {
+                            msg: 'SFTP Error',
+                            severity: 'error',
+                            err: err
+                        });
                     });
 
                     sftpConnection.on('timeout', function (err) {
                         err['server-port'] = connectOptions['port'];
-                        App.execute('log:error', {msg: 'SFTP Timeout', severity: 'info', err: err});
+                        App.execute('log:error', {
+                            msg: 'SFTP Timeout',
+                            severity: 'info',
+                            err: err
+                        });
                     });
 
                     App.vent.trigger('server:connected', this.server);
@@ -147,7 +171,11 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             } catch(err) {
                 this.set('connection_status', 'connection error');
                 err['server-port'] = connectOptions['port'];
-                App.execute('log:error', {msg: 'SSH Connection Error', severity: 'error', err: err});
+                App.execute('log:error', {
+                    msg: 'SSH Connection Error',
+                    severity: 'error',
+                    err: err
+                });
                 callback();
             }
         },
@@ -185,7 +213,10 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                     default:
                         errorMsg = 'Error reading file.';
                 }
-                App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
+                App.execute('modal:show', new FileOpsNotice({
+                    errorMsg: errorMsg,
+                    filePath: filePath
+                }));
                 callback(err);
             });
 
@@ -226,8 +257,15 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                     default:
                         errorMsg = 'Error saving file.';
                 }
-                App.execute('modal:show', new FileOpsNotice({errorMsg: errorMsg, filePath: filePath}));
-                App.execute('log:error', {msg: 'Sever Connection File Write Stream Error', severity: 'error', err: err});
+                App.execute('modal:show', new FileOpsNotice({
+                    errorMsg: errorMsg,
+                    filePath: filePath
+                }));
+                App.execute('log:error', {
+                    msg: 'Sever Connection File Write Stream Error',
+                    severity: 'error',
+                    err: err
+                });
                 callback(err);
             });
 
