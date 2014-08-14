@@ -58,7 +58,7 @@ define(['jquery',
         },
 
         onRender: function() {
-            var activeServer = App.reqres.request('active-server:get');
+            var activeServer = App.reqres.request('server:get');
             if(activeServer) {
                 this.showFileManager(activeServer);
             }
@@ -72,7 +72,7 @@ define(['jquery',
 
         onShow: function() {
             // TODO - clean this up, maybe this.model should be activeServer
-            var activeServer = App.reqres.request('active-server:get');
+            var activeServer = App.reqres.request('server:get');
             this.showFileManager(activeServer);
         },
 
