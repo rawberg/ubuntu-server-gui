@@ -2,6 +2,7 @@ define(['jquery',
         'underscore',
         'marionette',
         'App',
+        'models/Server',
         'collections/ServerList',
         'views/modal/AddEditServer',
         'text!views/templates/main-toolbar.html'], function (
@@ -9,6 +10,7 @@ define(['jquery',
         _,
         Marionette,
         App,
+        Server,
         ServerList,
         AddEditServerModal,
         mainToolbarTpl) {
@@ -20,16 +22,29 @@ define(['jquery',
 
         bindings: {
             'select.server-select-toggle': {
+                observe: 'id',
                 updateModel: function(val, event, options) {
-                    App.reqres.request('active-server:set', this.options.servers.get(val));
+                    if(val === null) {
+                        App.vent.trigger('server:disconnect');
+                    } else {
+                        App.reqres.request('server:set', this.options.servers.get(val));
+                    }
                     return false;
                 },
-                observe: 'cid',
+                afterUpdate: function($el, val, options) {
+                    var active_server = this.options.servers.findWhere({id: val});
+                    if(active_server && this.model.id === active_server.id) {
+                        App.vent.trigger('server:reconnect', active_server);
+                    }
+                },
                 selectOptions: {
                     collection: 'this.options.servers',
                     labelPath: 'name',
                     valuePath: 'id',
-                    defaultOption: {name: 'Select Server', label: 'Select Server', value: null}
+                    defaultOption: {
+                        label: 'Select Server',
+                        value: null
+                    }
                 }
             }
         },
@@ -43,12 +58,12 @@ define(['jquery',
         },
 
         triggers: {
-            'click .toolbar-server_rack a': 'server:add:click'
+            'click .toolbar-server_rack a': 'server:click'
         },
 
         initialize: function(options) {
             App.vent.on('server:disconnected', this.onActiveServerDisconnect, this);
-            App.vent.on('active-server:changed', this.onActiveServerChange, this);
+            App.vent.on('server:changed', this.onActiveServerChange, this);
         },
 
         toggleToolbarItems: function(enabled) {
@@ -71,12 +86,17 @@ define(['jquery',
             this.stickit();
         },
 
-        onServerAddClick: function() {
-            App.execute('modal:show', new AddEditServerModal({operationLabel:'Add'}));
+        onServerClick: function() {
+            App.execute('modal:show', new AddEditServerModal({
+                operationLabel: this.model.isNew() ? 'Add' : 'Edit',
+                model: this.model
+            }));
         },
 
         onActiveServerChange: function(server) {
-            this.model = App.reqres.request('active-server:get');
+            this.model = App.reqres.request('server:get');
+            this.stickit();
+            this.model.on('change:name', this.updateServerSelectionList, this);
             this.toggleToolbarItems(true);
         },
 
@@ -84,5 +104,11 @@ define(['jquery',
             this.$('.server-select-toggle').prop('selectedIndex', 0);
             this.toggleToolbarItems(false);
         },
+
+        updateServerSelectionList: function() {
+            // workaround for stickit not exposing refreshSelectOptions
+            // serverSelectList is updated and current server remains selected
+            this.model.trigger('change:id', this.model, this.model.id);
+        }
     });
 });

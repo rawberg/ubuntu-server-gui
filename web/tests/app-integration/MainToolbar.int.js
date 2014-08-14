@@ -9,7 +9,6 @@ module.exports = {
     tearDown: function () {
 
     },
-
     'clicking dashboard toolbar button has no effect when there is no active server': function (browser) {
         browser
             .url(function(session) {
@@ -19,7 +18,7 @@ module.exports = {
                     .click('.toolbar-dashboard a')
                     .pause(500)
                     .assert.urlEquals(currentUrl, 'url does not contain #dashboard hash value')
-                    .end()
+                    .end();
             })
     },
 
@@ -37,7 +36,7 @@ module.exports = {
                     .pause(500)
                     .assert.urlEquals(currentUrl + '#filemanager', 'url hash contains #filemanager')
             })
-            .end()
+            .end();
     },
 
     'when server disconnects toolbar links are in-activated and server select list is reset': function(browser) {
@@ -63,24 +62,47 @@ module.exports = {
             })
             .end();
     },
-
     'add server via top toolbar icon and connect to it via username/password auth': function(browser) {
         browser
             .waitForElementPresent('.toolbar-server_rack', 4000, 'wait for toolbar icons')
             .click('.toolbar-server_rack a')
             .assert.elementPresent('.modal-body')
             .setValue('input[name=name]', 'AddedTestbox')
-            .setValue('input[name=ipv4]', this.fixtures.active_vm.public_ip)
+            .setValue('input[name=ipv4]', '127.0.0.1') //this.fixtures.active_vm.public_ip)
+            .setValue('input[name=port]', [browser.Keys.BACK_SPACE,browser.Keys.BACK_SPACE, '2222'])
             .setValue('input[name=username]', 'vagrant')
             .click('input[name=auth_key]')
             .click('button[name=save]')
-            .waitForElementNotPresent('.modal-body', 2000)
-            .assert.containsText('select.server-select-toggle option:last-child', 'AddedTestbox', 'new server shows up in the server selection list')
-            .click('select.server-select-toggle option:last-child')
             .waitForElementPresent('.modal-body.password-required', 2000)
             .setValue('input[name=ssh_password]', 'vagrant')
             .click('button[name=connect]')
-            .waitForElementPresent('.dashboard-container', 5000, 'dashboard displays')
-            .end()
+            .waitForElementNotPresent('.modal-body', 4000)
+            .end();
     },
-}
+    'edit active server via top toolbar icon': function(browser) {
+        browser
+            .waitForElementPresent('.toolbar-server_rack', 4000, 'wait for toolbar icons')
+            .click('.toolbar-server_rack a')
+            .assert.elementPresent('.modal-body')
+            .setValue('input[name=name]', 'EditTestBox')
+            .setValue('input[name=ipv4]', '127.0.0.1')
+            .setValue('input[name=port]', [browser.Keys.BACK_SPACE,browser.Keys.BACK_SPACE, '2222'])
+            .setValue('input[name=username]', 'vagrant')
+            .click('input[name=auth_key]')
+            .click('button[name=save]')
+            .waitForElementPresent('.modal-body.password-required', 2000)
+            .setValue('input[name=ssh_password]', 'vagrant')
+            .click('button[name=connect]')
+            .waitForElementNotPresent('.modal-body', 4000)
+            .click('.toolbar-server_rack a')
+            .waitForElementPresent('.modal-body', 2000)
+            .pause(300)
+            .assert.containsText('.modal-header h4', 'Edit', 'modal title contains Edit')
+            .assert.value('.modal-body input[name=name]', 'EditTestBox')
+            .assert.value('.modal-body input[name=ipv4]', '127.0.0.1')
+            .assert.value('.modal-body input[name=port]', '2222')
+            .assert.value('.modal-body input[name=username]', 'vagrant')
+            .assert.value('.modal-body input[name=auth_key]', '')
+            .end();
+    }
+};
