@@ -31,6 +31,7 @@ define(['jquery',
         events: {
             'click button[name="save"]': 'onSave',
             'click button[name="cancel"]': 'onCancel',
+            'click button[name="delete"]': 'onDelete',
             'click button[name="change"]': 'onClickChangeKeypath',
             'click a.close': 'onCancel',
             'keyup input': 'onInputKeyup',
@@ -46,7 +47,7 @@ define(['jquery',
             'input[name="auth_key"]': {
                 observe: 'keyPath',
                 update: function($el, val, model, options) {
-                    var checked = (val !== null && val !== '' && typeof val !== 'undefined');
+                    var checked = (val !== '' && typeof val !== 'undefined');
                     $el.prop('checked', checked);
                     this.ui.ssh_keypath_text.attr('disabled', !checked);
                     this.ui.ssh_keypath_button.attr('disabled', !checked);
@@ -55,10 +56,12 @@ define(['jquery',
                 updateModel: function(val, event, options) {
                     if(event.currentTarget.checked === false) {
                         this.model.set('keyPath', null);
-                    } else if (val === '') {
+                        return false;
+                    } else if (val === null || val === '' || typeof val === 'undefined') {
                         this.setDefaultKeyPath();
+                        return false;
                     }
-                    return false;
+                    return true;
                 }
             }
         },
@@ -69,7 +72,10 @@ define(['jquery',
 
         initialize: function(options) {
             this.model = options && options.model ? options.model : new Server();
-            this.setDefaultKeyPath();
+            // allow keyPath to be null
+            if(this.model.get('keyPath') === '' || typeof this.model.get('keyPath') === 'undefined') {
+                this.setDefaultKeyPath();
+            }
         },
 
         onCancel: function(eventObj) {
@@ -91,10 +97,14 @@ define(['jquery',
 
             this.hideError();
             this.disableForm();
+
+            if(this.model.isNew()) {
+                console.log('AddEditServer trigger add:server');
+                App.vent.trigger('add:server', this.model);
+            } else {
+                App.execute('modal:close');
+            }
             this.model.save();
-            App.vent.trigger('add:server', this.model);
-            this.activeServer = this.model;
-            App.execute('modal:close');
         },
 
         onInputKeyup: function(eventObj) {
@@ -118,10 +128,8 @@ define(['jquery',
         },
 
         setDefaultKeyPath: function() {
-            var currentPath = this.model.get('keyPath');
-            if(currentPath === null || currentPath === '' || typeof currentPath === 'undefined') {
-                this.model.set('keyPath', '~/.ssh/id_rsa'); // TODO: make this platform specific
-            }
+            // TODO: make this platform specific
+            this.model.set('keyPath', '~/.ssh/id_rsa');
         },
 
         showError: function(msg) {
