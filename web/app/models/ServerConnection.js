@@ -121,6 +121,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             sshProxy.on('error', _.bind(function(err) {
                 err['server-port'] = connectOptions['port'];
                 App.execute('log:error', {msg: 'SSH Error', severity: 'error', err: err});
+                App.vent.trigger('server:disconnected', this.server);
                 this.set('connection_status', 'connection error');
             }, this));
 
@@ -159,6 +160,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 try {
                     connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
                 } catch(e) {
+                    App.vent.trigger('server:disconnected', this.server);
                     this.set('connection_status', 'ssh key error');
                     callback();
                 }
@@ -169,6 +171,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             try {
                 sshProxy.connect(connectOptions);
             } catch(err) {
+                App.vent.trigger('server:disconnected', this.server);
                 this.set('connection_status', 'connection error');
                 err['server-port'] = connectOptions['port'];
                 App.execute('log:error', {
@@ -205,10 +208,10 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 var errorMsg;
                 switch(err.type) {
                     case 'NO_SUCH_FILE':
-                        errorMsg = 'The file could not be found.'
+                        errorMsg = 'The file could not be found.';
                         break;
                     case 'PERMISSION_DENIED':
-                        errorMsg = 'Insufficient permissions.'
+                        errorMsg = 'Insufficient permissions.';
                         break;
                     default:
                         errorMsg = 'Error reading file.';

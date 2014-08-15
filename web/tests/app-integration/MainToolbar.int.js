@@ -9,7 +9,8 @@ module.exports = {
     tearDown: function () {
 
     },
-    'clicking dashboard toolbar button has no effect when there is no active server': function (browser) {
+
+    'dashboard toolbar button has no effect when there is no active server': function (browser) {
         browser
             .url(function(session) {
                 var currentUrl = session.value;
@@ -22,7 +23,7 @@ module.exports = {
             })
     },
 
-    'clicking filemanager toolbar button navigates to filemanager when server is active': function(browser) {
+    'filemanager toolbar button navigates to filemanager when server is active': function(browser) {
         browser
             .waitForElementPresent('select.server-select-toggle', 4000, 'select server drop down displays')
             .click('select.server-select-toggle option:last-child')
@@ -39,7 +40,7 @@ module.exports = {
             .end();
     },
 
-    'when server disconnects toolbar links are in-activated and server select list is reset': function(browser) {
+    'server select list is reset and toolbar links are in-activated when server disconnects': function(browser) {
         browser
             .waitForElementPresent('select.server-select-toggle', 4000, 'select server drop down displays')
             .assert.attributeEquals('select.server-select-toggle', 'selectedIndex', '0', 'server select list starts at default')
@@ -62,6 +63,22 @@ module.exports = {
             })
             .end();
     },
+
+    'server select list is reset on server connection error': function(browser) {
+        browser
+            .waitForElementPresent('select.server-select-toggle', 4000, 'select server drop down displays')
+            .assert.attributeEquals('select.server-select-toggle', 'selectedIndex', '0', 'server select list starts at default')
+            .click('.toolbar-server_rack a')
+            .assert.elementPresent('.modal-body')
+            .setValue('input[name=name]', 'ConnectionFailBox')
+            .setValue('input[name=ipv4]', '127.0.0.1')
+            .setValue('input[name=username]', 'vagrant')
+            .click('button[name=save]')
+            .waitForElementPresent('.modal-body.connection-error', 4000)
+            .assert.attributeEquals('select.server-select-toggle', 'selectedIndex', '0', 'server select list reset to default')
+            .end();
+    },
+    
     'add server via top toolbar icon and connect to it via username/password auth': function(browser) {
         browser
             .waitForElementPresent('.toolbar-server_rack', 4000, 'wait for toolbar icons')
@@ -79,7 +96,8 @@ module.exports = {
             .waitForElementNotPresent('.modal-body', 4000)
             .end();
     },
-    'edit active server via top toolbar icon': function(browser) {
+
+    'top toolbar icon edits active server': function(browser) {
         browser
             .waitForElementPresent('.toolbar-server_rack', 4000, 'wait for toolbar icons')
             .click('.toolbar-server_rack a')
@@ -105,4 +123,5 @@ module.exports = {
             .assert.value('.modal-body input[name=auth_key]', '')
             .end();
     }
+
 };
