@@ -11,6 +11,7 @@ define(['underscore',
         sshProxy: undefined,
         sftpProxy: undefined,
         defaults: {
+            id: null,
             name: null,
             ipv4: null,
             port: 22,

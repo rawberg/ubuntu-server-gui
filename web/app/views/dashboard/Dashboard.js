@@ -57,11 +57,13 @@ define(['jquery',
 
         onActiveServerChange: function(server) {
             // TODO: make sure previously connected server is disconnected
-            var serverConnection = new ServerConnection({'connection_status': 'connecting'}, {server: server}),
-                connectionModal = new ServerConnectionModal({model: serverConnection});
+            if(server.id) {
+                var serverConnection = new ServerConnection({'connection_status': 'connecting'}, {server: server}),
+                    connectionModal = new ServerConnectionModal({model: serverConnection});
 
-            App.execute('modal:show', connectionModal);
-            serverConnection.connect();
+                App.execute('modal:show', connectionModal);
+                serverConnection.connect();
+            }
         },
 
         onActiveServerDisconnected: function(server) {

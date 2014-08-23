@@ -48,7 +48,7 @@ define(function (requirejs) {
             });
 
             it('called when App.vent add:server is triggered', function() {
-                App.vent.trigger('add:server', new Server());
+                App.vent.trigger('server:add', new Server());
                 expect(onAddSpy).toHaveBeenCalled();
             });
         });

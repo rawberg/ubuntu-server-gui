@@ -71,14 +71,16 @@ module.exports = {
             .click('.toolbar-server_rack a')
             .assert.elementPresent('.modal-body')
             .setValue('input[name=name]', 'ConnectionFailBox')
-            .setValue('input[name=ipv4]', '127.0.0.1')
+            .setValue('input[name=ipv4]', '127.0.0.2')
             .setValue('input[name=username]', 'vagrant')
             .click('button[name=save]')
-            .waitForElementPresent('.modal-body.connection-error', 4000)
+            .waitForElementPresent('.modal-body.connection-error', 6000)
+            .click('button[name=cancel]')
+            .waitForElementNotPresent('.modal-body', 4000)
             .assert.attributeEquals('select.server-select-toggle', 'selectedIndex', '0', 'server select list reset to default')
             .end();
     },
-    
+
     'add server via top toolbar icon and connect to it via username/password auth': function(browser) {
         browser
             .waitForElementPresent('.toolbar-server_rack', 4000, 'wait for toolbar icons')

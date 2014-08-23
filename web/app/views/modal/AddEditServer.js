@@ -99,12 +99,12 @@ define(['jquery',
             this.disableForm();
 
             if(this.model.isNew()) {
-                console.log('AddEditServer trigger add:server');
-                App.vent.trigger('add:server', this.model);
+                this.model.save();
+                App.vent.trigger('server:add', this.model);
             } else {
+                this.model.save();
                 App.execute('modal:close');
             }
-            this.model.save();
         },
 
         onInputKeyup: function(eventObj) {

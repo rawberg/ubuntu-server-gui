@@ -13,7 +13,7 @@ define(['backbone',
             this.local = true;
             this.on('remove', this._checkEmpty);
             this.on('sync', this._checkEmpty);
-            App.vent.on('add:server', this.onAddServer, this);
+            App.vent.on('server:add', this.onAddServer, this);
         },
 
         _checkEmpty: function() {

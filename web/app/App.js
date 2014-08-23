@@ -14,7 +14,7 @@ define(['jquery',
 
     var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
     var Application = Marionette.Application.extend({
-        VERSION: '0.9.5',
+        VERSION: '0.9.6',
         routers: {},
         loggers: {},
 
@@ -34,7 +34,7 @@ define(['jquery',
         },
 
         setActiveServer: function(server) {
-            if(server instanceof Server) {
+            if(this.activeServer && server.cid !== this.activeServer.cid || typeof this.activeServer === 'undefined') {
                 this.activeServer = server;
                 this.vent.trigger('server:changed', server);
             }
@@ -98,7 +98,8 @@ define(['jquery',
         this.reqres.setHandler('server:get', this.getActiveServer, this);
 
         // place holder for the server we're currently connected to
-        this.reqres.request('server:set', new Server());
+//        this.reqres.request('server:set', new Server());
+        this.activeServer = new Server();
     });
 
     return App;

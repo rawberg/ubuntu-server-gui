@@ -156,6 +156,7 @@ if(typeof(window.TESTRUNNER) === 'undefined') {
                         // Mock Responses
     //                    'tests/app-unit/mock-responses/Sessions.response.js',
                         // Views (dashboard)
+                        'tests/app-unit/views/MainToolbar.spec.js',
                         'tests/app-unit/views/dashboard/Dashboard.spec.js',
                         // Views (filemanager)
                         'tests/app-unit/views/filemanager/FileManager.spec.js',
