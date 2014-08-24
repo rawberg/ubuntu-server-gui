@@ -105,7 +105,7 @@ define(['jquery',
 
             this.model = App.reqres.request('server:get');
             this.stickit();
-            this.model.on('change:name', this.updateServerSelectionList, this);
+            this.listenTo(this.model, 'change:name', this.updateServerSelectionList);
             this.toggleToolbarItems(true);
         },
 

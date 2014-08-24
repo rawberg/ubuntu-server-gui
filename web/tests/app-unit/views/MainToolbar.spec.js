@@ -57,8 +57,7 @@ define(function (requirejs) {
 
         describe('onActiveServerDisconnect', function() {
             var mainToolbar, activeServer, serverList,
-                acsDisconnectSpy, updateListSpy, appServerSetSpy,
-                appServerDisconnectSpy;
+                acsDisconnectSpy, updateListSpy, appServerSetSpy;
 
             beforeEach(function() {
                 App._initCallbacks.run(undefined, App);
@@ -72,7 +71,6 @@ define(function (requirejs) {
                 ]);
 
                 acsDisconnectSpy = spyOn(MainToolbar.prototype, 'onActiveServerDisconnect').and.callThrough();
-                updateListSpy = spyOn(MainToolbar.prototype, 'updateServerSelectionList').and.callThrough();
                 mainToolbar = new MainToolbar({model: activeServer, servers: serverList});
                 mainToolbar.render();
             });
@@ -82,6 +80,7 @@ define(function (requirejs) {
             });
 
             it('sets default server selection', function(done) {
+                updateListSpy = spyOn(mainToolbar, 'updateServerSelectionList').and.callThrough();
                 mainToolbar.$('.server-select-toggle').prop('selectedIndex', 1).change();
                 mainToolbar.onActiveServerChange(serverList.at(1));
                 expect(appServerSetSpy).toHaveBeenCalled();
@@ -99,6 +98,7 @@ define(function (requirejs) {
            });
 
             it('triggers default server list selection', function(done) {
+                updateListSpy = spyOn(mainToolbar, 'updateServerSelectionList').and.callThrough();
                 mainToolbar.$('.server-select-toggle').prop('selectedIndex', 1).change();
                 expect(appServerSetSpy).toHaveBeenCalled();
                 expect(updateListSpy).not.toHaveBeenCalled();
@@ -115,8 +115,8 @@ define(function (requirejs) {
         });
 
         describe('updateServerSelectionList', function() {
-            var mainToolbar, activeServer, serverList;
-            var updateSelectionListSpy;
+            var mainToolbar, activeServer, serverList,
+                updateSelectionListSpy;
 
             beforeEach(function () {
                 App._initCallbacks.run(undefined, App);
@@ -128,7 +128,6 @@ define(function (requirejs) {
                     {id: '2222', name: 'Second Fake Server'}
                 ]);
 
-                updateSelectionListSpy = spyOn(MainToolbar.prototype, 'updateServerSelectionList').and.callThrough();
                 mainToolbar = new MainToolbar({model: activeServer, servers: serverList});
                 mainToolbar.render();
             });
@@ -138,18 +137,20 @@ define(function (requirejs) {
             });
 
             it('editing passed in server does not update list', function () {
+                updateSelectionListSpy = spyOn(mainToolbar, 'updateServerSelectionList').and.callThrough();
                 mainToolbar.model.set('name', 'New Name');
                 expect(updateSelectionListSpy).not.toHaveBeenCalled();
             });
 
             it('editing selected server updates the list', function (done) {
+                updateSelectionListSpy = spyOn(mainToolbar, 'updateServerSelectionList').and.callThrough();
                 expect(updateSelectionListSpy).not.toHaveBeenCalled();
                 mainToolbar.$('.server-select-toggle').prop('selectedIndex', 1).change();
                 expect(mainToolbar.model.id).toMatch('1111');
                 expect(updateSelectionListSpy).not.toHaveBeenCalled();
                 mainToolbar.model.set('name', 'GNU Name');
                 expect(updateSelectionListSpy).toHaveBeenCalled();
-//                expect(updateSelectionListSpy.calls.count()).toBe(2);
+                expect(updateSelectionListSpy.calls.count()).toBe(1);
                 expect(mainToolbar.$('.server-select-toggle option:selected').text()).toMatch('GNU Name');
                 done();
             });
