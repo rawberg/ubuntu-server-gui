@@ -74,10 +74,40 @@ module.exports = {
             .setValue('input[name=ipv4]', '127.0.0.2')
             .setValue('input[name=username]', 'vagrant')
             .click('button[name=save]')
+            .waitForElementNotPresent('.modal-body', 2000)
+            .click('select.server-select-toggle option:last-child')
             .waitForElementPresent('.modal-body.connection-error', 6000)
             .click('button[name=cancel]')
             .waitForElementNotPresent('.modal-body', 4000)
             .assert.attributeEquals('select.server-select-toggle', 'selectedIndex', '0', 'server select list reset to default')
+            .end();
+    },
+    'server select list is updated when a server is deleted': function(browser) {
+        browser
+            .waitForElementPresent('.toolbar-server_rack', 4000, 'wait for toolbar icons')
+            .click('.toolbar-server_rack a')
+            .assert.elementPresent('.modal-body')
+            .setValue('input[name=name]', 'Delete Box')
+            .setValue('input[name=ipv4]', '127.0.0.1') //this.fixtures.active_vm.public_ip)
+            .setValue('input[name=port]', [browser.Keys.BACK_SPACE,browser.Keys.BACK_SPACE, '2222'])
+            .setValue('input[name=username]', 'vagrant')
+            .click('input[name=auth_key]')
+            .click('button[name=save]')
+            .waitForElementNotPresent('.modal-body', 2000)
+            .assert.containsText('select.server-select-toggle option:last-of-type', 'Delete Box')
+            .click('select.server-select-toggle option:last-child')
+            .waitForElementPresent('.modal-body.password-required', 2000)
+            .click('button[name=cancel]')
+            .click('.toolbar-server_rack a')
+            .waitForElementPresent('.modal-body', 4000)
+            .assert.hidden('.confirm-delete')
+            .assert.visible('button[name=request_delete]')
+            .click('button[name=request_delete]')
+            .assert.hidden('button[name=request_delete]')
+            .assert.visible('.confirm-delete')
+            .click('button[name=confirm_delete]')
+            .waitForElementNotPresent('.modal-body', 4000)
+            .assert.containsText('select.server-select-toggle option:checked', 'Select Server')
             .end();
     },
 
@@ -92,10 +122,12 @@ module.exports = {
             .setValue('input[name=username]', 'vagrant')
             .click('input[name=auth_key]')
             .click('button[name=save]')
+            .waitForElementNotPresent('.modal-body', 2000)
+            .click('select.server-select-toggle option:last-child')
             .waitForElementPresent('.modal-body.password-required', 2000)
             .setValue('input[name=ssh_password]', 'vagrant')
             .click('button[name=connect]')
-            .waitForElementNotPresent('.modal-body', 4000)
+            .waitForElementNotPresent('.modal-body', 6000)
             .end();
     },
 
@@ -110,6 +142,8 @@ module.exports = {
             .setValue('input[name=username]', 'vagrant')
             .click('input[name=auth_key]')
             .click('button[name=save]')
+            .waitForElementNotPresent('.modal-body', 4000)
+            .click('select.server-select-toggle option:last-child')
             .waitForElementPresent('.modal-body.password-required', 2000)
             .setValue('input[name=ssh_password]', 'vagrant')
             .click('button[name=connect]')
@@ -125,5 +159,4 @@ module.exports = {
             .assert.value('.modal-body input[name=auth_key]', '')
             .end();
     }
-
 };

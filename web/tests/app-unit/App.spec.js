@@ -12,16 +12,21 @@ define(function (requirejs) {
             var showSpy;
 
             beforeEach(function() {
+                App._initCallbacks.run(undefined, App);
                 showSpy = spyOn(App.modalContainer, 'show');
-                App.execute('modal:show', new AddEditServerModal());
             });
 
             afterEach(function() {
                 App.emptyRegions();
+                App._initCallbacks.reset();
             });
 
-            it('should show the modal', function() {
+            it('should show the modal', function(done) {
+                App.execute('modal:show', new AddEditServerModal({
+                    serverList: new Backbone.Collection()
+                }));
                 expect(showSpy).toHaveBeenCalled();
+                done();
             });
 
         });
@@ -30,12 +35,21 @@ define(function (requirejs) {
             var resetSpy, showSpy;
 
             beforeEach(function() {
+                App._initCallbacks.run(undefined, App);
                 resetSpy = spyOn(App.modalContainer, 'reset');
                 showSpy = spyOn(App.modalContainer, 'show');
-                App.showModal(new AddEditServerModal());
             });
 
+            afterEach(function() {
+                App.emptyRegions();
+                App._initCallbacks.reset();
+            });
+
+
             it('should call "reset" on the modal region', function() {
+                App.showModal(new AddEditServerModal({
+                    serverList: new Backbone.Collection()
+                }));
                 App.closeModal();
                 expect(resetSpy).toHaveBeenCalled();
             });
@@ -45,17 +59,18 @@ define(function (requirejs) {
             var toggleToolbarItemsStub;
 
             beforeEach(function() {
+                App._initCallbacks.run(undefined, App);
                 toggleToolbarItemsStub = spyOn(MainToolbar.prototype, 'toggleToolbarItems');
             });
 
             afterEach(function() {
                 App.emptyRegions();
+                App._initCallbacks.reset();
             });
 
             describe('getActiveServer', function() {
 
                 it('sets a blank activeServer on startup', function() {
-                    App._initCallbacks.run(undefined, App);
                     var activeServer = App.getActiveServer();
                     expect(activeServer instanceof Server).toBeTruthy();
                     expect(activeServer.get('ipv4')).toBeNull();
@@ -66,7 +81,12 @@ define(function (requirejs) {
                 var activeServerSpy;
 
                 beforeEach(function() {
+                    App._initCallbacks.run(undefined, App);
                     activeServerSpy = spyOn(App.vent, 'trigger');
+                });
+
+                afterEach(function() {
+                    App._initCallbacks.reset();
                 });
 
                 it('replaces existing active server', function() {
