@@ -13,7 +13,10 @@ define(function (requirejs) {
             beforeEach(function() {
                 server = new Server();
                 serverConnection = new ServerConnection({}, {server: server});
-                addEditServerModal = new AddEditServerModal({model: server});
+                addEditServerModal = new AddEditServerModal({
+                    model: server,
+                    serverList: new Backbone.Collection()
+                });
                 addEditServerModal.render();
             });
 
@@ -73,5 +76,55 @@ define(function (requirejs) {
                 expect(addEditServerModal.ui.manual_password_notice.css('display')).toBe('none');
             });
         });
+
+        describe('onSave', function() {
+            var server, serverConnection, addEditServerModal;
+
+            beforeEach(function() {
+                server = new Server({id: 1, name: "Fake Server"});
+                serverConnection = new ServerConnection({}, {server: server});
+            });
+
+            afterEach(function() {
+                addEditServerModal.destroy();
+            });
+
+            it('delete button not displayed when adding a new server', function() {
+                addEditServerModal = new AddEditServerModal({
+                    serverList: new Backbone.Collection()
+                });
+                addEditServerModal.render();
+                expect(addEditServerModal.ui.request_delete_button.css('display')).toBe('none');
+            });
+
+            it('delete confirmation removes the server from the collection', function(done) {
+                var destroySpy = spyOn(server, 'destroy').and.callThrough();
+                addEditServerModal = new AddEditServerModal({
+                    model: server,
+                    serverList: new Backbone.Collection()
+                });
+                addEditServerModal.render();
+                expect(addEditServerModal.ui.request_delete_button.css('display')).toBe('inline-block');
+                expect(destroySpy).not.toHaveBeenCalled();
+                addEditServerModal.onConfirmDelete();
+                expect(destroySpy).toHaveBeenCalled();
+                done();
+            });
+
+            it('adds new server to the collection', function() {
+                var serverList = new Backbone.Collection(),
+                    newServer = new Server();
+
+                expect(serverList.length).toEqual(0);
+                addEditServerModal = new AddEditServerModal({
+                    model: newServer,
+                    serverList: serverList
+                });
+                addEditServerModal.render();
+                newServer.set({name: 'New Server', ipv4: "127.0.0.1", port: 22});
+                addEditServerModal.onSave();
+                expect(serverList.length).toEqual(1);
+            });
+        })
     });
 });

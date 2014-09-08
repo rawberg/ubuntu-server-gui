@@ -7540,6 +7540,16 @@ table.directory-explorer td .icon_mode.M33152 {
 .modal-dialog.modal-add-edit-server .form-control-static.msg {
   font-style: italic;
 }
+.modal-dialog.modal-add-edit-server .modal-footer .confirm-delete {
+  display: none;
+}
+.modal-dialog.modal-add-edit-server .modal-footer .confirm-delete span {
+  display: block;
+  height: 28px;
+  margin-top: 4px;
+  margin-left: 18px;
+  margin-right: 12px;
+}
 .modal-dialog.modal-fileops {
   width: 360px;
 }

@@ -50,7 +50,14 @@
         </form>
     </div>
     <div class="modal-footer">
-        <!--<button name="delete" type="button" class="btn btn-danger pull-left">Delete</button>-->
+        <button name="request_delete" type="button" class="btn btn-danger pull-left" style="display:none;">Delete</button>
+        <div class="confirm-delete">
+            <span class="pull-left">Are you sure?</span>
+            <div class="btn-group btn-group-sm pull-left">
+                <button name="confirm_delete" type="button" class="btn btn-default">Yes</button>
+                <button name="cancel_delete" type="button" class="btn btn-primary btn-sm">No</button>
+            </div>
+        </div>
         <button name="cancel" type="button" class="btn btn-default">Cancel</button>
         <button name="save" type="button" class="btn btn-success">Save</button>
     </div>
