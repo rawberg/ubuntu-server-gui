@@ -1,18 +1,20 @@
 define(['jquery',
         'underscore',
         'marionette',
+        'modules/NoobTourModule',
         'models/User',
-        'models/Server',
-        'modules/NoobTourModule'], function (
+        'views/modal/ServerConnectionView'], function (
         $,
         _,
         Marionette,
+        NoobTourModule,
         User,
-        Server,
-        NoobTourModule) {
+        ServerConnectionModal) {
 
+    var ModalBackdrop = Marionette.ItemView.extend({
+        template: function() { return '<div class="modal-backdrop in"></div>'; }
+    });
 
-    var ModalBackdrop = Marionette.ItemView.extend({template: function() { return '<div class="modal-backdrop in"></div>'; }});
     var Application = Marionette.Application.extend({
         VERSION: '0.9.6',
         routers: {},
@@ -26,19 +28,25 @@ define(['jquery',
             popoverContainer: '#popover-container'
         },
 
-        getActiveServer: function() {
-            if(_.isUndefined(this.activeServer)) {
-                return this.setActiveServer(new Server());
-            }
-            return this.activeServer;
+        closeModal: function() {
+            this.modalContainer.reset();
+            $(this.modalContainer.el).hide();
         },
 
-        setActiveServer: function(server) {
-            if(this.activeServer && server.cid !== this.activeServer.cid || typeof this.activeServer === 'undefined') {
-                this.activeServer = server;
-                this.vent.trigger('server:changed', server);
-            }
-            return this.activeServer;
+        closePopover: function() {
+            this.popoverContainer.reset();
+        },
+
+        connectionModal: function(server) {
+            this.listenTo(server.connection, 'change:connection_status', function(model, status) {
+                if(status === 'connected') {
+                    _.delay(_.bind(App.closeModal, App), 800);
+                }
+            });
+
+            var connectionModal = new ServerConnectionModal({model: server.connection});
+            this.listenTo(connectionModal, "cancel", App.closeModal, App);
+            this.showModal(connectionModal);
         },
 
         isDesktop: function() {
@@ -49,15 +57,6 @@ define(['jquery',
             $(this.modalContainer.el).show();
             this.modalContainer.show(view, {forceShow: true});
         },
-
-        closeModal: function() {
-            this.modalContainer.reset();
-            $(this.modalContainer.el).hide();
-        },
-
-        closePopover: function() {
-            this.popoverContainer.reset();
-        }
     });
 
     var App = new Application();
@@ -81,25 +80,19 @@ define(['jquery',
             } else {
                 console.log('Error Log: ', options);
             }
-
         }, this);
     });
 
     // App Modules & Handlers
     App.addInitializer(function(options) {
         this.module("NoobTourModule", NoobTourModule);
+        this.serverChannel = Backbone.Wreqr.radio.channel('server');
+        this.serverChannel.vent.on('connection');
 
         this.commands.setHandler('noobtour:activate', this.NoobTourModule.activate, this.NoobTourModule);
         this.commands.setHandler('noobtour:deactivate', this.NoobTourModule.deactivate, this.NoobTourModule);
         this.commands.setHandler("modal:close", this.closeModal, this);
         this.commands.setHandler("modal:show", this.showModal, this);
-
-        this.reqres.setHandler('server:set', this.setActiveServer, this);
-        this.reqres.setHandler('server:get', this.getActiveServer, this);
-
-        // place holder for the server we're currently connected to
-//        this.reqres.request('server:set', new Server());
-        this.activeServer = new Server();
     });
 
     return App;
