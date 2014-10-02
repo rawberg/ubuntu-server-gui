@@ -21,9 +21,7 @@ define(['jquery',
         },
 
         bindings: {
-            '.filename': {
-                observe: 'fileName',
-            }
+            '.filename': 'fileName',
         },
 
         triggers: {
@@ -57,7 +55,6 @@ define(['jquery',
 
         onSaveEditor: function() {
             this.options.server.connection.writeStream(this.model.get('filePath'), this.cm.doc.getValue(), {}, function() {
-                console.log('saved');
             });
         },
 
@@ -76,9 +73,5 @@ define(['jquery',
 
             cm.doc.setCursor(0);
         },
-
-        close: function() {
-        }
-
     });
 });
