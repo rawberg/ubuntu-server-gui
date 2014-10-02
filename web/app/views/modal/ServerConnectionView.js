@@ -1,9 +1,7 @@
 define(['jquery',
         'underscore',
         'marionette',
-        'App',
         'views/BaseForm',
-        'models/Server',
         'text!views/modal/templates/server-connection-connecting.html',
         'text!views/modal/templates/server-connection-password.html',
         'text!views/modal/templates/server-connection-error.html',
@@ -11,9 +9,7 @@ define(['jquery',
         $,
         _,
         Marionette,
-        App,
         BaseForm,
-        Server,
         serverConnectingTpl,
         serverConnectPasswordPromptTpl,
         serverConnectErrorTpl) {
@@ -43,9 +39,12 @@ define(['jquery',
         },
 
         events: {
-            'click button[name="cancel"]': 'onCancel',
             'click button[name="connect"]': 'onClickConnect',
             'keyup input': 'onInputKeyup',
+        },
+
+        triggers: {
+            'click button[name="cancel"]': 'cancel',
         },
 
         getTemplate: function() {
@@ -58,18 +57,6 @@ define(['jquery',
             }
         },
 
-        templateHelpers: function() {
-            var location = '';
-            if(App.isDesktop()) {
-                location = 'your local network';
-            } else {
-                location = 'api.ubuntuservergui.com';
-            }
-            return {
-                access_location: location
-            }
-        },
-
         onInputKeyup: function(eventObj) {
             eventObj.stopPropagation();
             eventObj.preventDefault();
@@ -78,10 +65,6 @@ define(['jquery',
                 this.onClickConnect(eventObj);
             }
             return false;
-        },
-
-        onCancel: function(eventObj) {
-            App.execute('modal:close');
         },
 
         onClickConnect: function(eventObj) {

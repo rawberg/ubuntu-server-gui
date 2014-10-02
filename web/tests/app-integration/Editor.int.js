@@ -39,7 +39,7 @@ module.exports = {
             .click('xpath', '//table//td[@class="filename"][text()="vagrant"]')
             .waitForElementPresent('.directory-explorer tbody', 2000, 'directory explorer shows vagrant folder contents')
             .click('xpath', '//table//td[@class="filename"][text()="Z01-existing_file.txt"]')
-            .waitForElementPresent('#editor_layout', 3000, 'containing layout for code mirror displays')
+            .waitForElementPresent('#editor_layout', 2000, 'containing layout for code mirror displays')
             .assert.elementPresent('.CodeMirror-lines', 'displays code mirror editor')
             .assert.containsText('.CodeMirror-lines pre span', 'existing content', 'existing file contents is shown in the editor')
             .click('.CodeMirror-lines')
@@ -64,6 +64,7 @@ module.exports = {
             .click('xpath', '//table//td[@class="filename"][text()="vagrant"]')
             .waitForElementPresent('.directory-explorer tbody', 2000, 'directory explorer shows vagrant folder contents')
             .click('xpath', '//table//td[@class="filename"][text()="Z01-existing_file.txt"]')
+            .waitForElementPresent('#editor_layout', 2000, 'containing layout for code mirror displays')
             .assert.containsText('.CodeMirror-lines pre span', 'new content', 'new contents is shown in the editor')
             .keys([
                 browser.Keys.UP_ARROW,
@@ -81,6 +82,7 @@ module.exports = {
             .click('xpath', '//table//td[@class="filename"][text()="vagrant"]')
             .waitForElementPresent('.directory-explorer tbody', 2000, 'directory explorer shows vagrant folder contents')
             .click('xpath', '//table//td[@class="filename"][text()="Z01-existing_file.txt"]')
+            .waitForElementPresent('#editor_layout', 2000, 'containing layout for code mirror displays')
             .assert.containsText('.CodeMirror-lines pre span', 'existing content', 'existing file contents is shown in the editor')
             .end()
     }

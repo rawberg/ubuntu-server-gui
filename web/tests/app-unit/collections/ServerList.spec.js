@@ -76,9 +76,9 @@ define(function (requirejs) {
                 });
 
                 it("sets initial activeServer - does not autoconnect", function() {
-                    expect(serverList.getActive()).toBeUndefined();
+                    expect(serverList.getActive().isNew()).toBeTruthy();
                     serverList.setActive("XXXX");
-                    expect(serverList.activeServer).toBeUndefined();
+                    expect(serverList.getActive().isNew()).toBeTruthy();
                     serverList.setActive("2222");
                     expect(serverList.activeServer.id).toEqual("2222");
 

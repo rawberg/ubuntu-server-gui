@@ -1,4 +1,7 @@
-define(['models/Server', 'app'], function(Server, App) {
+define([
+    'models/Server',
+    'models/ServerConnection',
+    'App'], function(Server, ServerConnection, App) {
 
     describe('Server - Model', function() {
         describe('url', function() {
@@ -14,7 +17,6 @@ define(['models/Server', 'app'], function(Server, App) {
             it('should return a correctly formatted websocket url', function() {
                (server.getUrl()).should.have.string('http://10.10.0.1:9090');
             });
-
         });
 
         describe('saving, updating and deleting (local storage)', function() {
@@ -66,6 +68,52 @@ define(['models/Server', 'app'], function(Server, App) {
                 var updatedServerData = JSON.parse(window.localStorage[serverKey]);
                 (updatedServerData.name).should.equal('Changed Sample Server');
                 (updatedServerData.ipv4).should.equal('111.108.0.1');
+            });
+        });
+
+        describe('isConnected', function() {
+            var server;
+
+            beforeEach(function() {
+                server = new Server({
+                    name: 'Sample Server',
+                    ipv4: '10.10.0.1',
+                    port: 9090
+                });
+            });
+
+            it('returns false when no connection esists', function() {
+                expect(server.isConnected()).toBeFalsy();
+            });
+        });
+
+        describe('connect', function() {
+            var fakeServer, modalSpy, connectSpy;
+
+            beforeEach(function() {
+                App._initCallbacks.run(undefined, App);
+                connectSpy = spyOn(ServerConnection.prototype, 'connect');
+
+                fakeServer = new Server({
+                    id: '1111',
+                    name: 'Fake Server',
+                    ipv4: '10.0.0.1'
+                });
+                modalSpy = spyOn(App, 'connectionModal');
+            });
+
+            afterEach(function() {
+                App._initCallbacks.reset();
+            });
+
+            it('initiates ssh connection', function() {
+                expect(fakeServer.connection).toBeUndefined();
+                expect(modalSpy).not.toHaveBeenCalled();
+                expect(connectSpy).not.toHaveBeenCalled();
+                fakeServer.connect();
+                expect(modalSpy).toHaveBeenCalled();
+                expect(connectSpy).toHaveBeenCalled();
+                expect(fakeServer.connection).toBeDefined();
             });
         });
 

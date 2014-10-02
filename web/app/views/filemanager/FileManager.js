@@ -1,18 +1,18 @@
-define(['jquery',
-        'underscore',
-        'marionette',
-        'App',
-        'moment',
-        'filesize',
-        'collections/DirectoryBreadcrumbs',
-        'collections/DirectoryContents',
-        'models/DirectoryExplorer',
-        'models/Server',
-        'models/ServerConnection',
-        'views/modal/ServerConnectionView',
-        'views/filemanager/DirectoryExplorerView',
-        'views/filemanager/DirectoryBreadcrumbView',
-        'text!views/filemanager/templates/filemanager-layout.html'], function (
+define(["jquery",
+        "underscore",
+        "marionette",
+        "App",
+        "moment",
+        "filesize",
+        "collections/DirectoryBreadcrumbs",
+        "collections/DirectoryContents",
+        "models/DirectoryExplorer",
+        "models/Server",
+        "models/ServerConnection",
+        "views/modal/ServerConnectionView",
+        "views/filemanager/DirectoryExplorerView",
+        "views/filemanager/DirectoryBreadcrumbView",
+        "text!views/filemanager/templates/filemanager-layout.html"], function (
         $,
         _,
         Marionette,
@@ -31,49 +31,42 @@ define(['jquery',
 
     return Marionette.LayoutView.extend({
         template: _.template(fileManagerLayoutTpl),
-        id: 'file-manager-layout',
+        id: "file-manager-layout",
 
         regions: {
-            breadcrumbRegion: '#file-manager-breadcrumbs',
-            explorerRegion: '#file-manager-explorer'
+            breadcrumbRegion: "#file-manager-breadcrumbs",
+            explorerRegion: "#file-manager-explorer"
         },
 
         initialize: function(options) {
-            options.path = options.path ? options.path : '/';
-            App.vent.on('server:selected', this.onServerSelected, this);
-            App.vent.on('server:connected', this.transitionToShowFileManager, this);
+            if(typeof options.server === "undefined") {
+                throw "options.server required";
+            }
+            options.path = options.path ? options.path : "/";
+            App.serverChannel.vent.on("connected", this.onActiveServerChange, this);
         },
 
         onBeforeDestroy: function() {
-            App.vent.off('server:selected', this.onServerSelected);
-            App.vent.off('server:connected', this.transitionToShowFileManager);
+            App.serverChannel.vent.off("connected", this.onActiveServerChange);
         },
 
         onFileClick: function(fileModel, path) {
-            var filePath = path + fileModel.get('filename');
-            App.execute('app:navigate', 'editor', {
-                file: fileModel.get('filename'),
+            var filePath = path + fileModel.get("filename");
+            App.execute("app:navigate", "editor", {
+                file: fileModel.get("filename"),
                 path: path
             });
         },
 
         onRender: function() {
-            var activeServer = App.reqres.request('server:get');
-            if(activeServer) {
-                this.showFileManager(activeServer);
+            this.onActiveServerChange(this.options.server);
+        },
+
+        onActiveServerChange: function(server) {
+            if(server.isConnected()) {
+                this.showFileManager(server);
             }
-        },
-
-        onServerSelected: function(server) {
-            var serverConnection = new ServerConnection({}, {server: server});
-            App.showModal(new ServerConnectionModal({model: serverConnection}));
-            serverConnection.connect();
-        },
-
-        onShow: function() {
-            // TODO - clean this up, maybe this.model should be activeServer
-            var activeServer = App.reqres.request('server:get');
-            this.showFileManager(activeServer);
+            this.options.server = server;
         },
 
         showFileManager: function(server) {
@@ -90,7 +83,7 @@ define(['jquery',
                 model: directoryExplorer,
                 collection: directoryContents
             });
-            this.listenTo(directoryExplorerView, 'filemanager:file:click', this.onFileClick);
+            this.listenTo(directoryExplorerView, "filemanager:file:click", this.onFileClick);
 
             var directoryBreadcrumbView = new DirectoryBreadcrumbView({
                 collection: directoryBreadcrumbs,
@@ -102,10 +95,5 @@ define(['jquery',
             directoryContents.fetch();
             directoryBreadcrumbs.fetch();
         },
-
-        transitionToShowFileManager: function(server) {
-            this.showFileManager(server);
-            _.delay(_.bind(App.closeModal, App), 1200);
-        }
     });
 });

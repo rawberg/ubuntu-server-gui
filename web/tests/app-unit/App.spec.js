@@ -1,28 +1,29 @@
 define(function (requirejs) {
-    var App = requirejs('App'),
-        Session = requirejs('models/Session'),
-        Server = requirejs('models/Server'),
-        MainToolbar = requirejs('views/MainToolbar'),
-        AddEditServerModal = requirejs('views/modal/AddEditServer');
+    var App = requirejs("App"),
+        Session = requirejs("models/Session"),
+        Server = requirejs("models/Server"),
+        ServerConnection = requirejs("models/ServerConnection"),
+        MainToolbar = requirejs("views/MainToolbar"),
+        AddEditServerModal = requirejs("views/modal/AddEditServer");
 
 
-    describe('App', function() {
+    describe("App", function() {
+        var resetSpy, showSpy;
 
-        describe('showModal', function() {
-            var showSpy;
+        beforeEach(function() {
+            App._initCallbacks.run(undefined, App);
+            resetSpy = spyOn(App.modalContainer, "reset");
+            showSpy = spyOn(App.modalContainer, "show");
+        });
 
-            beforeEach(function() {
-                App._initCallbacks.run(undefined, App);
-                showSpy = spyOn(App.modalContainer, 'show');
-            });
+        afterEach(function() {
+            App.emptyRegions();
+            App._initCallbacks.reset();
+        });
 
-            afterEach(function() {
-                App.emptyRegions();
-                App._initCallbacks.reset();
-            });
-
-            it('should show the modal', function(done) {
-                App.execute('modal:show', new AddEditServerModal({
+        describe("showModal", function() {
+            it("should show the modal", function(done) {
+                App.execute("modal:show", new AddEditServerModal({
                     serverList: new Backbone.Collection()
                 }));
                 expect(showSpy).toHaveBeenCalled();
@@ -31,22 +32,8 @@ define(function (requirejs) {
 
         });
 
-        describe('closeModal', function() {
-            var resetSpy, showSpy;
-
-            beforeEach(function() {
-                App._initCallbacks.run(undefined, App);
-                resetSpy = spyOn(App.modalContainer, 'reset');
-                showSpy = spyOn(App.modalContainer, 'show');
-            });
-
-            afterEach(function() {
-                App.emptyRegions();
-                App._initCallbacks.reset();
-            });
-
-
-            it('should call "reset" on the modal region', function() {
+        describe("closeModal", function() {
+            it("should call 'reset' on the modal region", function() {
                 App.showModal(new AddEditServerModal({
                     serverList: new Backbone.Collection()
                 }));
@@ -54,58 +41,39 @@ define(function (requirejs) {
                 expect(resetSpy).toHaveBeenCalled();
             });
         });
-
-        describe('activeServer', function() {
-            var toggleToolbarItemsStub;
+        
+        describe("connectionModal", function() {
+            var fakeServer;
 
             beforeEach(function() {
-                App._initCallbacks.run(undefined, App);
-                toggleToolbarItemsStub = spyOn(MainToolbar.prototype, 'toggleToolbarItems');
+                fakeServer = new Server({name: 'TestServe', ipv4: '127.0.0.1'});
+                fakeServer.connection = new ServerConnection({}, {server: fakeServer});
+                jasmine.clock().install();
             });
 
             afterEach(function() {
-                App.emptyRegions();
-                App._initCallbacks.reset();
+               fakeServer.destroy();
+               jasmine.clock().uninstall();
             });
 
-            describe('getActiveServer', function() {
-
-                it('sets a blank activeServer on startup', function() {
-                    var activeServer = App.getActiveServer();
-                    expect(activeServer instanceof Server).toBeTruthy();
-                    expect(activeServer.get('ipv4')).toBeNull();
-                });
+            it("should close connection modal upon connected status", function(done) {
+                expect(resetSpy).not.toHaveBeenCalled();
+                App.connectionModal(fakeServer);
+                expect(showSpy).toHaveBeenCalled();
+                fakeServer.connection.set('connection_status', 'connected');
+                jasmine.clock().tick(801);
+                expect(resetSpy).toHaveBeenCalled();
+                done();
             });
 
-            describe('setActiveServer', function() {
-                var activeServerSpy;
-
-                beforeEach(function() {
-                    App._initCallbacks.run(undefined, App);
-                    activeServerSpy = spyOn(App.vent, 'trigger');
-                });
-
-                afterEach(function() {
-                    App._initCallbacks.reset();
-                });
-
-                it('replaces existing active server', function() {
-                    var firstActiveServer = App.getActiveServer();
-                    var secondActiveServer = App.setActiveServer(new Server());
-                    expect(firstActiveServer.cid).not.toBe(secondActiveServer.cid);
-                });
-
-                it('triggers App.vent "server:changed" when a new server is set', function() {
-                    var server = new Server();
-                    expect(activeServerSpy.calls.count()).toBe(0);
-                    App.setActiveServer(server);
-                    expect(activeServerSpy.calls.count()).toBe(1);
-                    expect(activeServerSpy).toHaveBeenCalledWith('server:changed', server);
-                });
-
+            it("should close the modal on cancel event", function(done) {
+                expect(resetSpy).not.toHaveBeenCalled();
+                App.connectionModal(fakeServer);
+                var connectionModal = showSpy.calls.mostRecent()['args'][0];
+                connectionModal.trigger('cancel');
+                expect(resetSpy).toHaveBeenCalled();
+                done();
             });
-
         });
-
     });
 });

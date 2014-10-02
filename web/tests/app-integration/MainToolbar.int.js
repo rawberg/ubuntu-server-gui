@@ -52,8 +52,7 @@ module.exports = {
                     .waitForElementNotPresent('.modal-body.connecting', 2000)
                     .pause(1000)
                     .execute(function() {
-                        var activeServer = window.App.getActiveServer();
-                        activeServer.connection.disconnect();
+                        window.App.serverChannel.vent.trigger('disconnect');
                     })
                     .pause(1000)
                     .assert.attributeEquals('select.server-select-toggle', 'selectedIndex', '0', 'server select list reset to default')

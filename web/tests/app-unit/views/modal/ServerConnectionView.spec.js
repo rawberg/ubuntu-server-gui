@@ -13,13 +13,12 @@ define(function (requirejs) {
     describe('ServerConnectionView', function() {
         // TODO: convert these to integration tests
         describe('onRender', function() {
-            var server, serverConnection;
-            var serverConnectionView;
+            var server, serverConnectionView;
 
             beforeEach(function() {
                 server = new Server({ipv4: '10.0.0.1', name: 'Simple Server'});
-                serverConnection = new ServerConnection({connection_status: 'connecting'}, {server: server});
-                serverConnectionView = new ServerConnectionView({model: serverConnection});
+                server.connection = new ServerConnection({connection_status: 'connecting'}, {server: server});
+                serverConnectionView = new ServerConnectionView({model: server.connection});
                 serverConnectionView.render();
             });
 
@@ -28,14 +27,14 @@ define(function (requirejs) {
             });
 
             it('displays connecting status and server name in the modal', function() {
-                (serverConnectionView.$('h4').text()).should.have.string('connecting');
-                (serverConnectionView.$('.modal-body').text()).should.have.string('Simple Server');
-                (serverConnectionView.$('div.modal-body').hasClass('connecting')).should.be.true;
+                expect(serverConnectionView.$('h4').text()).toMatch('connecting');
+                expect(serverConnectionView.$('.modal-body').text()).toMatch('Simple Server');
+                expect(serverConnectionView.$('div.modal-body').hasClass('connecting')).toBeTruthy();
             });
 
             it('displays connection error message in the modal', function() {
-                serverConnection.set('connection_status', 'connection error');
-                (serverConnectionView.$('h4').text()).should.have.string('connection error');
+                server.connection.set('connection_status', 'connection error');
+                expect(serverConnectionView.$('h4').text()).toMatch('connection error');
             });
         });
 

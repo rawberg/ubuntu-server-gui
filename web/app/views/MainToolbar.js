@@ -25,10 +25,9 @@ define(['jquery',
                 observe: 'server_id',
                 updateModel: function(val, event, options) {
                     if(val === null) {
-                        App.vent.trigger('server:disconnect');
+                        App.serverChannel.vent.trigger('disconnect');
                     } else {
-                        var server = this.options.servers.get(val);
-                        App.reqres.request('server:set', server);
+                        this.options.servers.setActive(val, {connect: true});
                     }
                     return true;
                 },
@@ -64,9 +63,8 @@ define(['jquery',
 
         initialize: function(options) {
             this.model = new Backbone.Model({'server_id': null});
-            App.vent.on('server:disconnected', this.onActiveServerDisconnect, this);
-            App.vent.on('server:changed', this.onActiveServerChange, this);
-//            this.listenTo(this.options.servers, 'add', )
+            App.serverChannel.vent.on('disconnected', this.onActiveServerDisconnect, this);
+            App.serverChannel.vent.on('changed', this.onActiveServerChange, this);
         },
 
         toggleToolbarItems: function(enabled) {
@@ -85,6 +83,11 @@ define(['jquery',
             }
         },
 
+        onDestroy: function() {
+            App.serverChannel.vent.off('disconnected', this.onActiveServerDisconnect);
+            App.serverChannel.vent.off('changed', this.onActiveServerChange);
+        },
+
         onRender: function() {
             this.stickit();
         },
@@ -98,11 +101,6 @@ define(['jquery',
                 serverList: this.options.servers,
                 toolbarModel: this.model,
             }));
-        },
-
-        onServerAdd: function() {
-
-            this.$('.server-select-toggle').prop('selectedIndex', 0);
         },
 
         onActiveServerChange: function(server) {
