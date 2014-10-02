@@ -24,7 +24,7 @@ define(['backbone',
         },
 
         getActive: function() {
-            return this.activeServer;
+            return this.activeServer ? this.activeServer : new Server();
         },
 
         setActive: function(serverId, options) {
