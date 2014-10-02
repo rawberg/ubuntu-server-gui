@@ -12,8 +12,8 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 throw "Expected server to be provided.";
             }
             this.server = options.server;
-            this.server.connection = this;
-            App.vent.on('server:disconnect', this.disconnect, this);
+
+            App.serverChannel.vent.on('disconnect', this.disconnect, this);
         },
 
         connect: function(callback) {
@@ -47,7 +47,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 }
                 this.destroy();
                 this.off();
-                App.vent.trigger('server:disconnected');
+                App.serverChannel.vent.trigger('disconnected');
                 callback();
             } else {
                 this.destroy();
@@ -73,7 +73,6 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
 //                connectOptions.password = undefined;
 //                this.attributes.ssh_password = undefined;
 
-                this.server.sshProxy = sshProxy;
                 this.set('connection_status', 'connected');
 
                 // also connect via sftp
@@ -87,7 +86,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                         });
                         throw err;
                     }
-                    this.server.sftpProxy = this.sftpProxy = sftpConnection;
+                    this.sftpProxy = sftpConnection;
 
                     sftpConnection.on('end', function () {
                     });
@@ -110,28 +109,26 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                         });
                     });
 
-                    App.vent.trigger('server:connected', this.server);
+                    App.serverChannel.vent.trigger('connected', this.server);
                     callback();
                 }, this));
 
             }, this));
 
-            //TODO: find a better place or logging and error trapping
-            //TODO: decide how the app will handle sshProxy errors and disconnects
             sshProxy.on('error', _.bind(function(err) {
                 err['server-port'] = connectOptions['port'];
                 App.execute('log:error', {msg: 'SSH Error', severity: 'error', err: err});
-                App.vent.trigger('server:disconnected', this.server);
+                App.serverChannel.vent.trigger('disconnected', this.server);
                 this.set('connection_status', 'connection error');
             }, this));
 
-            sshProxy.on('end', function() {
-                App.vent.trigger('server:disconnected', this.server);
-            });
+            sshProxy.on('end', _.bind(function() {
+                App.serverChannel.vent.trigger('disconnected', this.server);
+            }, this));
 
-            sshProxy.on('close', function(had_error) {
-                App.vent.trigger('server:closed', this.server);
-            });
+            sshProxy.on('close', _.bind(function(had_error) {
+                App.serverChannel.vent.trigger('closed', this.server);
+            }, this));
 
             sshProxy.on('timeout', function(err) {
                 err['server-port'] = connectOptions['port'];
@@ -160,7 +157,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 try {
                     connectOptions.privateKey = require('fs').readFileSync(this.server.get('keyPath'));
                 } catch(e) {
-                    App.vent.trigger('server:disconnected', this.server);
+                    App.serverChannel.vent.trigger('disconnected', this.server);
                     this.set('connection_status', 'ssh key error');
                     callback();
                 }
@@ -171,7 +168,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             try {
                 sshProxy.connect(connectOptions);
             } catch(err) {
-                App.vent.trigger('server:disconnected', this.server);
+                App.serverChannel.vent.trigger('disconnected', this.server);
                 this.set('connection_status', 'connection error');
                 err['server-port'] = connectOptions['port'];
                 App.execute('log:error', {
@@ -181,6 +178,10 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
                 });
                 callback();
             }
+        },
+
+        onDestroy: function() {
+            App.serverChannel.vent.off('disconnect', this.disconnect);
         },
 
         readStream: function(filePath, callback) {
@@ -194,7 +195,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             var decoder = new StringDecoder('utf8');
             var fileContents = '';
 
-            var fsStream = this.server.sftpProxy.createReadStream(filePath, {encoding: 'utf8'});
+            var fsStream = this.server.connection.sftpProxy.createReadStream(filePath, {encoding: 'utf8'});
 
             fsStream.on('data', function(chunk) {
                 fileContents += decoder.write(chunk);
@@ -233,16 +234,15 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
 
             if(typeof options === 'undefined') {
                 options = {}
-            }
-            else if (typeof options === 'function' && typeof callback === 'undefined') {
+            } else if (typeof options === 'function' && typeof callback === 'undefined') {
                 callback = options;
                 options = {};
-            };
+            }
 
             _.defaults(options, {encoding: 'utf8', autoClose: true, flags: 'w'});
 
             callback = typeof callback === 'function' ? callback : function() {};
-            var wsStream = this.server.sftpProxy.createWriteStream(filePath, options);
+            var wsStream = this.sftpProxy.createWriteStream(filePath, options);
 
 //            wsStream.on('finish', function() {
 //                callback();
