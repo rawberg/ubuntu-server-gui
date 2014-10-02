@@ -19,10 +19,9 @@ define(['underscore',
 
     return BaseController.extend({
         _toolbars: function() {
-            this.serverList = new ServerList();
+            this.serverList = this.serverList ? this.serverList : new ServerList();
 
             this.mainToolbar = this.mainToolbar ? this.mainToolbar : new MainToolbar({
-                model: App.getActiveServer(),
                 servers: this.serverList
             });
             this.serverList.fetch();
@@ -35,19 +34,21 @@ define(['underscore',
 
         dashboard: function() {
             this._toolbars();
-            this.dashboardLayout = new DashboardLayout();
+            this.dashboardLayout = new DashboardLayout({
+                server: this.serverList.getActive()
+            });
             App.mainViewport.show(this.dashboardLayout);
         },
 
         editor: function(options) {
             this._toolbars();
-            var server = App.getActiveServer();
-            var filePath = options.path + options.file;
+            var filePath = options.path + options.file,
+                activeServer = this.serverList.getActive();
 
-            server.connection.readStream(filePath, _.bind(function(err, fileContents) {
+            activeServer.connection.readStream(filePath, _.bind(function(err, fileContents) {
                 if(typeof err === 'undefined') {
                     var editorLayout = new EditorLayout({
-                        server: App.getActiveServer(),
+                        server: activeServer,
                         fileName: options.file,
                         fileContents: fileContents,
                         dirPath: options.path
@@ -62,7 +63,10 @@ define(['underscore',
             this._toolbars();
             dirPath = dirPath ? dirPath: '/';
 
-            this.fileManagerLayout = new FileManagerLayout({path: dirPath});
+            this.fileManagerLayout = new FileManagerLayout({
+                server: this.serverList.getActive(),
+                path: dirPath
+            });
             // TODO don't force show, just make sure events get re-bound
             App.mainViewport.show(this.fileManagerLayout, {forceShow: true});
         }
