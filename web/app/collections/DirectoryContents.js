@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'models/Directory'], function (backbone, underscore, Directory) {
+define(['backbone', 'underscore', 'App', 'models/Directory'], function (backbone, underscore, App, Directory) {
 
     return Backbone.Collection.extend({
         model: Directory,
@@ -26,7 +26,7 @@ define(['backbone', 'underscore', 'models/Directory'], function (backbone, under
         fetch: function(options) {
             var path = this.directoryExplorer.get('path');
             try {
-                this.server.sftpProxy.opendir(path, _.bind(function (err, buffer) {
+                this.server.connection.sftpProxy.opendir(path, _.bind(function (err, buffer) {
                     this.parseDir(err, buffer, options);
                 }, this));
             } catch(err) {
@@ -44,7 +44,7 @@ define(['backbone', 'underscore', 'models/Directory'], function (backbone, under
             }
 
             if(buffer) {
-                this.server.sftpProxy.readdir(buffer, _.bind(function(err, list) {
+                this.server.connection.sftpProxy.readdir(buffer, _.bind(function(err, list) {
                     if(err) {
                         console.log('readdir error: ', err);
                     } else if(list) {
