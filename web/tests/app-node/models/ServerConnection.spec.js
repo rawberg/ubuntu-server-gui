@@ -18,7 +18,7 @@ define(['underscore',
         var connectionStatusSpy, appVentConnectSpy, appVentDisconnectSpy;
 
         beforeEach(function(done) {
-            //jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+            jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
             connectionStatusSpy = jasmine.createSpy();
             appVentConnectSpy = jasmine.createSpy();
             appVentDisconnectSpy = jasmine.createSpy();
@@ -43,7 +43,6 @@ define(['underscore',
             if(serverConnection.sshProxy && serverConnection.sshProxy._state !== 'closed') {
                 serverConnection.sshProxy.end();
             }
-            serverConnection.destroy();
             done();
         });
 
@@ -132,12 +131,14 @@ define(['underscore',
 
     });
 
-    xdescribe('ServerConnection - sftpConnection', function() {
+    describe('ServerConnection - sftpConnection', function() {
 
         describe('opendir', function() {
             var server, serverConnection;
 
             beforeEach(function(done) {
+                App.serverChannel = Backbone.Wreqr.radio.channel('server');
+
                 var serversCollection = new ServerList();
                 serversCollection.fetch({success: function() {
                     server = serversCollection.at(0);
@@ -149,9 +150,9 @@ define(['underscore',
             });
 
             it('reads the contents of a directory', function(done) {
-                server.sftpProxy.opendir("/", function(err, buffer) {
+                serverConnection.sftpProxy.opendir("/", function(err, buffer) {
                     expect(err).toBeUndefined();
-                    server.sftpProxy.readdir(buffer, function(err, list) {
+                    serverConnection.sftpProxy.readdir(buffer, function(err, list) {
                         expect(list.length).toBeGreaterThan(0);
                         done();
                     });
@@ -184,8 +185,8 @@ define(['underscore',
             });
 
             it('reads a remote file', function(done) {
-                expect(server.connection).toBeDefined();
-                server.connection.readStream('/etc/hostname', function(err, fileContents) {
+                expect(serverConnection.sftpProxy).toBeDefined();
+                serverConnection.readStream('/etc/hostname', function(err, fileContents) {
                     expect(err).toBeUndefined();
                     expect(fileContents).toMatch(/lucid|trusty|precise/);
                     done();
@@ -193,21 +194,23 @@ define(['underscore',
             });
 
             it('displays an error modal when the file doesn\'t exist', function(done) {
-                server.connection.readStream('/etc/doesnotexist', function(err, fileContents) {
+                serverConnection.readStream('/etc/doesnotexist', function(err, fileContents) {
                     expect(err).toBeDefined();
                     expect(showModalSpy).toHaveBeenCalled();
                     expect(showModalSpy.calls.count()).toBe(1);
-                    (showModalSpy.calls.argsFor(0)[0].options).should.have.keys(['errorMsg', 'filePath']);
+                    expect(showModalSpy.calls.argsFor(0)[0].options['errorMsg']).toBeDefined();
+                    expect(showModalSpy.calls.argsFor(0)[0].options['filePath']).toBeDefined();
                     done();
                 });
             });
 
             it('displays an error modal when user has insufficient file permissions', function(done) {
-                server.connection.readStream('/etc/sudoers', function(err, fileContents) {
+                serverConnection.readStream('/etc/sudoers', function(err, fileContents) {
                     expect(err).toBeDefined();
                     expect(showModalSpy).toHaveBeenCalled();
                     expect(showModalSpy.calls.count()).toBe(1);
-                    (showModalSpy.calls.argsFor(0)[0].options).should.have.keys(['errorMsg', 'filePath']);
+                    expect(showModalSpy.calls.argsFor(0)[0].options['errorMsg']).toBeDefined();
+                    expect(showModalSpy.calls.argsFor(0)[0].options['filePath']).toBeDefined();
                     done();
                 });
             });
@@ -239,11 +242,11 @@ define(['underscore',
             it('writes a new remote file', function(done) {
                 var testFilePath = '/tmp/test_write_new_file.txt';
 
-                server.connection.writeStream(testFilePath, 'hello file', {flags: 'w'}, function() {
-                    server.sftpProxy.stat(testFilePath, function(err, stats) {
+                serverConnection.writeStream(testFilePath, 'hello file', {flags: 'w'}, function() {
+                    serverConnection.sftpProxy.stat(testFilePath, function(err, stats) {
                         expect(err).toBeUndefined();
                         expect(stats.size).toBe(10);
-                        server.sftpProxy.unlink(testFilePath, function() {
+                        serverConnection.sftpProxy.unlink(testFilePath, function() {
                             done();
                         })
                     });
@@ -253,16 +256,17 @@ define(['underscore',
             it('displays an error modal when the user has insufficient write permissions', function(done) {
                 var testFilePath = '/tmp/test_unwriteable_file.txt';
 
-                server.connection.writeStream(testFilePath, 'unwritable', {flags: 'w'}, function(err) {
+                serverConnection.writeStream(testFilePath, 'unwritable', {flags: 'w'}, function(err) {
                     expect(err).toBeUndefined();
                     expect(showModalSpy).not.toHaveBeenCalled();
 
-                    server.sftpProxy.chmod(testFilePath, 0444, function(err) {
+                    serverConnection.sftpProxy.chmod(testFilePath, 0444, function(err) {
                         expect(err).toBeUndefined();
-                        server.connection.writeStream(testFilePath, 'new content', {}, function(err) {
+                        serverConnection.writeStream(testFilePath, 'new content', {}, function(err) {
                             expect(showModalSpy).toHaveBeenCalled();
-                            (showModalSpy.calls.argsFor(0)[0].options).should.have.keys(['errorMsg', 'filePath']);
-                            server.sftpProxy.unlink(testFilePath, function(err) {
+                            expect(showModalSpy.calls.argsFor(0)[0].options['errorMsg']).toBeDefined();
+                            expect(showModalSpy.calls.argsFor(0)[0].options['filePath']).toBeDefined();
+                            serverConnection.sftpProxy.unlink(testFilePath, function(err) {
                                 expect(err).toBeUndefined();
                                 done();
                             });
@@ -274,19 +278,19 @@ define(['underscore',
             it('updates the contents of an existing file', function(done) {
                 var testFilePath = '/tmp/test_file_to_update.txt';
 
-                server.connection.writeStream(testFilePath, 're-write my contents', function(err) {
+                serverConnection.writeStream(testFilePath, 're-write my contents', function(err) {
                     expect(err).toBeUndefined();
-                    server.sftpProxy.stat(testFilePath, function(err, stats) {
+                    serverConnection.sftpProxy.stat(testFilePath, function(err, stats) {
                         expect(err).toBeUndefined();
 
-                        server.connection.writeStream(testFilePath, 'new stuff', function(err) {
+                        serverConnection.writeStream(testFilePath, 'new stuff', function(err) {
                             expect(err).toBeUndefined();
 
-                            server.connection.readStream(testFilePath, function(err, fileContents) {
+                            serverConnection.readStream(testFilePath, function(err, fileContents) {
                                 expect(err).toBeUndefined();
                                 expect(fileContents).toEqual('new stuff');
 
-                                server.sftpProxy.unlink(testFilePath, function (err) {
+                                serverConnection.sftpProxy.unlink(testFilePath, function (err) {
                                     expect(err).toBeUndefined();
                                     done();
                                 });
