@@ -1,7 +1,7 @@
           cmd LC_ID_DYLIB
       cmdsize 112
          name /Library/Frameworks/node-webkit Framework.framework/Versions/A/node-webkit Framework (offset 24)
-   time stamp 1 Thu Jan  1 08:00:01 1970
+   time stamp 1 Thu Jan  1 00:00:01 1970
       current version 0.0.0
 compatibility version 0.0.0
 .objc_class_name_AppController S
