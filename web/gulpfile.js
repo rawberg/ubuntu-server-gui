@@ -68,7 +68,7 @@ gulp.task('vagrant-fixture-data', ['vagrant-up'], function(cb) {
                     cb('<-- could not retrieve vm public ip address -->');
                 }
             });
-        }, 5000);
+        }, 8000);
     });
 });
 
