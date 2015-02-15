@@ -1,5 +1,6 @@
 define(function (requirejs) {
     var _ = requirejs('underscore'),
+        App = requirejs('App'),
     // Models
         Server = requirejs('models/Server'),
         ServerConnection = requirejs('models/ServerConnection'),
@@ -16,6 +17,7 @@ define(function (requirejs) {
             var server, serverConnectionView;
 
             beforeEach(function() {
+                App._initCallbacks.run({}, App);
                 server = new Server({ipv4: '10.0.0.1', name: 'Simple Server'});
                 server.connection = new ServerConnection({connection_status: 'connecting'}, {server: server});
                 serverConnectionView = new ServerConnectionView({model: server.connection});
@@ -39,6 +41,7 @@ define(function (requirejs) {
         });
 
         describe('getTemplate', function() {
+            App._initCallbacks.run({}, App);
             var server, serverConnection;
             var serverConnectionView, templateSpy;
 
