@@ -195,7 +195,7 @@ define(['backbone', 'App', 'views/modal/FileOpsNotice'], function (Backbone, App
             var decoder = new StringDecoder('utf8');
             var fileContents = '';
 
-            var fsStream = this.server.connection.sftpProxy.createReadStream(filePath, {encoding: 'utf8'});
+            var fsStream = this.sftpProxy.createReadStream(filePath, {encoding: 'utf8'});
 
             fsStream.on('data', function(chunk) {
                 fileContents += decoder.write(chunk);
