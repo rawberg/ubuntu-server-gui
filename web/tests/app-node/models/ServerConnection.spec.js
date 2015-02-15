@@ -18,12 +18,14 @@ define(['underscore',
         var connectionStatusSpy, appVentConnectSpy, appVentDisconnectSpy;
 
         beforeEach(function(done) {
-//            jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+            //jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
             connectionStatusSpy = jasmine.createSpy();
             appVentConnectSpy = jasmine.createSpy();
             appVentDisconnectSpy = jasmine.createSpy();
-            App.vent.on('server:connected', appVentConnectSpy);
-            App.vent.on('server:disconnected', appVentDisconnectSpy);
+
+            App.serverChannel = Backbone.Wreqr.radio.channel('server');
+            App.serverChannel.vent.on('connected', appVentConnectSpy);
+            App.serverChannel.vent.on('disconnected', appVentDisconnectSpy);
 
             serversCollection = new ServerList();
             serversCollection.fetch({success: function() {
@@ -41,6 +43,7 @@ define(['underscore',
             if(serverConnection.sshProxy && serverConnection.sshProxy._state !== 'closed') {
                 serverConnection.sshProxy.end();
             }
+            serverConnection.destroy();
             done();
         });
 
@@ -129,7 +132,7 @@ define(['underscore',
 
     });
 
-    describe('ServerConnection - sftpConnection', function() {
+    xdescribe('ServerConnection - sftpConnection', function() {
 
         describe('opendir', function() {
             var server, serverConnection;
