@@ -16,7 +16,7 @@ define(['jquery',
     });
 
     var Application = Marionette.Application.extend({
-        VERSION: '0.9.7',
+        VERSION: '0.9.7.1',
         routers: {},
         loggers: {},
 
@@ -64,7 +64,6 @@ define(['jquery',
 
     // Loggers
     App.addInitializer(function() {
-
         // --- Rollbar initialization placeholder --- //
 
         this.commands.setHandler('log:error', function(options) {
@@ -85,12 +84,12 @@ define(['jquery',
 
     // App Modules & Handlers
     App.addInitializer(function(options) {
-        this.module("NoobTourModule", NoobTourModule);
+        //this.module("NoobTourModule", NoobTourModule);
         this.serverChannel = Backbone.Wreqr.radio.channel('server');
         this.serverChannel.vent.on('connection');
 
-        this.commands.setHandler('noobtour:activate', this.NoobTourModule.activate, this.NoobTourModule);
-        this.commands.setHandler('noobtour:deactivate', this.NoobTourModule.deactivate, this.NoobTourModule);
+        //this.commands.setHandler('noobtour:activate', this.NoobTourModule.activate, this.NoobTourModule);
+        //this.commands.setHandler('noobtour:deactivate', this.NoobTourModule.deactivate, this.NoobTourModule);
         this.commands.setHandler("modal:close", this.closeModal, this);
         this.commands.setHandler("modal:show", this.showModal, this);
     });
